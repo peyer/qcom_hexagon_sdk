@@ -1,0 +1,2 @@
+WPK_VERSION=10.0.16299.0
+include $(thisDir)/defines_winarm.min

@@ -1,0 +1,50 @@
+##################################################################
+# Copyright (c) 2016-2017 Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+##################################################################
+
+UBWCDMA_LIB_ROOT := $(dir $(lastword $(MAKEFILE_LIST)))
+
+# FW compiler options
+DEFINES += DMA_FW_OP_STANDALONE=1 UBWCDMA_DEBUG=1
+ifneq (1,$(V_dynamic))
+DEFINES += COSIM_PLATFORM COSIM_PLATFORM_QURT
+endif
+
+# Cosim locations
+ifeq (WinNT,$(UNAME_S))
+UBWCDMA_COSIM_LIBDIRS := $(UBWCDMA_LIB_ROOT)/cosim/WinNT
+else
+UBWCDMA_COSIM_LIBDIRS := $(UBWCDMA_LIB_ROOT)/cosim/Linux
+endif
+
+# FW headers/library
+ifeq (1,$(UBWCDMA_LEGACY_DRIVER))
+INCDIRS += $(UBWCDMA_LIB_ROOT)/fw/$(V_ARCH)_legacy/inc
+LIBDIRS += $(UBWCDMA_LIB_ROOT)/fw/$(V_ARCH)_legacy
+else
+INCDIRS += $(UBWCDMA_LIB_ROOT)/fw/$(V_ARCH)/inc
+LIBDIRS += $(UBWCDMA_LIB_ROOT)/fw/$(V_ARCH)
+endif
+
+UBWCDMA_FW_LIBS := ubwcdma_dynlib
+UBWCDMA_FW_SIM_LIBS := ubwcdma_simlib
+
+.PHONY : ubwcdma_cosim q6ss_clean
+
+all: ubwcdma_cosim
+
+q6ss_clean:
+	rm -f $(V)/q6ss.cfg
+
+# Append UBWCDMA Cosim to q6ss.cfg
+ifeq (WinNT,$(UNAME_S))
+ubwcdma_cosim: q6ss_clean $(V)/q6ss.cfg
+	@echo $(UBWCDMA_COSIM_LIBDIRS)/Ubwcdma_cosim.dll 0xb2000000 4.78 20 120 120 1 >> $(V)/q6ss.cfg
+	@echo l2vic.dll 2 0x7b010000 >> $(V)/q6ss.cfg
+else
+ubwcdma_cosim: q6ss_clean $(V)/q6ss.cfg
+	@echo $(UBWCDMA_COSIM_LIBDIRS)/Ubwcdma_cosim.so 0xb2000000 4.78 20 120 120 1 >> $(V)/q6ss.cfg
+	@echo l2vic.so 2 0x7b010000 >> $(V)/q6ss.cfg
+endif

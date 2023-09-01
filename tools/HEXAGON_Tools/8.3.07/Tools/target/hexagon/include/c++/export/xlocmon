@@ -1,0 +1,412 @@
+// xlocmon internal header (from <locale>)
+#ifndef _XLOCMON_
+#define _XLOCMON_
+#include <xlocnum>
+_STD_BEGIN
+		// STRUCT money_base
+struct money_base
+	: public locale::facet
+	{	// ultimate base class for moneypunct
+	enum
+		{	// constants for different format codes
+		symbol = '$', sign = '+', space = ' ', value = 'v', none = 'x'};
+	typedef int part;
+
+	struct pattern
+		{	// four-part formats for monetary text
+		char field[4];
+		};
+
+	money_base(size_t _Refs = 0)
+		: locale::facet(_Refs)
+		{	// default constructor
+		}
+	};
+
+		// TEMPLATE CLASS _Mpunct
+export
+template<class _Elem>
+	class _Mpunct
+		: public money_base
+	{	// common base class for moneypunct<_Elem, false/true>
+public:
+	typedef _Elem char_type;
+	typedef basic_string<_Elem, char_traits<_Elem>, allocator<_Elem> >
+		string_type;
+
+	_Elem decimal_point() const
+		{	// return decimal point
+		return (do_decimal_point());
+		}
+
+	_Elem thousands_sep() const
+		{	// return thousands separator
+		return (do_thousands_sep());
+		}
+
+	string grouping() const
+		{	// return grouping string
+		return (do_grouping());
+		}
+
+	string_type curr_symbol() const
+		{	// return currency symbol string
+		return (do_curr_symbol());
+		}
+
+	string_type positive_sign() const
+		{	// return plus sign
+		return (do_positive_sign());
+		}
+
+	string_type negative_sign() const
+		{	// return minus sign
+		return (do_negative_sign());
+		}
+
+	int frac_digits() const
+		{	// return number of fraction digits
+		return (do_frac_digits());
+		}
+
+	pattern pos_format() const
+		{	// return format for positive values
+		return (do_pos_format());
+		}
+
+	pattern neg_format() const
+		{	// return format for negative values
+		return (do_neg_format());
+		}
+
+	explicit _Mpunct(size_t _Refs, bool _Intl)
+		: money_base(_Refs), _International(_Intl)
+		{	// construct from current locale
+		_Init(_Locinfo());
+		}
+
+	_Mpunct(const _Locinfo& _Lobj, size_t _Refs, bool _Intl)
+		: money_base(_Refs), _International(_Intl)
+		{	// construct from specified locale
+		_Init(_Lobj);
+		}
+
+_PROTECTED:
+	virtual ~_Mpunct()
+		{	// destroy the object
+		_Tidy();
+		}
+
+protected:
+	void _Init(const _Locinfo& _Lobj);
+
+	virtual _Elem do_decimal_point() const
+		{	// return decimal point
+		return (_Decimalpoint);
+		}
+
+	virtual _Elem do_thousands_sep() const
+		{	// return thousands separator
+		return (_Kseparator);
+		}
+
+	virtual string do_grouping() const
+		{	// return grouping string
+		return (string(_Grouping));
+		}
+
+	virtual string_type do_curr_symbol() const
+		{	// return currency symbol string
+		return (string_type(_Currencysign));
+		}
+
+	virtual string_type do_positive_sign() const
+		{	// return plus sign
+		return (string_type(_Plussign));
+		}
+
+	virtual string_type do_negative_sign() const
+		{	// return minus sign
+		return (string_type(_Minussign));
+		}
+
+	virtual int do_frac_digits() const
+		{	// return number of fraction digits
+		return (_Fracdigits);
+		}
+
+	virtual pattern do_pos_format() const
+		{	// return format for positive values
+		return (_Plusformat);
+		}
+
+	virtual pattern do_neg_format() const
+		{	// return format for negative values
+		return (_Minusformat);
+		}
+
+private:
+	void _Makpat(pattern& _Pattern, unsigned int _Sepbyspace,
+		unsigned int _Symbolprecedes, unsigned int _Signposition);
+
+	void _Tidy();
+
+	const char *_Grouping;	// grouping string, "" for "C" locale
+	_Elem _Decimalpoint;	// decimal point, '\0' for "C" locale
+	_Elem _Kseparator;	// thousands separator, '\0' for "C" locale
+	const _Elem *_Currencysign;	// currency symbol, "" for "C" locale
+	const _Elem *_Plussign;	// plus sign, "" for "C" locale
+	const _Elem *_Minussign;	// minus sign, "-" for "C" locale
+	int _Fracdigits;	// number of fraction digits, 0 for "C" locale
+	pattern _Plusformat;	// positive format, "$+vx" for "C" locale
+	pattern _Minusformat;	// negative format, "$+vx" for "C" locale
+	bool _International;	// true if international format
+
+	_Locinfo::_Cvtvec _Cvt;		// conversion information
+	};
+
+		// TEMPLATE CLASS moneypunct
+template<class _Elem,
+	bool _Intl = false>
+	class moneypunct
+		: public _Mpunct<_Elem>
+	{	// facet for defining monetary punctuation text
+public:
+	static const bool intl;	// true if international
+	static locale::id id;	// unique facet id
+
+	explicit moneypunct(size_t _Refs = 0)
+		: _Mpunct<_Elem>(_Refs, _Intl)
+		{	// construct from current locale
+		}
+
+	moneypunct(const _Locinfo& _Lobj, size_t _Refs = 0)
+		: _Mpunct<_Elem>(_Lobj, _Refs, _Intl)
+		{	// construct from specified locale
+		}
+
+	static size_t _Getcat(const locale::facet **_Ppf = 0,
+		const locale *_Ploc = 0)
+		{	// return locale category mask and construct standard facet
+		if (_Ppf != 0 && *_Ppf == 0)
+			*_Ppf = _NEW_CRT moneypunct<_Elem, _Intl>(
+				_Locinfo(_Ploc->name()));
+		return (_X_MONETARY);
+		}
+
+_PROTECTED:
+	virtual ~moneypunct()
+		{	// destroy the object
+		}
+	};
+
+		// STATIC moneypunct::intl OBJECT
+template<class _Elem,
+	bool _Intl>
+	const bool moneypunct<_Elem, _Intl>::intl = _Intl;
+
+		// STATIC moneypunct::id OBJECT
+template<class _Elem,
+	bool _Intl>
+	locale::id moneypunct<_Elem, _Intl>::id;
+
+		// TEMPLATE CLASS moneypunct_byname
+template<class _Elem,
+	bool _Intl = false>
+	class moneypunct_byname
+		: public moneypunct<_Elem, _Intl>
+	{	// moneypunct for named locale
+public:
+	explicit moneypunct_byname(const char *_Locname, size_t _Refs = 0)
+		: moneypunct<_Elem, _Intl>(_Locinfo(_Locname), _Refs)
+		{	// construct for named locale
+		}
+
+_PROTECTED:
+	virtual ~moneypunct_byname()
+		{	// destroy the object
+		}
+	};
+
+		// TEMPLATE CLASS money_get
+export
+template<class _Elem,
+	class _InIt = istreambuf_iterator<_Elem, char_traits<_Elem> > >
+	class money_get
+		: public locale::facet
+	{	// facet for converting text to encoded monetary amounts
+	typedef moneypunct<_Elem, false> _Mypunct0;
+	typedef moneypunct<_Elem, true> _Mypunct1;
+
+public:
+	typedef _Elem char_type;
+	typedef _InIt iter_type;
+	typedef basic_string<_Elem, char_traits<_Elem>, allocator<_Elem> >
+		string_type;
+
+	_InIt get(_InIt _First, _InIt _Last,
+		bool _Intl, ios_base& _Iosbase, ios_base::iostate& _State,
+			long double& _Val) const
+		{	// get long double from [_First, _Last) into _Val
+		return (do_get(_First, _Last, _Intl, _Iosbase, _State, _Val));
+		}
+
+	_InIt get(_InIt _First, _InIt _Last,
+		bool _Intl, ios_base& _Iosbase, ios_base::iostate& _State,
+			string_type& _Val) const
+		{	// get string_type from [_First, _Last) into _Val
+		return (do_get(_First, _Last, _Intl, _Iosbase, _State, _Val));
+		}
+
+	static locale::id id;	// unique facet id
+
+	explicit money_get(size_t _Refs = 0)
+		: locale::facet(_Refs)
+		{	// construct from current locale
+		_Init(_Locinfo());
+		}
+
+	money_get(const _Locinfo& _Lobj, size_t _Refs = 0)
+		: locale::facet(_Refs)
+		{	// construct from specified locale
+		_Init(_Lobj);
+		}
+
+	static size_t _Getcat(const locale::facet **_Ppf = 0,
+		const locale *_Ploc = 0)
+		{	// return locale category mask and construct standard facet
+		if (_Ppf != 0 && *_Ppf == 0)
+			*_Ppf = _NEW_CRT money_get<_Elem, _InIt>(
+				_Locinfo(_Ploc->name()));
+		return (_X_MONETARY);
+		}
+
+_PROTECTED:
+	virtual ~money_get()
+		{	// destroy the object
+		}
+
+protected:
+	void _Init(const _Locinfo& _Lobj)
+		{	// initialize from _Locinfo object
+		_Cvt = _Lobj._Getcvt();
+		}
+
+	virtual _InIt do_get(_InIt _First, _InIt _Last,
+		bool _Intl, ios_base& _Iosbase, ios_base::iostate& _State,
+			long double& _Val) const;
+
+	virtual _InIt do_get(_InIt _First, _InIt _Last,
+		bool _Intl, ios_base& _Iosbase, ios_base::iostate& _State,
+			string_type& _Val) const;
+
+private:
+	string_type _Getmfld(_InIt& _First, _InIt& _Last,
+		bool _Intl, ios_base& _Iosbase) const;
+
+	_Locinfo::_Cvtvec _Cvt;		// conversion information
+	};
+
+		// STATIC money_get::id OBJECT
+template<class _Elem,
+	class _InIt>
+	locale::id money_get<_Elem, _InIt>::id;
+
+		// TEMPLATE CLASS money_put
+export
+template<class _Elem,
+	class _OutIt = ostreambuf_iterator<_Elem, char_traits<_Elem> > >
+	class money_put
+		: public locale::facet
+	{	// facet for converting encoded monetary amounts to text
+	typedef moneypunct<_Elem, false> _Mypunct0;
+	typedef moneypunct<_Elem, true> _Mypunct1;
+
+public:
+	typedef _Elem char_type;
+	typedef _OutIt iter_type;
+	typedef basic_string<_Elem, char_traits<_Elem>, allocator<_Elem> >
+		string_type;
+
+	_OutIt put(_OutIt _Dest,
+		bool _Intl, ios_base& _Iosbase, _Elem _Fill,
+			long double _Val) const
+		{	// put long double to _Dest
+		return (do_put(_Dest, _Intl, _Iosbase, _Fill, _Val));
+		}
+
+	_OutIt put(_OutIt _Dest,
+		bool _Intl, ios_base& _Iosbase, _Elem _Fill,
+			const string_type& _Val) const
+		{	// put string_type to _Dest
+		return (do_put(_Dest, _Intl, _Iosbase, _Fill, _Val));
+		}
+
+	static locale::id id;	// unique facet id
+
+	explicit money_put(size_t _Refs = 0)
+		: locale::facet(_Refs)
+		{	// construct from current locale
+		_Init(_Locinfo());
+		}
+
+	money_put(const _Locinfo& _Lobj, size_t _Refs = 0)
+		: locale::facet(_Refs)
+		{	// construct from specified locale
+		_Init(_Lobj);
+		}
+
+	static size_t _Getcat(const locale::facet **_Ppf = 0,
+		const locale *_Ploc = 0)
+		{	// return locale category mask and construct standard facet
+		if (_Ppf != 0 && *_Ppf == 0)
+			*_Ppf = _NEW_CRT money_put<_Elem, _OutIt>(
+				_Locinfo(_Ploc->name()));
+		return (_X_MONETARY);
+		}
+
+_PROTECTED:
+	virtual ~money_put()
+		{	// destroy the object
+		}
+
+protected:
+	void _Init(const _Locinfo& _Lobj)
+		{	// initialize from _Locinfo object
+		_Cvt = _Lobj._Getcvt();
+		}
+
+	virtual _OutIt do_put(_OutIt _Dest,
+		bool _Intl, ios_base& _Iosbase, _Elem _Fill,
+			long double _Val) const;
+
+	virtual _OutIt do_put(_OutIt _Dest,
+		bool _Intl, ios_base& _Iosbase, _Elem _Fill,
+			const string_type& _Val) const;
+
+private:
+	_OutIt _Putmfld(_OutIt _Dest,
+		bool _Intl, ios_base& _Iosbase, _Elem _Fill,
+			bool _Neg, string_type _Val) const;
+
+	static _OutIt _Put(_OutIt _Dest,
+		typename string_type::const_iterator _Source, size_t _Count);
+
+	static _OutIt _Rep(_OutIt _Dest,
+		_Elem _Ch, size_t _Count);
+
+	_Locinfo::_Cvtvec _Cvt;		// conversion information
+	};
+
+		// STATIC money_put::id OBJECT
+template<class _Elem,
+	class _OutIt>
+	locale::id money_put<_Elem, _OutIt>::id;
+
+_STD_END
+#endif /* _XLOCMON_ */
+
+/*
+ * Copyright (c) 1992-2006 by P.J. Plauger.  ALL RIGHTS RESERVED.
+ * Consult your license regarding permissions and restrictions.
+V5.01:1566 */

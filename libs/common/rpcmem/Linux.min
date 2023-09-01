@@ -1,0 +1,6 @@
+#what we ship
+BUILD_COPIES += $V/rpcmem$(LIB_EXT)
+
+BUILD_LIBS += rpcmem
+rpcmem_C_SRCS = src/rpcmem
+

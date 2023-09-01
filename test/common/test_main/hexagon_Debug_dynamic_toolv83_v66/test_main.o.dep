@@ -1,0 +1,12 @@
+src/test_main.c:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/rtld/ship/hexagon_Debug_dynamic_toolv83_v66/dlfcn.h:
+inc/test_main.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_farf.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_debug.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/stddef/AEEStdDef.h:
+hexagon_Debug_dynamic_toolv83_v66/test_main.o: src/test_main.c
+hexagon_Debug_dynamic_toolv83_v66/test_main.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/rtld/ship/hexagon_Debug_dynamic_toolv83_v66/dlfcn.h
+hexagon_Debug_dynamic_toolv83_v66/test_main.o: inc/test_main.h
+hexagon_Debug_dynamic_toolv83_v66/test_main.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_farf.h
+hexagon_Debug_dynamic_toolv83_v66/test_main.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_debug.h
+hexagon_Debug_dynamic_toolv83_v66/test_main.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/stddef/AEEStdDef.h

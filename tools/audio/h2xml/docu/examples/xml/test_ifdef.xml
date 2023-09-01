@@ -1,0 +1,37 @@
+<DSP type="WDSP" versionMajor="0x2" versionMinor="0x8" versionBranch="0x10" versionSubBranch="0x20">
+  <MODULE_LIST>
+    <MODULE name="MODULE_1" id="0x11111111">
+      <MODULE_INFO pidFwk="0x20002">
+        <META_DATA/>
+        <PIN_INFO type="STATIC">
+          <INPUT_PINS/>
+          <OUTPUT_PINS/>
+        </PIN_INFO>
+      </MODULE_INFO>
+      <PARAMETER_LIST>
+        <PARAMETER name="Parameter1" pid="0x11111199" maxSize="0x10">
+          <TOOL_POLICIES>
+            <POLICY name="RTC"/>
+            <POLICY name="CALIBRATION"/>
+          </TOOL_POLICIES>
+          <DEFAULT_DEPENDENCIES/>
+          <CONFIG_ELEMENT name="a" type="unsigned short" typeUnSigned="true" byteSize="0x2" byteOffset="0x0" min="0x0" max="0xffff" default="0x0"/>
+          <CONFIG_ELEMENT name="b" type="unsigned int" typeUnSigned="true" byteSize="0x4" byteOffset="0x4" min="0x0" max="0xffffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d" type="unsigned short" typeUnSigned="true" byteSize="0x2" byteOffset="0x8" min="0x0" max="0xffff" default="0x0"/>
+          <CONFIG_ELEMENT name="f" type="unsigned int" typeUnSigned="true" byteSize="0x4" byteOffset="0xc" min="0x0" max="0xffffffff" default="0x0"/>
+        </PARAMETER>
+        <PARAMETER name="Parameter2" pid="0x22222299" maxSize="0x10">
+          <TOOL_POLICIES>
+            <POLICY name="RTC"/>
+            <POLICY name="CALIBRATION"/>
+          </TOOL_POLICIES>
+          <DEFAULT_DEPENDENCIES/>
+          <CONFIG_ELEMENT name="a" type="char" byteSize="0x1" byteOffset="0x0" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c" type="long" byteSize="0x4" byteOffset="0x4" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d" type="char" byteSize="0x1" byteOffset="0x8" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="e" type="long" byteSize="0x4" byteOffset="0xc" min="0x80000000" max="0x7fffffff" default="0x0"/>
+        </PARAMETER>
+      </PARAMETER_LIST>
+    </MODULE>
+  </MODULE_LIST>
+</DSP>

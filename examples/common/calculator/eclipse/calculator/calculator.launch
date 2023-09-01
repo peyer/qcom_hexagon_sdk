@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="com.qualcomm.ndk.launch.ndkLaunchType">
+<stringAttribute key="/system/lib/rfsa/adsp" value="/system/lib/rfsa/adsp"/>
+<stringAttribute key="ADSP_PROC_LOCATION" value=""/>
+<stringAttribute key="DLL_CONFIG_TO_RUN" value=""/>
+<stringAttribute key="NDK_DEVICE_ID" value="0x144805"/>
+<stringAttribute key="NDK_DEVICE_NAME" value="84e1b72e"/>
+<booleanAttribute key="RUN_ON_SIMULATOR" value="false"/>
+<listAttribute key="SHARED_OBJECTS">
+<listEntry value="../libcalculator_skel/LLVM_Shared-Debug/libcalculator_skel.so"/>
+</listAttribute>
+<stringAttribute key="SHARED_OBJECTS_LOCATION" value="/system/lib/rfsa/adsp"/>
+<stringAttribute key="SIMULATOR_ARGUMENTS" value=""/>
+<booleanAttribute key="com.ndk.hexagon.launch.targetTab.DEFAULTS_SET" value="true"/>
+<stringAttribute key="org.eclipse.cdt.debug.mi.core.DEBUG_NAME" value="gdb"/>
+<stringAttribute key="org.eclipse.cdt.debug.mi.core.DEV" value="/dev/ttyS0"/>
+<stringAttribute key="org.eclipse.cdt.debug.mi.core.DEV_SPEED" value="115200"/>
+<stringAttribute key="org.eclipse.cdt.debug.mi.core.GDB_INIT" value=".gdbinit"/>
+<stringAttribute key="org.eclipse.cdt.debug.mi.core.HOST" value="localhost"/>
+<stringAttribute key="org.eclipse.cdt.debug.mi.core.PORT" value="10000"/>
+<booleanAttribute key="org.eclipse.cdt.debug.mi.core.REMOTE_TCP" value="false"/>
+<stringAttribute key="org.eclipse.cdt.debug.mi.core.commandFactory" value="org.eclipse.cdt.debug.mi.core.standardCommandFactory"/>
+<booleanAttribute key="org.eclipse.cdt.debug.mi.core.verboseMode" value="false"/>
+<intAttribute key="org.eclipse.cdt.launch.ATTR_BUILD_BEFORE_LAUNCH_ATTR" value="2"/>
+<stringAttribute key="org.eclipse.cdt.launch.PROGRAM_ARGUMENTS" value="0 1000"/>
+<stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value="NDK_Debug/calculator"/>
+<stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value="calculator"/>
+<stringAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_ID_ATTR" value=""/>
+<booleanAttribute key="org.eclipse.cdt.launch.use_terminal" value="true"/>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/calculator"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="4"/>
+</listAttribute>
+</launchConfiguration>

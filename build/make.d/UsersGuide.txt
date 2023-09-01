@@ -1,0 +1,390 @@
+Make.d User's Guide
+###################
+
+Rob Walker, Principal Engineer <rwalker@qualcomm.com>
+
+Greg Fitzgerald, Staff Engineer <gregf@qualcomm.com>
+
+April 8, 2011
+
+
+Contents
+========
+
+.toc
+
+Description
+===========
+
+Make.d is a GNU Make library that allows developers to write descriptions
+of *what* their build produces, rather than *how* to produce it.  By
+removing the "how", developers can render multiple build variations using
+the same declarative descriptions.  
+
+
+Make.d increases productivity
+-----------------------------
+
+Make.d improves developer productively by allowing developer to use their
+preferred toolchain without sacrificing software quality.  Binaries produced
+by Make.d are *functionally consistent* across build variations.  Make.d's build 
+rules carefully manage the subtle differences between toolchains to ensure the 
+resulting product functions identically regardless of which build variation
+is chosen.  A developer could troubleshoot bugs with the Visual Studio 
+debugger, make fixes and test locally, and then recompile for the ARM 
+architecture and expect the target device to function identically.
+
+
+Make.d improves software quality
+--------------------------------
+
+Make.d users use *qualification tests* (Q-tests) to ensure functional
+consistency at build-time.  For example, a Make.d user might build
+both a static library and Q-test executable.  The Q-test links in the
+library and runs tests to ensure it works as we expect.  When the 
+user runs Make, the static library is built, then the Q-test is
+built and immediately executed.  If any of its tests fail, the Q-test 
+returns nonzero, which halts the build and informs the user of the
+failure.  
+
+With Q-tests, Make.d users can verify that not only does their code work, 
+but it works consistently across build variations.  In the case of target 
+builds, Make.d will run Q-tests locally on the configured simulator.
+
+
+Make.d by Example
+-----------------
+
+To build a "hello world" executable with make.d, one would write a 
+simple `Makefile` such as:
+
+. include path_to_my_make.d/defines.min
+.
+. BUILD_EXES        = helloworld
+.
+. helloworld.C_SRCS = hello.c
+.
+. include $(RULES_MIN)
+
+To build, just launch GNU Make from the directory with `hello.c`:
+
+. > make
+. > WinNT_Debug\hello.exe
+. Hello make.d!
+
+The Makfile contains no build rules and does not mention specifics about 
+about the output, such as the file extension or target directory.  This 
+lets make.d render the same Makefile in different contexts.  A 
+**build variation** is specified with the `V` variable.  Make.d 
+recognizes many different values for `V`, such as what CPU architecture 
+to target, what C compiler to use, and whether or not debug symbols should 
+be included.
+
+To build `hello.exe` without debug symbols, set `V` to `WinNT_Release`:
+
+. > make V=WinNT_Release
+. > WinNT_Release\hello.exe
+. Hello make.d!
+
+Make.d keeps each build variation and all intermediary files isolated, 
+allowing multiple build variations to coexist side-by-side.
+
+
+Theory of Operation
+===================
+
+Developers write a build specification in terms of declarative `BUILD`
+constructs described below and place them between make.d's defines.min
+and rules.min.  The defines.min provides variables and functions to help 
+writing `BUILD` definitions, and the rules.min tells Make how to interpret
+those definitions in the context of a particular build variation. 
+
+: ,-------------------------------------------,
+: | Makefile                                  |
+: |   |                                       |
+: |   |   ,-------------,                     |
+: |   +-->| defines.min |                     |
+: |   |   `-------------`                     |
+: |   |                                       |
+: |   +--> User-defined BUILD definitions     |
+: |   |                                       |
+: |   |   ,-----------,                       |
+: |   `-->| rules.min |                       |
+: |       `-----------`                       |
+: |                                           |
+: `-------------------------------------------`
+
++-----------------+--------------------------------------------------------------+
+| File name       | Description                                                  |
++=================+==============================================================+
+| **Makefile**    | A user-defined file that includes make.d's defines.min,      |
+|                 | sets BUILD variables, and lastly includes $(RULES_MIN).      |
++-----------------+--------------------------------------------------------------+
+| **defines.min** | Supplied by make.d.  It sets up all the predefined variables |
+|                 | and functions exported by make.d, also has "all:", the       |
+|                 | default rule, so it'll be first.                             |
++-----------------+--------------------------------------------------------------+
+| **rules.min**   | Supplied by make.d.  It sets up all the rules based on the   |
+|                 | make.d primitives, tells GNU Make what to execute and how.   |
++-----------------+--------------------------------------------------------------+
+
+Developers specify build targets using a set of specially named variables 
+in their `Makefile`:
+
++-------------------------+---------------------------------------------------+
+| Variable                | Description                                       |
++=========================+===================================================+
+| `BUILD_LIBS`            | static libraries                                  |
++-------------------------+---------------------------------------------------+
+| `BUILD_DLLS`            | shared, or dynamic libraries                      |
++-------------------------+---------------------------------------------------+
+| `BUILD_EXES`            | executables                                       |
++-------------------------+---------------------------------------------------+
+| `BUILD_QEXES`           | test executables                                  |
++-------------------------+---------------------------------------------------+
+| `BUILD_MODS`            | Component Services (CS) modules, mod1s            |
++-------------------------+---------------------------------------------------+
+| `BUILD_SUBDIRS`         | a list of sub-directories relative to `$(CURDIR)` |
+|                         | in which to execute `$(MAKE)`                     |
++-------------------------+---------------------------------------------------+
+| `BUILD_ZIPS`            | a list of .zip files to be generated.             |
++-------------------------+---------------------------------------------------+
+| `BUILD_COPIES`          | a list of ";"-delimited copy specs.               |
++-------------------------+---------------------------------------------------+
+| `BUILD_HEADERS_FROM_IDL`| a special target for .idl --> .h compilation      |
++-------------------------+---------------------------------------------------+
+
+In addition, make.d has partial support for these top-level targets:
+
++-------------------------+--------------------------------------------------+
+| Variable                | Description                                      |
++=========================+==================================================+
+| `BUILD_IMPLIBS`         | special, Component Services dynamic link targets |
+|                         | that enable symbol resolution from CS modules    |
++-------------------------+--------------------------------------------------+
+| `BUILD_IMGS`            | handset images, support is extremely partial     |
++-------------------------+--------------------------------------------------+
+
+A `Makefile` typically has only one or two BUILD directives.
+
+
+Build Variations
+----------------
+
+Make.d uses a single set of rules to build for multiple platforms, multiple
+execution targets, multiple flavors, and multiple toolchains.  Each of these
+factors are allowed to vary independently from build to build.  A supported
+combination of these factors is called a "V", where "V" stands for
+"variation".  Each V has a .min file that specifies the toolchain to be used
+to build the V and other variables that control the build.
+
+Most proceeds from a Make run are placed in a subdirectory named
+`$(V)`. Exceptions include proceeds of install, zip, and copies targets.
+
+Make.d can only make one V per invocation of make, but make.d can run multiple
+sub-makes to support building multiple Vs in a single user invocation.
+
+The following syntax grammar represents all Vs accepted by make.d
+
+. v           ::= target "_" flavor
+.
+. target      ::= "ARM"
+.               | "ADS12arm9"
+.               | "armgcc"
+.               | "cygwin"
+.               | "Darwin"
+.               | "Linux"
+.               | "mingw"
+.               | "qdsp6v3"
+.               | "qdsp6v4"
+.               | "RVCT" rvct_ver rvct_arch
+.               | "SunOS"
+.               | "WinNT"
+.               | "Win32"
+. 
+. flavor      ::= "Debug"
+.               | "Release"
+.               | "ReleaseG"
+. 
+. rvct_ver    ::= "22"
+.               | "30"
+.               | "40"
+.               | "41"
+.
+. rvct_arch   ::= "arm9"
+.               | "arm11"
+.               | "CortexA8"
+.               | "CortexM3"
+.               | "Scorpion"
+
+Each target represents a set of constraints that must be satisfied by the 
+execution environment.
+
++-------------------------+--------------------------------------------------+
+| Target                  | Execution environment constraints                |
++=========================+==================================================+
+| `ARM`                   | Requires ARM runtime                             |
++-------------------------+--------------------------------------------------+
+| `ADS12arm9`             | Requires ADS12 runtime and arm9 or later CPU     |
++-------------------------+--------------------------------------------------+
+| `armgcc`                | Requires armgcc runtime and arm9 or later CPU    |
++-------------------------+--------------------------------------------------+
+| `cygwin`                | Requires cygwin runtime libraries                |
++-------------------------+--------------------------------------------------+
+| `Darwin`                | Requires Darwin runtime on x86                   |
++-------------------------+--------------------------------------------------+
+| `Linux`                 | Requires Linux runtime on x86                    |
++-------------------------+--------------------------------------------------+
+| `mingw`                 | Requires MinGW runtime                           |
++-------------------------+--------------------------------------------------+
+| `qdsp6v3`               | Requires Hexagon runtime, arch 3 or later        |
++-------------------------+--------------------------------------------------+
+| `qdsp6v4`               | Requires Hexagon runtime, arch 4 or later        |
++-------------------------+--------------------------------------------------+
+| `RVCT ver arch`         | Requires ARM runtime at `ver` or later and       |
+|                         | optimized for `arch` CPU or later                |
++-------------------------+--------------------------------------------------+
+| `SunOS`                 | Requires SunOS runtime                           |
++-------------------------+--------------------------------------------------+
+| `WinNT`                 | Requires 32-bit (or later) Windows on x86        |
++-------------------------+--------------------------------------------------+
+| `Win32`                 | Requires 32-bit (or later) Windows on x86        |
++-------------------------+--------------------------------------------------+
+
+
+Each flavor represents a set of properties of the binary.
+
++-------------------------+--------------------------------------------------+
+| Flavor                  | Properties of resulting binary                   |
++=========================+==================================================+
+| `Debug`                 | Contains debug symbols.  Compiled with DEBUG     |
++-------------------------+--------------------------------------------------+
+| `Release`               | Contains no debug symbols                        |
++-------------------------+--------------------------------------------------+
+| `ReleaseG`              | Contains debug symbols, but compiled for Release |
++-------------------------+--------------------------------------------------+
+
+
+make.d Extensions
+=================
+
+Make.d can be extended to support new tools, programming languages, and
+build variations.  Extending make.d does not require modifications to make.d
+-- instead, extensions can be implemented outside of make.d.  Much of the
+build system is, in fact, implemented as extensions.
+
+An extension consists of one or more `.min` files that are included at
+various points in make.d's execution.  Generally, each of make.d's own
+`.min` files will include extension files as a final step of execution,
+as illustrated below:
+
+: ,------------------------------------------------------------,
+: | Makefile                                                   |
+: |   |                                                        |
+: |   |   ,--------------------------------------------,       |
+: |   +-->| defines.min                                |       |
+: |   |   |   |                                        |       |
+: |   |   |   |                                        |       |
+: |   |   |   +--> Make.d defines                      |       |
+: |   |   |   |                                        |       |
+: |   |   |   |   ,------------------------------,     |       |
+: |   |   |   +-->| Each extension's defines.min |     |       |
+: |   |   |   |   `------------------------------`     |       |
+: |   |   |   |   ,------------------------------,     |       |
+: |   |   |   `-->| Variation-specific "V File"  |     |       |
+: |   |   |       `------------------------------`     |       |
+: |   |   `--------------------------------------------`       |
+: |   |                                                        |
+: |   +--> User-defined BUILD definitions                      |
+: |   |                                                        |
+: |   |   ,--------------------------------------------,       |
+: |   `-->| rules.min                                  |       |
+: |       |   |                                        |       |
+: |       |   |   ,--------------------------------,   |       |
+: |       |   +-->| Each extension's functions.min |   |       |
+: |       |   |   `--------------------------------`   |       |
+: |       |   |                                        |       |
+: |       |   +--> Make.d rules                        |       |
+: |       |   |                                        |       |
+: |       |   |   ,----------------------------,       |       |
+: |       |   `-->| Each extension's rules.min |       |       |
+: |       |       `----------------------------`       |       |
+: |       `--------------------------------------------`       |
+: |                                                            |
+: `------------------------------------------------------------`
+
+
+Extensions named **`defines.min`** are included before V resolution s
+performed in make.d's `defines.min`.  This lets the user add custom
+V-specific files and specify global toolchain locations (e.g. cdep or
+qidlc).
+
+Extensions named **`functions.min`** are included by Make.d's `rules.min`
+just before Make.d starts interpreting BUILD definitions.  This
+lets the extension, for example, extend `BUILD_LIBS` with support for
+other programming languages by adding `_OBJS` entries to the build, and
+then rules for how to create those object files in the extension's
+`rules.min`.
+
+Extensions named **`rules.min`** are included at the end of make.d's
+`rules.min`.  This is where the extension can add Make rules for any
+new BUILD definitions it introduces.
+
+Extensions named **`defines_<toolchain>.min`** can be used to extend or
+override make.d's default configurations, such as specifying the
+location of an installation of Visual Studio.
+
+Specifying Extensions
+---------------------
+
+Make variables are used to tell make.d about extensions.  These
+variables should be defined before make.d's `defines.min` is executed.
+Some variables name extension directories -- directories to search for
+`.min` files -- and some name individual extension files.
+
+`MAKE_D_SITE_DIR`
+.................
+
+If `MAKE_D_SITE_DIR` is defined, make.d searches that directory for
+override/extension files.  These "site files" are typically included at
+the end of make.d's normal .min files, as described above.  Site files
+need to have the same name as the file from which they're to be
+included.  For example, make.d's rules.min includes
+`$(MAKE_D_SITE_DIR)/rules.min` if present.
+
+
+`MAKE_D_EXT_<ext>_DIR`
+......................
+
+Every make variable whose name matches this pattern specifies a
+directory of extension files.  This is similar to `MAKE_D_SITE_DIR`, the
+difference being that there can be more than one `MAKE_D_EXT_<ext>_DIR`.
+For example, the following assignment:
+
+.  MAKE_D_EXT_myext_DIR = mydir
+
+... will cause `mydir/<file>.min`, if it exists, to be included by each
+corresponding `<file>.min` in make.d.  The extension name ("`myext`" in
+this example) is ignored; it serves only to construct a unique name for
+the variable.
+
+
+`MAKE_D_EXT_<file>_<ext>_MIN`
+..............................
+
+Every make variable whose name matches this pattern specifies an
+extension file to be included by `<file>.min`.  For example, to
+include `myrules.min` after make.d's `rules.min`, use the following:
+
+.  MAKE_D_EXT_rules_myext_MIN = myrules.min
+
+
+Extension Ordering
+------------------
+
+The order make.d includes extension files depends on which of these
+variables were used to describe the extension.  First the `MAKE_D_SITE_DIR`
+files are included, then `MAKE_D_EXT_<ext>_DIR` files, and finally the
+`MAKE_D_EXT_<file>_<ext>_MIN` files.  If there are multiple extensions in
+one category, the order of their inclusion is undefined.
+

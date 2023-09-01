@@ -1,0 +1,18 @@
+#=======================================================================
+#                  Copyright 2010 QUALCOMM Incorporated.
+#                         All Rights Reserved.
+#                      QUALCOMM Confidential and Proprietary
+#=======================================================================
+# maps hex locale IDs (LCIDs) to locale names
+LCID_409.NAME=en_US
+LCID_809.NAME=en_UK
+LCID_407.NAME=de
+LCID_40D.NAME=he
+LCID_804.NAME=zh_CN
+LCID_411.NAME=ja
+LCID_412.NAME=ko
+
+# RGW, 07/272010:
+# The only thing I've so far localized is XCOPY.F.  The only locale above 
+# that uses something other than "F" for xcopy is "de", so 
+# I'm not creating locale files for them yet.

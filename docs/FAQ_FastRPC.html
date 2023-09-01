@@ -1,0 +1,887 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><title>WinNT_Debug/ship/WinNT/FAQ_FastRPC.html</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="images/sidebar_top.jpg"></top><script src="scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, false)"><input id="searchButton" onclick="postFunction(false)" type="button" value="Search"></form><p>
+<a href="index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<p>
+<a href="sitemap.html">Sitemap</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="Audio/Applications.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="Voice/Applications.html">Voice</a>
+</p><p>
+<a href="Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="Audio/Examples.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="Examples_Common.html">Common</a>
+</p><p>
+<a href="Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="Tools_Signing.html">Signing</a>
+</p><p>
+<a href="Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="FAQ_Common.html">Common</a>
+</p><p>
+<a href="FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="Support_Contact.html">Contact</a>
+</p><center><img src="images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h2>
+<a name="FastRPC%20FAQ"></a>FastRPC FAQ
+</h2><div class="toc"><div class="tocLevel"><a href="#How%20does%20the%20FastRPC%20mechanism%20work%3f">How does the FastRPC mechanism work?</a></div><div class="tocLevel"><a href="#Why%20is%20FastRPC%20failing%3f">Why is FastRPC failing?</a></div><div class="tocLevel"><a href="#Is%20there%20any%20documentation%20for%20the%20IDL%20Compiler%3f">Is there any documentation for the IDL Compiler?</a></div><div class="tocLevel"><a href="#Do%20you%20have%20a%20simple%20example%20of%20FastRPC%3f">Do you have a simple example of FastRPC?</a></div><div class="tocLevel"><a href="#How%20to%20verify%20FastRPC%20is%20working%20on%20a%20setup%3f">How to verify FastRPC is working on a setup?</a></div><div class="tocLevel"><a href="#Why%20do%20all%20remote%20functions%20return%200%20as%20their%20return%20value%3f">Why do all remote functions return 0 as their return value?</a></div><div class="tocLevel"><a href="#Why%20not%20to%20use%20dual%20input/output%20parameter%3f">Why not to use dual input/output parameter?</a></div><div class="tocLevel"><a href="#What%20is%20the%20significane%20of%20using%20ION%20memory%3f">What is the significane of using ION memory?</a></div><div class="tocLevel"><a href="#What%20memory%20can%20be%20passed%20to%20a%20FastRPC%20function%3f">What memory can be passed to a FastRPC function?</a></div><div class="tocLevel"><a href="#How%20much%20stack%20space%20is%20available%20in%20a%20FastRPC%20function%3f">How much stack space is available in a FastRPC function?</a></div><div class="tocLevel"><a href="#Do%20buffers%20get%20copied%20over%20when%20using%20FastRPC%20mechanism%3f">Do buffers get copied over when using FastRPC mechanism?</a></div><div class="tocLevel"><a href="#What%20is%20the%20page%20granularity%20of%20mappings%20on%20DSP%3f">What is the page granularity of mappings on DSP?</a></div><div class="tocLevel"><a href="#What%20happens%20if%20application%20is%20terminated%20in%20the%20middle%20of%20remote%20invocation%3f">What happens if application is terminated in the middle of remote invocation?</a></div><div class="tocLevel"><a href="#Can%20more%20than%20one%20remote%20invocation%20be%20made%20at%20any%20given%20point%3f">Can more than one remote invocation be made at any given point?</a></div><div class="tocLevel"><a href="#What%20cache%20attribute%20is%20used%20to%20map%20the%20input%20and%20output%20buffers%3f">What cache attribute is used to map the input and output buffers?</a></div><div class="tocLevel"><a href="#How%20to%20create%20persistent%20state%20on%20the%20DSP%3f">How to create persistent state on the DSP?</a></div><div class="tocLevel"><a href="#How%20to%20manage%20the%20clocks%20when%20making%20a%20fastrpc%20call%3f">How to manage the clocks when making a fastrpc call?</a></div><div class="tocLevel"><a href="#How%20to%20get%20FARF%20messages%20posted%20in%20a%20fastrpc%20call%3f">How to get FARF messages posted in a fastrpc call?</a></div><div class="tocLevel"><a href="#How%20to%20handle%20sub-system%20restart%20(SSR)%20when%20offloading%20to%20CDSP%3f">How to handle sub-system restart (SSR) when offloading to CDSP?</a></div><div class="tocLevel"><a href="#How%20to%20handle%20high%20FastRPC%20latency%3f">How to handle high FastRPC latency?</a></div></div><h3>
+<a name="How%20does%20the%20FastRPC%20mechanism%20work%3f"></a>How does the FastRPC mechanism work?
+</h3><p>
+See the <a href="APIs_FastRPC.html">FastRPC</a> documentation.
+</p><h3>
+<a name="Why%20is%20FastRPC%20failing%3f"></a>Why is FastRPC failing?
+</h3><p>
+First run your application with <code>adb logcat -s adsprpc</code> running in another shell, and collect mini-dm logs. For mini-dm usage, refer to <a href="Debugging_Message%20Logging.html#mini-dm">document</a>
+</p><ul>
+<li>
+<p>
+Errors related to dynamic Loading or file not found:
+</p><ul type="circle">
+<li>
+<p>
+If dynamic loading is failing, see <a href="FAQ_Dynamic%20Loading.html">FAQ</a>
+</p>
+</li><li>
+<p>
+If Signature verification is failing, see <a href="Tools_Signing.html">Signing</a>
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Errors related to /dev/adsprpc-smd
+</p><ul type="circle">
+<li>
+<p>
+See <a href="APIs_FastRPC.html#Setup">if FastRPC is Enabled</a>
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+DSP does not respond without errors
+</p><ul type="circle">
+<li>
+<p>
+The daemon adsprpcd/cdsprpcd/mdsprpcd is not running, see <a href="APIs_FastRPC.html#Setup">if FastRPC is Enabled</a>.
+</p>
+</li>
+</ul>
+</li>
+</ul><h3>
+<a name="Is%20there%20any%20documentation%20for%20the%20IDL%20Compiler%3f"></a>Is there any documentation for the IDL Compiler?
+</h3><p>
+<a href="Tools_IDL%20Compiler.html">IDL compiler</a>
+</p><h3>
+<a name="Do%20you%20have%20a%20simple%20example%20of%20FastRPC%3f"></a>Do you have a simple example of FastRPC?
+</h3><p>
+<a href="Examples_Common.html#calculator">Calculator example</a>
+</p><h3>
+<a name="How%20to%20verify%20FastRPC%20is%20working%20on%20a%20setup%3f"></a>How to verify FastRPC is working on a setup?
+</h3><p>
+Run the <a href="Examples_Common.html#calculator">Calculator</a> example
+</p><h3>
+<a name="Why%20do%20all%20remote%20functions%20return%200%20as%20their%20return%20value%3f"></a>Why do all remote functions return 0 as their return value?
+</h3><p>
+The biggest factor in RPC latencies is flushing and invalidating buffers between HLOS and DSP. A non-zero return value is used by the RPC driver to ignore synchronizing output buffers from DSP to HLOS when an error has occurred. So, a zero return value indicates success and output buffers will get propagated. However, a non zero return value indicates a failure, and output buffers will not be flushed, their contents may be out of sync.
+</p><h3>
+<a name="Why%20not%20to%20use%20dual%20input/output%20parameter%3f"></a>Why not to use dual input/output parameter?
+</h3><p>
+There is no additional performance benefit of an additional parameter type over passing the same memory as an input and output parameter. Users who want to do in-place transformations on the DSP should ask the caller to pass the same memory as input and output.
+</p><p>
+Because memory is mapped and flush/invalidate between output and input buffers are done in parallel, there is no performance hit with this approach. On the DSP side, the caller can do the following to handle the two buffers in all cases:
+</p><pre><span style="color: blue">if</span>(outbufLen != srcbufLen) {
+   <span style="color: blue">return</span> -1;
+}
+<span style="color: blue">if</span>(srcbuf != outbuf) {
+   memmove(outbuf, srcbuf, outbufLen);
+}
+inplace_alg(outbuf, outbufLen);
+</pre><h3>
+<a name="What%20is%20the%20significane%20of%20using%20ION%20memory%3f"></a>What is the significane of using ION memory?
+</h3><p>
+ION is a contiguous memory allocator for Android. It allows Android applications to allocate phycially contiguous memory. The DSP can only access a limited number of physically contiguous pages. Without ION, a 4 MB buffer on Android could be allocated at 4 KB contiguous chunks which would severely degrade DSP performance.
+</p><p>
+If users do not use ION, the /dev/adsprpc-smd kernel driver will copy the memory into a local physically contiguous buffer. When ION is used, the driver doesn't need to do any coping and the memory can be mapped directly.
+</p><h3>
+<a name="What%20memory%20can%20be%20passed%20to%20a%20FastRPC%20function%3f"></a>What memory can be passed to a FastRPC function?
+</h3><p>
+Any memory, but ION allocated memory is the only memory that will be passed to the DSP directly without a copy. Stack, general heap, and static buffers will be copied.
+</p><p>
+Even though ION memory isn't copied, cache synchronization still has to be performed. This is because DSP and APPS do not share the same cache. Also, these operations are the most significant factor in RPC performance.
+</p><h3>
+<a name="How%20much%20stack%20space%20is%20available%20in%20a%20FastRPC%20function%3f"></a>How much stack space is available in a FastRPC function?
+</h3><p>
+FastRPC function may use up to 500KB of stack space. Depending on the IDL interface, the skel may additionally allocate on the stack. On 8x9x devices and later, FastRPC thread are allocated with 16KB stack. On earlier devices, they are allocated with 4KB stack.
+</p><h3>
+<a name="Do%20buffers%20get%20copied%20over%20when%20using%20FastRPC%20mechanism%3f"></a>Do buffers get copied over when using FastRPC mechanism?
+</h3><p>
+For security and stability reasons, HLOS memory may not be visible to DSP in future targets and only ION carve out buffers can be used between HLOS and DSP. While using FastRPC, if HLOS memory is allocated via malloc, then it would result in a copy from HLOS memory to ION buffer for input buffers and from ION buffer to HLOS memory for output buffers. To avoid this, the HLOS can allocate from ION buffer and send that over in which case this extra copy would not happen.
+</p><h3>
+<a name="What%20is%20the%20page%20granularity%20of%20mappings%20on%20DSP%3f"></a>What is the page granularity of mappings on DSP?
+</h3><p>
+The FastRPC framework maps buffers at a page granularity supported by the DSP (4K, 16K, 64K, 256K, 1M). For example, if the client passes a 512K buffer, it would be mapped with two entries of 256K each, correctly aligning the received physical address.
+</p><p>
+The mapping exists only for the duration of that remote invocation. When the DSP returns from the invocation, it would unmap the pages associated with that invocation. So, the mapping and unmapping happen for each RPC call made.
+</p><h3>
+<a name="What%20happens%20if%20application%20is%20terminated%20in%20the%20middle%20of%20remote%20invocation%3f"></a>What happens if application is terminated in the middle of remote invocation?
+</h3><p>
+The FastRPC framework keeps track of all resources used for the remote invocation and would perform the necessary cleanup such as notifying the DSP processor to kill the threads servicing the remote invocation. The application would be blocked from exiting until the clean up is complete so as to guarantee that the buffers passed to the DSP are not in use before HLOS can re-allocate them.
+</p><h3>
+<a name="Can%20more%20than%20one%20remote%20invocation%20be%20made%20at%20any%20given%20point%3f"></a>Can more than one remote invocation be made at any given point?
+</h3><p>
+Yes, there can be multiple threads that can be spawned from the user space application with each making a remote invocation simultaneously.
+</p><h3>
+<a name="What%20cache%20attribute%20is%20used%20to%20map%20the%20input%20and%20output%20buffers%3f"></a>What cache attribute is used to map the input and output buffers?
+</h3><p>
+The input and output buffers are mapped by default with write-back cache attribute (both L1 and L2 cacheable).
+</p><h3>
+<a name="How%20to%20create%20persistent%20state%20on%20the%20DSP%3f"></a>How to create persistent state on the DSP?
+</h3><p>
+Refer to <a href="APIs_FastRPC.html#Using%20persistent%20threads%20on%20the%20DSP">Using persistent threads on the DSP</a>.
+</p><h3>
+<a name="How%20to%20manage%20the%20clocks%20when%20making%20a%20fastrpc%20call%3f"></a>How to manage the clocks when making a fastrpc call?
+</h3><p>
+Refer to the header file HAP_power.h.
+</p><h3>
+<a name="How%20to%20get%20FARF%20messages%20posted%20in%20a%20fastrpc%20call%3f"></a>How to get FARF messages posted in a fastrpc call?
+</h3><p>
+Refer to <a href="Debugging_Message%20Logging.html">FARF</a>.
+</p><h3>
+<a name="How%20to%20handle%20sub-system%20restart%20(SSR)%20when%20offloading%20to%20CDSP%3f"></a>How to handle sub-system restart (SSR) when offloading to CDSP?
+</h3><p>
+A subsystem restart or SSR occurs when a subsystem (eg. ADSP, CDSP) crashes, and only the crashed subsystem gets restarted instead of restarting the device. In case of a SSR, the running applications need to catch a <code>connection reset by peer</code> error <b>AEE_CONNRESET</b> (Error code 104). When a FastRPC call returns AEE_CONNRESET, it should not terminate the running process. To handle an SSR, the return value can be caught and the running process can be restarted at the instant an SSR occurs.
+</p><p>
+Suppose an SSR happened when an example, like benchmark_v65, is running on CDSP. The running benchmark FastRPC API will return <code>AEE_CONNRESET</code> as error. The example code given below can be used as an error handler to prevent termination of the running process.
+</p><pre>if (retVal == AEE_ECONNRESET) {
+    printf("Attempting to restart session and continue\n");
+    // close handle
+    if (handle != -1)
+        (void) benchmark_close(handle);
+    handle = -1;
+
+    // reopen handle
+    printf("Waiting for 5 seconds before another attempt\n");
+    sleep(5);
+</pre><div class="indent"><p>
+retVal = benchmark_open(benchmark_URI_Domain, &amp;handle);
+</p></div><pre>    VERIFY(-1 != handle &amp;&amp; 0 == retVal);
+    // set clocks
+    printf("setting clocks\n");
+    retVal = benchmark_setClocks(handle, POWER_LEVEL, LATENCY, DCVS_ENABLE);
+    VERIFY(0 == retVal);
+}
+</pre><h3>
+<a name="How%20to%20handle%20high%20FastRPC%20latency%3f"></a>How to handle high FastRPC latency?
+</h3><p>
+Follow these steps to handle high FastRPC latency:
+</p><ul>
+<li>
+<p>
+Use secondary boot image for performance measurement
+</p><ul type="circle">
+<li>
+<p>
+Extra logging is enabled in kernel modules like scheduler and other modules in primary boot image. It adds more than 1 ms overhead to overall fastrpc latency.
+</p>
+</li><li>
+<p>
+Production devices use secondary boot image. Hence profiling with secondary boot is always recommended
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Check if buffers are not allocated from System heap, using buffers allocated from System heap avoids extra memory copy. For example, use ION buffers on Android, pmem buffers on QNX, etc.
+</p>
+</li><li>
+<p>
+Ensure voting for appropriate/max clocks on DSP
+</p>
+</li><li>
+<p>
+Skip first RPC call overhead. First call includes session open latency.
+</p>
+</li><li>
+<p>
+Find average, minimum and maximum overhead over N iterations
+</p>
+</li><li>
+<p>
+Enable <a href="FastRPC_QoS.html">FastRPC QoS</a>
+</p>
+</li><li>
+<p>
+Try an Android kernel built in performance mode for consistent performance numbers
+</p>
+</li>
+</ul><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

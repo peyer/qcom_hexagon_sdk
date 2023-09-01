@@ -1,0 +1,14 @@
+absl-py==0.1.9
+bleach==1.5.0
+futures==3.1.1
+html5lib==0.9999999
+Markdown==2.6.11
+numpy==1.14.0
+Pillow==5.2.0
+protobuf==3.5.1
+pyaml==17.12.1
+PyYAML==3.12
+six==1.11.0
+tensorflow==1.5.0
+tensorflow-tensorboard==1.5.0
+Werkzeug==0.14.1

@@ -1,0 +1,82 @@
+#!/bin/bash
+
+declare -a test=(
+    'device-standalone/test-stand'
+    'blur/test-Blur-app'
+    'blur/test-Blur-app-android'
+    'camera_pipe/test-camera-pipe'
+    'camera_pipe/test-camera-pipe-android'
+    'conv3x3a16/test-conv3x3a16'
+    'conv3x3a32/test-conv3x3a32'
+    'median/test-median'
+    'sobel/test-sobel'
+    'dilate3x3/test-dilate3x3'
+    'gaussian5x5/test-gaussian5x5'
+    'hexagon_benchmarks/test-perf'
+    'hexagon_benchmarks/test-sim-perf'
+    'vtcm/test-app-scatter'
+    'vtcm/test-app-scatter-android'
+    'vtcm/test-app-histogram'
+    'vtcm/test-app-histogram-android'
+    'vtcm/test-app-gather'
+    'vtcm/test-app-gather-android'
+    'vtcm/test-app-sg_chain'
+    'vtcm/test-app-sg_chain-android'
+    'vtcm/test-app-vtcm_alloc'
+    'vtcm/test-app-vtcm_alloc-android'
+    'vtcm/test-app-small_lut'
+    'vtcm/test-app-small_lut-android'
+    )
+
+basedir=`dirname $0`
+cd $basedir
+. ./setup-env.sh
+declare -i cnt_test=0
+declare -i cnt_pass=0
+declare -i cnt_fail=0
+declare -i cnt_skip=0
+declare -a FAIL=()
+declare -a SKIP=()
+
+echo "Running ${#test[@]} tests:"
+printf '    %s\n' ${test[@]}
+
+topdir=`pwd`
+for t in "${test[@]}"
+do
+    ((cnt_test++))
+    echo "============================================================================="
+    echo -n "$cnt_test/${#test[@]}: "
+    echo "Running $t:"
+    subdir=`dirname $t`
+    script=`basename $t`
+    cd $topdir
+    cd $subdir
+    if [ $? -eq 0 ]; then
+        ./$script
+        if [ $? -gt 0 ]; then
+            echo "FAIL $t"
+            FAIL[cnt_fail++]=$t
+        else
+            echo "PASS $t"
+            ((cnt_pass++))
+        fi
+    else
+        echo "SKIPPED $t"
+        SKIP[cnt_skip++]=$t
+    fi
+done
+
+echo "============================================================================="
+echo "Done testing: $cnt_test tests ($cnt_pass pass, $cnt_fail fail, $cnt_skip skipped)"
+rc=0
+if [ ${#FAIL[*]} -gt 0 ]; then
+    echo "Failing tests:"
+    printf '    %s\n' ${FAIL[@]}
+    rc=1
+fi
+if [ ${#SKIP[*]} -gt 0 ]; then
+    echo "Skipped tests:"
+    printf '    %s\n' ${SKIP[@]}
+fi
+exit $rc

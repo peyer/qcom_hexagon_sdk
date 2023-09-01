@@ -1,0 +1,63 @@
+Bus interface cosimulation module
+-------------------
+
+Bus interface cosim module
+
+This cosim module models latency incurred by a bus access.
+The access latency can be configured via the DELAY flag
+in bus.h, which indicates the number of cycles the bus transaction
+will be delayed. The depth of the bus queue can be changed via the
+MAX_QUEUE_DEPTH flag in bus.h. Note that changing the values of these
+flags in the header file requires a clean make in order for the
+changes to take effect.
+
+This is a simple implementation that registers itself for a bus
+access callback across the entire memory map. When a bus access
+occurs, debug accesses are serviced immediately. For non-debug
+accesses, a BusRequest container is set up to store the details of
+the transaction, and a timed callback is registered with a pointer
+to the newly created BusRequest container. The interval of the timed
+callback is derived from the value of the DELAY flag. The callback
+function uses the pointer to the BusRequest container passed back to
+it to service the request, and then deletes the container.
+
+
+To build:
+
+From the src directory, run the following commands in a shell:
+> make clean
+> make
+
+This will build the cosim and launch a simulation with the
+cosim attached. The makefile will run a hello world app on
+the simulator with the cosim attached.
+
+Windows:
+
+The cosim build requires Visual Studio 10 to Visual Studio 14.
+See the make.cmd for details on changing the release and
+version number to compile.  The make.cmd file has Visual Studio 10
+configured as default.
+
+Linux:
+
+Building on Linux requires a version of GCC compatible with
+4.1.2 to be installed in your system path.
+
+The path and name of the cosim is listed in a file which
+is passed to the simulator via the --cosim_file option:
+
+${COSIM_PATH}/${COSIM_LIB}
+
+Where:
+
+${COSIM_LIB} = bus.so  on linux32/64
+${COSIM_LIB} = bus.dll on cygwin
+
+Refer to the Hexagon Simulator System API User Guide
+(80-N2040-18) for more details on creating cosimulation
+models. The most recent version of the User Guide can
+be found here:
+http://aglcrpprdapp.qualcomm.com/AgileDocument/AgileDocument.jsp?itemno=80-VB419-20
+
+

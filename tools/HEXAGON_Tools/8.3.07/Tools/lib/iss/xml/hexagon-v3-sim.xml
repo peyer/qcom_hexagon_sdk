@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE feature SYSTEM "gdb-target.dtd">
+<target>
+ <architecture>hexagonv3</architecture>
+ <xi:include href="hexagon-core.xml"/>
+ <feature name="org.gnu.gdb.hexagon.v3.sim">
+  <reg name="p3:0"  bitsize="32" regnum="36" type="uint32"/>
+  <reg name="m0"    bitsize="32" regnum="38" type="uint32"/>
+  <reg name="m1"    bitsize="32" regnum="39" type="uint32"/>
+  <reg name="usr"   bitsize="32" regnum="40" type="uint32"/>
+  <reg name="pc"    bitsize="32" regnum="41" type="uint32"/>
+  <reg name="ugp"   bitsize="32" regnum="42" type="uint32"/>
+  <reg name="gp"    bitsize="32" regnum="43" type="uint32"/>
+  <reg name="sgp"   bitsize="32" regnum="64" type="uint32"/>
+  <reg name="ssr"   bitsize="32" regnum="66" type="uint32"/>
+  <reg name="imask" bitsize="32" regnum="67" type="uint32"/>
+  <reg name="badva" bitsize="32" regnum="68" type="uint32"/>
+  <reg name="elr"   bitsize="32" regnum="69" type="uint32"/>
+  <reg name="tid"   bitsize="32" regnum="70" type="uint32"/>  
+ </feature>
+</target>

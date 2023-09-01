@@ -1,0 +1,7 @@
+-rsc
+hexagon_Debug_dynamic_toolv83_v66/test_util.a
+hexagon_Debug_dynamic_toolv83_v66/test_utils.o
+hexagon_Debug_dynamic_toolv83_v66/sysmon_vtcm_mgr_client.o
+hexagon_Debug_dynamic_toolv83_v66/sysmon_vtcm_mgr_srv.o
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_srv.o
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o

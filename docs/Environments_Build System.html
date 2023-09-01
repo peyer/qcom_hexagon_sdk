@@ -1,0 +1,1630 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><title>Build environment</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="images/sidebar_top.jpg"></top><script src="scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, false)"><input id="searchButton" onclick="postFunction(false)" type="button" value="Search"></form><p>
+<a href="index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<p>
+<a href="sitemap.html">Sitemap</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="Audio/Applications.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="Voice/Applications.html">Voice</a>
+</p><p>
+<a href="Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="Audio/Examples.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="Examples_Common.html">Common</a>
+</p><p>
+<a href="Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="Tools_Signing.html">Signing</a>
+</p><p>
+<a href="Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="FAQ_Common.html">Common</a>
+</p><p>
+<a href="FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="Support_Contact.html">Contact</a>
+</p><center><img src="images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h1>
+<a name="Build%20environment"></a>Build environment
+</h1><div class="toc"><div class="tocLevel"><a href="#Overview">Overview</a><div class="tocLevel"><a href="#Make.d%20increases%20productivity">Make.d increases productivity</a></div><div class="tocLevel"><a href="#Make.d%20improves%20software%20quality">Make.d improves software quality</a></div></div><div class="tocLevel"><a href="#Make.d%20Dependencies">Make.d Dependencies</a></div><div class="tocLevel"><a href="#Variants">Variants</a></div><div class="tocLevel"><a href="#Building%20a%20make.d%20project">Building a make.d project</a><div class="tocLevel"><a href="#Recommended%20processor/tools%20combinations">Recommended processor/tools combinations</a></div></div><div class="tocLevel"><a href="#The%20make.d%20directory">The make.d directory</a></div><div class="tocLevel"><a href="#Build%20goals">Build goals</a><div class="tocLevel"><a href="#Target%20goals">Target goals</a></div><div class="tocLevel"><a href="#Packaging%20goals">Packaging goals</a></div><div class="tocLevel"><a href="#Diagnostic%20and%20information%20goals">Diagnostic and information goals</a></div></div><div class="tocLevel"><a href="#Makefiles">Makefiles</a><div class="tocLevel"><a href="#Defining%20build%20targets">Defining build targets</a><div class="tocLevel"><a href="#Build%20target%20variables">Build target variables</a></div><div class="tocLevel"><a href="#Variables%20common%20across%20all%20targets">Variables common across all targets</a></div><div class="tocLevel"><a href="#Target-specific%20variables">Target-specific variables</a></div></div><div class="tocLevel"><a href="#Customizing%20build%20rules">Customizing build rules</a></div></div><div class="tocLevel"><a href="#Make.d%20BUILD_COPIES">Make.d BUILD_COPIES</a><div class="tocLevel"><div class="tocLevel"><a href="#SHIP_DIR">SHIP_DIR</a></div></div></div><div class="tocLevel"><a href="#Toolchain%20Support%20in%20Android%20NDK">Toolchain Support in Android NDK</a></div><div class="tocLevel"><a href="#Common%20issues">Common issues</a></div><div class="tocLevel"><a href="#Glossary">Glossary</a></div></div><h2>
+<a name="Overview"></a>Overview
+</h2><p>
+Make.d is a GNU Make library which allows developers to write descriptions of <i>what</i> their build produces, rather than <i>how</i> to produce it. By removing the &#8220;how&#8221;, developers can render multiple build variants using the same declarative descriptions.
+</p><p>
+The make.d system can be used to build libraries, shared objects, etc... from the command line using the GNU make utility.
+</p><p>
+Make.d is located in the <code>tools/make.d</code> and its extensions are located in the <code>tools/make.d.ext</code> directory.
+</p><p>
+The make utility requires a makefile, which contains definitions and rules. The makefile is created by the developer and resides in the directory with the source code. A makefile that is used with make.d typically includes two make.d files (make.d/defines.min and make.d/rules.min) and defines a number of variables that identify the targets and the source files, libraries, etc., required to build the targets. Makefiles used with make.d are simplified because make.d defines the rules that specify how targets are built. Make.d also defines the variables that are used to identify the targets and the required files.
+</p><p>
+When you run the make command, you can specify the following on the command line:
+</p><ul type="circle">
+<li>
+<p>
+A variant, which specifies the target platform (Hexagon, Windows, etc.). The make.d system defines a number of variants. See <a href="#Variants">Variants</a>.
+</p>
+</li><li>
+<p>
+A goal, which specifies which of the targets in the makefile will be built.
+</p>
+</li>
+</ul><p>
+This reference provides information on using make.d to create makefiles that use the variables, goals, variants, and rules defined by make.d.
+</p><h3>
+<a name="Make.d%20increases%20productivity"></a>Make.d increases productivity
+</h3><p>
+Make.d improves developer productivity by allowing developer to use their preferred toolchain without sacrificing software quality. Binaries produced by Make.d are <i>functionally consistent</i> across build variants. Make.d's build rules carefully manage the subtle differences between toolchains to ensure the resulting product functions identically regardless of which build variant is chosen. A developer can troubleshoot bugs with the Visual Studio debugger, make fixes and test locally, and then recompile for the ARM architecture and expect the target device to function identically.
+</p><h3>
+<a name="Make.d%20improves%20software%20quality"></a>Make.d improves software quality
+</h3><p>
+Make.d users use <i>qualification tests</i> (Q-tests) to ensure functional consistency at build-time. For example, a Make.d user might build both a static library and Q-test executable. The Q-test links in the library and runs tests to ensure it works as expected. When the user runs Make, the static library is built, then the Q-test is built and immediately executed. If any of its tests fail, the Q-test returns non-zero, which halts the build and informs the user of the failure.
+</p><p>
+With Q-tests, Make.d users can verify that not only does their code work, but it works consistently across build variants. In the case of target builds, Make.d will run Q-tests locally on the configured simulator.
+</p><h2>
+<a name="Make.d%20Dependencies"></a>Make.d Dependencies
+</h2><p>
+The make.d system requires Gnu On Windows, for more information see <a href="Dependencies_Common.html">Dependencies</a>.
+</p><p>
+The make.d system requires Gnu make On Linux.
+</p><h2>
+<a name="Variants"></a>Variants
+</h2><p>
+When you run a make command, you can specify a variant on the command line to build the targets for a specific platform. The variant is specified on the command line as follows:
+</p><pre>make V=&lt;variant&gt;
+</pre><p>
+The variant is made up of three parts:
+</p><pre>&lt;TARGET&gt;&lt;_FLAVOR&gt;&lt;_OPTION&gt;
+</pre><ul type="circle">
+<li>
+<p>
+<code>TARGET</code> specifies the processor target. Mandatory
+</p>
+</li><li>
+<p>
+<code>FLAVOR</code> specifies the amount of debug information. Mandatory
+</p>
+</li><li>
+<p>
+<code>OPTION</code> specifies any build options. Optional
+</p><ul type="circle">
+<li>
+<p>
+Supported <code>TARGET</code>s:
+</p>
+</li><li>
+<p>
+hexagon: Hexagon DSP
+</p>
+</li><li>
+<p>
+android: 32 bit Android on target
+</p>
+</li><li>
+<p>
+aarch64: 64 bit Android on target
+</p>
+</li><li>
+<p>
+UbuntuARM: Ubuntu Linux on target
+</p>
+</li><li>
+<p>
+WinNT: Windows 7
+</p>
+</li><li>
+<p>
+Linux: Ubuntu Linux on host
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Supported <code>FLAVOR</code>s:
+</p><ul type="circle">
+<li>
+<p>
+Debug: full debug info, including diagnostic messages
+</p>
+</li><li>
+<p>
+Release: no Debug info, no diagnostic messages
+</p>
+</li><li>
+<p>
+ReleaseG: debug symbols only, no diagnostic messages
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Supported <code>OPTION</code>s:
+</p><ul type="circle">
+<li>
+<p>
+dynamic: build products support dynamic loading. Specifying this option will
+</p><div class="indent"><p>
+build shared objects (.so) and all libraries will be built to be compatible with dynamic options and should not be linked with static images.
+</p></div><ul class="indent" type="circle">
+<li>
+<p>
+vX: specifies the Hexagon processor architecture. Possible values are
+</p><div class="indent"><p>
+v4, v5, the default being v5. architecture is v5.
+</p></div>
+</li>
+</ul>
+</li><li>
+<p>
+toolvXX: specifies the Hexagon tool chain version. Possible values are
+</p><div class="indent"><p>
+toolv50.
+</p></div>
+</li>
+</ul>
+</li>
+</ul><p>
+Example: hexagon_Debug - full debug info, includes diagnostic messages Example: hexagon_Debug_dynamic - dynamic, full debug info, includes
+</p><div class="indent"><p>
+diagnostic messages
+</p></div><p>
+Example: hexagon_Debug_dynamic_toolv82_v65 - dynamic modules, full debug info, includes
+</p><div class="indent"><p>
+diagnostic messages, v65 architecture using toolset 8.2
+</p></div><h2>
+<a name="Building%20a%20make.d%20project"></a>Building a make.d project
+</h2><p>
+For Windows: Before calling 'make' be sure that the Hexagon SDK environment is set, <a href="readme.html">Setup Instructions</a>
+</p><p>
+Navigate to the specific example directory you want to build and issue the command:
+</p><pre>make tree
+</pre><p>
+Issuing the make command without 'tree' will just build the example and not its dependencies. This is OK if the dependencies have already been built but in general its a good idea to always build the tree. If you attempt to build and example without tree and the dependencies have not been built you will see errors complaining about not being able to find headers/libraries. Rebuild using make tree.
+</p><p>
+A simple make command specifies the variant, as follows:
+</p><pre>make V=&lt;variant&gt;
+</pre><p>
+This command builds all targets of this makefile.
+</p><p>
+The following command builds all dependencies and then targets of this makefile.
+</p><pre>make V=&lt;variant&gt; tree
+</pre><p>
+For example, to build a makefile and all its dependencies using the Hexagon debug variant which supports building dynamic shared objects:
+</p><pre>make tree V=hexagon_Debug_dynamic_toolv82_v65
+</pre><p>
+If the variant is not specified, the default variant is built.
+</p><p>
+To off-load to a specific DSP in case multiple DSP support is available, xDSP_FLAG=1 can be specified during the build of HLOS variants. For example, to off-load to CDSP:
+</p><pre>make V=android_Debug CDSP_FLAG=1
+</pre><p>
+The make system bundled with the Hexagon SDK is mostly quiet and outputs very little information unless a problem is encountered. To increase the amount of information displayed add VERBOSE = 1 to the make command as follows:
+</p><pre>make tree VERBOSE=1
+</pre><p>
+The result of a successful build will be a library created in the specific example's variant sub-folder. For example, when building calculator with variant hexagon_Debug_dynamic_toolv82_v65, the following library will be created:
+</p><pre style="font-size: 83%">&lt;SDK root&gt;/examples/common/calculator/hexagon_Debug_dynamic_toolv82_v65/calculator.so
+</pre><h3>
+<a name="Recommended%20processor/tools%20combinations"></a>Recommended processor/tools combinations
+</h3><table><tr><th><p>
+Hexagon Version
+</p></th><th><p>
+Example Targets
+</p></th><th><p>
+Recommended Tools Version
+</p></th></tr><tr><td><p>
+V60
+</p></td><td><p>
+MSM8996
+</p></td><td><p>
+8.3.x
+</p></td><td><p>
+toolv83_v60
+</p></td></tr><tr><td><p>
+V62
+</p></td><td><p>
+MSM8998
+</p></td><td><p>
+8.3.x
+</p></td><td><p>
+toolv83_v62
+</p></td></tr><tr><td><p>
+V60(cDSP)
+</p></td><td><p>
+SDM660
+</p></td><td><p>
+8.3.x
+</p></td><td><p>
+toolv83_v60
+</p></td></tr><tr><td><p>
+V65(cDSP)
+</p></td><td><p>
+SDM845
+</p></td><td><p>
+8.3.x
+</p></td><td><p>
+toolv83_v65
+</p></td></tr></table><h2>
+<a name="The%20make.d%20directory"></a>The make.d directory
+</h2><p>
+The /tools/make.d directory contains the .min files for make.d, which contain the common rules and definitions for the make.d system.
+</p><p>
+The make.d directory contains the following:
+</p><ul type="circle">
+<li>
+<p>
+defines.min
+</p><p>
+This file contains the standard defines used in the make.d system.
+</p>
+</li><li>
+<p>
+defines_&lt;compiler&gt;.min
+</p><p>
+These files contain the compiler specific definitions, such as compiler and linker flags, tool paths, target extension names, and other compiler definitions.
+</p>
+</li><li>
+<p>
+V_&lt;variant&gt;.min
+</p><p>
+Each variant file specifies the target, flavor, and architecture flags for that variant.
+</p>
+</li><li>
+<p>
+rules.min
+</p><p>
+This is the primary rules file. It contains general rules on how to process source files into target files.
+</p>
+</li>
+</ul><h2>
+<a name="Build%20goals"></a>Build goals
+</h2><p>
+A goal used in the make command specifies which of the targets in the makefile will be built.
+</p><p>
+Goals are defined in the rules.min file. There are several categories of goals that are supported by the make.d system:
+</p><h3>
+<a name="Target%20goals"></a>Target goals
+</h3><p>
+Target goals specify the source files and dependencies required to build that target. If no variant is specified, the targets apply to the current variant V.
+</p><p>
+The make.d system defines the following target goals:
+</p><ul type="circle">
+<li>
+<p>
+all
+</p><p>
+Build the libs, exes, imgs, oks, and dlls defined in this makefile. If a variant is not specified, the default variant is used.
+</p>
+</li><li>
+<p>
+clean
+</p><p>
+Attempt to clean targets that have been built by removing the object directories for the current variant.
+</p>
+</li><li>
+<p>
+tree
+</p><p>
+Builds the current project and all it's dependencies.
+</p>
+</li><li>
+<p>
+tree_clean
+</p><p>
+Clean the current project and all it's dependencies.
+</p>
+</li><li>
+<p>
+libs
+</p><p>
+Build the libraries defined in this makefile.
+</p>
+</li><li>
+<p>
+dlls
+</p><p>
+Build the dlls defined in this makefile.
+</p>
+</li><li>
+<p>
+exes
+</p><p>
+Build the Windows executables defined in this makefile.
+</p>
+</li><li>
+<p>
+imgs
+</p><p>
+Build the binary images (for example, .elf format) defined in this makefile.
+</p>
+</li><li>
+<p>
+oks
+</p><p>
+Build and run the QEXE targets. The QEXE executables are compiled and run during the make process (frequently used for build-time tests).
+</p>
+</li>
+</ul><p>
+If no target is specified make.d will build the libs, exes, imgs, oks, and dlls defined in this makefile only, not it's dependencies.
+</p><h3>
+<a name="Packaging%20goals"></a>Packaging goals
+</h3><p>
+These goals package an installation into an archive (ZIP) file. The make.d system defines the following packaging goals:
+</p><ul type="circle">
+<li>
+<p>
+zips
+</p><p>
+Create zip packages.
+</p>
+</li><li>
+<p>
+zips_clean
+</p><p>
+Remove zip packages.
+</p>
+</li>
+</ul><h3>
+<a name="Diagnostic%20and%20information%20goals"></a>Diagnostic and information goals
+</h3><p>
+Diagnostic and information goals can be used for debugging makefile problems. The make.d system defines the following diagnostic and information goals:
+</p><ul type="circle">
+<li>
+<p>
+echo
+</p><p>
+Report the set of items which can be built by the all target, which can be used to identify the items built by a makefile.
+</p>
+</li><li>
+<p>
+echo_xxx
+</p><p>
+Report the value of variable xxx. This can be used to display most build variables.
+</p>
+</li><li>
+<p>
+help
+</p><p>
+List the supported variants.
+</p>
+</li><li>
+<p>
+build_srcs
+</p><p>
+List all source files for this build.
+</p>
+</li><li>
+<p>
+q_srcs
+</p><p>
+List all sources for quick executables in this build.
+</p>
+</li>
+</ul><h2>
+<a name="Makefiles"></a>Makefiles
+</h2><p>
+Each makefile should include the following make.d files:
+</p><ul type="circle">
+<li>
+<p>
+defines.min at the beginning of the makefile.
+</p>
+</li><li>
+<p>
+rules.min at the end of the makefile.
+</p>
+</li>
+</ul><p>
+A makefile typically contains rules for one or more libraries, shared objects, images, or executables. A makefile can also contain variables that define the source files and resources required for each target, as well as the directories to search for include files.
+</p><p>
+Depending on &lt;TARGET&gt; in the &lt;variant&gt; input to Makefile, Makefiles include following files. These files are located in their respective root directories:
+</p><ul type="circle">
+<li>
+<p>
+hexagon_deps.min, hexagon.min for building the Hexagon variant
+</p>
+</li><li>
+<p>
+android_deps.min, android.min for building the Android variant.
+</p>
+</li><li>
+<p>
+UbuntuARM_deps.min and UbuntuARM.min for building the Ubuntu/LE variant.
+</p>
+</li>
+</ul><p>
+An example of Makefile can be found at HEXAGON_SDK_ROOT/examples/common/calculator/Makefile.
+</p><p>
+Below is the description of hexagon.min included in Makefile for calculator.
+</p><pre># This builds the skel library
+BUILD_LIBS += libcalculator_skel
+
+# only build the shared object if dynamic option specified in V
+ifeq (1,$(V_dynamic))
+BUILD_DLLS = libcalculator_skel
+endif
+</pre><pre>libcalculator_skel_QAICIDLS = inc/calculator.
+libcalculator_skel_C_SRCS = $V/calculator_skel
+# This builds the actual implementation
+libcalculator_skel.C_SRCS = src/calculator_imp.c
+</pre><p>
+# quality test exe BUILD_QEXES += calculator_q
+</p><p>
+# SRC &amp; libs to build qualtiy test exe calculator_q_C_SRCS = src/calculator_test_main src/calculator_test src/calculator_imp calculator_q_LIBS = rtld rpcmem test_util atomic
+</p><pre># copy final build products to the ship directory
+# specify final build products, in this case the module's header file and
+# its associated libraries (and shared objects)
+BUILD_COPIES = \
+  $(DLLS) \
+  $(EXES) \
+  $(LIBS) \
+  $(SHIP_DIR)/ ;
+</pre><p>
+A project&#8217;s dependencies and supported variants must be defined in hexagon_deps.min, android_deps.min and UbuntuARM_deps.min.
+</p><p>
+Define DEPENDENCIES of your project in hexagon_deps.min, android_deps.min and UbuntuARM_deps.min with the DEPENDENCIES variable, as in the following example:
+</p><pre>DEPENDENCIES = \
+ATOMIC \
+RPCMEM \
+</pre><p>
+Each dependency needs a directory definition of the form &lt;DEPENDENCY NAME&gt;_DIR.
+</p><p>
+For example:
+</p><pre>DEPENDENCIES = FOO
+FOO_DIR = $(HEXAGON_SDK_ROOT)/examples/common/foo
+</pre><p>
+If you would like to be able to build all variants supported by the SDK, define your supported variants as follows:
+</p><pre>SUPPORTED_VS = $(default_VS)
+</pre><p>
+The hexagon, android, and UbuntuARM default_VS variants are defined respectively in hexagon_vs.min, android_vs.min, and UbuntuARM_vs.min in {HEXAGON_SDK_ROOT}/build/make.d. Alternatively, you can define SUPPORTED_VS so that you can only build variants of your own choosing as follows:
+</p><pre>SUPPORTED_VS = \
+hexagon_Debug_dynamic_toolv82_v65 \
+hexagon_Debug_dynamic_toolv82_v66 \
+</pre><p>
+Here is a full example of a hexagon_deps.min file.
+</p><pre>SUPPORTED_VS = $(default_VS)
+
+DEPENDENCIES = \
+ATOMIC \
+RPCMEM \
+TEST_MAIN \
+TEST_UTIL
+
+ATOMIC_DIR = $(HEXAGON_SDK_ROOT)/libs/common/atomic
+RPCMEM_DIR = $(HEXAGON_SDK_ROOT)/libs/common/rpcmem
+TEST_MAIN_DIR = $(HEXAGON_SDK_ROOT)/test/common/test_main
+TEST_UTIL_DIR = $(HEXAGON_SDK_ROOT)/test/common/test_util
+</pre><p>
+android_deps.min and UbuntuARM_deps.min have the same form, but with dependencies specific to those variants.
+</p><p>
+Build commands:
+</p><p>
+To build android variant
+</p><pre>make tree V=android_Debug  
+</pre><p>
+To build hexagon variant
+</p><pre>make tree V=hexagon_Debug_dynamic_toolv82_v65 
+</pre><p>
+To build UbuntuARM variant
+</p><pre>make tree V=UbuntuARM_Debug 
+</pre><h3>
+<a name="Defining%20build%20targets"></a>Defining build targets
+</h3><p>
+The first step when creating a makefile using the make.d rules is to identify all of the items which are to be built by this makefile.
+</p><p>
+As an enhancement over standard make files, the make system has rules to generate and use a dependency tree for each source file. This saves having to list each include dependency for each source file. Since the make rules also map an object file to a source file, in most cases it is sufficient to specify only the object file in the list of dependencies. The source file dependency generation tool for C and C++ is called cdep.
+</p><p>
+VPATH and vpath are used to add search paths for the object to source mapping rules. For more information on VPATH, see the GNU make manual.
+</p><h4>
+<a name="Build%20target%20variables"></a>Build target variables
+</h4><p>
+The following variables can be used in a makefile to define build targets:
+</p><ul type="circle">
+<li>
+<p>
+BUILD_LIBS
+</p><p>
+Specifies the names of libraries to build. The make system assumes that additional variables exist that are based on the library names, such as &lt;targetName&gt;_OBJS and &lt;targetName&gt;_C_SRCS. For example, if BUILD_LIBS = lib1 lib2 then the variables lib1_OBJS and lib2_OBJS are expected to hold the list of objects used to build the respective libraries.
+</p>
+</li><li>
+<p>
+BUILD_EXES
+</p><p>
+Specifies the set of executable targets.
+</p>
+</li><li>
+<p>
+BUILD_QEXES
+</p><p>
+Specifies the list of quick executables. These files are executed after they have been built and are often used for unit testing what was just built.
+</p>
+</li><li>
+<p>
+QEXE_ARGS
+</p><p>
+Specifies the list of arguments to the user program.
+</p>
+</li><li>
+<p>
+QEXE_SIM_OPTIONS
+</p><p>
+Specifies the list of arguments to the hexagon simulator.
+</p>
+</li><li>
+<p>
+PRIMORDIAL_STACK_SIZE
+</p><p>
+Specifies the value to override the default 16k user thread stack size
+</p>
+</li><li>
+<p>
+BUILD_DLLS
+</p><p>
+Specifies the set of shared objects to build. These may be Hexagon (.so), Windows (.dll), Android/Ubuntu (.so), etc... shared objects.
+</p>
+</li><li>
+<p>
+BUILD_IMGS
+</p><p>
+Specifies the list of images to build.
+</p>
+</li><li>
+<p>
+BUILD_ZIPS
+</p><p>
+Specifies the set of ZIP files to be created. Use &lt;target&gt;_ZIP_SPEC to specify the files that are placed into each ZIP file.
+</p>
+</li>
+</ul><h4>
+<a name="Variables%20common%20across%20all%20targets"></a>Variables common across all targets
+</h4><ul type="circle">
+<li>
+<p>
+CC_FLAGS
+</p>
+</li>
+</ul><p>
+Used to specify compiler flags for all C objects. Compiler flags may be compiler specific; this variable may need to be set conditionally.
+</p><ul type="circle">
+<li>
+<p>
+CXX_FLAGS
+</p>
+</li>
+</ul><p>
+Used to specify additional compiler flags for all C++ objects. Compiler flags may be compiler specific; this variable may need to be set conditionally.
+</p><h4>
+<a name="Target-specific%20variables"></a>Target-specific variables
+</h4><p>
+The target specific variables allow you to change definitions for a specific target. For example, &lt;objectName&gt;_CC can be used to redefine the tool used to compile &lt;objectName&gt;.
+</p><ul type="circle">
+<li>
+<p>
+&lt;targetName&gt;_C_SRCS
+</p><p>
+Specifies a list of .c source files required to build this target. Do not specify the .c extension.
+</p>
+</li><li>
+<p>
+&lt;targetName&gt;.C_SRCS
+</p><p>
+Specifies a list of C sources files required to build this target. You must specify the file's extension.
+</p>
+</li><li>
+<p>
+&lt;targetName&gt;_CPP_SRCS
+</p><p>
+Specifies a list of CPP source files required to build this target. Do not specify the .cpp extension.
+</p>
+</li><li>
+<p>
+&lt;targetName&gt;.CPP_SRCS
+</p><p>
+Specifies a list of CPP sources files required to build this target. You must specify the file's extension.
+</p>
+</li><li>
+<p>
+&lt;targetName&gt;_CXX_SRCS
+</p><p>
+Specifies a list of CXX source files required to build this target. Do not specify the .cxx extension.
+</p>
+</li><li>
+<p>
+&lt;targetName&gt;.CXX_SRCS
+</p><p>
+Specifies a list of CXX sources files required to build this target. You must specify the file's extension.
+</p>
+</li><li>
+<p>
+&lt;targetName&gt;_ASM_SRCS
+</p><p>
+Specifies a list of ASM source files required to build this target. Do not specify the .s extension.
+</p>
+</li><li>
+<p>
+&lt;targetName&gt;.ASM_SRCS
+</p><p>
+Specifies a list of ASM sources files required to build this target. You must specify the file's extension. This is useful when you need to distinguish between ASM sources that use the extension .s vs .S
+</p>
+</li><li>
+<p>
+&lt;targetName&gt;_INSTALL_DIR
+</p><p>
+Specifies a directory name to append to the associated install dir. For example, if &lt;targetName&gt; is a LIB and &lt;targetName&gt;_INSTALL_DIR = oem, then &lt;targetName&gt; is installed in $(LIB_INSTALL_DIR)/oem. This works for LIBS, EXES, and DLLS.
+</p>
+</li><li>
+<p>
+&lt;targetName&gt;_LIBS
+</p><p>
+Specifies a list of libraries to link with this target. When a variable &lt;lib&gt;_DIR is defined for any of these libraries, the make system will recurse to that directory to update the library dependency.
+</p>
+</li><li>
+<p>
+&lt;libname&gt;_DIR
+</p><p>
+Similar to &lt;targetName&gt;_LIBS.
+</p>
+</li><li>
+<p>
+&lt;targetName&gt;_DATA
+</p><p>
+Specifies a list of data files associated with the &lt;targetName&gt;.
+</p>
+</li><li>
+<p>
+&lt;targetName&gt;_DLLS
+</p><p>
+Specifies a list of shared objects from which symbols will be imported (similar to IMPLIB).
+</p>
+</li><li>
+<p>
+&lt;targetName&gt;_RCS
+</p><p>
+Specifies a list of resource (RES) files.
+</p>
+</li><li>
+<p>
+&lt;targetName&gt;_LD_FLAGS
+</p><p>
+Used to specify additional linker flags for a specifc shared object or executable target. Linker flags may be compiler specific; this variable may need to be set conditionally.
+</p>
+</li><li>
+<p>
+&lt;objectName&gt;_CC_FLAGS
+</p><p>
+Used to specify additional compiler flags for a specifc C object. Compiler flags may be compiler specific; this variable may need to be set conditionally.
+</p>
+</li><li>
+<p>
+&lt;objectName&gt;_CXX_FLAGS
+</p><p>
+Used to specify additional compiler flags for a specifc C++ object. Compiler flags may be compiler specific; this variable may need to be set conditionally.
+</p>
+</li><li>
+<p>
+&lt;targetName&gt;_DEFS
+</p><p>
+Specifies DLL-specific DEF files.
+</p>
+</li><li>
+<p>
+&lt;targetName&gt;_ZIP_SPEC
+</p><p>
+Specifies the files to include in the ZIP file. Paths should be specified relative to &lt;targetName&gt;_ZIP_SRCHROOT. Wildcards are supported for directories and files.
+</p>
+</li><li>
+<p>
+&lt;targetName&gt;_ZIP_SRCHROOT
+</p><p>
+Specifies the base path for files listed in &lt;targetName&gt;_ZIP_SPEC. Paths in the ZIP file are relative to this base.
+</p>
+</li><li>
+<p>
+&lt;targetName&gt;_QAICIDLS
+</p><p>
+Specifies the IDL files to be compiled into C/C++ prior to building the target. Targets should add the stub or skel sources to their list of C sources.
+</p><div class="indent"><p>
+&lt;targetName&gt;_QAICIDLS=&lt;idl&gt; &lt;targetName&gt;_C_SRCS+=$V/&lt;interface&gt;_stub
+</p></div><p>
+or
+</p><div class="indent"><p>
+&lt;targetName&gt;_QAICIDLS=&lt;idl&gt; &lt;targetName&gt;_C_SRCS+=$V/&lt;interface&gt;_skel
+</p></div><p>
+Typically only the stub or the skel is built into a single target.
+</p>
+</li><li>
+<p>
+&lt;objectName&gt;_CC
+</p><p>
+Used to change the default tool used to compile this C object.
+</p>
+</li><li>
+<p>
+&lt;objectName&gt;_CXX
+</p><p>
+Used to change the default tool used to compile this CPP or CXX object.
+</p>
+</li><li>
+<p>
+&lt;objectName&gt;_INCDIRS
+</p><p>
+Specifies additional include paths to use for &lt;objectName&gt;.
+</p>
+</li><li>
+<p>
+&lt;objectName&gt;_DEFINES
+</p><p>
+Specifies additional defines that are added when building &lt;objectName&gt;.
+</p><p>
+Note: &lt;objectname&gt;_DEFINES += -DMYDEFINE1 &#8211;DMYDEFINE2 should not be used, instead &lt;objectname&gt;_DEFINES += MYDEFINE1 MYDEFINE2 should be used, -D will be picked up by default.
+</p>
+</li><li>
+<p>
+&lt;objectName&gt;_UNDEFINES
+</p><p>
+Removes the specified defines when building &lt;objectName&gt;.
+</p>
+</li><li>
+<p>
+DEFINES
+</p><p>
+Specifies #define names passed to the compiler. Always append to this variable when adding defines. When possible, use the alternate &lt;objectname&gt;_DEFINES.
+</p><p>
+Note: DEFINES += -DMYDEFINE1 &#8211;DMYDEFINE2 should not be used, instead DEFINES += MYDEFINE1 MYDEFINE2 should be used, -D will be picked up by default.
+</p>
+</li><li>
+<p>
+INCDIRS
+</p><p>
+Specifies additional include paths that are passed to the compiler. Always append to this variable when adding include paths. When possible, use the alternate &lt;objectname&gt;_INCDIRS.
+</p>
+</li><li>
+<p>
+LIBDIRS
+</p><p>
+Specifies the paths to search for libraries, DLLS, and import libraries. Always append to this variable when adding paths.
+</p>
+</li>
+</ul><p>
+Here is a simple snippet that shows how to run both qurt and standalone simulator in the same project.
+</p><p>
+Qurt based simulator test
+</p><pre style="font-size: 74%">BUILD_QEXES += qurt_test
+qurt_test_C_SRCS += src_app/qurt_test
+qurt_test_OSTYPE = QURT
+qurt_test_PRIMORDIAL_STACK_SIZE = 0x6000
+qurt_test_QEXE_ARGS = foobar
+qurt_test_QEXE_SIM_OPTIONS = --dsp_clock 1000 --ahb:lowaddr 0xc0000000 --ahb:highaddr 0xc0ffffff
+</pre><p>
+Standalone based simulator test
+</p><pre style="font-size: 69%">BUILD_QEXES += standalone_test
+standalone_test_C_SRCS += src_app/standalone_test
+standalone_test_QEXE_ARGS = foobar
+standalone_test_QEXE_SIM_OPTIONS = --dsp_clock 1000 --ahb:lowaddr 0xc0000000 --ahb:highaddr 0xc0ffffff
+</pre><h3>
+<a name="Customizing%20build%20rules"></a>Customizing build rules
+</h3><p>
+It is sometimes necessary to define custom build rules. For example, when a single file needs a custom compile option, or there is a generator tool which generates a known extension. These rules can be added to the makefile after the include $(RULES_MIN) line.
+</p><p>
+For example:
+</p><pre>$(OBJ_DIR)/example.c : example.bin
+bin2src.exe -s$(subst /,\\,$&lt;) -dfs:/example.bin -o$@
+</pre><h2>
+<a name="Make.d%20BUILD_COPIES"></a>Make.d BUILD_COPIES
+</h2><p>
+BUILD_COPIES may be used to copy both pre-existing or generated files. This is useful when creating a <code>ship</code> directory which contains the output of the build that will be used by either another project or intended to be shipped.
+</p><p>
+BUILD_COPIES holds a list of &#8220;;&#8221;-delimited copy specs. Copy specs come in two forms:
+</p><ol type="1">
+<li>
+<p>
+two file names
+</p>
+</li><li>
+<p>
+zero or more file names
+</p>
+</li>
+</ol><p>
+Followed by a directory name (ending in &#8220;/&#8221;).
+</p><pre>srcFile destFile
+...srcFile... destDir/
+</pre><p>
+For example:
+</p><pre>BUILD_COPIES += inc/myfoo.h ship/inc/foo.h ;
+BUILD_COPIES += src/foo.h $V/foo$(OBJ_EXT) ship/ ;
+</pre><p>
+The calculator makefile contains the following BUILD_COPIES definition:
+</p><pre>BUILD_COPIES = \
+  $(DLLS) \
+  $(LIBS) \
+  $(SHIP_DIR)/ ;
+</pre><p>
+Which copies all the generated DLLs, and all the generated libs to the SHIP_DIR.
+</p><h4>
+<a name="SHIP_DIR"></a>SHIP_DIR
+</h4><p>
+The ship directory can be overridden to be any directory on the file system.
+</p><p>
+For example, in the makefile set the ship directory like so:
+</p><pre>SHIP_DIR=$(V)/ship
+</pre><h2>
+<a name="Toolchain%20Support%20in%20Android%20NDK"></a>Toolchain Support in Android NDK
+</h2><p>
+The Android NDK r19c comes with Clang toolchain support. However, SDK build supports GCC toolchain to enable users to compile using other NDK versions. To use GCC toolchain, set ANDROID_ROOT_DIR to the Android root directory and use V_GCC=1 option in make command.
+</p><pre>make V=android_Debug V_GCC=1 
+</pre><p>
+Also, the default Android API level is set to 26 (i.e. Version 8 OREO). API Level can be modified by passing API_LEVEL=&lt;&gt; in make command.
+</p><pre>make V=android_Debug API_LEVEL=28
+</pre><p>
+For use with an older Android NDK like r14b, it is recommended to change the Android API level to 24 or below. API level 24 works only with the full Android NDK and not with the minimal Android NDK.
+</p><pre>make tree V=android_Debug V_GCC=1 API_LEVEL=24
+</pre><p>
+The API level should be set to 21 if the minimal Android NDK has been installed.
+</p><pre>make tree V=android_Debug V_GCC=1 API_LEVEL=21
+</pre><h2>
+<a name="Common%20issues"></a>Common issues
+</h2><p>
+This topic describes common makefile issues and their resolutions.
+</p><ul type="circle">
+<li>
+<p>
+Recursive variables
+</p><pre>Recursive variable '__updirs' references itself
+</pre><p>
+The full text of this error is &#8220;Makefile:11: *** Recursive variable '__updirs' references itself (eventually). Stop.&#8221;
+</p><p>
+This error indicates that an older version of make is being invoked. Verify the version of make you are using is at least 3.81 with the command &#8220;make &#8212;version&#8221;. If not, install a newer version of make. You may need to update cygwin to cygwin 1.5.24.
+</p>
+</li><li>
+<p>
+Target Patern contains no '%'
+</p><pre>target pattern contains no `%'.
+</pre><p>
+This error is typically found in the dependency files generated by cdep. GNU make doesn't handle drive letters in make rules, since the colon after the letter looks like a dependency rule itself. For example, make interprets the following:
+</p><pre>c:/mypath/inc/header.h: headerb.h
+</pre><p>
+as &#8220;c&#8221; depends on &#8220;/mypath/inc/header.h&#8221; and then chokes on the second ':'
+</p><p>
+The first time make compiles a file, it generates the .dep and then compiles the file. On subsequent invocations, make includes the .dep file generated previously to add the dependency rules and rebuilds the file if necessary. This means that the error only occurs on the second attempt to compile the file.
+</p>
+</li><li>
+<p>
+No such file or directory
+</p><pre>no such file or directory
+</pre><p>
+For example:
+</p><p>
+/bin/sh: /Vc7/bin/cl.exe: No such file or directory
+</p><p>
+This occurs when the variable which defines the path to a tool (such as a compiler) is not defined.
+</p><p>
+In most cases, make.d can determine the correct path from the environment variable(s) set up by the tool at installation.
+</p>
+</li><li>
+<p>
+Cannot create short name
+</p><pre>cygpath: cannot create short name of xxxx
+</pre><p>
+For example:
+</p><pre>cygpath: cannot create short name of C:\Progra~1\Qualcomm
+
+Usage: cygpath (-d|-m|-u|-w|-t TYPE) [-f FILE] [OPTION]... NAME...
+
+cygpath [-c HANDLE]
+
+cygpath [-ADHPSW]
+</pre>
+</li><li>
+<p>
+File access denied
+</p><pre>File Access Privileges: access denied
+</pre><p>
+This problem can occur when using cygwin. After using make.d to install files, the user may receive an &#8220;access denied&#8221; error when trying to copy or access the installed files.
+</p><p>
+This is due to Cygwin's inability to map unix-style permissions to Windows ACLs. To resolve this add the line to the cygwin/etc/fstab file.
+</p><pre>none /cygdrive cygdrive binary,noacl,posix=0,user 0 0
+</pre><p>
+If modifying fstab does not work configuring cygwin with the NONTSEC setting may resolve this problem. The setting can be applied by setting the environment variable for 'CYGWIN', as follows:
+</p><pre>set CYGWIN=NONTSEC
+</pre>
+</li>
+</ul><h2>
+<a name="Glossary"></a>Glossary
+</h2><ul type="circle">
+<li>
+<p>
+cdep
+</p><p>
+Dependency generation tool
+</p>
+</li><li>
+<p>
+ELF
+</p><p>
+Executable and Linking File.
+</p>
+</li><li>
+<p>
+goal
+</p><p>
+A goal used in the make command specifies which of the targets in the makefile will be built.
+</p>
+</li><li>
+<p>
+quick executable
+</p><p>
+A quick executable, or qexe, is compiled and run during the make process.
+</p>
+</li><li>
+<p>
+variant
+</p><p>
+A variant can be specified in the make command and indicates the target platform, such as Windows or Hexagon.
+</p>
+</li>
+</ul><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

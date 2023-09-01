@@ -1,0 +1,59 @@
+#!/bin/bash
+#
+# adb-perfmode - Android settings to enable performance mode
+#
+# Notes:
+#   - Disables dynamic clock and voltage scaling
+#   - Use before running benchmarks on device (makes runs more repeatable)
+#   - Settings will be reset to their defaults on reboot
+#
+device=""
+while [ $# -gt 0 ]; do          # check arguments
+   case "$1" in
+      -s)
+         shift
+         device="-s $1" ;;
+      *)
+         echo "Usage: $0 [-s device]" >& 2
+         exit 1 ;;
+   esac
+   shift
+done
+
+adb $device wait-for-devices
+adb $device root
+adb $device wait-for-devices
+adb $device remount
+adb $device wait-for-devices
+
+# Stop Thermal Engine and KTM
+adb $device shell stop thermal-engine
+
+# Get available CPUs
+cpus=`adb $device shell 'ls -d /sys/devices/system/cpu/cpu[0-9]* | cat' | tr '\r\n' ' '`
+
+# Bring up all cores just in case
+for cpu in $cpus; do
+    echo $cpu
+    adb $device shell "echo 1 > $cpu/online"
+done
+
+# Stop CPU DCVS
+for cpu in $cpus; do
+    adb $device shell "echo performance > $cpu/cpufreq/scaling_governor"
+done
+
+# Stop Bus DCVS
+adb $device shell "echo 1 > /sys/kernel/debug/msm-bus-dbg/shell-client/mas"
+adb $device shell "echo 512 > /sys/kernel/debug/msm-bus-dbg/shell-client/slv"
+adb $device shell "echo performance > /sys/class/devfreq/soc:qcom,m4m/governor" > /dev/null
+adb $device shell "echo performance > /sys/class/devfreq/soc:qcom,cpubw/governor"
+
+adb $device shell "echo 0 > /sys/kernel/debug/msm-bus-dbg/shell-client/ab"
+adb $device shell "echo 17464000000 > /sys/kernel/debug/msm-bus-dbg/shell-client/ib"
+adb $device shell "echo 1 > /sys/kernel/debug/msm-bus-dbg/shell-client/update_request"
+adb $device shell "echo 1593600000 > /d/clk/cbf_clk/rate" > /dev/null
+
+# Stop Low Power Modes, PC, SPC, Retention and L2 Retension
+adb $device shell "echo Y > /sys/module/lpm_levels/parameters/sleep_disabled"
+

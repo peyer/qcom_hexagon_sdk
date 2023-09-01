@@ -1,0 +1,182 @@
+<DSP type="WDSP" versionMajor="0x2" versionMinor="0x8" versionBranch="0x10" versionSubBranch="0x20">
+  <MODULE_LIST>
+    <MODULE name="MODULE_ID_VOICE_WAKEUP" id="0x12c0d" description="Voice Wakeup Module">
+      <MODULE_INFO pidFwk="0x20002">
+        <META_DATA/>
+        <PIN_INFO type="STATIC">
+          <INPUT_PINS max="0x1" pinIdSize="0x2">
+            <PIN name="IN0" id="0x0"/>
+          </INPUT_PINS>
+          <OUTPUT_PINS max="0x1" pinIdSize="0x2">
+            <PIN name="OUT0" id="0x0"/>
+          </OUTPUT_PINS>
+        </PIN_INFO>
+        <TOOL_POLICIES>
+          <POLICY name="CALIBRATION"/>
+          <POLICY name="RTC"/>
+        </TOOL_POLICIES>
+      </MODULE_INFO>
+      <PARAMETER_LIST>
+        <PARAMETER name="PARAM_ID_ENDPOINT_DETECT_THRESHOLD" pid="0x12c01" maxSize="0xc" description="parameter used to set the beginning-of-speech and#[
+          #] end-of-speech thresholds">
+          <TOOL_POLICIES>
+            <POLICY name="RTC"/>
+            <POLICY name="CALIBRATION"/>
+          </TOOL_POLICIES>
+          <DEFAULT_DEPENDENCIES/>
+          <CONFIG_ELEMENT name="minor_version" type="uint32_t" typeUnSigned="true" byteSize="0x4" byteOffset="0x0" min="0x1" max="0x1" default="0x1"
+            description="Minor version used for tracking the version of this parameter ID"/>
+          <CONFIG_ELEMENT name="epd_begin_threshold" type="int32_t" byteSize="0x4" byteOffset="0x4" min="0x80000000" max="0x7fffffff" default="0x2710000"
+            description="Threshold for the beginning of speech" dataFormat="Q20"/>
+          <CONFIG_ELEMENT name="epd_end_threshold" type="uint32_t" typeUnSigned="true" byteSize="0x4" byteOffset="0x8" min="0x0" max="0xffffffff"
+            default="0xfa9b62b7" description="Threshold for the end of speech" dataFormat="Q20"/>
+        </PARAMETER>
+        <PARAMETER name="PARAM_ID_GAIN" pid="0x12c03" maxSize="0x8" description="parameter used to set the gain that is applied to the audio incoming data">
+          <TOOL_POLICIES>
+            <POLICY name="RTC"/>
+            <POLICY name="CALIBRATION"/>
+          </TOOL_POLICIES>
+          <DEFAULT_DEPENDENCIES/>
+          <CONFIG_ELEMENT name="minor_version" type="uint32_t" typeUnSigned="true" byteSize="0x4" byteOffset="0x0" min="0x1" max="0x1" default="0x1"
+            description="Minor version used for tracking the version of this parameter ID"/>
+          <CONFIG_ELEMENT name="gain" type="int16_t" byteSize="0x2" byteOffset="0x4" min="0x8000" max="0x7fff" default="0x100" description="Gain applied to the#[
+            #] data" dataFormat="Q8"/>
+          <CONFIG_ELEMENT name="reserved" type="uint16_t" typeUnSigned="true" byteSize="0x2" byteOffset="0x6" min="0x0" max="0xffff" default="0x0"
+            description="This field must be set to zero" readOnly="true"/>
+        </PARAMETER>
+        <PARAMETER name="PARAM_ID_SWMAD_ENABLE" pid="0x12c1a" maxSize="0x8" description="parameter used to enable Software Mic Activity Detection (SWMAD)">
+          <TOOL_POLICIES>
+            <POLICY name="RTC"/>
+            <POLICY name="CALIBRATION"/>
+          </TOOL_POLICIES>
+          <DEFAULT_DEPENDENCIES/>
+          <CONFIG_ELEMENT name="minor_version" type="uint32_t" typeUnSigned="true" byteSize="0x4" byteOffset="0x0" min="0x1" max="0x1" default="0x1"
+            description="Tracks the current version of this parameter"/>
+          <CONFIG_ELEMENT name="enable" type="int32_t" byteSize="0x4" byteOffset="0x4" min="0x80000000" max="0x7fffffff" default="0x0" description="Specifies#[
+            #] whether the module is enabled">
+            <RANGE_LIST>
+              <RANGE name="disable" value="0x0"/>
+              <RANGE name="enable" value="0x1"/>
+            </RANGE_LIST>
+          </CONFIG_ELEMENT>
+        </PARAMETER>
+        <PARAMETER name="PARAM_ID_SWMAD_CFG" pid="0x12c18" maxSize="0xc" description="Parameter used to configure Software Mic Activity Detection (SWMAD)">
+          <TOOL_POLICIES>
+            <POLICY name="RTC"/>
+            <POLICY name="CALIBRATION"/>
+          </TOOL_POLICIES>
+          <DEFAULT_DEPENDENCIES/>
+          <CONFIG_ELEMENT name="minor_version" type="uint32_t" typeUnSigned="true" byteSize="0x4" byteOffset="0x0" min="0x1" max="0x1" default="0x1"
+            description="Tracks the current version of this parameter"/>
+          <CONFIG_ELEMENT name="sw_mad_thresh_Q23" type="int32_t" byteSize="0x4" byteOffset="0x4" min="0x80000000" max="0x7f800000" default="0xfff831ab"
+            description="Score threshold for the binary classifier"/>
+          <CONFIG_ELEMENT name="sw_mad_gain_Q8" type="int16_t" byteSize="0x2" byteOffset="0x8" min="0x8000" max="0x7fff" default="0x100" description="Gain value#[
+            #] to multiply to input samples" dataFormat="Q8"/>
+          <CONFIG_ELEMENT name="reserved" type="int16_t" byteSize="0x2" byteOffset="0xa" min="0x8000" max="0x7fff" default="0x0" description="This field must be#[
+            #] set to 0" readOnly="true"/>
+        </PARAMETER>
+        <PARAMETER name="PARAM_ID_SWMAD_MODEL" pid="0x12c19" maxSize="0x0" description="parameter used to register the SWMAD model. The SWMAD model contains the#[
+          #] unique sound characteristics or signatures used by the algorithm hosted in the module.">
+          <TOOL_POLICIES>
+            <POLICY name="RTC"/>
+            <POLICY name="CALIBRATION"/>
+          </TOOL_POLICIES>
+          <DEFAULT_DEPENDENCIES/>
+          <CONFIG_ELEMENT name="bolb" type="uint8_t" typeUnSigned="true" byteSize="0x0" byteOffset="0x0" arrayElements="0" min="0x0" max="0xff" default="0x0"
+            description="Payload is Blob which represents the sound model and it's size is mentioned in param_size"/>
+        </PARAMETER>
+        <PARAMETER name="PARAM_ID_BUFFERING_MODULE_INFO" pid="0x12c23" maxSize="0xc" description="parameter used to share related buffering module info">
+          <TOOL_POLICIES>
+            <POLICY name="RTC"/>
+            <POLICY name="CALIBRATION"/>
+          </TOOL_POLICIES>
+          <DEFAULT_DEPENDENCIES/>
+          <CONFIG_ELEMENT name="minor_version" type="uint32_t" typeUnSigned="true" byteSize="0x4" byteOffset="0x0" min="0x1" max="0x1" default="0x1"
+            description="Minor version used for tracking the version of this parameter"/>
+          <CONFIG_ELEMENT name="module_id" type="uint32_t" typeUnSigned="true" byteSize="0x4" byteOffset="0x4" min="0x0" max="0xffffffff" default="0x0"
+            description="Buffering module id"/>
+          <CONFIG_ELEMENT name="instance_id" type="uint16_t" typeUnSigned="true" byteSize="0x2" byteOffset="0x8" min="0x0" max="0xffff" default="0x0"
+            description="Buffering module instance id"/>
+          <CONFIG_ELEMENT name="reserved" type="uint16_t" typeUnSigned="true" byteSize="0x2" byteOffset="0xa" min="0x0" max="0xffff" default="0x0"
+            description="Reserved space for alignment" readOnly="true"/>
+        </PARAMETER>
+        <PARAMETER name="PARAM_ID_DETECTION_ENGINE_CONFIG_VOICE_WAKEUP" pid="0x12c28" maxSize="0x6" description="PARAM_ID_DETECTION_ENGINE_CONFIG is getting#[
+          #] redefined here. These details are specific to Voice Wakeup while inheriting the original definition">
+          <TOOL_POLICIES>
+            <POLICY name="RTC"/>
+            <POLICY name="CALIBRATION"/>
+          </TOOL_POLICIES>
+          <DEFAULT_DEPENDENCIES/>
+          <CONFIG_ELEMENT name="mode" type="uint16_t" typeUnSigned="true" byteSize="0x2" byteOffset="0x0" min="0x0" max="0xffff" default="0x1" description="Flags#[
+            #] that configure the Voice Wakeup module to run in different modes">
+            <BITFIELD bitMask="0x1" bitName="detectionMode" description="Keyword/Pattern Detection mode">
+              <RANGE_LIST>
+                <RANGE name="disabled" value="0x0"/>
+                <RANGE name="enabled" value="0x1"/>
+              </RANGE_LIST>
+            </BITFIELD>
+            <BITFIELD bitMask="0x2" bitName="verificationMode" description="User Verification mode">
+              <RANGE_LIST>
+                <RANGE name="disabled" value="0x0"/>
+                <RANGE name="enabled" value="0x1"/>
+              </RANGE_LIST>
+            </BITFIELD>
+            <BITFIELD bitMask="0x4" bitName="eventMode" description="Detection Events are sent to the HLOS">
+              <RANGE_LIST>
+                <RANGE name="success" value="0x0"/>
+                <RANGE name="always" value="0x1"/>
+              </RANGE_LIST>
+            </BITFIELD>
+          </CONFIG_ELEMENT>
+          <CONFIG_ELEMENT name="custom_payload_size" type="uint16_t" typeUnSigned="true" byteSize="0x2" byteOffset="0x2" min="0x0" max="0xffff" default="0x0"
+            description="Size of addition custom configuration sent to detection engine module. If custom_payload_size isn’t 4byte aligned size, then caller#[
+            #] needs to fill padding bytes to ensure that entire calibration is 4byte aligned. Immediately following this variable is the custom configuration#[
+            #] Payload of size custom_payload_size."/>
+          <CONFIG_ELEMENT name="minor_version" type="uint8_t" typeUnSigned="true" byteSize="0x1" byteOffset="0x4" min="0x1" max="0x1" default="0x1"
+            description="Tracks the current version of this parameter"/>
+          <CONFIG_ELEMENT name="num_active_models" type="uint8_t" typeUnSigned="true" byteSize="0x1" byteOffset="0x5" min="0x1" max="0x14" default="0x1"
+            description="Sum of all keyword models plus the active user models"/>
+          <CONFIG_ELEMENT name="list" type="uint8_t" typeUnSigned="true" byteSize="0x0" byteOffset="0x6" arrayElements="0" min="0x0" max="0xff" default="0x0"
+            description="This list contains two arrays (Confidence levels and Keyword/User Enables). Confidence Levels: This is an array of size#[
+            #] num_active_models and each element is 1 byte long. This field enumerates the confidence level for each keywords and active user pair. Assuming#[
+            #] there are N keywords and M active user models included in the model, then the first N elements of this parameter corresponds to N keywords#[
+            #] confidence. The N+1 to N+M elements controls M active user model's confidence level. Each element maps confidence values for entries (keyword#[
+            #] and/or user specific keyword) whose order is specified in sound model. Keyword/User enable: Immediately following this structure is an array of#[
+            #] size num_active_models and each element is 1 byte long. This field enumerates the enabling(1)/disabling(0) status for each keywords and active#[
+            #] user pair. Assuming there are N keywords and M active user models included in the model, then the first N elements of this parameter corresponds#[
+            #] to N keywords enabling/disabling. The N+1 to N+M elements controls M active user model's enabling/disabling. Each element maps#[
+            #] enable(1)/disable(0) values for entries (keyword and/or user specific keyword) whose order is specified in sound model."/>
+        </PARAMETER>
+        <PARAMETER name="PARAM_ID_DETECTION_ENGINE_EVENT_VOICE_WAKEUP" pid="0x12c29" maxSize="0x6" description="PARAM_ID_DETECTION_ENGINE_EVENT is getting#[
+          #] redefined here. These details are specific to Voice Wakeup while inheriting the original definition">
+          <TOOL_POLICIES>
+            <POLICY name="RTC"/>
+            <POLICY name="CALIBRATION"/>
+          </TOOL_POLICIES>
+          <DEFAULT_DEPENDENCIES/>
+          <CONFIG_ELEMENT name="status" type="uint16_t" typeUnSigned="true" byteSize="0x2" byteOffset="0x0" min="0x0" max="0xffff" default="0x0"
+            description="Status returned by algorithm">
+            <RANGE_LIST>
+              <RANGE name="success" value="0x0"/>
+              <RANGE name="failed" value="0x1"/>
+            </RANGE_LIST>
+          </CONFIG_ELEMENT>
+          <CONFIG_ELEMENT name="custom_payload_size" type="uint16_t" typeUnSigned="true" byteSize="0x2" byteOffset="0x2" min="0x0" max="0xffff" default="0x0"
+            description="Size of addition custom configuration sent to detection engine module. If custom_payload_size isn’t 4byte aligned size, then caller#[
+            #] needs to fill padding bytes to ensure that entire calibration is 4byte aligned. Immediately following this variable  is the custom configuration#[
+            #] Payload of size custom_payload_size."/>
+          <CONFIG_ELEMENT name="minor_version" type="uint8_t" typeUnSigned="true" byteSize="0x1" byteOffset="0x4" min="0x1" max="0x1" default="0x1"
+            description="Tracks the current version of this parameter"/>
+          <CONFIG_ELEMENT name="num_active_models" type="uint8_t" typeUnSigned="true" byteSize="0x1" byteOffset="0x5" min="0x1" max="0x14" default="0x1"
+            description="Sum of all keyword models plus the active user models"/>
+          <CONFIG_ELEMENT name="list" type="uint8_t" typeUnSigned="true" byteSize="0x0" byteOffset="0x6" arrayElements="0" min="0x0" max="0xff" default="0x0"
+            description="This list is an array of size num_active_models and each element is 1 byte long. This field enumerates the detection confidence level#[
+            #] for each keywords and active user pair. Assuming there are N keywords and M active user models included in the model, then the first N elements of#[
+            #] this parameter corresponds to N keywords detection confidence level. The N+1 to N+M elements highlights the M active user model's detection#[
+            #] confidence level. Each element maps it's confidence level values for entries (keyword and/or user specific keyword) whose order is specified in#[
+            #] sound model."/>
+        </PARAMETER>
+      </PARAMETER_LIST>
+    </MODULE>
+  </MODULE_LIST>
+</DSP>

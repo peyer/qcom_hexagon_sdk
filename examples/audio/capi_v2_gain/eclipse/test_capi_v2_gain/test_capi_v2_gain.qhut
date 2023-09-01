@@ -1,0 +1,9 @@
+<Testcases>
+	<Testcase Name="TestCase1">
+		<ConfigFile>../../data/gain.cfg</ConfigFile>
+		<InputFile>../../data/input_wnoise_48k_stereo.raw</InputFile>
+		<OutputFile>../../data/output__wnoise_48k_stereo.raw</OutputFile>
+		<Reference/>
+		<RunStatus>True</RunStatus>
+	</Testcase>
+</Testcases>

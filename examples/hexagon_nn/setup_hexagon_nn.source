@@ -1,0 +1,45 @@
+#!/bin/sh
+
+#
+# Usage: $setup_hexagon_nn.source [<Hexagon NN library current or desired location> [<repo> [<patch>]]]
+#
+
+if [ -z "$1" ]; then
+  export HEXAGON_NN=${HEXAGON_SDK_ROOT}/libs/hexagon_nn/2.10.1
+else
+  export HEXAGON_NN="$(cd "$(dirname "$1")";pwd)/$(basename "$1")"
+fi
+
+HEXAGON_NN_CAF_REPO=https://source.codeaurora.org/quic/hexagon_nn/nnlib
+
+if [[ -z "$2" ]]; then
+  HEXAGON_NN_REPO=$HEXAGON_NN_CAF_REPO
+else
+  HEXAGON_NN_REPO=$2
+fi
+
+if [ -d $HEXAGON_NN ]; then
+  true
+else
+  while true; do
+    echo "WARNING: Could not find $HEXAGON_NN"
+    echo "Do you wish to create it by cloning $HEXAGON_NN_REPO? (y/n)"
+    read -r yn
+    case $yn in
+      [Yy]* )
+        echo "Cloning $HEXAGON_NN_REPO into $HEXAGON_NN"
+        git clone $HEXAGON_NN_REPO $HEXAGON_NN
+        if [[ -n "$3" ]]; then
+        pushd $HEXAGON_NN
+        echo "Applying patch $3. Note: path to patch needs to be absolute"
+        git apply $3
+        popd
+        fi  
+        break;;
+      [Nn]* ) break;;
+      * ) echo "Please answer yes (y) or no (n).";;
+    esac
+  done
+fi
+
+echo "Done setting up hexagon-nn. hexagon-nn library expected to be @ HEXAGON_NN=$HEXAGON_NN"

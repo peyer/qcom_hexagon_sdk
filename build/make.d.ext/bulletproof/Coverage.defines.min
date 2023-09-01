@@ -1,0 +1,10 @@
+CCOV=$(CCOV_DIR)/$(UNAME_S)_Debug/ccov$(EXE_EXT)
+
+ifeq (,$(GCOV_DIR))
+   GCOV=gcov$(EXE_EXT)
+else
+   GCOV=$(GCOV_DIR)/gcov$(EXE_EXT)
+endif
+
+-include $(thisDir)/$(V_TARGET).defines.min
+

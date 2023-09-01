@@ -1,0 +1,127 @@
+########################################################################
+# Copyright (c) Date: Tue Aug 26 16:38:28 CDT 2008 QUALCOMM INCORPORATED 
+# All Rights Reserved 
+# Modified by QUALCOMM INCORPORATED on Tue Aug 26 16:38:28 CDT 2008 
+########################################################################
+
+
+* Common Symbols
+
+This example illustrates how common symbols are handled by the Hexagon assembler
+and linker.
+
+* Global Data Area
+
+Hexagon provides a convenient addressing-mode that is similar to the
+register-relative, however always implying the GP register, thus allowing
+greater offsets from it.  However, the offset has a maximum value of only 512k
+for double-words, decreasing exponentially for smaller data sizes: 256k for
+words, 128k for half-words and 64k for bytes.  Therefore, the criterion used to
+decide when an object is allocated in the global data area is by its size.  By
+default, objects up to 8 bytes-long are allocated in the global data area, but
+this can be changed through the "-G n" option in the compiler, in the assembler
+and in the linker.
+
+It is assumed that the GP register has been previously initialized, typically by
+the start-up code, to point to the beginning of the global data area.
+
+* Assembler
+
+The Hexagon assembler uses the option "-G n" when defining common objects,
+either global or local.  Common objects smaller than or equal to the specified
+size are allocated in the global data area, specifically in the block storage
+section for small objects (".sbss").
+
+The directives to allocate global or local objects are ".comm" and ".lcomm",
+respectively:
+
+  .comm  ga, 4
+  .comm  gb, 12
+  .comm  gc, 20
+
+  .lcomm  la, 4
+  .lcomm  lb, 12
+  .lcomm  lc, 20
+
+For example, assuming the default "-G 8", assembling the example above with the
+command:
+
+  hexagon-llvm-mc -filetype=obj -mv60 common.s -o common.o
+
+Results in the objects "la" and "ga" to be allocated in the global data area,
+but not the objects "lb", "lc", "gb" and "gc":
+
+It can be verified using "hexagon-objdump" and checking for the small objects
+allocated in the sections ".sbss" and ".scommon", in contrast to ".bss" and
+"*COM*", whether the object is local or global, respectively:
+
+  $ hexagon-objdump -t common.o
+
+  common.o:  file format elf32-littlehexagon
+
+  SYMBOL TABLE:
+  ...
+  00000000 l     O .sbss  00000004 la
+  00000000 l     O .bss   0000000c lb
+  00000010 l     O .bss   00000014 lc
+  00000004 g     O .scommon       00000004 ga
+  0000000c       O *COM*  00000008 gb
+  00000014       O *COM*  00000010 gc
+
+* Linker
+
+The Hexagon linker uses the option "-G n" when allocating global common objects
+not allocated in the global data area by the assembler.  Then if such objects
+are smaller than the specified size, they are allocated in the ".sbss" section.
+
+For example, using the result by the assembler from the example above, but
+specifying larger size criterion, as in the command:
+
+  hexagon-ld -mv60 -G 16 common.o
+
+Results in the object "gb" to be allocated in the global data area, which it can
+be verified using "hexagon-objdump" and checking for the small objects allocated
+in the section ".sbss", in contrast to ".bss":
+
+  $ hexagon-objdump -t common16
+
+  common16:     file format elf32-littlehexagon
+
+  SYMBOL TABLE:
+  ...
+  00080000 l     O .sbss  00000004 la
+  00000000 l     O .bss   0000000c lb
+  00000010 l     O .bss   00000014 lc
+  00080014 g     O .sbss  00000004 ga
+  00080008 g     O .sbss  0000000c gb
+  00000030 g     O .bss   00000014 gc
+
+However, the linker will not reallocate a global common object that the
+assembler allocated in the global data area nor a local common object.
+
+For example, still using the result by the assembler from the example above, but
+specifying a smaller size criterion, as in the command:
+
+  hexagon-ld -mv60 -G 0 common.o
+
+Results in the object "ga" remaining in the global data area, although the size
+criterion used by the linker was specified to be zero, as can be verified again
+with "hexagon-objdump":
+
+  $ hexagon-objdump -t common0
+
+  common0:     file format elf32-littlehexagon
+
+  SYMBOL TABLE:
+  ...
+  00080000 l     O .sbss  00000004 la
+  00000000 l     O .bss   0000000c lb
+  00000010 l     O .bss   00000014 lc
+  00080008 g     O .sbss  00000004 ga
+  00000030 g     O .bss   0000000c gb
+  00000040 g     O .bss   00000014 gc
+
+This guarantees that if an common object was referenced through the GP-relative
+addressing-mode, thus assuming that it will be allocated in the global data
+area, no errors will result by reallocating it beyond the offset range of this
+addressing mode.

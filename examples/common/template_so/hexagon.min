@@ -1,0 +1,36 @@
+
+INCDIRS += \
+   inc \
+   src \
+
+# only build the shared object if dynamic option specified in V
+ifeq (1,$(V_dynamic))
+BUILD_DLLS = template_so
+endif
+
+BUILD_LIBS = template_so
+
+MAKE_D_2_LIBDIR = $(HEXAGON_SDK_ROOT)/libs/common/a1std/ship/$(V)
+
+template_so_C_SRCS += \
+   src/template_so \
+
+BUILD_QEXES += template_so_q
+
+template_so_q_C_SRCS = src/template_so_test
+template_so_q_LIBS = rtld test_main test_util template_so a1std atomic
+
+# if building shared object must also list it as a dependency to the qtest
+ifeq (1,$(V_dynamic))
+$V/template_so_q.ok: $V/template_so_q $V/template_so$(DLL_EXT)
+endif
+
+BUILD_COPIES = \
+   inc/template_so.h \
+   $(DLLS) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;
+
+# always last
+include $(RULES_MIN)
+

@@ -1,0 +1,20 @@
+#ifndef EPSILON_V60_IDL
+#define EPSILON_V60_IDL
+
+#include "AEEStdDef.idl"
+
+interface epsilon_v60{
+
+AEEResult epsilonFilt(in sequence<uint8> src,              // input buffer of unsigned 8-bit values
+                              in int32 stride,          // stride of the src image
+                              in int32 width,           // width of region of interest contained in src image
+                              in int32 height,          // height of region of interest contained in src image
+                              in int32 threshold,       // threshold
+		   					  inrout   sequence<uint8> dst,   // output buffer of unsigned 8-bit values
+                              rout int32 dspUsec        // dsp-measured microseconds profiling
+	);
+};
+
+
+
+#endif //EPSILON_V60_IDL

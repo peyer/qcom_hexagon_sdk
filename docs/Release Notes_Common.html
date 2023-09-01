@@ -1,0 +1,2410 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><title>&#65279;SDK release notes</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="images/sidebar_top.jpg"></top><script src="scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, false)"><input id="searchButton" onclick="postFunction(false)" type="button" value="Search"></form><p>
+<a href="index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<p>
+<a href="sitemap.html">Sitemap</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="Audio/Applications.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="Voice/Applications.html">Voice</a>
+</p><p>
+<a href="Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="Audio/Examples.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="Examples_Common.html">Common</a>
+</p><p>
+<a href="Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="Tools_Signing.html">Signing</a>
+</p><p>
+<a href="Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="FAQ_Common.html">Common</a>
+</p><p>
+<a href="FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="Support_Contact.html">Contact</a>
+</p><center><img src="images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h1>
+<a name="﻿SDK%20release%20notes"></a>&#65279;SDK release notes
+</h1><div class="toc"><div class="tocLevel"><a href="#3.5.4">3.5.4</a></div><div class="tocLevel"><a href="#3.5.3">3.5.3</a></div><div class="tocLevel"><a href="#3.5.2">3.5.2</a></div><div class="tocLevel"><a href="#3.5.1">3.5.1</a></div><div class="tocLevel"><a href="#3.5.0">3.5.0</a></div><div class="tocLevel"><a href="#3.4.3">3.4.3</a></div><div class="tocLevel"><a href="#3.4.2">3.4.2</a></div><div class="tocLevel"><a href="#3.4.1">3.4.1</a></div><div class="tocLevel"><a href="#3.4.0">3.4.0</a></div><div class="tocLevel"><a href="#3.3">3.3</a><div class="tocLevel"><a href="#Elfsigner%20update">Elfsigner update</a></div><div class="tocLevel"><a href="#Installation%20update">Installation update</a></div><div class="tocLevel"><a href="#SysMon%20in%203.3.1">SysMon in 3.3.1</a></div><div class="tocLevel"><a href="#Sysmon%20for%203.3.0">Sysmon for 3.3.0</a></div><div class="tocLevel"><a href="#Debugger%20support">Debugger support</a></div><div class="tocLevel"><a href="#Toolset">Toolset</a></div><div class="tocLevel"><a href="#QuRT">QuRT</a></div><div class="tocLevel"><a href="#Halide">Halide</a></div><div class="tocLevel"><a href="#New%20Libraries">New Libraries</a></div><div class="tocLevel"><a href="#Mini-DM">Mini-DM</a></div><div class="tocLevel"><a href="#_Examples">Examples</a></div><div class="tocLevel"><a href="#Documentation">Documentation</a></div><div class="tocLevel"><a href="#Known%20Issues">Known Issues</a></div></div><div class="tocLevel"><a href="#3.2">3.2</a></div><div class="tocLevel"><a href="#3.1">3.1</a></div><div class="tocLevel"><a href="#3.0">3.0</a></div><div class="tocLevel"><a href="#2.0">2.0</a></div><div class="tocLevel"><a href="#1.2.2">1.2.2</a></div><div class="tocLevel"><a href="#1.1.0">1.1.0</a></div><div class="tocLevel"><a href="#1.0.0">1.0.0</a></div></div><h2>
+<a name="3.5.4"></a>3.5.4
+</h2><ul class="indent" type="circle">
+<li>
+<p>
+Fixes thread-safety issues in rpcmem init and deinit calls
+</p>
+</li><li>
+<p>
+Tools
+</p><ul class="indent" type="circle">
+<li>
+<p>
+Adds CFI fix in QAIC to resolve stack overflow issue
+</p>
+</li><li>
+<p>
+Resolves lsb_release error from QAIC Makefile
+</p>
+</li>
+</ul>
+</li>
+</ul><h2>
+<a name="3.5.3"></a>3.5.3
+</h2><ul class="indent" type="circle">
+<li>
+<p>
+Adds support for making rpcmem init and deinit calls thread-safe
+</p>
+</li><li>
+<p>
+Adds documentation for unsigned PD
+</p>
+</li>
+</ul><h2>
+<a name="3.5.2"></a>3.5.2
+</h2><ul class="indent" type="circle">
+<li>
+<p>
+Introduces support for Bitra target
+</p>
+</li><li>
+<p>
+Removes the need to strip out Cygwin from the system PATH when setting up SDK environment
+</p>
+</li><li>
+<p>
+Includes security fixes in QAIC generated code
+</p>
+</li>
+</ul><h2>
+<a name="3.5.1"></a>3.5.1
+</h2><ul class="indent" type="circle">
+<li>
+<p>
+Introduces support for SM8250, SAIPAN, RENNEL, CYPRESS targets
+</p>
+</li><li>
+<p>
+Incorporates Hexagon Tools release 8.3.07
+</p>
+</li><li>
+<p>
+Incorporates Halide Tools release 2.2.03
+</p>
+</li><li>
+<p>
+Incorporates Hexagon NN release 2.10.1
+</p>
+</li><li>
+<p>
+Incorporated new Qurt Kernel release 3.2.06
+</p>
+</li><li>
+<p>
+Added Support Qualcomm Hexagon Libraries (QHL).
+</p>
+</li><li>
+<p>
+Introduces CMake based libraries cross compile support for Hexagon Platform.
+</p>
+</li><li>
+<p>
+Added image_dspq library for enqueuing image processing tasks through asyncdspq on DSP
+</p>
+</li><li>
+<p>
+Add unsupported variants info in capi_v2_gain_cpp example.
+</p>
+</li><li>
+<p>
+Add mini-dm support for both Ubuntu16 and Ubuntu18.
+</p>
+</li><li>
+<p>
+Enable remote debugger on SM7250 and SM6250.
+</p>
+</li><li>
+<p>
+Add simulator support for HAP_mem API.
+</p>
+</li><li>
+<p>
+Added 64bit variants of sysMonApp and sysMonAppLE executables.
+</p>
+</li><li>
+<p>
+Converted all the SDK examples and libs to glue free.
+</p>
+</li><li>
+<p>
+General bug fixes
+</p><ul class="indent" type="circle">
+<li>
+<p>
+Fix an issue with QEXE_EXEC_SIM_OPTIONS compilation.
+</p>
+</li>
+</ul><ul class="indent" type="circle">
+<li>
+<p>
+Resolved shipping of remote debugger dynamically loadable kernel module(rdbg.ko) across all appropriate targets.
+</p>
+</li><li>
+<p>
+Fix the compilation of calculator-c++ app for Android Q.
+</p>
+</li><li>
+<p>
+Fix an issue with displaying project icons in IDE correctly.
+</p>
+</li><li>
+<p>
+Fix an issue with target connection error while trying to create a new debug configuration in IDE.
+</p>
+</li><li>
+<p>
+Fix an issue with hexagon_nn fail to compile on ubuntu for android_ReleaseG variant.
+</p>
+</li><li>
+<p>
+Support mini-dm &#8211;showdevices option for both Windows and Linux.
+</p>
+</li><li>
+<p>
+Fix DSPCV compilation error while building benchmark_v65.
+</p>
+</li><li>
+<p>
+Fix HexagonNN compilation issues with LLVM.
+</p>
+</li><li>
+<p>
+Organize order of search paths by domain and allow user to prepend the default path by setting the DSP_LIBRARY_PATH.
+</p>
+</li><li>
+<p>
+Fixed issues with IDE when debugging on target.
+</p>
+</li><li>
+<p>
+Fix the multiple type definitions for WIN32 in the auto generated stub code.
+</p>
+</li><li>
+<p>
+Fix the loader behavior to be consistent between windows and linux.
+</p>
+</li><li>
+<p>
+Fix various resource leaks in run_main_on_hexagon.
+</p>
+</li><li>
+<p>
+Deprecate support for apps_mem_heap API.
+</p>
+</li><li>
+<p>
+Fix incorrect error messages while editing the file in Eclipse.
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Documentation
+</p><ul class="indent" type="circle">
+<li>
+<p>
+Fixed the broken link for fastrpc page row.
+</p>
+</li><li>
+<p>
+Fixed the typo for hvx resource manager API in fasrpc documentation page.
+</p>
+</li><li>
+<p>
+Updated the glue free documentation.
+</p>
+</li><li>
+<p>
+Added documentation on how to build an OpenWRT Binary.
+</p>
+</li><li>
+<p>
+Corrected documentation on dsp dcvs vote sleep latency.
+</p>
+</li><li>
+<p>
+Corrected the unsigned PD documentation w.r.t thread priorities.
+</p>
+</li><li>
+<p>
+Refactor documentation in readme.txt for both windows and Linux installer.
+</p>
+</li><li>
+<p>
+Update feature matrix to include support of camera streaming across various targets.
+</p>
+</li><li>
+<p>
+Update documentation FAQ information on handling libc++ linker errors.
+</p>
+</li><li>
+<p>
+Update fastrpc documentation.
+</p>
+</li><li>
+<p>
+Added documentation for DCVS_v3 option of HAP_power_set() for SM8250, SM7250, SM6250 targets.
+</p>
+</li><li>
+<p>
+Added documentation for DSP power status feature under sysMonApp.
+</p>
+</li>
+</ul>
+</li>
+</ul><h2>
+<a name="3.5.0"></a>3.5.0
+</h2><ul class="indent" type="circle">
+<li>
+<p>
+Introduces support for SM8250 target
+</p>
+</li><li>
+<p>
+Incorporates Hexagon Tools release 8.3.04
+</p>
+</li><li>
+<p>
+Introduces Android NDK r19c tools support
+</p>
+</li><li>
+<p>
+Incorporates Halide Tools release 2.2.02
+</p>
+</li><li>
+<p>
+Incorporates Hexagon NN release 2.9.5
+</p>
+</li><li>
+<p>
+Updates Eclipse CDT to Photon
+</p>
+</li><li>
+<p>
+Introduces CMake support in Benchmark_v65 example
+</p>
+</li><li>
+<p>
+Introduces Remote debugger support on SM8250
+</p>
+</li><li>
+<p>
+Updates syMon_DSP_Profiler_V2.apk with SM8250 support
+</p>
+</li><li>
+<p>
+Updates HTML based sysmon_parser utilities with SM8250 support
+</p>
+</li><li>
+<p>
+Updates sysMonApp with Android Q support - need to run from /data/local/tmp/
+</p>
+</li><li>
+<p>
+Introduces build support for hard-float and soft-float ABI in UbuntuARM 32 bit variants
+</p>
+</li><li>
+<p>
+Updates all example and dependencies to remove /glue folder dependency
+</p>
+</li><li>
+<p>
+Stack size of Run_main_on_hexagon target version is configurable now similar to run_main_on_hexagon of simulator
+</p>
+</li><li>
+<p>
+Exposes new HAP_power_destroy API
+</p>
+</li><li>
+<p>
+Introduces support for PD dump
+</p><ul type="circle">
+<li>
+<p>
+PD dump is a snapshot of an application running on DSP at the point in time the exception occurred. Please refer to &lt;HEXAGON_SDK_ROOT&gt;/docs/Debugging_Exceptions.html for more details on PD dump.
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+General bug fixes
+</p><ul type="circle">
+<li>
+<p>
+Fixes testsig script issues by adding multi-domain support
+</p>
+</li><li>
+<p>
+Enables multiple devices to connect to mini-dm on Linux
+</p>
+</li><li>
+<p>
+Fixes Linux installer issues by increasing linux installer JVM maximum heapsize to 512Mb
+</p>
+</li><li>
+<p>
+Adds missing audio documents in Linux SDK
+</p>
+</li><li>
+<p>
+Fixes slower compilation issue on Windows while rebuilding larger projects like hexagon-nn
+</p>
+</li><li>
+<p>
+Fixes Hexagon IDE issue (emitting -mv66 in simulator command instead of -mv66g_1024 when arch version v66 is selected) with running v66 simulator test
+</p>
+</li><li>
+<p>
+Device crash with force exit (Ctrl+C) the application that is being debugged is fixed now, it works from SM8250
+</p>
+</li><li>
+<p>
+Fixes bug requiring device reboot between between debug sessions from SM8250
+</p>
+</li><li>
+<p>
+Fixes bug in QAIC allowing users to use nested complex sequences
+</p>
+</li><li>
+<p>
+Fixes bug in QAIC allowing users to pass sequence of size 0
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Documentation
+</p><ul type="circle">
+<li>
+<p>
+Adds Dmahandle IDL Type in IDLReference document
+</p>
+</li><li>
+<p>
+Adds FastRPC QoS document
+</p>
+</li><li>
+<p>
+Updates DSP Power &amp; Perf document
+</p>
+</li><li>
+<p>
+Adds documentation for HAP mem APIs to manage User PD memory management
+</p>
+</li><li>
+<p>
+Updates AEEStdErr.h with FastRPC error codes and description of existing error codes
+</p>
+</li><li>
+<p>
+Adds HAP PMU APIs for configuring and reading PMU metrics from user process introduced in SM8250
+</p>
+</li><li>
+<p>
+Adds HAP compute resource APIs with serialization option for CDSP applications introduced in SM8250
+</p>
+</li><li>
+<p>
+Added 'User QoS' option for user controlled QoS based FastRPC optimization to FastRPC QoS documentation introduced in SM8250
+</p>
+</li><li>
+<p>
+Updates CDSP L2 cache locking HAP interface documentation with new features introduced in SM8250
+</p>
+</li><li>
+<p>
+Updates sysMonApp documentation with reference to new HTML based sysmon_parser and new location (/data/local/tmp) to run sysMonApp from Android Q
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Known Issues with Hexagon IDE CDT upgrade
+</p><ul type="circle">
+<li>
+<p>
+Improper Project icons in Project explorer wizard
+</p>
+</li>
+</ul>
+</li>
+</ul><h2>
+<a name="3.4.3"></a>3.4.3
+</h2><ul class="indent" type="circle">
+<li>
+<p>
+Introduces support for SM6125 and QCS403 targets
+</p>
+</li><li>
+<p>
+Incorporates Hexagon NN release 2.6
+</p>
+</li><li>
+<p>
+Removes adsp_ps dependency on libstdc++ and updates install_adsp_ps.py for Android-P builds
+</p><ul class="indent" type="circle">
+<li>
+<p>
+adsp_ps is an android application that allows the caller to query the DSP for a list of running FastRPC processes, please see &lt;Hexagon_SDK_root_folder&gt;/docs/adsp_ps.html for more details about adsp_ps
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Exposes apps_mem_share_map() and apps_mem_share_munmap() in apps_mem.h located at &lt;Hexagon_SDK_root_folder&gt;/incs
+</p><ul class="indent" type="circle">
+<li>
+<p>
+Updated apps_mem.h located at &lt;Hexagon_SDK_root_folder&gt;/incs with apps_mem_share_map() and apps_mem_share_unmap() to map the buffers on DSP using an APPS fd
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Introduces a new capiV2 example (capi_v2_gain_cpp) for C++11/14 support
+</p>
+</li><li>
+<p>
+Updates capiV2 audio events
+</p>
+</li><li>
+<p>
+Updates voice IMC module config file
+</p>
+</li><li>
+<p>
+General bug fixes
+</p><ul class="indent" type="circle">
+<li>
+<p>
+Fixes Hexagon IDE bug related to compilation of Hexagon projects created with Hexagon Project wizard for arch v62 and above
+</p>
+</li>
+</ul>
+</li>
+</ul><h2>
+<a name="3.4.2"></a>3.4.2
+</h2><p>
+Summary:
+</p><ul class="indent" type="circle">
+<li>
+<p>
+Introduces support for SM7150 target
+</p>
+</li><li>
+<p>
+Incorporates Hexagon Tools release 8.3.02, which introduces automatic vectorization support for HVX
+</p>
+</li><li>
+<p>
+Incorporates Halide Tools release 2.2 - see Halide tools release notes for detailed info
+</p>
+</li><li>
+<p>
+Incorporates Hexagon NN release 2.5
+</p>
+</li><li>
+<p>
+Introduces Hexagon Trace Analyzer to process Hexagon ETM Traces
+</p>
+</li><li>
+<p>
+Incorporates installer support to install USB drivers
+</p>
+</li><li>
+<p>
+Introduces support for sysMon command-line tool
+</p>
+</li><li>
+<p>
+Introduces simultaneous build support for Ubuntu 32 bit and 64 bit variants
+</p>
+</li><li>
+<p>
+Updates benchmark_v65 example to remove /glue folder dependency
+</p>
+</li><li>
+<p>
+Adds an automatic vectorization example to conv3x3 in benchmark_v65
+</p>
+</li><li>
+<p>
+Adds support to configure simulator test thread stack size
+</p>
+</li><li>
+<p>
+General bug fixes
+</p><ul class="indent" type="circle">
+<li>
+<p>
+Fixed issue of ambiguity in variable values in IDE
+</p>
+</li><li>
+<p>
+Solved the issue of passing environment variables to LLDB using IDE
+</p>
+</li><li>
+<p>
+Fixed issue of passing args to simulator test main
+</p>
+</li><li>
+<p>
+Fixed calculator_c++ simulator test failure
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Documentation:
+</p><ul class="indent" type="circle">
+<li>
+<p>
+Introduction to Sub-system Restart (SSR) handling
+</p>
+</li><li>
+<p>
+QoS document
+</p>
+</li><li>
+<p>
+Steps to find out crash location from crash signature
+</p>
+</li><li>
+<p>
+FastRPC Error logs document
+</p>
+</li><li>
+<p>
+New QURT simulation framework
+</p>
+</li>
+</ul>
+</li>
+</ul><h2>
+<a name="3.4.1"></a>3.4.1
+</h2><p>
+Summary:
+</p><ul class="indent" type="circle">
+<li>
+<p>
+Introduces support for QCS405
+</p>
+</li><li>
+<p>
+Introduces support for SM6150
+</p>
+</li><li>
+<p>
+Introduces first APK based Calculator C++ example
+</p>
+</li><li>
+<p>
+Incorporates Halide Tools release 2.1.04
+</p>
+</li><li>
+<p>
+Incorporates Hexagon Tools release 8.2.07
+</p>
+</li><li>
+<p>
+Introduces support for Audio H2XML Tool
+</p>
+</li><li>
+<p>
+Introduces support for Signature-free Compute processing
+</p>
+</li><li>
+<p>
+Deprecates qdebug library
+</p>
+</li><li>
+<p>
+Adds simulator support for the new timeout based VTCM allocation API.
+</p>
+</li><li>
+<p>
+Introduces LE support for sysMon
+</p>
+</li><li>
+<p>
+Introduces an utility called run_main_on_hexagon to run a user test with main() on simulator and DSP. Starting from 3.4.1, all the qurt simulator tests in SDK are run with this utility.
+</p>
+</li><li>
+<p>
+General bug fixes
+</p>
+</li><li>
+<p>
+Documentation
+</p><ul type="circle">
+<li>
+<p>
+Updated DCVS_v2 HAP_power_set documentation with CPU L3 clock voting options.
+</p>
+</li><li>
+<p>
+Updated VTCM Manager documentation with a new timeout based VTCM allocation API.
+</p>
+</li><li>
+<p>
+Reorganized documentation
+</p>
+</li>
+</ul>
+</li>
+</ul><h2>
+<a name="3.4.0"></a>3.4.0
+</h2><p>
+Summary:
+</p><ul class="indent" type="circle">
+<li>
+<p>
+Introduces support for SM8150
+</p>
+</li><li>
+<p>
+Incorporates LLVM Tools release 8.2.04 - see tools release notes for detailed info
+</p>
+</li><li>
+<p>
+Incorporates Halide Tools release 2.1.02 - see Halide tools release notes for detailed info
+</p>
+</li><li>
+<p>
+Introduce qprintf library that extends printf support to assembly language and HVX register types
+</p>
+</li><li>
+<p>
+Introduce Hexagon NN library and examples allowing to run Neural Networks on the Hexagon DSP
+</p>
+</li><li>
+<p>
+v66 Hexagon Architecture support
+</p>
+</li><li>
+<p>
+Camera streaming example support on SDM845
+</p>
+</li><li>
+<p>
+Remote debugger support on SM8150
+</p>
+</li><li>
+<p>
+Added fastrpc system libraries to support system applications to offload to DSP on Treble enabled builds.
+</p>
+</li><li>
+<p>
+Added SysmonParser executables with SM8150 support.
+</p>
+</li><li>
+<p>
+Updated rpcmem library to allocate memory from ION for Linux platforms (AGL, linaro)
+</p>
+</li><li>
+<p>
+SysMon
+</p><ul type="circle">
+<li>
+<p>
+Updated sysMon_DSP_Profiler_V2.apk with support from SM8150
+</p><ul type="circle">
+<li>
+<p>
+New benchmarks histogram and ncc8x8 under CDSP tap
+</p>
+</li><li>
+<p>
+HVX units configurability for benchmarks on SM8150
+</p>
+</li><li>
+<p>
+Added fix power level option for full suite under benchmarks
+</p>
+</li><li>
+<p>
+Added support for Android P
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Updated SysmonParser executables for windows and linux with SM8150 support
+</p><ul type="circle">
+<li>
+<p>
+Location of the executables is:
+</p><ul type="circle">
+<li>
+<p>
+Windows: (&#8216;&lt;Hexagon_SDK&gt;\tools\utils\sysmon\parser_win_v2\&#8217;)
+</p>
+</li><li>
+<p>
+Linux: (&#8216;&lt;Hexagon_SDK&gt;/tools/utils/sysmon/parser_linux_v2/&#8217;)
+</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li><li>
+<p>
+Debugger
+</p><ul type="circle">
+<li>
+<p>
+Command-line on-target debugging has been simplified.
+</p>
+</li>
+</ul>
+</li>
+</ul><h2>
+<a name="3.3"></a>3.3
+</h2><p>
+Summary:
+</p><p>
+This release build upon the Hexagon SDK 3.2 and adds features, capabilities and improvements listed below.
+</p><p>
+Hardware:
+</p><ul>
+<li>
+<p>
+Support added for the Hexagon architecture v.65
+</p>
+</li><li>
+<p>
+Hexagon architectures supported by this release:
+</p>
+</li>
+</ul><p>
+o v60, v60-HVX, v61, v62, v62-HVX, v65, v65-HVX
+</p><ul>
+<li>
+<p>
+Snapdragon devices supported by this release:
+</p>
+</li>
+</ul><p>
+o Simulator o SDM630 o SDM660 (CDSP) o SDM820 o SDM835 o SDM845 (ADSP and CDSP) o SDM670 (ADSP and CDSP)
+</p><p>
+Development Tools and Environment
+</p><h3>
+<a name="Elfsigner%20update"></a>Elfsigner update
+</h3><ul>
+<li>
+<p>
+New elfsigner package that is compatible to OpenSSL 1.1.0
+</p>
+</li>
+</ul><h3>
+<a name="Installation%20update"></a>Installation update
+</h3><ul>
+<li>
+<p>
+The full NDK installation support now contains all the C++ headers, libraries and tools which are needed for c++11 compilations.
+</p>
+</li>
+</ul><h3>
+<a name="SysMon%20in%203.3.1"></a>SysMon in 3.3.1
+</h3><ul>
+<li>
+<p>
+Added SysmonParser executables for windows and linux with SDM845 support.
+</p>
+</li>
+</ul><p>
+o Location of the executables is:
+</p><div class="indent"><p>
+Windows: (&#8216;&lt;Hexagon_SDK&gt;\tools\utils\sysmon\parser_win_v2\&#8217;) Linux: (&#8216;&lt;Hexagon_SDK&gt;\tools\utils\sysmon\parser_linux_v2\&#8217;)
+</p></div><p>
+o SysmonParser utility helps users post process the raw profiling data captured via sysMon DSP Profiler on a host machine.
+</p><div class="indent"><p>
+Known issue: SysmonParser.exe (Windows) can sometimes fail to post process any data when there is a perl installation under C:\Perl64. Workaround is to temporarily rename the folder to something else (ex: C:\Perl64 ? C:\Perl) before running the parser.
+</p></div><ul>
+<li>
+<p>
+Updated sysMon_DSP_Profiler_V2.apk
+</p>
+</li>
+</ul><p>
+o Added new benchmarks (fft1024, fft1024_vtcm) under CDSP tab. o Added &#8216;Profiler&#8217; option to enable or disable profiling for benchmark runs.
+</p><h3>
+<a name="Sysmon%20for%203.3.0"></a>Sysmon for 3.3.0
+</h3><ul>
+<li>
+<p>
+sysMon DSP Profiler allows collection of DSP metrics &amp; statistics that help in analyzing performance of the SW running on the DSP - things like, MPPS used, DDR/AXI BW usage, various clock speeds while running the SW, cache hits/misses, etc.
+</p>
+</li>
+</ul><h3>
+<a name="Debugger%20support"></a>Debugger support
+</h3><ul>
+<li>
+<p>
+Support for LLDB is included allowing users, via USB connection between development workstation and reference board, perform common debugging operations such as single-stepping through the code, using breakpoints, and inspecting register or memory contents. The debugger is accessible from the SDK IDE (Eclipse) or from the command line.
+</p>
+</li><li>
+<p>
+Issues fixed from lldb debugger side in 3.3.1
+</p>
+</li>
+</ul><p>
+o LLDB hang with v65 simulator tests. o Registers are not displayed correctly while debugging on target. o LLDB debug server crash with v65 simulator tests.
+</p><ul>
+<li>
+<p>
+Issues fixed from lldb debugger side in 3.3.2
+</p>
+</li>
+</ul><p>
+o Changing the value of a variable from debugger was failing. This issue is now fixed and the user can change the value of the variable from the debugger. o Retrieving disassembly data used to fail randomly during debug session. This issue is now fixed.
+</p><ul>
+<li>
+<p>
+Issues fixed from hexagon IDE
+</p>
+</li>
+</ul><p>
+o IDE throws error popup with adb 1.0.39. adb 1.0.39 returns non-zero error code if adb shell ls &lt;filepath&gt; gives no such file or directory. Older versions of adb returns Success even when file not found. o Hexagon Processor version Dropdown under project preferences is not listing v65 option.
+</p><h3>
+<a name="Toolset"></a>Toolset
+</h3><ul>
+<li>
+<p>
+Incorporates LLVM Tools release 8.1.04 - see tools release notes for detailed info.
+</p>
+</li><li>
+<p>
+Link time optimizations (LTO) - better performance and code size by giving compiler a larger scope for optimization. Compiler works one file at the time, but with LTO it optimizes across all the files in the build. Observed 25% code size reduction but your mileage can vary.
+</p>
+</li><li>
+<p>
+Thread Local Storage (TLS) - declare a variable with 1 instance per thread. https://en.wikipedia.org/wiki/Thread-local_storage
+</p>
+</li><li>
+<p>
+Integrated assembler speeds up compilation time.
+</p>
+</li><li>
+<p>
+Enabling OpenCV, TensorFlow and other frameworks written in C++ 11/14 to execute on Hexagon DSP
+</p>
+</li>
+</ul><h3>
+<a name="QuRT"></a>QuRT
+</h3><ul>
+<li>
+<p>
+Historically, QuRT has provided access to system resources such as hardware I/O registers or shared memory resources using an &#8220;on demand&#8221; model. If you are ever authorized to access the resource, then you can map it and un-map it at any time. This model of unmanaged &#8220;on demand&#8221; access leaves a lot of room for improvement.
+</p>
+</li><li>
+<p>
+Among the weaknesses are:-
+</p>
+</li>
+</ul><p>
+o No ability to dynamically change the authorization model. o There is no enforcement of exclusive access. o No cleanup of hardware I/O state when a process exits. If a user process maps some hardware I/O and puts it into an unknown state, the hardware stays in that unknown state if the process crashes.
+</p><ul>
+<li>
+<p>
+The Secure Resource Manager will address the issues above and will allows system resources (drivers) to be used in both the normal and secure context (DRM for example) without having to explicitly enforce separation between contexts.
+</p>
+</li><li>
+<p>
+HVX Preemption enables saving and restoring of HVX registers when context switch takes place due to process preemption.
+</p>
+</li><li>
+<p>
+Fix for the slow file load during execution.
+</p>
+</li><li>
+<p>
+Timer co-sim for using timer functions in simulator was corrected.
+</p>
+</li><li>
+<p>
+Pick up latest libposix.a for posix mutex default behavior (non-recursive).
+</p>
+</li>
+</ul><h3>
+<a name="Halide"></a>Halide
+</h3><div class="indent"><p>
+We are including support for Halide, which is a is a programming language for vision processing http://halide-lang.org/. Halide is designed as a dialect of C++. This allows programmers who are familiar with C++ to start authoring Halide programs. The Halide toolset - available as part of the Hexagon SDK and the Hexagon LLVM toolset - contains a Halide compiler that targets the Hexagon DSP and Hexagon Vector eXtensions (HVX) architecture. Halide for Hexagon with HVX allows programmers to exploit the powerful features of the Qualcomm DSP without knowledge of the underlying processor architecture. This, in turn, enables a higher level of abstraction and significantly increases the number of developers who can take advantage of it. Specifically, programmers can focus solely on the image algorithm and achieve high levels of performance from DSP. The Halide runtime also makes the task of offloading kernels to Hexagon very easy for a programmer. The programmer merely has to add a .hexagon() directive in the Halide program and the Halide runtime will ensure that the kernel is transparently dispatched to the Hexagon processor. With this release we are shipping Halide and example code. Halide user guide and training material is placed under SDK_ROOT/tools/HALIDE_Tools/
+</p></div><ul>
+<li>
+<p>
+This release, paired up with Hexagon Neural Network Libraries available here:
+</p><div class="indent"><p>
+https://wiki.codeaurora.org/xwiki/bin/+Qualcomm+Hexagon+NN+Offload+Framework/ provide a starting point for sophisticated Machine Learning use cases with ops optimized for Hexagon architecture. Developers can use TensorFlow to offload Neural Network graphs (inferences) to Hexagon.
+</p></div>
+</li>
+</ul><h3>
+<a name="New%20Libraries"></a>New Libraries
+</h3><ul class="indent" type="circle">
+<li>
+<p>
+qmath library
+</p><ul type="circle">
+<li>
+<p>
+Offers non-IEEE-compliant HVX-vectorized floating point arithmetic,
+</p>
+</li><li>
+<p>
+Conversion to/from arrays of float or double.
+</p>
+</li><li>
+<p>
+Add/subtract/multiply/mac/compare/sqrt/recip/recipsqrt
+</p>
+</li><li>
+<p>
+qfxp library
+</p>
+</li><li>
+<p>
+Utility library for helping to convert a floating point implementation to a fixed point implementation.
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+UBWCDMA firmware and cosim libraries
+</p><ul type="circle">
+<li>
+<p>
+Firmware library for access to the UBWCDMA cosim. The UBWCDMA is hardware included on the SDM845 CDSP.
+</p>
+</li><li>
+<p>
+Cosim library for use with the hexagon simulator to develop applications using the UBWCDMA
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Asynchronous communication APIs
+</p><ul type="circle">
+<li>
+<p>
+Starting with Hexagon SDK 3.3.1, we are introducing a library that can enable asynchronous communication between CPU and DSP. The asynchronous message queue is included in the Hexagon SDK as &#8220;asyncdspq&#8221; as a user space library and does not require system-level changes on SDM845 or later. More details, including API descriptions, are included in the &#8220;Asynchronous DSP Message Queue&#8221; document accompanying the Hexagon SDK.
+</p>
+</li>
+</ul>
+</li>
+</ul><h3>
+<a name="Mini-DM"></a>Mini-DM
+</h3><ul class="indent" type="circle">
+<li>
+<p>
+Added support for new log types: 0x 19C5, 0x19C6, 0x19C7, 0x19C8, 0x19C9, 0x19CB, 0x19CC, 0x19D6.
+</p>
+</li><li>
+<p>
+Also added support for messages from additional subsystems: SSID 122, 123, 124 and 125.
+</p>
+</li><li>
+<p>
+Check out the mini-dm documentation for more details.
+</p>
+</li><li>
+<p>
+Support for new logcodes - 0x19d8 and 0x19cd.
+</p>
+</li><li>
+<p>
+Fixes for missing logs in the generated log file.
+</p>
+</li><li>
+<p>
+Message in stdout made optional.
+</p>
+</li>
+</ul><h3>
+<a name="_Examples"></a>Examples
+</h3><ul class="indent" type="circle">
+<li>
+<p>
+Hexagon HVX benchmark_v65 example (best starting point for SDM845/Hexagon v65 development).
+</p><ul type="circle">
+<li>
+<p>
+Demonstrates best practice for using multi-domain FastRPC to find appropriate DSP across targets.
+</p>
+</li><li>
+<p>
+Demonstrates using HVX without explicit HVX lock/unlock calls (supported starting in SDM845).
+</p>
+</li><li>
+<p>
+Demonstrates using new v65 HVX scatter/gather and Vector TCM (VTCM), in the bilateral filter.
+</p>
+</li><li>
+<p>
+Added a 1024x1024 FFT, which also uses VTCM (when available) as scratch.
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+UBWCDMA memcpy, blend, and hvx_sum simulator only examples to illustrate the programming flow when using the UBWCDMA firmware library.
+</p>
+</li><li>
+<p>
+(This is only for 3.3.1) With this release, we are shipping Halide example code.
+</p>
+</li>
+</ul><h3>
+<a name="Documentation"></a>Documentation
+</h3><ul class="indent" type="circle">
+<li>
+<p>
+Updated documentation for sysMon_DSP_Profiler_V2.
+</p><ul type="circle">
+<li>
+<p>
+Added descriptions for the new benchmarks (fft1024, fft1024_vtcm)
+</p>
+</li><li>
+<p>
+Added description for &#8216;Profiler&#8217; option usage.
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Updated documentation for sysMonApp and Markers.
+</p><ul type="circle">
+<li>
+<p>
+Added more details on Markers usage for profiling user selectable portions of code.
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Updated documentation of simulator/target debugging.
+</p>
+</li><li>
+<p>
+Updated Getting Started document
+</p><ul type="circle">
+<li>
+<p>
+Comprehensive guide for beginning users of Hexagon.
+</p>
+</li><li>
+<p>
+Covers run-time environment, debugging, profiling, optimization techniques, etc., and pointers to further info.
+</p>
+</li><li>
+<p>
+Added user guide for QuRT
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Hexagon DSP for Compute Guide
+</p><ul type="circle">
+<li>
+<p>
+Introduction guide for software developers whose main task is to run code efficiently on the Hexagon DSP
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Added documentation for VTCM manager APIs, (SDM845 CDSP)
+</p>
+</li><li>
+<p>
+Added documentation for HAP cache lock APIs. (SDM845 CDSP. HAP cache lock APIs are currently not supported in simulator environment)
+</p>
+</li><li>
+<p>
+Updated documentation for sysMon DSP Profiler (formerly Hexagon Profiler)
+</p>
+</li><li>
+<p>
+Added documentation for HVX Resource Manager (SDM660 CDSP) and APIs exposed.
+</p>
+</li><li>
+<p>
+Added documentation for services provided by sysMonApp Android executable
+</p>
+</li><li>
+<p>
+Added documentation to describe the UBWCDMA and the firmware programming model
+</p>
+</li><li>
+<p>
+Added documentation to describe what raw materials are needed to integrate into another build system
+</p>
+</li><li>
+<p>
+Added documentation changes to deprecate RPCMEM_DEFAULT_HEAP.
+</p>
+</li><li>
+<p>
+Added documentation changes to cover rpcmem_init limitation.
+</p>
+</li><li>
+<p>
+Documentation - toolset and other documentation added to the sidebar
+</p>
+</li>
+</ul><h3>
+<a name="Known%20Issues"></a>Known Issues
+</h3><ul>
+<li>
+<p>
+On LE 8096,
+</p><ul type="circle">
+<li>
+<p>
+rpcperf example is not working.
+</p>
+</li><li>
+<p>
+FARF messaging is not working.
+</p>
+</li><li>
+<p>
+Histogram example is not working.
+</p>
+</li><li>
+<p>
+Calculator_C++ example is failing on simulator with toolv72_v55.
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+On SDM845
+</p><ul type="circle">
+<li>
+<p>
+Calculator_multi_domain failure on SDSP on SD845.
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+On SDM670
+</p><ul type="circle">
+<li>
+<p>
+Async DSP Q test failure on SD670. Causes device crash.
+</p>
+</li><li>
+<p>
+Calculator_multi_legacy failure on SD670. Fails to allocate contiguous memory that is used for SDSP. If we change the heaped/flag this is working.
+</p>
+</li>
+</ul>
+</li>
+</ul><h2>
+<a name="3.2"></a>3.2
+</h2><p>
+This SDK is mainly meant for SDM660 support.
+</p><ul type="circle">
+<li>
+<p>
+Support for SDM660
+</p>
+</li><li>
+<p>
+Updated camera streaming example
+</p>
+</li><li>
+<p>
+Updated benchmark example to support v60
+</p>
+</li><li>
+<p>
+Updated makefiles to support flags to off-load to different DSPs
+</p>
+</li><li>
+<p>
+Updated sysmon
+</p><ul type="circle">
+<li>
+<p>
+Support for SDM660
+</p>
+</li>
+</ul>
+</li>
+</ul><h2>
+<a name="3.1"></a>3.1
+</h2><p>
+This SDK is mainly meant to support C++ 11/14. Hexagon toolset, qurt and other libs have been updated to support this feature. Also, an example to showcase this has been added.
+</p><ul type="circle">
+<li>
+<p>
+New features
+</p><ul type="circle">
+<li>
+<p>
+Support for SDM835 (MSM8998)
+</p>
+</li><li>
+<p>
+Updated Hexagon toolset (version 8.0.08), which supports C++ 11/14
+</p>
+</li><li>
+<p>
+Updated qurt libs
+</p>
+</li><li>
+<p>
+Support to 8.0 variants
+</p>
+</li><li>
+<p>
+Support to LE targets (Note: LE toolset is not released as part of SDK. You need to install it separately)
+</p>
+</li><li>
+<p>
+Added an example for computation domains support
+</p>
+</li><li>
+<p>
+CV
+</p><ul type="circle">
+<li>
+<p>
+Added new Computer Vision HVX example &#8216;benchmark&#8217; for MSM8998
+</p><ul type="circle">
+<li>
+<p>
+Added new Computer Vision HVX examples 'dilate5x5_v60', 'gemm' for MSM8996 and MSM8998
+</p>
+</li>
+</ul>
+</li>
+</ul>
+</li><li>
+<p>
+Added rpcperf epplication to measure the overhead associated with FastRPC with various buffer sizes
+</p>
+</li><li>
+<p>
+Bug fixes mini-dm
+</p>
+</li><li>
+<p>
+Document updates and fixes
+</p>
+</li><li>
+<p>
+Hexagon IDE
+</p><ul type="circle">
+<li>
+<p>
+Bug fixes
+</p>
+</li>
+</ul>
+</li>
+</ul>
+</li><li>
+<p>
+Features not supported
+</p><ul type="circle">
+<li>
+<p>
+Remote debugger support is not available for 8996 in this version of SDK
+</p>
+</li><li>
+<p>
+APPI and CAPI are not supported on 8998. Only CAPIv2 is supported on 8998.
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Installer updates
+</p><ul type="circle">
+<li>
+<p>
+Mininal NDK support. This SDK can be used if you are using the standard build system options provided in the SDK and variants. If you need anything more, you might have to install full NDK from Google
+</p>
+</li><li>
+<p>
+Installer_Dependencies.py script helps in installing SDK dependecies in case the installer fails to download
+</p>
+</li>
+</ul>
+</li>
+</ul><h2>
+<a name="3.0"></a>3.0
+</h2><ul type="circle">
+<li>
+<p>
+New features
+</p><ul type="circle">
+<li>
+<p>
+Support for Snadragon 820 (8096) (Note: For previous generation chipsets, please use SDK 2.x)
+</p>
+</li><li>
+<p>
+Support of 7.2 and 7.4 Hexagon toolsets
+</p>
+</li><li>
+<p>
+Support for v62 and v64 Hexagon architectures
+</p>
+</li><li>
+<p>
+Audio/Voice
+</p><ul class="indent" type="circle">
+<li>
+<p>
+CAPI V2 Voice wakeup example, CAPI V2 Speaker Protection example, Dummy ECSN example, Voice IMC example
+</p>
+</li><li>
+<p>
+Updates to Audio/Voice unit test frameworks
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Added Machine learning examples (k-means, linear regression)
+</p>
+</li><li>
+<p>
+Added new Computer Vision examples for integral image and histogram computation
+</p>
+</li><li>
+<p>
+Updates to camera streaming examples. Added simulation example for HVX_add_constant
+</p>
+</li><li>
+<p>
+First release of Hexagon Profiler (sysmon) in SDK
+</p>
+</li><li>
+<p>
+First release of unit test profiling library
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Features not supported
+</p><ul type="circle">
+<li>
+<p>
+Remote debugger support is not available for 8996 in this version of SDK
+</p>
+</li><li>
+<p>
+Audio/Voice integration support on simulator is no longer supported
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Installer updates
+</p><ul type="circle">
+<li>
+<p>
+Selectable SDK components Installation
+</p>
+</li><li>
+<p>
+Reduced installation time
+</p>
+</li><li>
+<p>
+Error logging
+</p>
+</li><li>
+<p>
+For troubleshooting installation issues, please look at this document <a href="InstallAnywhere.html">InstallAnywhere Error recovery</a>
+</p>
+</li>
+</ul>
+</li>
+</ul><h2>
+<a name="2.0"></a>2.0
+</h2><ul type="circle">
+<li>
+<p>
+New features
+</p><ul type="circle">
+<li>
+<p>
+Support for the Snapdragon 810 (8094)
+</p>
+</li><li>
+<p>
+<a href="Applications_Compute%20offload.html">Computational offload to a 2nd DSP</a>
+</p>
+</li><li>
+<p>
+<a href="Audio/audio_calibration_using_app.html">Audio calibration (Set/Get parameters) from Android Java application</a>
+</p>
+</li><li>
+<p>
+<a href="CAPIv2/CAPIv2_Introduction.html">Audio CAPI_V2 support</a>
+</p>
+</li><li>
+<p>
+<a href="CAPIv2/APPI_to_CAPIv2%20Migration.html#Purpose">APPI to CAPI_V2 migration guide</a>
+</p>
+</li><li>
+<p>
+Framework to support heterogeneous computing for image processing
+</p>
+</li><li>
+<p>
+Lots more free memory to load bigger dynamic modules
+</p>
+</li><li>
+<p>
+Support for the LLVM compiler
+</p>
+</li><li>
+<p>
+Android Position Independent Executable (PIE) support
+</p>
+</li><li>
+<p>
+64 bit native Android application support
+</p>
+</li><li>
+<p>
+Get your serial number from the Android UI
+</p>
+</li><li>
+<p>
+<a href="Tools_Scripts.html#com_finder.py">Discover com ports connected to Qualcomm HS-HSB devices</a>
+</p>
+</li><li>
+<p>
+Auto-discover ION heap, used by calculator examples
+</p>
+</li><li>
+<p>
+<a href="Debugging_Message%20Logging.html#getpkt">Extract pcm samples from a mini-dm log</a>
+</p>
+</li><li>
+<p>
+<a href="Debugging_Message%20Logging.html#Runtime%20FARF">Support for run-time message logging (Runtime FARF)</a>
+</p>
+</li><li>
+<p>
+Simulated test framework for Snapdragon 810 (8094)
+</p>
+</li><li>
+<p>
+<a href="Memory%20Management.html#Memory%20Management">Memory architecture documentation</a>
+</p>
+</li><li>
+<p>
+<a href="Examples_Common.html#QuRT%20examples">QuRT example projects</a>
+</p>
+</li><li>
+<p>
+Support for running QuRT in simulation for unit testing
+</p>
+</li><li>
+<p>
+<a href="Voice/voice_overview.html">Added Voice workflow recommendation for static integration and dynamic loading</a>
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Major bug fixes
+</p><ul type="circle">
+<li>
+<p>
+mini-dm flushes output on successful connection
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Known issues
+</p><ul type="circle">
+<li>
+<p>
+Remote debugger is temporarily not supported on Snapdragon 810 (8094) devices
+</p>
+</li>
+</ul>
+</li>
+</ul><h2>
+<a name="1.2.2"></a>1.2.2
+</h2><ul type="circle">
+<li>
+<p>
+New features
+</p><ul type="circle">
+<li>
+<p>
+<a href="Voice/Applications.html">Dynamic voice post-processing</a>
+</p>
+</li><li>
+<p>
+[FastCV libraries upgraded to 1.5.0 release]
+</p>
+</li><li>
+<p>
+[Debugger non-stop mode support]
+</p>
+</li><li>
+<p>
+Remote debugger page table support
+</p>
+</li><li>
+<p>
+Debugger verification script
+</p>
+</li><li>
+<p>
+<a href="eclipse_target_debug.html">Target debugging using IDE</a>
+</p>
+</li><li>
+<p>
+<a href="eclipse_utilities.html">RTOS, Profiling and amdb_mgr views in IDE</a>
+</p>
+</li><li>
+<p>
+<a href="eclipse_ndk_projects.html">Android NDK based project creation in IDE</a>
+</p>
+</li><li>
+<p>
+<a href="eclipse_utilities.html#Profiling%20library">Comparative module profiler</a>
+</p>
+</li><li>
+<p>
+Expose stdlib string symbols
+</p>
+</li><li>
+<p>
+<a href="Examples_Common.html#template_so">Template shared object example</a>
+</p>
+</li><li>
+<p>
+<a href="https://developer.qualcomm.com/hexagon-updates">Developer registration for updates</a>
+</p>
+</li><li>
+<p>
+<a href="Environments_Build%20System.html#Variants">Switched to finer grained Hexagon build variants</a>
+</p>
+</li><li>
+<p>
+Support for 5.1 Hexagon Tools (5.1 tools obtained separately)
+</p>
+</li><li>
+<p>
+Improved DSP state information when running TISE
+</p>
+</li><li>
+<p>
+<a href="Tools_Signing.html">elfsigner supports production signing</a>
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Major bug fixes
+</p><ul type="circle">
+<li>
+<p>
+Fixed segment fault when running calculator example on build that does not support adspmsgd
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Known issues
+</p><ul type="circle">
+<li>
+<p>
+Lua Debugger crashes so has been disabled
+</p>
+</li>
+</ul>
+</li>
+</ul><h2>
+<a name="1.1.0"></a>1.1.0
+</h2><ul type="circle">
+<li>
+<p>
+New features
+</p><ul type="circle">
+<li>
+<p>
+Trepn
+</p>
+</li><li>
+<p>
+Lua debugger
+</p>
+</li><li>
+<p>
+Equalizer example
+</p>
+</li><li>
+<p>
+mini-dm
+</p>
+</li><li>
+<p>
+FFT examples
+</p>
+</li><li>
+<p>
+Improved loader and security error reporting
+</p>
+</li><li>
+<p>
+Run-time get/set param of APPI modules
+</p>
+</li><li>
+<p>
+Performance monitor
+</p>
+</li><li>
+<p>
+Utilities to query test root and symbol support
+</p>
+</li><li>
+<p>
+Improved remote debugger stability
+</p>
+</li>
+</ul>
+</li>
+</ul><h2>
+<a name="1.0.0"></a>1.0.0
+</h2><ul type="circle">
+<li>
+<p>
+First public release of the Hexagon SDK
+</p><ul type="circle">
+<li>
+<p>
+Notable features
+</p><ul type="circle">
+<li>
+<p>
+FastRPC
+</p>
+</li><li>
+<p>
+Dynamic loading
+</p>
+</li><li>
+<p>
+Remote debugger
+</p>
+</li><li>
+<p>
+Audio customization
+</p>
+</li><li>
+<p>
+FastCV support
+</p>
+</li><li>
+<p>
+Hexagon IDE plugins
+</p>
+</li><li>
+<p>
+Logger
+</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

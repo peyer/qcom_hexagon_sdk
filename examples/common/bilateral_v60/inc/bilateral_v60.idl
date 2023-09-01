@@ -1,0 +1,19 @@
+#ifndef BILATERAL_V60_IDL
+#define BILATERAL_V60_IDL
+
+#include "AEEStdDef.idl"
+
+interface bilateral_v60{
+
+AEEResult bilateral9x9(in sequence<uint8> src,              // input buffer of unsigned 8-bit values
+                              in int32 stride,          // stride of the src image
+                              in int32 width,           // width of region of interest contained in src image
+                              in int32 height,          // height of region of interest contained in src image
+		   					  inrout   sequence<uint8> dst,   // output buffer of unsigned 8-bit values
+                              rout int32 dspUsec        // dsp-measured microseconds profiling
+	);
+};
+
+
+
+#endif //BILATERAL_V60_IDL

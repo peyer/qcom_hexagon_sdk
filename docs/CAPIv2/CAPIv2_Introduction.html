@@ -1,0 +1,1130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><style type="text/css">
+.html2d { position: relative; }
+.html2d div { position: absolute; border-width: 0; border-style: solid; }
+.html2d div div { position: absolute; border-width: 0; border-style: solid; }
+
+</style><title>CAPIv2</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="../images/sidebar_top.jpg"></top><script src="../scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, true)"><input id="searchButton" onclick="postFunction(true)" type="button" value="Search"></form><p>
+<a href="../index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="../feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="../hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="../images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="../hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="../images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="../images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="../Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="../Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="../Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="../Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="../Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="../Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="../HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="../Audio/Applications.html">Audio</a>
+</p><p>
+<a href="../Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="../Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="../FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="../Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="../Voice/Applications.html">Voice</a>
+</p><p>
+<a href="../Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="../APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="../APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="../APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="../APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="../Audio/Examples.html">Audio</a>
+</p><p>
+<a href="../Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="../Examples_Common.html">Common</a>
+</p><p>
+<a href="../Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="../Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="../Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="../Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="../CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="../Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="../Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="../Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="../Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="../Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="../Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="../Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="../Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="../Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="../Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="../Tools_Signing.html">Signing</a>
+</p><p>
+<a href="../Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="../Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="../FAQ_Common.html">Common</a>
+</p><p>
+<a href="../FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="../FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="../FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="../Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="../Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="../Support_Contact.html">Contact</a>
+</p><center><img src="../images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h1>
+<a name="CAPIv2"></a>CAPIv2
+</h1><div class="toc"><div class="tocLevel"><a href="#Introduction">Introduction</a></div><div class="tocLevel"><a href="#Differences%20between%20CAPI,%20APPI%20and%20CAPIv2">Differences between CAPI, APPI and CAPIv2</a></div><div class="tocLevel"><a href="#CAPIv2%20Interface">CAPIv2 Interface</a><div class="tocLevel"><a href="#Function%20Interface%20Wrapper">Function Interface Wrapper</a></div><div class="tocLevel"><a href="#Virtual%20Function%20Table">Virtual Function Table</a><div class="tocLevel"><a href="#Data%20Structure%20Documentation">Data Structure Documentation</a></div></div></div><div class="tocLevel"><a href="#CAPIv2%20Properties">CAPIv2 Properties</a><div class="tocLevel"><a href="#Buffering">Buffering</a><div class="tocLevel"><a href="#Non-Buffered%20Data%20Flow%20Model">Non-Buffered Data Flow Model</a></div><div class="tocLevel"><a href="#Buffered%20Data%20Flow%20Model">Buffered Data Flow Model</a></div></div><div class="tocLevel"><a href="#Events">Events</a></div><div class="tocLevel"><a href="#Framework%20Extensions">Framework Extensions</a></div><div class="tocLevel"><a href="#Properties%20and%20Parameters">Properties and Parameters</a></div></div><div class="tocLevel"><a href="#Error%20Codes">Error Codes</a><div class="tocLevel"><a href="#Set%20Properties%20and%20Get%20Properties%20Errors">Set Properties and Get Properties Errors</a></div><div class="tocLevel"><a href="#Initialization%20Errors">Initialization Errors</a></div></div><div class="tocLevel"><a href="#Converting%20APPI%20to%20CAPIv2">Converting APPI to CAPIv2</a></div><div class="tocLevel"><a href="#Moving%20Ahead">Moving Ahead</a><div class="tocLevel"><a href="#Testing%20CAPIv2%20Modules">Testing CAPIv2 Modules</a></div></div></div><h2>
+<a name="Introduction"></a>Introduction
+</h2><p>
+The present context describes the Hexagon&#8482; Multimedia Common Audio Processor Interface v2 (CAPI v2), which is used in the aDSP framework for the Audio subsystem (Elite). It allows the control layer to use any audio encoder, decoder or post-processing feature through a common set of APIs, thereby abstracting the details of the underlying algorithm. The CAPIv2 also helps the control layers, such as Audio Encoder Service, Audio Decoder Service, Audio Post-processing and Audio Pre-processing services, to
+</p><ul type="circle">
+<li>
+<p>
+Be generic
+</p>
+</li><li>
+<p>
+Localize the changes specific to the algorithms
+</p>
+</li>
+</ul><p>
+This document is intended for software developers who will be using the CAPIv2. This document provides the public interfaces necessary to use the features provided by the CAPIv2. A high-level overview and information on leveraging the interface functionality are also provided. The CAPIv2 provides a set of generic utilities that can be used by the standalone applications, Elite service, and many other such frameworks to interact with the audio core libraries. These utilities are the only interface for the upper software layers to interact with these audio libraries.
+</p><h2>
+<a name="Differences%20between%20CAPI,%20APPI%20and%20CAPIv2"></a>Differences between CAPI, APPI and CAPIv2
+</h2><p>
+The CAPIv2 interface is intended to be a common interface to be used for audio decoders and encoders (which were using CAPI earlier) and audio post processing algorithms (which were using APPI earlier). Some of the key new features introduced in CAPIv2 are:
+</p><ul type="circle">
+<li>
+<p>
+A mechanism for the module to notify the client service of any events that may occur while processing.
+</p>
+</li><li>
+<p>
+The ability to have more than one input port and more than one output port.
+</p>
+</li>
+</ul><p>
+The major difference between CAPI, APPI API and CAPIv2 is the buffering model. CAPIv2 provides two different buffering models, any of which can be chosen by the module developer. These models are different from the buffering models used by CAPI and APPI.
+</p><h2>
+<a name="CAPIv2%20Interface"></a>CAPIv2 Interface
+</h2><h3>
+<a name="Function%20Interface%20Wrapper"></a>Function Interface Wrapper
+</h3><p>
+Wrapper for the virtual function table, capi_v2_vtbl_t. This capi_v2_t structure appears to the caller as a virtual function table. The virtual function table in the instance structure is followed by other structure elements, but those are invisible to the users of the CAPI_V2 object. This capi_v2_t structure is all that is publicly visible.
+</p><div class="indent"><div class=diagram>
+<div class="html2d art" style="width:608px;height:96px;font-size:12.48px;line-height:16px;white-space:nowrap">
+<div class="rect round" style="border-width:3px;left:3px;top:7px;right:2px;bottom:6px"></div>
+<div class=line style="border-left-width:2px;left:347px;top:7px;right:259px;bottom:63px"></div>
+<div class=line style="border-top-width:2px;left:7px;top:39px;right:7px;bottom:55px;line-height:0"></div>
+<div class=line style="border-left-width:2px;left:347px;top:39px;right:259px;bottom:15px"></div>
+<div class=line style="border-left-width:2px;left:187px;top:7px;right:419px;bottom:63px"></div>
+<div class=line style="border-left-width:2px;left:187px;top:47px;right:419px;bottom:15px"></div>
+<div style="text-align:center;left:24px;top:16px;right:552px;bottom:64px">Type</div>
+<div style="text-align:center;left:232px;top:16px;right:304px;bottom:64px">Parameter</div>
+<div style="text-align:center;left:400px;top:16px;right:120px;bottom:64px">Description</div>
+<div style="text-align:center;left:16px;top:48px;right:432px;bottom:32px">const capi_v2_vtbl_t</div>
+<div style="text-align:center;left:208px;top:48px;right:336px;bottom:32px">vtbl_ptr</div>
+<div style="left:360px;top:48px;right:64px;bottom:32px">vtbl_ptr Pointer to the</div>
+<div style="text-align:center;left:24px;top:64px;right:576px;bottom:16px"></div>
+<div style="left:360px;top:64px;right:64px;bottom:16px">virtual function table.</div>
+</div>
+</div>
+</div><h3>
+<a name="Virtual%20Function%20Table"></a>Virtual Function Table
+</h3><p>
+The capi_v2_vtbl_t structure contains the following functions:
+</p><ol type="1">
+<li>
+<p>
+capi_v2_vtbl_t::process()
+</p>
+</li><li>
+<p>
+capi_v2_vtbl_t::end()
+</p>
+</li><li>
+<p>
+capi_v2_vtbl_t::set_param()
+</p>
+</li><li>
+<p>
+capi_v2_vtbl_t::get_param()
+</p>
+</li><li>
+<p>
+capi_v2_vtbl_t::set_properties()
+</p>
+</li><li>
+<p>
+capi_v2_vtbl_t::get_properties()
+</p>
+</li>
+</ol><h4>
+<a name="Data%20Structure%20Documentation"></a>Data Structure Documentation
+</h4><ol type="1">
+<li>
+<p>
+struct capi_v2_vtbl_t
+</p><p>
+Function table structure for plain implementations of CAPIv2-compliant objects. Objects must have a pointer to a function table as the first element in their instance structure. This struct is the function table type for all such objects. Data Fields
+</p><ul type="circle">
+<li>
+<p>
+capi_v2_err_t( process )(capi_v2_t _pif, capi_v2_stream_data_t input[ ], capi_v2_stream_data_t output[ ])
+</p>
+</li><li>
+<p>
+capi_v2_err_t( end )(capi_v2_t _pif)
+</p>
+</li><li>
+<p>
+capi_v2_err_t( set_param )(capi_v2_t _pif, uint32_t param_id, const capi_v2_port_info_t port_info_ptr, capi_v2_buf_t params_ptr)
+</p>
+</li><li>
+<p>
+capi_v2_err_t( get_param )(capi_v2_t _pif, uint32_t param_id, const capi_v2_port_info_t port_info_ptr, capi_v2_buf_t params_ptr)
+</p>
+</li><li>
+<p>
+capi_v2_err_t( set_properties )(capi_v2_t _pif, capi_v2_proplist_t proplist_ptr)
+</p>
+</li><li>
+<p>
+capi_v2_err_t( get_properties )(capi_v2_t _pif, capi_v2_proplist_t proplist_ptr)
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Each pp module requires the following to be added to Audio Module Database:
+</p><ul type="circle">
+<li>
+<p>
+pp module ID - Either a unique ID or the ID of an existing pp module that should be overridden by the new pp module.
+</p>
+</li><li>
+<p>
+get_static_properties function - The resulting library must export a pp module-specific <code>get_static_properties()</code> function that will be called by the Elite framework to get the number of properties defined in Elite_CAPI_V2_properties.h before initializing the pp module.
+</p><p>
+The prototype of the <code>get_static_properties()</code> function is as follows:
+</p><pre><span style="color: blue">typedef</span> capi_v2_err_t (*capi_v2_get_static_properties_f)(
+          capi_v2_proplist_t *init_set_proplist,
+          capi_v2_proplist_t *static_proplist);
+
+For more information see capi_v2_passthru.h/.c and Elite_CAPI_V2.h.  
+Naming convention: The name of this function must be of the form &lt;tag&gt;_get_static_properties. 
+The tag may be any string as <span style="color: blue">long</span> as the function name is a valid C function name. 
+This tag will be used <span style="color: blue">while</span> registering the module with the DSP. Example: volume_control_get_static_properties. The tag is volume_control.
+</pre>
+</li><li>
+<p>
+init function - The resulting library must export a pp module specific <code>init()</code> function that will be called by the Elite framework to init the pp module and obtain a pointer to the pp module's CAPI v2 object.
+</p><p>
+The prototype of the <code>init()</code> function is as follows:
+</p><pre><span style="color: blue">typedef</span> capi_v2_err_t (*capi_v2_init_f)(
+            capi_v2_t* _pif,
+            capi_v2_proplist_t *init_set_proplist);
+
+For more information look at capi_v2_passthru.h/.c and Elite_CAPI_V2.h. 
+Naming convention: The name of this function must be of the form &lt;tag&gt;_init. 
+The tag should be the same as the tag used in the naming of the get_static_properties 
+function. This tag will be used <span style="color: blue">while</span> registering the module with the DSP. 
+Example: volume_control_init. The tag is volume_control, which matches with the 
+example given <span style="color: blue">for</span> get_static_properties.
+</pre>
+</li>
+</ul>
+</li><li>
+<p>
+Creating and customizing
+</p><p>
+The following provides an overview of the process of creating a custom audio pp module.
+</p><ul type="circle">
+<li>
+<p>
+Algorithms are wrapped with the CAPI v2.
+</p>
+</li><li>
+<p>
+CAPI v2 modules have unique IDs
+</p><ul type="circle">
+<li>
+<p>
+Create a unique module ID
+</p>
+</li><li>
+<p>
+Create unique get/set parameter IDs.
+</p>
+</li>
+</ul>
+</li>
+</ul><pre><span style="color: blue">#define</span> PPID_MODULE 0xFFFFFFF0
+<span style="color: blue">#define</span> PARAM_ID_CTRL1 0x10000001
+<span style="color: blue">#define</span> PARAM_ID_CTRL2 0x10000002
+</pre><ul type="circle">
+<li>
+<p>
+Implement the core signal processing algorithm in the process function
+</p><ul type="circle">
+<li>
+<p>
+Implements the supporting functions to make the module CAPI v2 compliant.
+</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol><div class=diagram>
+<div class="html2d art" style="width:440px;height:256px;font-size:12.48px;line-height:16px;white-space:nowrap">
+<div class="rect round" style="border-width:3px;left:3px;top:7px;right:2px;bottom:6px"></div>
+<div class="rect round" style="border-width:3px;left:43px;top:103px;right:282px;bottom:118px"></div>
+<div class="rect round" style="border-width:3px;left:227px;top:199px;right:42px;bottom:22px"></div>
+<div class="rect round" style="border-width:3px;left:179px;top:55px;right:162px;bottom:166px"></div>
+<div class="rect round" style="border-width:3px;left:299px;top:151px;right:42px;bottom:70px"></div>
+<div class="rect round" style="border-width:3px;left:171px;top:151px;right:154px;bottom:70px"></div>
+<div class="rect round" style="border-width:3px;left:43px;top:199px;right:242px;bottom:22px"></div>
+<div class="rect round" style="border-width:3px;left:171px;top:103px;right:42px;bottom:118px"></div>
+<div class="rect round" style="border-width:3px;left:43px;top:151px;right:282px;bottom:70px"></div>
+<div class=line style="border-top-width:2px;left:3px;top:39px;right:3px;bottom:215px;line-height:0"></div>
+<div style="text-align:center;left:184px;top:16px;right:144px;bottom:224px">CAPI v2 Module</div>
+<div style="text-align:center;left:192px;top:64px;right:176px;bottom:176px">process()</div>
+<div style="left:56px;top:112px;right:336px;bottom:128px">init()</div>
+<div style="left:184px;top:112px;right:72px;bottom:128px">get_static_properties()</div>
+<div style="text-align:center;left:56px;top:160px;right:296px;bottom:80px">get_param()</div>
+<div style="text-align:center;left:184px;top:160px;right:168px;bottom:80px">set_param()</div>
+<div style="left:312px;top:160px;right:88px;bottom:80px">end()</div>
+<div style="text-align:center;left:56px;top:208px;right:256px;bottom:32px">set_properties()</div>
+<div style="left:240px;top:208px;right:72px;bottom:32px">get_properties()</div>
+</div>
+</div>
+<div class="indent"><pre>get_static_properties        Returns the list of <span style="color: blue">static</span> properties by the library to framework.
+init                         Initializes the CAPI v2 and the library.
+process                      Processes an input buffer and generates an output buffer.
+                                 This calls the core signal processing algorithm in the library.
+set_param                    Used to set module calibration parameters.
+get_param                    Used to get module calibration parameters.
+set_properties               Used to set properties of CAPI v2 modules.
+get_properties               Used to get properties of CAPI v2 modules.
+end                          Destroys the CAPI v2 library.
+</pre></div><h2>
+<a name="CAPIv2%20Properties"></a>CAPIv2 Properties
+</h2><h3>
+<a name="Buffering"></a>Buffering
+</h3><p>
+CAPIv2 has two models of data flow:
+</p><ul type="circle">
+<li>
+<p>
+Non-buffered: This model is applicable to all modules that do not perform any rate conversion, encoding or decoding.
+</p>
+</li><li>
+<p>
+Buffered: This model is applicable to modules which perform rate conversion or perform encoding or decoding.
+</p>
+</li>
+</ul><p>
+The type of data flow model must be exposed by the module as a parameter that can be queried statically. This is done via the CAPI_V2_REQUIRES_DATA_BUFFERING property that can be queried through the capi_v2_get_static_properties_f function exposed by the module.
+</p><h4>
+<a name="Non-Buffered%20Data%20Flow%20Model"></a>Non-Buffered Data Flow Model
+</h4><p>
+The non-buffered data flow model works as follows:
+</p><ul type="circle">
+<li>
+<p>
+The client must ensure that it provides the same number of samples on every input port of the module. In case of compressed data, the same number of bytes must be provided on every input port.
+</p>
+</li><li>
+<p>
+The number of output samples provided on every output port of the module must be the same as the number of input samples. In case of compressed data, the number of bytes on every port must be the same as the number of input bytes. The client code must ensure that there is enough space in the output buffer.
+</p>
+</li><li>
+<p>
+The module must be able to handle any number of input samples (or input bytes in the case of compressed data).
+</p>
+</li>
+</ul><p>
+This model incurs low overhead, so it should be used whenever possible. This model can also be used for modules that perform processing in fixed blocks of data (frames). This can be achieved by using the following technique:
+</p><ol type="1">
+<li>
+<p>
+Define one buffer per port equal to the frame size.
+</p>
+</li><li>
+<p>
+Initially mark all the buffers at the input ports as empty.
+</p>
+</li><li>
+<p>
+Initially mark all the buffers at output ports as full and initialize them all to zero.
+</p>
+</li><li>
+<p>
+Define a buffer offset variable which is common for all ports and initialize it to zero. This variable holds the number of samples present in the internal input buffers and the number of samples read from the internal output buffers.
+</p>
+</li><li>
+<p>
+Whenever process is called, do the following:
+</p>
+</li>
+</ol><pre>n = number of samples provided at each input port
+F = frame size in samples
+buf_offset = the value of the common buffer offset variable
+<span style="color: blue">while</span> (n &gt; 0)
+ {
+   valid_samples_in_internal_output_bufs = (F) (minus) (buf_offset);
+   copy_size = min(n, valid_samples_in_internal_output_bufs);
+   On every input port, copy copy_size samples from the input buffers provided by the client to the internal input buffers.
+   On every output port, copy copy_size samples from the internal output buffers to the output buffers provided by the client. 
+   buf_offset += copy_size;
+   n -= copy_size;
+   <span style="color: blue">if</span> (buf_offset == F)
+   {
+      <span style="color: darkgreen">// At this point there are F samples in every internal input buffer</span>
+      <span style="color: darkgreen">// and F samples of free space in every internal output buffer.</span>
+      <span style="color: darkgreen">// Perform data processing using the data from the internal input buffers and writing data into the internal output buffers.</span>
+      buf_offset = 0;
+   }
+ }
+</pre><h4>
+<a name="Buffered%20Data%20Flow%20Model"></a>Buffered Data Flow Model
+</h4><p>
+The buffered data flow model works as follows:
+</p><ol type="1">
+<li>
+<p>
+The module must define a threshold in terms of the number of bytes for every input and output port. This threshold for any port may be queried by the client at any time using the CAPI_V2_PORT_DATA_THRESHOLD property. If the threshold changes, the module must raise the CAPI_V2_EVENT_PORT_DATA_THRESHOLD_CHANGE event for each port on which the threshold changed.
+</p>
+</li><li>
+<p>
+For input ports, the threshold indicates the minimum amount of data needed to guarantee that processing can be done. For example, consider an input buffer with 100 bytes of data and a threshold of 25 bytes. If the module consumes more than 75 bytes, the amount of remaining data in the input buffer will be less than its threshold. When this happens, the module may stop further processing and return from the process() function. Note: It may be possible for the module to perform processing with lesser amount of data in some cases. For example, if the module performs decoding of compressed data, this value will be the worst case compressed frame size. The module would be able to perform decoding with lesser data if the actual compressed frame size is smaller. In this case, it may continue processing.
+</p>
+</li><li>
+<p>
+For output ports, the threshold indicates the minimum amount of free space needed to guarantee that processing can be done. For example, consider an output buffer with a maximum size of 100 bytes and a threshold of 25 bytes. If the module produces more than 75 bytes of data, the remaining free space in the output buffer will be less than the threshold. When this happens, the module may stop further processing and return from the process() function.
+</p>
+</li><li>
+<p>
+The client may provide input and output buffers of any size when calling process.
+</p>
+</li><li>
+<p>
+When the process call returns, the module must have consumed enough data so that the amount of valid data remaining in at least one input port is less than the threshold for that port OR the module must have produced enough data so that the amount of free space remaining in at least one output port is less than the threshold for that port.
+</p>
+</li>
+</ol><p>
+Some examples of thresholds that can be provided are:
+</p><ol type="1">
+<li>
+<p>
+Decoders: Input threshold = the worst case compressed frame size. Output threshold = the size of one uncompressed frame.
+</p>
+</li><li>
+<p>
+Encoders: Input threshold = the size of one uncompressed frame. Output threshold = the worst case compressed frame size.
+</p>
+</li><li>
+<p>
+Sample rate converter that can work on an arbitrary number of samples: Input threshold = 1, output threshold = 1.
+</p>
+</li>
+</ol><p>
+This model incurs high overhead, so it should be used only when necessary.
+</p><h3>
+<a name="Events"></a>Events
+</h3><p>
+A mechanism is provided for the module to notify the client of events that happen. Events are identified by pre-defined event ids. The interface also describes the payload corresponding to each event id. The following information is provided by the module to the client when the callback function is called:
+</p><ol type="1">
+<li>
+<p>
+An opaque state token that is provided by the client at the module creation time.
+</p>
+</li><li>
+<p>
+The event id
+</p>
+</li><li>
+<p>
+The port number associated with this event. This is optional.
+</p>
+</li><li>
+<p>
+A buffer containing the payload associated with this event. The buffer must be allocated by the module. It can be freed by the module once the callback function returns.
+</p>
+</li>
+</ol><p>
+All event ids and their payloads are described in the &#8216;Interfaces&#8217; section. A typical call-flow is illustrated in Figure below . Here two events are raised in a call to the process() function. The client takes the appropriate action within the callback function.
+</p><div class="indent"><left><img alt="<Image not found&gt;" src="images/call_flow_for_raising_events.jpg"></left></div><h3>
+<a name="Framework%20Extensions"></a>Framework Extensions
+</h3><p>
+CAPIv2 provides a mechanism for extending the functionality of the interface. The additional functionality is provided via framework extensions. A framework extension is typically defined using a header file that is included both by the module and the client. Each extension is identified using a GUID. The header file then describes how the client and module that use the extensions behave. Any set parameter IDs and payloads, constant definitions and function declarations required for this extension are also present in the header file. The client queries the module for the list of extensions that it needs using capi_v2_get_static_properties. If the client supports these extensions, it can create the module and proceed. If not, the client must error out. Here is an example of a framework extension: Consider a module that performs sample removal or insertion in order to match the audio going from one clock domain to another. This module would then need the clock drift information to be passed to it. A framework extension can be created for this purpose. The extension header would have the GUID identifying this extension, and the param ID and payload format to be used by the client to pass the drift information to the module. Any module that implements the rate matching functionality can then include this header and return the GUID in the list of framework extensions it needs. The client can then perform the required set parameters to pass the drift information.
+</p><h3>
+<a name="Properties%20and%20Parameters"></a>Properties and Parameters
+</h3><p>
+CAPIv2 provides two different ways of setting and getting information from a module &#8211; properties and parameters. Both properties and parameters are identified by ids and have a specific payload associated with each id. All valid property ids and their payloads are defined in the CAPIv2 header files. Module developers cannot define custom properties. Properties can be set using the set_properties method and can be queried using the get_properties method. Some properties can be queried without creating an instance of a module, using the capi_v2_get_static_properties_f function exposed by the module. Some properties can be set at initialization time using the capi_v2_init_f function exposed by the module. Parameter ids and their payloads are defined by the module developer. They can be set using the set_param method and queried using the get_param method.
+</p><h2>
+<a name="Error%20Codes"></a>Error Codes
+</h2><p>
+The error codes returned by CAPIv2 functions are interpreted as bit fields. Multiple bits cam be set at the same time to indicate various errors. Use the helper macro, CAPI_V2_SET_ERROR, to set a bit in the error code. Use the helper macro, CAPI_V2_IS_ERROR_CODE_SET, to check if a specific bit is set in the error code.
+</p><h3>
+<a name="Set%20Properties%20and%20Get%20Properties%20Errors"></a>Set Properties and Get Properties Errors
+</h3><p>
+Functions that use the capi_v2_proplist_t structure can be used to set or get multiple property values at the same time. Errors that might occur must be handled as follows:
+</p><ol type="1">
+<li>
+<p>
+If the property is not supported by the module, the CAPI_V2_EUNSUPPORTED flag must be set in the error code, and the actual_data_len field for that property must be set to zero.
+</p>
+</li><li>
+<p>
+If there is another error, the corresponding flag must be set in the error code, and the actual_data_len field must be set to the number of bytes read or written (just like for the success case).
+</p>
+</li>
+</ol><h3>
+<a name="Initialization%20Errors"></a>Initialization Errors
+</h3><p>
+An error returned from the capi_v2_init_f() function indicates the module was not initialized. Return an error if the module cannot proceed because of a problem. The module must return CAPI_V2_EOK if any unsupported property is set during initialization. If the module returns an error from capi_v2_init_f(), the module must ensure that all cleanup is done because the capi_v2_vtbl_t::end() method will not be called.
+</p><h2>
+<a name="Converting%20APPI%20to%20CAPIv2"></a>Converting APPI to CAPIv2
+</h2><p>
+To convert existing APPI module to CAPIv2, please click <a href="APPI_to_CAPIv2%20Migration.html#Purpose">here</a>
+</p><h2>
+<a name="Moving%20Ahead"></a>Moving Ahead
+</h2><h3>
+<a name="Testing%20CAPIv2%20Modules"></a>Testing CAPIv2 Modules
+</h3><ol type="1">
+<li>
+<p>
+Audio : Testing procedure of CAPIv2 modules is same as APPI/CAPI modules.
+</p><div class="indent"><p>
+For more information please click <a href="../Audio/Examples.html#Building%20CAPIv2/CAPI/APPI%20modules">here</a>
+</p></div>
+</li><li>
+<p>
+Voice : Testing procedure of voice CAPIv2 modules is mentioned <a href="../Voice/voice_overview.html#Introduction">here</a>
+</p>
+</li>
+</ol><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+
+# must list all variants supported by this project
+include hexagon_unsupport.min
+SUPPORTED_VS = $(filter-out $(Unsupported_hexagon_VS),$(default_VS))
+# must list all the dependencies of this project
+DEPENDENCIES = TEST_MAIN \
+			   TEST_CAPI_V2_VOICE \
+			   TEST_CAPI_V2 \
+			   TEST_UTIL \
+			   CAPI_V2_UTILS_PROPS \
+			   ATOMIC \
+			   TEST_PROFILE \
+
+# each dependency needs a directory definition
+#  the form is <DEPENDENCY NAME>_DIR
+#  for example:
+#    DEPENDENCIES = FOO
+#    FOO_DIR = $(HEXAGON_SDK_ROOT)/examples/common/foo
+#
+
+TEST_MAIN_DIR = $(HEXAGON_SDK_ROOT)/test/common/test_main
+TEST_CAPI_V2_DIR  = $(HEXAGON_SDK_ROOT)/test/audio/test_capi_v2
+TEST_CAPI_V2_VOICE_DIR  = $(HEXAGON_SDK_ROOT)/test/audio/test_capi_v2_voice
+TEST_UTIL_DIR = $(HEXAGON_SDK_ROOT)/test/common/test_util
+TEST_PROFILE_DIR = $(HEXAGON_SDK_ROOT)/test/common/test_profile
+CAPI_V2_UTILS_PROPS_DIR = $(HEXAGON_SDK_ROOT)/libs/audio/capi_v2_utils_props
+ATOMIC_DIR = $(HEXAGON_SDK_ROOT)/libs/common/atomic

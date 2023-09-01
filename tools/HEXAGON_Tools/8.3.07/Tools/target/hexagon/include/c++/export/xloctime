@@ -1,0 +1,323 @@
+// xloctime internal header (from <locale>)
+#ifndef _XLOCTIME_
+#define _XLOCTIME_
+#include <ctime>
+#include <xlocnum>
+_STD_BEGIN
+
+		// STRUCT time_base
+struct time_base
+	: public locale::facet
+	{	// base class for time_get
+	enum dateorder
+		{	// constants for different orders of date components
+		no_order, dmy, mdy, ymd, ydm};
+
+	time_base(size_t _Refs = 0)
+		: locale::facet(_Refs)
+		{	// default constructor
+		}
+	};
+
+		// TEMPLATE CLASS time_get
+export
+template<class _Elem,
+	class _InIt = istreambuf_iterator<_Elem, char_traits<_Elem> > >
+	class time_get
+		: public time_base
+	{	// facet for converting text to encoded times
+public:
+	typedef _Elem char_type;
+	typedef _InIt iter_type;
+
+	static locale::id id;	// unique facet id
+
+	dateorder date_order() const
+		{	// return date order code
+		return (do_date_order());
+		}
+
+	_InIt get_time(_InIt _First, _InIt _Last,
+		ios_base& _Iosbase, ios_base::iostate& _State, tm *_Pt) const
+		{	// get time of day from [_First, _Last) into _Pt
+		return (do_get_time(_First, _Last, _Iosbase, _State, _Pt));
+		}
+
+	_InIt get_date(_InIt _First, _InIt _Last,
+		ios_base& _Iosbase, ios_base::iostate& _State, tm *_Pt) const
+		{	// get date from [_First, _Last) into _Pt
+		return (do_get_date(_First, _Last, _Iosbase, _State, _Pt));
+		}
+
+	_InIt get_weekday(_InIt _First, _InIt _Last,
+		ios_base& _Iosbase, ios_base::iostate& _State, tm *_Pt) const
+		{	// get weekday from [_First, _Last) into _Pt
+		return (do_get_weekday(_First, _Last, _Iosbase, _State, _Pt));
+		}
+
+	_InIt get_monthname(_InIt _First, _InIt _Last,
+		ios_base& _Iosbase, ios_base::iostate& _State, tm *_Pt) const
+		{	// get month from [_First, _Last) into _Pt
+		return (do_get_monthname(_First, _Last, _Iosbase, _State, _Pt));
+		}
+
+	_InIt get_year(_InIt _First, _InIt _Last,
+		ios_base& _Iosbase, ios_base::iostate& _State, tm *_Pt) const
+		{	// get year from [_First, _Last) into _Pt
+		return (do_get_year(_First, _Last, _Iosbase, _State, _Pt));
+		}
+
+	explicit time_get(size_t _Refs = 0)
+		: time_base(_Refs)
+		{	// construct from current locale
+		_Init(_Locinfo());
+		}
+
+	time_get(const _Locinfo& _Lobj, size_t _Refs = 0)
+		: time_base(_Refs)
+		{	// construct from specified locale
+		_Init(_Lobj);
+		}
+
+	static size_t _Getcat(const locale::facet **_Ppf = 0,
+		const locale *_Ploc = 0)
+		{	// return locale category mask and construct standard facet
+		if (_Ppf != 0 && *_Ppf == 0)
+			*_Ppf = _NEW_CRT time_get<_Elem, _InIt>(
+				_Locinfo(_Ploc->name()));
+		return (_X_TIME);
+		}
+
+_PROTECTED:
+	virtual ~time_get()
+		{	// destroy the object
+		_Tidy();
+		}
+
+protected:
+	void _Init(const _Locinfo& _Lobj);
+
+	virtual dateorder do_date_order() const
+		{	// return date order code
+		return (_Dateorder);
+		}
+
+	virtual _InIt do_get_time(_InIt _First, _InIt _Last,
+		ios_base&, ios_base::iostate& _State, tm *_Pt) const;
+
+	virtual _InIt do_get_date(_InIt _First, _InIt _Last,
+		ios_base& _Iosbase, ios_base::iostate& _State, tm *_Pt) const;
+
+	virtual _InIt do_get_weekday(_InIt _First, _InIt _Last,
+		ios_base&, ios_base::iostate& _State, tm *_Pt) const;
+
+	virtual _InIt do_get_monthname(_InIt _First, _InIt _Last,
+		ios_base&, ios_base::iostate& _State, tm *_Pt) const;
+
+	virtual _InIt do_get_year(_InIt _First, _InIt _Last,
+		ios_base&, ios_base::iostate& _State, tm *_Pt) const;
+
+private:
+	ios_base::iostate _Getint(_InIt& _First, _InIt& _Last,
+		int _Lo, int _Hi, int& _Val) const;
+
+	void _Tidy();
+
+	const _Elem *_Days;	// ":Sun:Sunday:Mon:Monday..." for example
+	const _Elem *_Months;	// "Jan:January:Feb:February..." for example
+	dateorder _Dateorder;
+	_Locinfo::_Cvtvec _Cvt;		// conversion information
+	};
+
+		// STATIC time_get::id OBJECT
+template<class _Elem,
+	class _InIt>
+	locale::id time_get<_Elem, _InIt>::id;
+
+		// TEMPLATE CLASS time_get_byname
+template<class _Elem,
+	class _InIt = istreambuf_iterator<_Elem, char_traits<_Elem> > >
+	class time_get_byname
+		: public time_get<_Elem, _InIt>
+	{	// time_get for named locale
+public:
+	explicit time_get_byname(const char *_Locname, size_t _Refs = 0)
+		: time_get<_Elem, _InIt>(_Locinfo(_Locname), _Refs)
+		{	// construct for named locale
+		}
+
+_PROTECTED:
+	virtual ~time_get_byname()
+		{	// destroy the object
+		}
+	};
+
+		// TEMPLATE CLASS time_put
+export
+template<class _Elem,
+	class _OutIt = ostreambuf_iterator<_Elem, char_traits<_Elem> > >
+	class time_put
+		: public locale::facet
+	{	// facet for converting encoded times to text
+public:
+	typedef _Elem char_type;
+	typedef _OutIt iter_type;
+
+	_OutIt put(_OutIt _Dest,
+		ios_base& _Iosbase, _Elem _Fill, const tm *_Pt,
+			const _Elem *_Fmtfirst, const _Elem *_Fmtlast) const;
+
+	_OutIt put(_OutIt _Dest, ios_base& _Iosbase, _Elem _Fill, const tm *_Pt,
+		char _Specifier, char _Modifier = 0) const
+		{	// put formatted time from _Pt to _Dest for _Specifier/_Modifier
+		return (do_put(_Dest, _Iosbase, _Fill, _Pt, _Specifier, _Modifier));
+		}
+
+	static locale::id id;	// unique facet id
+
+	explicit time_put(size_t _Refs = 0)
+		: locale::facet(_Refs)
+		{	// construct from current locale
+		_Init(_Locinfo());
+		}
+
+	time_put(const _Locinfo& _Lobj, size_t _Refs = 0)
+		: locale::facet(_Refs)
+		{	// construct from specified locale
+		_Init(_Lobj);
+		}
+
+	static size_t _Getcat(const locale::facet **_Ppf = 0,
+		const locale *_Ploc = 0)
+		{	// return locale category mask and construct standard facet
+		if (_Ppf != 0 && *_Ppf == 0)
+			*_Ppf = _NEW_CRT time_put<_Elem, _OutIt>(
+				_Locinfo(_Ploc->name()));
+		return (_X_TIME);
+		}
+
+_PROTECTED:
+	virtual ~time_put()
+		{	// destroy the object
+		}
+
+protected:
+	void _Init(const _Locinfo& _Lobj)
+		{	// initialize from _Lobj
+		_Cvt = _Lobj._Getcvt();
+		_Tnames = _Lobj._Gettnames();
+		}
+
+	virtual _OutIt do_put(_OutIt _Dest,
+		ios_base&, _Elem, const tm *_Pt,
+			char _Specifier, char _Modifier = 0) const;
+
+private:
+	_Locinfo::_Timevec _Tnames;	// locale-specific stuff for _Strftime
+	_Locinfo::_Cvtvec _Cvt;		// conversion information
+	};
+
+		// STATIC time_put::id OBJECT
+template<class _Elem,
+	class _OutIt>
+	locale::id time_put<_Elem, _OutIt>::id;
+
+		// CLASS time_put<wchar_t>
+export
+template<class _OutIt>
+	class time_put<wchar_t, _OutIt>
+		: public locale::facet
+	{	// facet for converting encoded times to wchar_t text
+public:
+	typedef wchar_t _Elem;
+	typedef _Elem char_type;
+	typedef _OutIt iter_type;
+
+	_OutIt put(_OutIt _Dest,
+		ios_base& _Iosbase, _Elem _Fill, const tm *_Pt,
+			const _Elem *_Fmtfirst, const _Elem *_Fmtlast) const;
+
+	_OutIt put(_OutIt _Dest, ios_base& _Iosbase, _Elem _Fill, const tm *_Pt,
+		char _Specifier, char _Modifier = 0) const
+		{	// put formatted time from _Pt to _Dest for _Specifier/_Modifier
+		return (do_put(_Dest, _Iosbase, _Fill, _Pt, _Specifier, _Modifier));
+		}
+
+	static locale::id id;	// unique facet id
+
+	explicit time_put(size_t _Refs = 0)
+		: locale::facet(_Refs)
+		{	// construct from current locale
+		_Init(_Locinfo());
+		}
+
+	time_put(const _Locinfo& _Lobj, size_t _Refs = 0)
+		: locale::facet(_Refs)
+		{	// construct from specified locale
+		_Init(_Lobj);
+		}
+
+	static size_t _Getcat(const locale::facet **_Ppf = 0,
+		const locale *_Ploc = 0)
+		{	// return locale category mask and construct standard facet
+		if (_Ppf != 0 && *_Ppf == 0)
+			*_Ppf = _NEW_CRT time_put<_Elem, _OutIt>(
+				_Locinfo(_Ploc->name()));
+		return (_X_TIME);
+		}
+
+_PROTECTED:
+	virtual ~time_put()
+		{	// destroy the object
+		}
+
+protected:
+	void _Init(const _Locinfo& _Lobj)
+		{	// initialize from _Lobj
+		_Cvt = _Lobj._Getcvt();
+		_Tnames = _Lobj._Gettnames();
+		}
+
+	virtual _OutIt do_put(_OutIt _Dest,
+		ios_base&, _Elem, const tm *_Pt,
+			char _Specifier, char _Modifier = 0) const;
+
+private:
+	_Locinfo::_Timevec _Tnames;	// locale-specific stuff for _Strftime
+	_Locinfo::_Cvtvec _Cvt;		// conversion information
+	};
+
+ 
+
+ #if __EDG__ && _MSC_VER == 0	/* compiler test */
+		// STATIC time_put<wchar_t>::id OBJECT
+template<>
+	locale::id time_put<wchar_t,
+		ostreambuf_iterator<wchar_t, char_traits<wchar_t> > >::id;
+ #endif /* __EDG__ */
+
+		// TEMPLATE CLASS time_put_byname
+template<class _Elem,
+	class _OutIt = ostreambuf_iterator<_Elem, char_traits<_Elem> > >
+	class time_put_byname
+		: public time_put<_Elem, _OutIt>
+	{	// time_put for named locale
+public:
+	explicit time_put_byname(const char *_Locname, size_t _Refs = 0)
+		: time_put<_Elem, _OutIt>(_Locinfo(_Locname), _Refs)
+		{	// construct for named locale
+		}
+
+_PROTECTED:
+	virtual ~time_put_byname()
+		{	// destroy the object
+		}
+	};
+
+_STD_END
+#endif /* _XLOCTIME_ */
+
+/*
+ * Copyright (c) 1992-2006 by P.J. Plauger.  ALL RIGHTS RESERVED.
+ * Consult your license regarding permissions and restrictions.
+V5.01:1566 */

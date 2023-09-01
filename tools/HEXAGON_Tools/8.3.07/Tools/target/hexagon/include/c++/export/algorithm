@@ -1,0 +1,1540 @@
+// algorithm standard header
+#ifndef _ALGORITHM_
+#define _ALGORITHM_
+#include <memory>
+_STD_BEGIN
+
+		// COMMON SORT PARAMETERS
+const int _ISORT_MAX = 32;	// maximum size for insertion sort
+
+		// TEMPLATE FUNCTION for_each
+export
+template<class _InIt,
+	class _Fn1>
+	_Fn1 for_each(_InIt _First, _InIt _Last, _Fn1 _Func);
+
+		// TEMPLATE FUNCTION find
+export
+template<class _InIt,
+	class _Ty>
+	_InIt find(_InIt _First, _InIt _Last, const _Ty& _Val);
+
+inline const char *find(const char *_First, const char *_Last, int _Val)
+	{	// find first char that matches _Val
+	_DEBUG_RANGE(_First, _Last);
+	_First = (const char *)_CSTD memchr(_First, _Val, _Last - _First);
+	return (_First == 0 ? _Last : _First);
+	}
+
+inline const signed char *find(const signed char *_First,
+	const signed char *_Last, int _Val)
+	{	// find first signed char that matches _Val
+	_DEBUG_RANGE(_First, _Last);
+	_First = (const signed char *)_CSTD memchr(_First, _Val,
+		_Last - _First);
+	return (_First == 0 ? _Last : _First);
+	}
+
+inline const unsigned char *find(const unsigned char *_First,
+	const unsigned char *_Last, int _Val)
+	{	// find first unsigned char that matches _Val
+	_DEBUG_RANGE(_First, _Last);
+	_First = (const unsigned char *)_CSTD memchr(_First, _Val,
+		_Last - _First);
+	return (_First == 0 ? _Last : _First);
+	}
+
+		// TEMPLATE FUNCTION find_if
+export
+template<class _InIt,
+	class _Pr>
+	_InIt find_if(_InIt _First, _InIt _Last, _Pr _Pred);
+
+		// TEMPLATE FUNCTION adjacent_find
+export
+template<class _FwdIt>
+	_FwdIt adjacent_find(_FwdIt _First, _FwdIt _Last);
+
+		// TEMPLATE FUNCTION adjacent_find WITH PRED
+export
+template<class _FwdIt,
+	class _Pr>
+	_FwdIt adjacent_find(_FwdIt _First, _FwdIt _Last, _Pr _Pred);
+
+		// TEMPLATE FUNCTION count
+export
+template<class _InIt,
+	class _Ty>
+	typename iterator_traits<_InIt>::difference_type
+		count(_InIt _First, _InIt _Last, const _Ty& _Val);
+
+		// TEMPLATE FUNCTION count_if
+export
+template<class _InIt,
+	class _Pr>
+	typename iterator_traits<_InIt>::difference_type
+		count_if(_InIt _First, _InIt _Last, _Pr _Pred);
+
+		// TEMPLATE FUNCTION search
+export
+template<class _FwdIt1,
+	class _FwdIt2,
+	class _Diff1,
+	class _Diff2>
+	_FwdIt1 _Search(_FwdIt1 _First1, _FwdIt1 _Last1,
+		_FwdIt2 _First2, _FwdIt2 _Last2, _Diff1 *, _Diff2 *);
+
+template<class _FwdIt1,
+	class _FwdIt2> inline
+	_FwdIt1 search(_FwdIt1 _First1, _FwdIt1 _Last1,
+		_FwdIt2 _First2, _FwdIt2 _Last2)
+	{	// find first [_First2, _Last2) match
+	return (_Search(_First1, _Last1, _First2, _Last2,
+		_Dist_type(_First1), _Dist_type(_First2)));
+	}
+
+		// TEMPLATE FUNCTION search WITH PRED
+export
+template<class _FwdIt1,
+	class _FwdIt2,
+	class _Diff1,
+	class _Diff2,
+	class _Pr>
+	_FwdIt1 _Search(_FwdIt1 _First1, _FwdIt1 _Last1,
+		_FwdIt2 _First2, _FwdIt2 _Last2, _Pr _Pred, _Diff1 *, _Diff2 *);
+
+template<class _FwdIt1,
+	class _FwdIt2,
+	class _Pr> inline
+	_FwdIt1 search(_FwdIt1 _First1, _FwdIt1 _Last1,
+		_FwdIt2 _First2, _FwdIt2 _Last2, _Pr _Pred)
+	{	// find first [_First2, _Last2) satisfying _Pred
+	return (_Search(_First1, _Last1, _First2, _Last2, _Pred,
+		_Dist_type(_First1), _Dist_type(_First2)));
+	}
+
+		// TEMPLATE FUNCTION search_n
+export
+template<class _FwdIt1,
+	class _Diff2,
+	class _Ty>
+	_FwdIt1 _Search_n(_FwdIt1 _First1, _FwdIt1 _Last1,
+		_Diff2 _Count, const _Ty& _Val, forward_iterator_tag);
+
+export
+template<class _FwdIt1,
+	class _Diff2,
+	class _Ty>
+	_FwdIt1 _Search_n(_FwdIt1 _First1, _FwdIt1 _Last1,
+		_Diff2 _Count, const _Ty& _Val, random_access_iterator_tag);
+
+template<class _FwdIt1,
+	class _Diff2,
+	class _Ty> inline
+	_FwdIt1 search_n(_FwdIt1 _First1, _FwdIt1 _Last1,
+		_Diff2 _Count, const _Ty& _Val)
+	{	// find first _Count * _Val match
+	return _Search_n(_First1, _Last1, _Count, _Val,
+		_Iter_cat(_First1));
+	}
+
+		// TEMPLATE FUNCTION search_n WITH PRED
+export
+template<class _FwdIt1,
+	class _Diff2,
+	class _Ty,
+	class _Pr>
+	_FwdIt1 _Search_n(_FwdIt1 _First1, _FwdIt1 _Last1,
+		_Diff2 _Count, const _Ty& _Val, _Pr _Pred, forward_iterator_tag);
+
+export
+template<class _FwdIt1,
+	class _Diff2,
+	class _Ty,
+	class _Pr>
+	_FwdIt1 _Search_n(_FwdIt1 _First1, _FwdIt1 _Last1,
+		_Diff2 _Count, const _Ty& _Val, _Pr _Pred, random_access_iterator_tag);
+
+template<class _FwdIt1,
+	class _Diff2,
+	class _Ty,
+	class _Pr> inline
+	_FwdIt1 search_n(_FwdIt1 _First1, _FwdIt1 _Last1,
+		_Diff2 _Count, const _Ty& _Val, _Pr _Pred)
+	{	// find first _Count * _Val satisfying _Pred
+	return _Search_n(_First1, _Last1, _Count, _Val, _Pred,
+		_Iter_cat(_First1));
+	}
+
+		// TEMPLATE FUNCTION find_end
+export
+template<class _FwdIt1,
+	class _FwdIt2,
+	class _Diff1,
+	class _Diff2>
+	_FwdIt1 _Find_end(_FwdIt1 _First1, _FwdIt1 _Last1,
+		_FwdIt2 _First2, _FwdIt2 _Last2, _Diff1 *, _Diff2 *);
+
+template<class _FwdIt1,
+	class _FwdIt2> inline
+	_FwdIt1 find_end(_FwdIt1 _First1, _FwdIt1 _Last1,
+		_FwdIt2 _First2, _FwdIt2 _Last2)
+	{	// find last [_First2, _Last2) match
+	return (_Find_end(_First1, _Last1, _First2, _Last2,
+		_Dist_type(_First1), _Dist_type(_First2)));
+	}
+
+		// TEMPLATE FUNCTION find_end WITH PRED
+export
+template<class _FwdIt1,
+	class _FwdIt2,
+	class _Diff1,
+	class _Diff2,
+	class _Pr>
+	_FwdIt1 _Find_end(_FwdIt1 _First1, _FwdIt1 _Last1,
+		_FwdIt2 _First2, _FwdIt2 _Last2, _Pr _Pred, _Diff1 *, _Diff2 *);
+
+template<class _FwdIt1,
+	class _FwdIt2,
+	class _Pr> inline
+	_FwdIt1 find_end(_FwdIt1 _First1, _FwdIt1 _Last1,
+		_FwdIt2 _First2, _FwdIt2 _Last2, _Pr _Pred)
+	{	// find last [_First2, _Last2) satisfying _Pred
+	return (_Find_end(_First1, _Last1, _First2, _Last2, _Pred,
+		_Dist_type(_First1), _Dist_type(_First2)));
+	}
+
+		// TEMPLATE FUNCTION find_first_of
+export
+template<class _FwdIt1,
+	class _FwdIt2>
+	_FwdIt1 find_first_of(_FwdIt1 _First1, _FwdIt1 _Last1,
+		_FwdIt2 _First2, _FwdIt2 _Last2);
+
+		// TEMPLATE FUNCTION find_first_of WITH PRED
+export
+template<class _FwdIt1,
+	class _FwdIt2,
+	class _Pr>
+	_FwdIt1 find_first_of(_FwdIt1 _First1, _FwdIt1 _Last1,
+		_FwdIt2 _First2, _FwdIt2 _Last2, _Pr _Pred);
+
+		// TEMPLATE FUNCTION iter_swap
+template<class _FwdIt1,
+	class _FwdIt2> inline
+	void iter_swap(_FwdIt1 _Left, _FwdIt2 _Right)
+	{	// swap *_Left and *_Right
+	_STD swap(*_Left, *_Right);
+	}
+
+		// TEMPLATE FUNCTION swap_ranges
+export
+template<class _FwdIt1,
+	class _FwdIt2>
+	_FwdIt2 swap_ranges(_FwdIt1 _First1, _FwdIt1 _Last1, _FwdIt2 _First2);
+
+		// TEMPLATE FUNCTION transform WITH UNARY OP
+export
+template<class _InIt,
+	class _OutIt,
+	class _Fn1>
+	_OutIt transform(_InIt _First, _InIt _Last, _OutIt _Dest, _Fn1 _Func);
+
+		// TEMPLATE FUNCTION transform WITH BINARY OP
+export
+template<class _InIt1,
+	class _InIt2,
+	class _OutIt,
+	class _Fn2>
+	_OutIt transform(_InIt1 _First1, _InIt1 _Last1, _InIt2 _First2,
+		_OutIt _Dest, _Fn2 _Func);
+
+		// TEMPLATE FUNCTION replace
+export
+template<class _FwdIt,
+	class _Ty>
+	void replace(_FwdIt _First, _FwdIt _Last,
+		const _Ty& _Oldval, const _Ty& _Newval);
+
+		// TEMPLATE FUNCTION replace_if
+export
+template<class _FwdIt,
+	class _Pr,
+	class _Ty>
+	void replace_if(_FwdIt _First, _FwdIt _Last, _Pr _Pred, const _Ty& _Val);
+
+		// TEMPLATE FUNCTION replace_copy
+export
+template<class _InIt,
+	class _OutIt,
+	class _Ty>
+	_OutIt replace_copy(_InIt _First, _InIt _Last, _OutIt _Dest,
+		const _Ty& _Oldval, const _Ty& _Newval);
+
+		// TEMPLATE FUNCTION replace_copy_if
+export
+template<class _InIt,
+	class _OutIt,
+	class _Pr,
+	class _Ty>
+	_OutIt replace_copy_if(_InIt _First, _InIt _Last, _OutIt _Dest,
+		_Pr _Pred, const _Ty& _Val);
+
+		// TEMPLATE FUNCTION generate
+export
+template<class _FwdIt,
+	class _Fn0>
+	void generate(_FwdIt _First, _FwdIt _Last, _Fn0 _Func);
+
+		// TEMPLATE FUNCTION generate_n
+export
+template<class _OutIt,
+	class _Diff,
+	class _Fn0>
+	void generate_n(_OutIt _Dest, _Diff _Count, _Fn0 _Func);
+
+		// TEMPLATE FUNCTION remove_copy
+export
+template<class _InIt,
+	class _OutIt,
+	class _Ty>
+	_OutIt remove_copy(_InIt _First, _InIt _Last,
+		_OutIt _Dest, const _Ty& _Val);
+
+		// TEMPLATE FUNCTION remove_copy_if
+export
+template<class _InIt,
+	class _OutIt,
+	class _Pr>
+	_OutIt remove_copy_if(_InIt _First, _InIt _Last, _OutIt _Dest, _Pr _Pred);
+
+		// TEMPLATE FUNCTION remove
+export
+template<class _FwdIt,
+	class _Ty>
+	_FwdIt remove(_FwdIt _First, _FwdIt _Last, const _Ty& _Val);
+
+		// TEMPLATE FUNCTION remove_if
+export
+template<class _FwdIt,
+	class _Pr>
+	_FwdIt remove_if(_FwdIt _First, _FwdIt _Last, _Pr _Pred);
+
+		// TEMPLATE FUNCTION unique
+export
+template<class _FwdIt>
+	_FwdIt unique(_FwdIt _First, _FwdIt _Last);
+
+		// TEMPLATE FUNCTION unique WITH PRED
+export
+template<class _FwdIt,
+	class _Pr>
+	_FwdIt unique(_FwdIt _First, _FwdIt _Last, _Pr _Pred);
+
+		// TEMPLATE FUNCTION unique_copy
+export
+template<class _InIt,
+	class _OutIt,
+	class _Ty>
+	_OutIt _Unique_copy(_InIt _First, _InIt _Last, _OutIt _Dest, _Ty *);
+
+template<class _InIt,
+	class _OutIt> inline
+	_OutIt _Unique_copy(_InIt _First, _InIt _Last, _OutIt _Dest,
+		input_iterator_tag)
+	{	// copy compressing pairs that match, input iterators
+	return (_Unique_copy(_First, _Last, _Dest, _Val_type(_First)));
+	}
+
+export
+template<class _FwdIt,
+	class _OutIt>
+	_OutIt _Unique_copy(_FwdIt _First, _FwdIt _Last, _OutIt _Dest,
+		forward_iterator_tag);
+
+template<class _BidIt,
+	class _OutIt> inline
+	_OutIt _Unique_copy(_BidIt _First, _BidIt _Last, _OutIt _Dest,
+		bidirectional_iterator_tag)
+	{	// copy compressing pairs that match, bidirectional iterators
+	return (_Unique_copy(_First, _Last, _Dest, forward_iterator_tag()));
+	}
+
+template<class _RanIt,
+	class _OutIt> inline
+	_OutIt _Unique_copy(_RanIt _First, _RanIt _Last, _OutIt _Dest,
+		random_access_iterator_tag)
+	{	// copy compressing pairs that match, random-access iterators
+	return (_Unique_copy(_First, _Last, _Dest, forward_iterator_tag()));
+	}
+
+template<class _InIt,
+	class _OutIt> inline
+	_OutIt unique_copy(_InIt _First, _InIt _Last, _OutIt _Dest)
+	{	// copy compressing pairs that match
+	return (_First == _Last ? _Dest :
+		_Unique_copy(_First, _Last, _Dest, _Iter_cat(_First)));
+	}
+
+		// TEMPLATE FUNCTION unique_copy WITH PRED
+export
+template<class _InIt,
+	class _OutIt,
+	class _Ty,
+	class _Pr>
+	_OutIt _Unique_copy(_InIt _First, _InIt _Last, _OutIt _Dest, _Pr _Pred,
+		_Ty *);
+
+template<class _InIt,
+	class _OutIt,
+	class _Pr> inline
+	_OutIt _Unique_copy(_InIt _First, _InIt _Last, _OutIt _Dest, _Pr _Pred,
+		input_iterator_tag)
+	{	// copy compressing pairs satisfying _Pred, input iterators
+	return (_Unique_copy(_First, _Last, _Dest, _Pred, _Val_type(_First)));
+	}
+
+export
+template<class _FwdIt,
+	class _OutIt,
+	class _Pr>
+	_OutIt _Unique_copy(_FwdIt _First, _FwdIt _Last, _OutIt _Dest, _Pr _Pred,
+		forward_iterator_tag);
+
+template<class _BidIt,
+	class _OutIt,
+	class _Pr> inline
+	_OutIt _Unique_copy(_BidIt _First, _BidIt _Last, _OutIt _Dest, _Pr _Pred,
+		bidirectional_iterator_tag)
+	{	// copy compressing pairs satisfying _Pred, bidirectional iterators
+	return (_Unique_copy(_First, _Last, _Dest, _Pred,
+		forward_iterator_tag()));
+	}
+
+template<class _RanIt,
+	class _OutIt,
+	class _Pr> inline
+	_OutIt _Unique_copy(_RanIt _First, _RanIt _Last, _OutIt _Dest, _Pr _Pred,
+		random_access_iterator_tag)
+	{	// copy compressing pairs satisfying _Pred, random-access iterators
+	return (_Unique_copy(_First, _Last, _Dest, _Pred,
+		forward_iterator_tag()));
+	}
+
+template<class _InIt,
+	class _OutIt,
+	class _Pr> inline
+	_OutIt unique_copy(_InIt _First, _InIt _Last, _OutIt _Dest, _Pr _Pred)
+	{	// copy compressing pairs satisfying _Pred
+	return (_First == _Last ? _Dest
+		: _Unique_copy(_First, _Last, _Dest, _Pred, _Iter_cat(_First)));
+	}
+
+		// TEMPLATE FUNCTION reverse
+export
+template<class _BidIt>
+	void _Reverse(_BidIt _First, _BidIt _Last, bidirectional_iterator_tag);
+
+export
+template<class _RanIt>
+	void _Reverse(_RanIt _First, _RanIt _Last, random_access_iterator_tag);
+
+template<class _BidIt> inline
+	void reverse(_BidIt _First, _BidIt _Last)
+	{	// reverse elements in [_First, _Last)
+	_Reverse(_First, _Last, _Iter_cat(_First));
+	}
+
+		// TEMPLATE FUNCTION reverse_copy
+export
+template<class _BidIt,
+	class _OutIt>
+	_OutIt reverse_copy(_BidIt _First, _BidIt _Last, _OutIt _Dest);
+
+		// TEMPLATE FUNCTION rotate
+export
+template<class _FwdIt>
+	void _Rotate(_FwdIt _First, _FwdIt _Mid, _FwdIt _Last,
+		forward_iterator_tag);
+
+template<class _BidIt> inline
+	void _Rotate(_BidIt _First, _BidIt _Mid, _BidIt _Last,
+		bidirectional_iterator_tag)
+	{	// rotate [_First, _Last), bidirectional iterators
+	_STD reverse(_First, _Mid);
+	_STD reverse(_Mid, _Last);
+	_STD reverse(_First, _Last);
+	}
+
+export
+template<class _RanIt,
+	class _Diff,
+	class _Ty>
+	void _Rotate(_RanIt _First, _RanIt _Mid, _RanIt _Last, _Diff *, _Ty *);
+
+template<class _RanIt> inline
+	void _Rotate(_RanIt _First, _RanIt _Mid, _RanIt _Last,
+			random_access_iterator_tag)
+	{	// rotate [_First, _Last), random-access iterators
+	_Rotate(_First, _Mid, _Last, _Dist_type(_First), _Val_type(_First));
+	}
+
+template<class _FwdIt> inline
+	void rotate(_FwdIt _First, _FwdIt _Mid, _FwdIt _Last)
+	{	// rotate [_First, _Last)
+	if (_First != _Mid && _Mid != _Last)
+		_Rotate(_First, _Mid, _Last, _Iter_cat(_First));
+	}
+
+		// TEMPLATE FUNCTION rotate_copy
+template<class _FwdIt,
+	class _OutIt> inline
+	_OutIt rotate_copy(_FwdIt _First, _FwdIt _Mid, _FwdIt _Last, _OutIt _Dest)
+	{	// copy rotating [_First, _Last)
+	_Dest = _STD copy(_Mid, _Last, _Dest);
+	return (_STD copy(_First, _Mid, _Dest));
+	}
+
+		// TEMPLATE FUNCTION random_shuffle
+export
+template<class _RanIt,
+	class _Diff>
+	void _Random_shuffle(_RanIt _First, _RanIt _Last, _Diff *);
+
+template<class _RanIt> inline
+	void random_shuffle(_RanIt _First, _RanIt _Last)
+	{	// shuffle [_First, _Last)
+	if (_First != _Last)
+		_Random_shuffle(_First, _Last, _Dist_type(_First));
+	}
+
+		// TEMPLATE FUNCTION random_shuffle WITH RANDOM FN
+export
+template<class _RanIt,
+	class _Fn1,
+	class _Diff>
+	void _Random_shuffle(_RanIt _First, _RanIt _Last, _Fn1& _Func, _Diff *);
+
+template<class _RanIt,
+	class _Fn1> inline
+	void random_shuffle(_RanIt _First, _RanIt _Last, _Fn1& _Func)
+	{	// shuffle [_First, _Last) using random function _Func
+	if (_First != _Last)
+		_Random_shuffle(_First, _Last, _Func, _Dist_type(_First));
+	}
+
+		// TEMPLATE FUNCTION partition
+export
+template<class _BidIt,
+	class _Pr>
+	_BidIt partition(_BidIt _First, _BidIt _Last, _Pr _Pred);
+
+		// TEMPLATE FUNCTION stable_partition
+export
+template<class _BidIt,
+	class _Pr,
+	class _Diff,
+	class _Ty>
+	_BidIt _Stable_partition(_BidIt _First, _BidIt _Last, _Pr _Pred,
+		_Diff _Count, _Temp_iterator<_Ty>& _Tempbuf);
+
+template<class _BidIt,
+	class _Pr,
+	class _Diff,
+	class _Ty> inline
+	_BidIt _Stable_partition(_BidIt _First, _BidIt _Last, _Pr _Pred,
+		_Diff *, _Ty *)
+	{	// partition preserving order of equivalents, using _Pred
+	_Diff _Count = 0;
+	_Distance(_First, _Last, _Count);
+	_Temp_iterator<_Ty> _Tempbuf(_Count);
+	return (_Stable_partition(_First, _Last, _Pred, _Count, _Tempbuf));
+	}
+
+template<class _BidIt,
+	class _Pr> inline
+	_BidIt stable_partition(_BidIt _First, _BidIt _Last, _Pr _Pred)
+	{	// partition preserving order of equivalents, using _Pred
+	return (_First == _Last ? _First : _Stable_partition(_First, _Last, _Pred,
+		_Dist_type(_First), _Val_type(_First)));
+	}
+
+ #if _HAS_ITERATOR_DEBUGGING
+		// TEMPLATE FUNCTION _Debug_heap
+template<class _RanIt> inline
+	void _Debug_heap(_RanIt _First, _RanIt _Last)
+	{	// test if range is a heap ordered by operator<
+	_DEBUG_RANGE(_First, _Last);
+
+	if (_First != _Last)
+		for (_RanIt _Root = _First; ++_First != _Last; ++_Root)
+			if (_DEBUG_LT(*_Root, *_First))
+				_DEBUG_ERROR("invalid heap");
+			else if (++_First == _Last)
+				break;
+			else if (_DEBUG_LT(*_Root, *_First))
+				_DEBUG_ERROR("invalid heap");
+	}
+
+		// TEMPLATE FUNCTION _Debug_heap WITH PRED
+template<class _RanIt,
+	class _Pr> inline
+	void _Debug_heap(_RanIt _First, _RanIt _Last, _Pr _Pred)
+	{	// test if range is a heap ordered by _Pred
+	_DEBUG_RANGE(_First, _Last);
+	_DEBUG_POINTER(_Pred);
+
+	if (_First != _Last)
+		for (_RanIt _Root = _First; ++_First != _Last; ++_Root)
+			if (_DEBUG_LT_PRED(_Pred, *_Root, *_First))
+				_DEBUG_ERROR("invalid heap");
+			else if (++_First == _Last)
+				break;
+			else if (_DEBUG_LT_PRED(_Pred, *_Root, *_First))
+				_DEBUG_ERROR("invalid heap");
+	}
+
+ #define _DEBUG_HEAP(first, last)	\
+	_Debug_heap(first, last)
+ #define _DEBUG_HEAP_PRED(first, last, pred)	\
+	_Debug_heap(first, last, pred)
+
+ #else /* _HAS_ITERATOR_DEBUGGING */
+ #define _DEBUG_HEAP(first, last)
+ #define _DEBUG_HEAP_PRED(first, last, pred)
+ #endif /* _HAS_ITERATOR_DEBUGGING */
+
+		// TEMPLATE FUNCTION push_heap
+export
+template<class _RanIt,
+	class _Diff,
+	class _Ty>
+	void _Push_heap(_RanIt _First, _Diff _Hole,
+		_Diff _Top, _Ty _Val);
+
+template<class _RanIt,
+	class _Diff,
+	class _Ty> inline
+	void _Push_heap_0(_RanIt _First, _RanIt _Last, _Diff *, _Ty *)
+	{	// push *_Last onto heap at [_First, _Last), using operator<
+	_DEBUG_HEAP(_First, _Last);
+	_Diff _Count = _Last - _First;
+	if (0 < _Count)
+		_Push_heap(_First, _Count, _Diff(0), _Ty(*_Last));
+	}
+
+template<class _RanIt> inline
+	void push_heap(_RanIt _First, _RanIt _Last)
+	{	// push *(_Last - 1) onto heap at [_First, _Last - 1), using operator<
+
+ #if _HAS_ITERATOR_DEBUGGING
+	if (_First == _Last)
+		_DEBUG_ERROR("empty push_heap sequence");
+	else
+
+ #else /* _HAS_ITERATOR_DEBUGGING */
+	if (_First != _Last)
+ #endif /* _HAS_ITERATOR_DEBUGGING */
+
+		_Push_heap_0(_First, --_Last,
+			_Dist_type(_First), _Val_type(_First));
+	}
+
+		// TEMPLATE FUNCTION push_heap WITH PRED
+export
+template<class _RanIt,
+	class _Diff,
+	class _Ty,
+	class _Pr>
+	void _Push_heap(_RanIt _First, _Diff _Hole,
+		_Diff _Top, _Ty _Val, _Pr _Pred);
+
+template<class _RanIt,
+	class _Diff,
+	class _Ty,
+	class _Pr> inline
+	void _Push_heap_0(_RanIt _First, _RanIt _Last, _Pr _Pred, _Diff *, _Ty *)
+	{	// push *_Last onto heap at [_First, _Last), using _Pred
+	_DEBUG_HEAP_PRED(_First, _Last, _Pred);
+	_Diff _Count = _Last - _First;
+	if (0 < _Count)
+		_Push_heap(_First, _Count, _Diff(0), _Ty(*_Last), _Pred);
+	}
+
+template<class _RanIt,
+	class _Pr> inline
+	void push_heap(_RanIt _First, _RanIt _Last, _Pr _Pred)
+	{	// push *(_Last - 1) onto heap at [_First, _Last - 1), using _Pred
+
+ #if _HAS_ITERATOR_DEBUGGING
+	if (_First == _Last)
+		_DEBUG_ERROR("empty push_heap sequence");
+	else
+
+ #else /* _HAS_ITERATOR_DEBUGGING */
+	if (_First != _Last)
+ #endif /* _HAS_ITERATOR_DEBUGGING */
+
+		_Push_heap_0(_First, --_Last, _Pred,
+			_Dist_type(_First), _Val_type(_First));
+	}
+
+		// TEMPLATE FUNCTION pop_heap
+export
+template<class _RanIt,
+	class _Diff,
+	class _Ty>
+	void _Adjust_heap(_RanIt _First, _Diff _Hole, _Diff _Bottom, _Ty _Val);
+
+template<class _RanIt,
+	class _Diff,
+	class _Ty> inline
+	void _Pop_heap(_RanIt _First, _RanIt _Last, _RanIt _Dest,
+		_Ty _Val, _Diff *)
+	{	// pop *_First to *_Dest and reheap, using operator<
+	*_Dest = *_First;
+	_Adjust_heap(_First, _Diff(0), _Diff(_Last - _First), _Val);
+	}
+
+template<class _RanIt,
+	class _Ty> inline
+	void _Pop_heap_0(_RanIt _First, _RanIt _Last, _Ty *)
+	{	// pop *_First to *(_Last - 1) and reheap, using operator<
+	_Pop_heap(_First, _Last - 1, _Last - 1,
+		_Ty(*(_Last - 1)), _Dist_type(_First));
+	}
+
+template<class _RanIt> inline
+	void pop_heap(_RanIt _First, _RanIt _Last)
+	{	// pop *_First to *(_Last - 1) and reheap, using operator<
+	_DEBUG_HEAP(_First, _Last);
+	if (1 < _Last - _First)
+		_Pop_heap_0(_First, _Last, _Val_type(_First));
+	}
+
+		// TEMPLATE FUNCTION pop_heap WITH PRED
+export
+template<class _RanIt,
+	class _Diff,
+	class _Ty,
+	class _Pr>
+	void _Adjust_heap(_RanIt _First, _Diff _Hole, _Diff _Bottom,
+		_Ty _Val, _Pr _Pred);
+
+template<class _RanIt,
+	class _Diff,
+	class _Ty,
+	class _Pr> inline
+	void _Pop_heap(_RanIt _First, _RanIt _Last, _RanIt _Dest,
+		_Ty _Val, _Pr _Pred, _Diff *)
+	{	// pop *_First to *_Dest and reheap, using _Pred
+	*_Dest = *_First;
+	_Adjust_heap(_First, _Diff(0), _Diff(_Last - _First), _Val, _Pred);
+	}
+
+template<class _RanIt,
+	class _Ty,
+	class _Pr> inline
+	void _Pop_heap_0(_RanIt _First, _RanIt _Last, _Pr _Pred, _Ty *)
+	{	// pop *_First to *(_Last - 1) and reheap, using _Pred
+	_Pop_heap(_First, _Last - 1, _Last - 1,
+		_Ty(*(_Last - 1)), _Pred, _Dist_type(_First));
+	}
+
+template<class _RanIt,
+	class _Pr> inline
+	void pop_heap(_RanIt _First, _RanIt _Last, _Pr _Pred)
+	{	// pop *_First to *(_Last - 1) and reheap, using _Pred
+	_DEBUG_HEAP_PRED(_First, _Last, _Pred);
+	if (1 < _Last - _First)
+		_Pop_heap_0(_First, _Last, _Pred, _Val_type(_First));
+	}
+
+		// TEMPLATE FUNCTION make_heap
+export
+template<class _RanIt,
+	class _Diff,
+	class _Ty>
+	void _Make_heap(_RanIt _First, _RanIt _Last, _Diff *, _Ty *);
+
+template<class _RanIt> inline
+	void make_heap(_RanIt _First, _RanIt _Last)
+	{	// make [_First, _Last) into a heap, using operator<
+	if (1 < _Last - _First)
+		_Make_heap(_First, _Last,
+			_Dist_type(_First), _Val_type(_First));
+	}
+
+		// TEMPLATE FUNCTION make_heap WITH PRED
+export
+template<class _RanIt,
+	class _Diff,
+	class _Ty,
+	class _Pr>
+	void _Make_heap(_RanIt _First, _RanIt _Last, _Pr _Pred, _Diff *, _Ty *);
+
+template<class _RanIt,
+	class _Pr> inline
+	void make_heap(_RanIt _First, _RanIt _Last, _Pr _Pred)
+	{	// make [_First, _Last) into a heap, using _Pred
+	if (1 < _Last - _First)
+		_Make_heap(_First, _Last, _Pred,
+			_Dist_type(_First), _Val_type(_First));
+	}
+
+		// TEMPLATE FUNCTION sort_heap
+export
+template<class _RanIt>
+	void sort_heap(_RanIt _First, _RanIt _Last);
+
+		// TEMPLATE FUNCTION sort_heap WITH PRED
+export
+template<class _RanIt,
+	class _Pr>
+	void sort_heap(_RanIt _First, _RanIt _Last, _Pr _Pred);
+
+		// TEMPLATE FUNCTION lower_bound
+export
+template<class _FwdIt,
+	class _Ty,
+	class _Diff>
+	_FwdIt _Lower_bound(_FwdIt _First, _FwdIt _Last, const _Ty& _Val, _Diff *);
+
+template<class _FwdIt,
+	class _Ty> inline
+	_FwdIt lower_bound(_FwdIt _First, _FwdIt _Last, const _Ty& _Val)
+	{	// find first element not before _Val, using operator<
+	return (_Lower_bound(_First, _Last, _Val, _Dist_type(_First)));
+	}
+
+		// TEMPLATE FUNCTION lower_bound WITH PRED
+export
+template<class _FwdIt,
+	class _Ty,
+	class _Diff,
+	class _Pr>
+	_FwdIt _Lower_bound(_FwdIt _First, _FwdIt _Last,
+		const _Ty& _Val, _Pr _Pred, _Diff *);
+
+template<class _FwdIt,
+	class _Ty,
+	class _Pr> inline
+	_FwdIt lower_bound(_FwdIt _First, _FwdIt _Last,
+		const _Ty& _Val, _Pr _Pred)
+	{	// find first element not before _Val, using _Pred
+	return (_Lower_bound(_First, _Last, _Val, _Pred, _Dist_type(_First)));
+	}
+
+		// TEMPLATE FUNCTION upper_bound
+export
+template<class _FwdIt,
+	class _Ty,
+	class _Diff>
+	_FwdIt _Upper_bound(_FwdIt _First, _FwdIt _Last, const _Ty& _Val, _Diff *);
+
+template<class _FwdIt,
+	class _Ty> inline
+	_FwdIt upper_bound(_FwdIt _First, _FwdIt _Last, const _Ty& _Val)
+	{	// find first element that _Val is before, using operator<
+	return (_Upper_bound(_First, _Last, _Val, _Dist_type(_First)));
+	}
+
+		// TEMPLATE FUNCTION upper_bound WITH PRED
+export
+template<class _FwdIt,
+	class _Ty,
+	class _Diff,
+	class _Pr>
+	_FwdIt _Upper_bound(_FwdIt _First, _FwdIt _Last,
+		const _Ty& _Val, _Pr _Pred, _Diff *);
+
+template<class _FwdIt,
+	class _Ty,
+	class _Pr> inline
+	_FwdIt upper_bound(_FwdIt _First, _FwdIt _Last,
+		const _Ty& _Val, _Pr _Pred)
+	{	// find first element that _Val is before, using _Pred
+	return (_Upper_bound(_First, _Last, _Val, _Pred, _Dist_type(_First)));
+	}
+
+		// TEMPLATE FUNCTION equal_range
+export
+template<class _FwdIt,
+	class _Ty,
+	class _Diff>
+	pair<_FwdIt, _FwdIt> _Equal_range(_FwdIt _First, _FwdIt _Last,
+		const _Ty& _Val, _Diff *);
+
+template<class _FwdIt,
+	class _Ty> inline
+	pair<_FwdIt, _FwdIt> equal_range(_FwdIt _First, _FwdIt _Last,
+		const _Ty& _Val)
+	{	// find range equivalent to _Val, using operator<
+	return (_Equal_range(_First, _Last, _Val, _Dist_type(_First)));
+	}
+
+		// TEMPLATE FUNCTION equal_range WITH PRED
+export
+template<class _FwdIt,
+	class _Ty,
+	class _Diff,
+	class _Pr>
+	pair<_FwdIt, _FwdIt> _Equal_range(_FwdIt _First, _FwdIt _Last,
+		const _Ty& _Val, _Pr _Pred, _Diff *);
+
+template<class _FwdIt,
+	class _Ty,
+	class _Pr> inline
+	pair<_FwdIt, _FwdIt> equal_range(_FwdIt _First, _FwdIt _Last,
+		const _Ty& _Val, _Pr _Pred)
+	{	// find range equivalent to _Val, using _Pred
+	return (_Equal_range(_First, _Last, _Val, _Pred, _Dist_type(_First)));
+	}
+
+		// TEMPLATE FUNCTION binary_search
+template<class _FwdIt,
+	class _Ty> inline
+	bool binary_search(_FwdIt _First, _FwdIt _Last, const _Ty& _Val)
+	{	// test if _Val equivalent to some element, using operator<
+	_First = _STD lower_bound(_First, _Last, _Val);
+	return (_First != _Last && !(_Val < *_First));
+	}
+
+		// TEMPLATE FUNCTION binary_search WITH PRED
+template<class _FwdIt,
+	class _Ty,
+	class _Pr> inline
+	bool binary_search(_FwdIt _First, _FwdIt _Last,
+		const _Ty& _Val, _Pr _Pred)
+	{	// test if _Val equivalent to some element, using _Pred
+	_First = _STD lower_bound(_First, _Last, _Val, _Pred);
+	return (_First != _Last && !_Pred(_Val, *_First));
+	}
+
+		// TEMPLATE FUNCTION merge
+export
+template<class _InIt1,
+	class _InIt2,
+	class _OutIt>
+	_OutIt merge(_InIt1 _First1, _InIt1 _Last1,
+		_InIt2 _First2, _InIt2 _Last2, _OutIt _Dest);
+
+		// TEMPLATE FUNCTION merge WITH PRED
+export
+template<class _InIt1,
+	class _InIt2,
+	class _OutIt,
+	class _Pr>
+	_OutIt merge(_InIt1 _First1, _InIt1 _Last1,
+		_InIt2 _First2, _InIt2 _Last2, _OutIt _Dest, _Pr _Pred);
+
+		// TEMPLATE FUNCTION inplace_merge
+export
+template<class _BidIt,
+	class _Diff,
+	class _Ty>
+	_BidIt _Buffered_rotate(_BidIt _First, _BidIt _Mid, _BidIt _Last,
+		_Diff _Count1, _Diff _Count2, _Temp_iterator<_Ty>& _Tempbuf);
+
+export
+template<class _BidIt1,
+	class _BidIt2,
+	class _BidIt3>
+	_BidIt3 _Merge_backward(_BidIt1 _First1, _BidIt1 _Last1,
+		_BidIt2 _First2, _BidIt2 _Last2, _BidIt3 _Dest);
+
+export
+template<class _BidIt,
+	class _Diff,
+	class _Ty>
+	void _Buffered_merge(_BidIt _First, _BidIt _Mid, _BidIt _Last,
+		_Diff _Count1, _Diff _Count2,
+			_Temp_iterator<_Ty>& _Tempbuf);
+
+export
+template<class _BidIt,
+	class _Diff,
+	class _Ty>
+	void _Inplace_merge(_BidIt _First, _BidIt _Mid, _BidIt _Last,
+		_Diff *, _Ty *);
+
+template<class _BidIt> inline
+	void inplace_merge(_BidIt _First, _BidIt _Mid, _BidIt _Last)
+	{	// merge [_First, _Mid) with [_Mid, _Last), using operator<
+	if (_First != _Mid && _Mid != _Last)
+		_Inplace_merge(_First, _Mid, _Last,
+			_Dist_type(_First), _Val_type(_First));
+	}
+
+		// TEMPLATE FUNCTION inplace_merge WITH PRED
+export
+template<class _BidIt1,
+	class _BidIt2,
+	class _BidIt3,
+	class _Pr>
+	_BidIt3 _Merge_backward(_BidIt1 _First1, _BidIt1 _Last1,
+		_BidIt2 _First2, _BidIt2 _Last2, _BidIt3 _Dest, _Pr _Pred);
+
+export
+template<class _BidIt,
+	class _Diff,
+	class _Ty,
+	class _Pr>
+	void _Buffered_merge(_BidIt _First, _BidIt _Mid, _BidIt _Last,
+		_Diff _Count1, _Diff _Count2,
+			_Temp_iterator<_Ty>& _Tempbuf, _Pr _Pred);
+
+export
+template<class _BidIt,
+	class _Diff,
+	class _Ty,
+	class _Pr>
+	void _Inplace_merge(_BidIt _First, _BidIt _Mid, _BidIt _Last, _Pr _Pred,
+		_Diff *, _Ty *);
+
+template<class _BidIt,
+	class _Pr> inline
+	void inplace_merge(_BidIt _First, _BidIt _Mid, _BidIt _Last, _Pr _Pred)
+	{	// merge [_First, _Mid) with [_Mid, _Last), using _Pred
+	if (_First != _Mid && _Mid != _Last)
+		_Inplace_merge(_First, _Mid, _Last, _Pred,
+			_Dist_type(_First), _Val_type(_First));
+	}
+
+		// TEMPLATE FUNCTION sort
+export
+template<class _BidIt,
+	class _Ty>
+	void _Insertion_sort1(_BidIt _First, _BidIt _Last, _Ty *);
+
+template<class _BidIt> inline
+	void _Insertion_sort(_BidIt _First, _BidIt _Last)
+	{	// insertion sort [_First, _Last), using operator<
+	_Insertion_sort1(_First, _Last, _Val_type(_First));
+	}
+template<class _RanIt> inline
+	void _Med3(_RanIt _First, _RanIt _Mid, _RanIt _Last)
+	{	// sort median of three elements to middle
+	if (_DEBUG_LT(*_Mid, *_First))
+		_STD iter_swap(_Mid, _First);
+	if (_DEBUG_LT(*_Last, *_Mid))
+		_STD iter_swap(_Last, _Mid);
+	if (_DEBUG_LT(*_Mid, *_First))
+		_STD iter_swap(_Mid, _First);
+	}
+
+template<class _RanIt> inline
+	void _Median(_RanIt _First, _RanIt _Mid, _RanIt _Last)
+	{	// sort median element to middle
+	if (40 < _Last - _First)
+		{	// median of nine
+		size_t _Step = (_Last - _First + 1) / 8;
+		_Med3(_First, _First + _Step, _First + 2 * _Step);
+		_Med3(_Mid - _Step, _Mid, _Mid + _Step);
+		_Med3(_Last - 2 * _Step, _Last - _Step, _Last);
+		_Med3(_First + _Step, _Mid, _Last - _Step);
+		}
+	else
+		_Med3(_First, _Mid, _Last);
+	}
+
+export
+template<class _RanIt>
+	pair<_RanIt, _RanIt> _Unguarded_partition(_RanIt _First, _RanIt _Last);
+
+export
+template<class _RanIt,
+	class _Diff>
+	void _Sort(_RanIt _First, _RanIt _Last, _Diff _Ideal);
+
+template<class _RanIt> inline
+	void sort(_RanIt _First, _RanIt _Last)
+	{	// order [_First, _Last), using operator<
+	_DEBUG_RANGE(_First, _Last);
+	_Sort(_First, _Last, _Last - _First);
+	}
+
+		// TEMPLATE FUNCTION sort WITH PRED
+export
+template<class _BidIt,
+	class _Pr,
+	class _Ty>
+	void _Insertion_sort1(_BidIt _First, _BidIt _Last, _Pr _Pred, _Ty *);
+
+template<class _BidIt,
+	class _Pr> inline
+	void _Insertion_sort(_BidIt _First, _BidIt _Last, _Pr _Pred)
+	{	// insertion sort [_First, _Last), using _Pred
+	_Insertion_sort1(_First, _Last, _Pred, _Val_type(_First));
+	}
+
+template<class _RanIt,
+	class _Pr> inline
+	void _Med3(_RanIt _First, _RanIt _Mid, _RanIt _Last, _Pr _Pred)
+	{	// sort median of three elements to middle
+	if (_DEBUG_LT_PRED(_Pred, *_Mid, *_First))
+		_STD iter_swap(_Mid, _First);
+	if (_DEBUG_LT_PRED(_Pred, *_Last, *_Mid))
+		_STD iter_swap(_Last, _Mid);
+	if (_DEBUG_LT_PRED(_Pred, *_Mid, *_First))
+		_STD iter_swap(_Mid, _First);
+	}
+
+template<class _RanIt,
+	class _Pr> inline
+	void _Median(_RanIt _First, _RanIt _Mid, _RanIt _Last, _Pr _Pred)
+	{	// sort median element to middle
+	if (40 < _Last - _First)
+		{	// median of nine
+		size_t _Step = (_Last - _First + 1) / 8;
+		_Med3(_First, _First + _Step, _First + 2 * _Step, _Pred);
+		_Med3(_Mid - _Step, _Mid, _Mid + _Step, _Pred);
+		_Med3(_Last - 2 * _Step, _Last - _Step, _Last, _Pred);
+		_Med3(_First + _Step, _Mid, _Last - _Step, _Pred);
+		}
+	else
+		_Med3(_First, _Mid, _Last, _Pred);
+	}
+
+export
+template<class _RanIt,
+	class _Pr>
+	pair<_RanIt, _RanIt> _Unguarded_partition(_RanIt _First, _RanIt _Last,
+		_Pr _Pred);
+
+export
+template<class _RanIt,
+	class _Diff,
+	class _Pr>
+	void _Sort(_RanIt _First, _RanIt _Last, _Diff _Ideal, _Pr _Pred);
+
+template<class _RanIt,
+	class _Pr> inline
+	void sort(_RanIt _First, _RanIt _Last, _Pr _Pred)
+	{	// order [_First, _Last), using _Pred
+	_DEBUG_RANGE(_First, _Last);
+	_DEBUG_POINTER(_Pred);
+	_Sort(_First, _Last, _Last - _First, _Pred);
+	}
+
+		// TEMPLATE FUNCTION stable_sort
+export
+template<class _BidIt,
+	class _OutIt,
+	class _Diff>
+	void _Chunked_merge(_BidIt _First, _BidIt _Last, _OutIt _Dest,
+		_Diff _Chunk, _Diff _Count);
+
+export
+template<class _BidIt,
+	class _Diff,
+	class _Ty>
+	void _Buffered_merge_sort(_BidIt _First, _BidIt _Last, _Diff _Count,
+		_Temp_iterator<_Ty>& _Tempbuf);
+
+export
+template<class _BidIt,
+	class _Diff,
+	class _Ty>
+	void _Stable_sort(_BidIt _First, _BidIt _Last, _Diff _Count,
+		_Temp_iterator<_Ty>& _Tempbuf);
+
+template<class _BidIt,
+	class _Diff,
+	class _Ty> inline
+	void _Stable_sort(_BidIt _First, _BidIt _Last, _Diff *, _Ty *)
+	{	// sort preserving order of equivalents, using operator<
+	_Diff _Count = 0;
+	_Distance(_First, _Last, _Count);
+	_Temp_iterator<_Ty> _Tempbuf((_Count + 1) / 2);
+	_Stable_sort(_First, _Last, _Count, _Tempbuf);
+	}
+
+template<class _BidIt> inline
+	void stable_sort(_BidIt _First, _BidIt _Last)
+	{	// sort preserving order of equivalents, using operator<
+	_DEBUG_RANGE(_First, _Last);
+	if (_First != _Last)
+		_Stable_sort(_First, _Last, _Dist_type(_First), _Val_type(_First));
+	}
+
+		// TEMPLATE FUNCTION stable_sort WITH PRED
+export
+template<class _BidIt,
+	class _OutIt,
+	class _Diff,
+	class _Pr>
+	void _Chunked_merge(_BidIt _First, _BidIt _Last, _OutIt _Dest,
+		_Diff _Chunk, _Diff _Count, _Pr _Pred);
+
+export
+template<class _BidIt,
+	class _Diff,
+	class _Ty,
+	class _Pr>
+	void _Buffered_merge_sort(_BidIt _First, _BidIt _Last, _Diff _Count,
+		_Temp_iterator<_Ty>& _Tempbuf, _Pr _Pred);
+
+export
+template<class _BidIt,
+	class _Diff,
+	class _Ty,
+	class _Pr>
+	void _Stable_sort(_BidIt _First, _BidIt _Last, _Diff _Count,
+		_Temp_iterator<_Ty>& _Tempbuf, _Pr _Pred);
+
+template<class _BidIt,
+	class _Diff,
+	class _Ty,
+	class _Pr> inline
+	void _Stable_sort(_BidIt _First, _BidIt _Last, _Diff *, _Ty *, _Pr _Pred)
+	{	// sort preserving order of equivalents, using _Pred
+	_Diff _Count = 0;
+	_Distance(_First, _Last, _Count);
+	_Temp_iterator<_Ty> _Tempbuf((_Count + 1) / 2);
+	_Stable_sort(_First, _Last, _Count, _Tempbuf, _Pred);
+	}
+
+template<class _BidIt,
+	class _Pr> inline
+	void stable_sort(_BidIt _First, _BidIt _Last, _Pr _Pred)
+	{	// sort preserving order of equivalents, using _Pred
+	_DEBUG_RANGE(_First, _Last);
+	_DEBUG_POINTER(_Pred);
+	if (_First != _Last)
+		_Stable_sort(_First, _Last,
+			_Dist_type(_First), _Val_type(_First), _Pred);
+	}
+
+		// TEMPLATE FUNCTION partial_sort
+export
+template<class _RanIt,
+	class _Ty>
+	void _Partial_sort(_RanIt _First, _RanIt _Mid, _RanIt _Last, _Ty *);
+
+template<class _RanIt> inline
+	void partial_sort(_RanIt _First, _RanIt _Mid, _RanIt _Last)
+	{	// order [First, _Last) up to _Mid, using operator<
+	_Partial_sort(_First, _Mid, _Last, _Val_type(_First));
+	}
+
+		// TEMPLATE FUNCTION partial_sort WITH PRED
+export
+template<class _RanIt,
+	class _Ty,
+	class _Pr>
+	void _Partial_sort(_RanIt _First, _RanIt _Mid, _RanIt _Last,
+		_Pr _Pred, _Ty *);
+
+template<class _RanIt,
+	class _Pr> inline
+	void partial_sort(_RanIt _First, _RanIt _Mid, _RanIt _Last, _Pr _Pred)
+	{	// order [First, _Last) up to _Mid, using _Pred
+	_Partial_sort(_First, _Mid, _Last, _Pred, _Val_type(_First));
+	}
+
+		// TEMPLATE FUNCTION partial_sort_copy
+export
+template<class _InIt,
+	class _RanIt,
+	class _Diff,
+	class _Ty>
+	_RanIt _Partial_sort_copy(_InIt _First1, _InIt _Last1,
+		_RanIt _First2, _RanIt _Last2, _Diff *, _Ty *);
+
+template<class _InIt,
+	class _RanIt> inline
+	_RanIt partial_sort_copy(_InIt _First1, _InIt _Last1,
+		_RanIt _First2, _RanIt _Last2)
+	{	// copy [First1, _Last1) into [_First2, _Last2), using operator<
+	return (_First1 == _Last1 || _First2 == _Last2 ? _First2
+		: _Partial_sort_copy(_First1, _Last1, _First2, _Last2,
+			_Dist_type(_First2), _Val_type(_First1)));
+	}
+
+		// TEMPLATE FUNCTION partial_sort_copy WITH PRED
+export
+template<class _InIt,
+	class _RanIt,
+	class _Diff,
+	class _Ty,
+	class _Pr>
+	_RanIt _Partial_sort_copy(_InIt _First1, _InIt _Last1,
+		_RanIt _First2, _RanIt _Last2, _Pr _Pred, _Diff *, _Ty *);
+
+template<class _InIt,
+	class _RanIt,
+	class _Pr> inline
+	_RanIt partial_sort_copy(_InIt _First1, _InIt _Last1,
+		_RanIt _First2, _RanIt _Last2, _Pr _Pred)
+	{	// copy [First1, _Last1) into [_First2, _Last2) using _Pred
+	return (_First1 == _Last1 || _First2 == _Last2 ? _First2
+		: _Partial_sort_copy(_First1, _Last1, _First2, _Last2, _Pred,
+			_Dist_type(_First2), _Val_type(_First1)));
+	}
+
+		// TEMPLATE FUNCTION nth_element
+export
+template<class _RanIt>
+	void nth_element(_RanIt _First, _RanIt _Nth, _RanIt _Last);
+
+		// TEMPLATE FUNCTION nth_element WITH PRED
+export
+template<class _RanIt,
+	class _Pr>
+	void nth_element(_RanIt _First, _RanIt _Nth, _RanIt _Last, _Pr _Pred);
+
+		// TEMPLATE FUNCTION includes
+export
+template<class _InIt1,
+	class _InIt2>
+	bool includes(_InIt1 _First1, _InIt1 _Last1,
+		_InIt2 _First2, _InIt2 _Last2);
+
+		// TEMPLATE FUNCTION includes WITH PRED
+export
+template<class _InIt1,
+	class _InIt2,
+	class _Pr>
+	bool includes(_InIt1 _First1, _InIt1 _Last1,
+		_InIt2 _First2, _InIt2 _Last2, _Pr _Pred);
+
+		// TEMPLATE FUNCTION set_union
+export
+template<class _InIt1,
+	class _InIt2,
+	class _OutIt>
+	_OutIt set_union(_InIt1 _First1, _InIt1 _Last1,
+		_InIt2 _First2, _InIt2 _Last2, _OutIt _Dest);
+
+		// TEMPLATE FUNCTION set_union WITH PRED
+export
+template<class _InIt1,
+	class _InIt2,
+	class _OutIt,
+	class _Pr>
+	_OutIt set_union(_InIt1 _First1, _InIt1 _Last1,
+		_InIt2 _First2, _InIt2 _Last2, _OutIt _Dest, _Pr _Pred);
+
+		// TEMPLATE FUNCTION set_intersection
+export
+template<class _InIt1,
+	class _InIt2,
+	class _OutIt>
+	_OutIt set_intersection(_InIt1 _First1, _InIt1 _Last1,
+		_InIt2 _First2, _InIt2 _Last2, _OutIt _Dest);
+
+		// TEMPLATE FUNCTION set_intersection WITH PRED
+export
+template<class _InIt1,
+	class _InIt2,
+	class _OutIt,
+	class _Pr>
+	_OutIt set_intersection(_InIt1 _First1, _InIt1 _Last1,
+		_InIt2 _First2, _InIt2 _Last2, _OutIt _Dest, _Pr _Pred);
+
+		// TEMPLATE FUNCTION set_difference
+export
+template<class _InIt1,
+	class _InIt2,
+	class _OutIt>
+	_OutIt set_difference(_InIt1 _First1, _InIt1 _Last1,
+		_InIt2 _First2, _InIt2 _Last2,	_OutIt _Dest);
+
+		// TEMPLATE FUNCTION set_difference WITH PRED
+export
+template<class _InIt1,
+	class _InIt2,
+	class _OutIt,
+	class _Pr>
+	_OutIt set_difference(_InIt1 _First1, _InIt1 _Last1,
+		_InIt2 _First2, _InIt2 _Last2, _OutIt _Dest, _Pr _Pred);
+
+		// TEMPLATE FUNCTION set_symmetric_difference
+export
+template<class _InIt1,
+	class _InIt2,
+	class _OutIt>
+	_OutIt set_symmetric_difference(_InIt1 _First1, _InIt1 _Last1,
+		_InIt2 _First2, _InIt2 _Last2, _OutIt _Dest);
+
+		// TEMPLATE FUNCTION set_symmetric_difference WITH PRED
+export
+template<class _InIt1,
+	class _InIt2,
+	class _OutIt,
+	class _Pr>
+	_OutIt set_symmetric_difference(_InIt1 _First1, _InIt1 _Last1,
+		_InIt2 _First2, _InIt2 _Last2, _OutIt _Dest, _Pr _Pred);
+
+		// TEMPLATE FUNCTION max_element
+export
+template<class _FwdIt>
+	_FwdIt max_element(_FwdIt _First, _FwdIt _Last);
+
+		// TEMPLATE FUNCTION max_element WITH PRED
+export
+template<class _FwdIt,
+	class _Pr>
+	_FwdIt max_element(_FwdIt _First, _FwdIt _Last, _Pr _Pred);
+
+		// TEMPLATE FUNCTION min_element
+export
+template<class _FwdIt>
+	_FwdIt min_element(_FwdIt _First, _FwdIt _Last);
+
+		// TEMPLATE FUNCTION min_element WITH PRED
+export
+template<class _FwdIt,
+	class _Pr>
+	_FwdIt min_element(_FwdIt _First, _FwdIt _Last, _Pr _Pred);
+
+		// TEMPLATE FUNCTION next_permutation
+export
+template<class _BidIt>
+	bool next_permutation(_BidIt _First, _BidIt _Last);
+
+		// TEMPLATE FUNCTION next_permutation WITH PRED
+export
+template<class _BidIt,
+	class _Pr>
+	bool next_permutation(_BidIt _First, _BidIt _Last, _Pr _Pred);
+
+		// TEMPLATE FUNCTION prev_permutation
+export
+template<class _BidIt>
+	bool prev_permutation(_BidIt _First, _BidIt _Last);
+
+		// TEMPLATE FUNCTION prev_permutation WITH PRED
+export
+template<class _BidIt,
+	class _Pr>
+	bool prev_permutation(_BidIt _First, _BidIt _Last, _Pr _Pred);
+
+ #if _HAS_TRADITIONAL_STL
+		// TEMPLATE FUNCTION count
+template<class _InIt,
+	class _Ty,
+	class _Diff> inline
+	void count(_InIt _First, _InIt _Last, const _Ty& _Val, _Diff &_Ans)
+	{	// count elements that match _Val
+	_DEBUG_RANGE(_First, _Last);
+	_Diff _Count = 0;
+
+	for (; _First != _Last; ++_First)
+		if (*_First == _Val)
+			++_Count;
+	_Ans = _Count;
+	}
+
+		// TEMPLATE FUNCTION count_if
+template<class _InIt,
+	class _Pr,
+	class _Diff> inline
+	void count_if(_InIt _First, _InIt _Last, _Pr _Pred, _Diff &_Ans)
+	{	// count elements satisfying _Pred
+	_DEBUG_RANGE(_First, _Last);
+	_DEBUG_POINTER(_Pred);
+	_Diff _Count = 0;
+
+	for (; _First != _Last; ++_First)
+		if (_Pred(*_First))
+			++_Count;
+	_Ans = _Count;
+	}
+
+		// TEMPLATE FUNCTION is_heap
+template<class _RanIt,
+	class _Diff> inline
+	bool _Is_heap(_RanIt _First, _RanIt _Last, _Diff *)
+	{	// test if range is a heap ordered by operator<
+	_DEBUG_RANGE(_First, _Last);
+	_Diff _Size = _Last - _First;
+
+	if (2 <= _Size)
+		for (_Diff _Off = 0; ++_Off < _Size; )
+			if (_DEBUG_LT(*(_First + (_Off - 1) / 2), *(_First + _Off)))
+				return (false);
+	return (true);
+	}
+
+template<class _RanIt>
+	bool is_heap(_RanIt _First, _RanIt _Last)
+		{	// test if range is a heap ordered by operator<
+		return (_Is_heap(_First, _Last, _Dist_type(_First)));
+		}
+
+		// TEMPLATE FUNCTION is_heap WITH PRED
+template<class _RanIt,
+	class _Diff,
+	class _Pr> inline
+	bool _Is_heap(_RanIt _First, _RanIt _Last, _Pr _Pred, _Diff *)
+	{	// test if range is a heap ordered by _Pred
+	_DEBUG_RANGE(_First, _Last);
+	_DEBUG_POINTER(_Pred);
+	_Diff _Size = _Last - _First;
+
+	if (2 <= _Size)
+		for (_Diff _Off = 0; ++_Off < _Size; )
+			if (_DEBUG_LT_PRED(_Pred, *(_First + (_Off - 1) / 2),
+				*(_First + _Off)))
+				return (false);
+	return (true);
+	}
+
+template<class _RanIt,
+	class _Pr>
+	bool is_heap(_RanIt _First, _RanIt _Last, _Pr _Pred)
+		{	// test if range is a heap ordered by _Pred
+		return (_Is_heap(_First, _Last, _Pred, _Dist_type(_First)));
+		}
+
+		// TEMPLATE FUNCTION is_sorted
+template<class _FwdIt> inline
+	bool is_sorted(_FwdIt _First, _FwdIt _Last)
+	{	// test is range is ordered by operator<
+	_DEBUG_RANGE(_First, _Last);
+	for (_FwdIt _Next = _First; _First != _Last && ++_Next != _Last; ++_First)
+		if (_DEBUG_LT(*_Next, *_First))
+			return (false);
+	return (true);
+	}
+
+		// TEMPLATE FUNCTION is_sorted WITH PRED
+template<class _FwdIt,
+	class _Pr> inline
+	bool is_sorted(_FwdIt _First, _FwdIt _Last, _Pr _Pred)
+	{	// test if range is ordered by predicate, forward iterators
+	_DEBUG_RANGE(_First, _Last);
+	_DEBUG_POINTER(_Pred);
+	for (_FwdIt _Next = _First; _First != _Last && ++_Next != _Last; ++_First)
+		if (_DEBUG_LT_PRED(_Pred, *_Next, *_First))
+			return (false);
+	return (true);
+	}
+ #endif /* _HAS_TRADITIONAL_STL */
+
+_STD_END
+#endif /* _ALGORITHM_ */
+
+/*
+ * Copyright (c) 1992-2006 by P.J. Plauger.  ALL RIGHTS RESERVED.
+ * Consult your license regarding permissions and restrictions.
+ */
+
+/*
+ * This file is derived from software bearing the following
+ * restrictions:
+ *
+ * Copyright (c) 1994
+ * Hewlett-Packard Company
+ *
+ * Permission to use, copy, modify, distribute and sell this
+ * software and its documentation for any purpose is hereby
+ * granted without fee, provided that the above copyright notice
+ * appear in all copies and that both that copyright notice and
+ * this permission notice appear in supporting documentation.
+ * Hewlett-Packard Company makes no representations about the
+ * suitability of this software for any purpose. It is provided
+ * "as is" without express or implied warranty.
+V5.01:1566 */

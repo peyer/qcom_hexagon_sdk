@@ -1,0 +1,32 @@
+<DSP type="WDSP" versionMajor="0x2" versionMinor="0x8" versionBranch="0x10" versionSubBranch="0x20">
+  <MODULE_LIST>
+    <MODULE name="MODULE_1" id="0x11111111">
+      <MODULE_INFO pidFwk="0x20002">
+        <META_DATA/>
+        <PIN_INFO type="STATIC">
+          <INPUT_PINS/>
+          <OUTPUT_PINS/>
+        </PIN_INFO>
+      </MODULE_INFO>
+      <PARAMETER_LIST>
+        <PARAMETER name="Parameter1" pid="0x11111199" maxSize="0xc">
+          <TOOL_POLICIES>
+            <POLICY name="RTC"/>
+            <POLICY name="CALIBRATION"/>
+          </TOOL_POLICIES>
+          <DEFAULT_DEPENDENCIES/>
+          <CONFIG_ELEMENT name="a" type="short" byteSize="0x2" byteOffset="0x0" min="0xfff6" max="0x3" default="0xffff"/>
+          <CONFIG_ELEMENT name="b" type="int" byteSize="0x4" byteOffset="0x4" min="0xfffffff8" max="0x14" default="0xfffffffc"/>
+          <CONFIG_ELEMENT name="c" type="unsigned short" typeUnSigned="true" byteSize="0x2" byteOffset="0x8" min="0xfff8" max="0xffff" default="0xfff9"/>
+          <CONFIG_ELEMENT name="d" type="short" byteSize="0x2" byteOffset="0xa" min="0x8000" max="0x7fff" default="0xfff8">
+            <RANGE_LIST>
+              <RANGE name="value1" value="0xfff8"/>
+              <RANGE name="value2" value="0x1"/>
+              <RANGE name="value3" value="0x3"/>
+            </RANGE_LIST>
+          </CONFIG_ELEMENT>
+        </PARAMETER>
+      </PARAMETER_LIST>
+    </MODULE>
+  </MODULE_LIST>
+</DSP>

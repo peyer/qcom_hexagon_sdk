@@ -1,0 +1,53 @@
+#!/bin/sh
+if [ -n "${HEXAGON_SDK_ROOT}" ]; then
+	echo sdk environment already setup
+	return
+fi
+echo ""
+echo Setting up the Hexagon SDK environment locally
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+export HEXAGON_SDK_ROOT=$DIR
+if [ -n "${ANDROID_ROOT_DIR}" ]; then
+  	echo Warning: ANDROID_ROOT_DIR already defined in the environment
+  	echo            Using:      $ANDROID_ROOT_DIR
+  	echo            Default is: $HEXAGON_SDK_ROOT/tools/android-ndk-r19c
+else
+ 	export  ANDROID_ROOT_DIR=$HEXAGON_SDK_ROOT/tools/android-ndk-r19c
+	
+	export  QNX_HOST=$HEXAGON_SDK_ROOT/tools/qnx/qnx_700/host/linux/x86_64/
+	export  QNX_TARGET=$HEXAGON_SDK_ROOT/tools/qnx/qnx_700/target/qnx7/
+fi
+echo HEXAGON_SDK_ROOT is : $HEXAGON_SDK_ROOT
+export SDK_SETUP_ENV=Done
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HEXAGON_SDK_ROOT/tools/libusb/
+export DEFAULT_HEXAGON_TOOLS_ROOT=$HEXAGON_SDK_ROOT/tools/HEXAGON_Tools/8.3.07
+if [ -f /lib32/ld-linux.so.* ];
+then
+   echo ""
+else
+   echo "32 bit compatibility libs are not installed.Please install them using \"sudo apt-get install lib32z1 lib32ncurses5\""
+fi
+
+if [ -d $HEXAGON_SDK_ROOT/tools/android-ndk-r19c ];
+then
+   true
+else
+   echo "Could not find Androd ndk at $HEXAGON_SDK_ROOT/tools/android-ndk-r19c"
+   export WARNING=1
+fi
+if [ -d $DEFAULT_HEXAGON_TOOLS_ROOT ];
+then
+  true
+else
+   echo "Could not find Hexagon Tools at $DEFAULT_HEXAGON_TOOLS_ROOT"
+   export WARNING=1
+fi
+
+if [ -n "$WARNING" ]
+then
+echo ""
+echo "Please refer to $HEXAGON_SDK_ROOT/docs/Dependencies_Common.html for installing the missed components"
+echo ""
+else
+echo "Done"
+fi

@@ -1,0 +1,13 @@
+/*==============================================================================
+  Copyright (c) 2015 Qualcomm Technologies, Inc.
+  All rights reserved. Qualcomm Proprietary and Confidential.
+==============================================================================*/
+
+#include "AEEStdDef.idl"
+
+interface calculator_plus {
+   long sum(in sequence<long> vec, rout long long res);
+   long static_sum(in sequence<long> vec, rout long long res1, rout long long res2);
+   long iostream_sum(in string filename, rout long long res);
+};
+

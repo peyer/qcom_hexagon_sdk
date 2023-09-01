@@ -1,0 +1,20 @@
+# This builds the skel library
+BUILD_LIBS += test_profile
+BUILD_LIBS += test_profile_qurt
+
+include $(QURT_IMAGE_DIR)/qurt_libs.min
+INCDIRS+=inc
+
+test_profile_qurt.C_SRCS = src/test_profile.c src/test_profile_qurt.c
+test_profile.C_SRCS = src/test_profile.c src/test_profile_sim.c
+
+#BUILD_QEXES = test_profile_q
+#test_profile_q.C_SRCS = src/test_profile_q.c
+#test_profile_q_LIBS += test_profile atomic
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   inc/test_profile.h \
+   $(LIBS) \
+   $(DLLS) \
+   $(SHIP_DIR)/ ;

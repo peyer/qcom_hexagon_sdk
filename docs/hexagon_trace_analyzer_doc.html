@@ -1,0 +1,922 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><title>Hexagon Trace Analyzer Tool</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="images/sidebar_top.jpg"></top><script src="scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, false)"><input id="searchButton" onclick="postFunction(false)" type="button" value="Search"></form><p>
+<a href="index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<p>
+<a href="sitemap.html">Sitemap</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="Audio/Applications.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="Voice/Applications.html">Voice</a>
+</p><p>
+<a href="Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="Audio/Examples.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="Examples_Common.html">Common</a>
+</p><p>
+<a href="Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="Tools_Signing.html">Signing</a>
+</p><p>
+<a href="Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="FAQ_Common.html">Common</a>
+</p><p>
+<a href="FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="Support_Contact.html">Contact</a>
+</p><center><img src="images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h1>
+<a name="Hexagon%20Trace%20Analyzer%20Tool"></a>Hexagon Trace Analyzer Tool
+</h1><div class="toc"><div class="tocLevel"><a href="#Supported%20targets">Supported targets</a></div><div class="tocLevel"><a href="#Overview">Overview</a><div class="tocLevel"><a href="#Prerequisites">Prerequisites</a></div><div class="tocLevel"><a href="#Collecting%20ETM%20Logs%20using%20an%20SDK%20example">Collecting ETM Logs using an SDK example</a></div><div class="tocLevel"><a href="#Configuring%20Hexagon%20Trace%20Analyzer">Configuring Hexagon Trace Analyzer</a></div><div class="tocLevel"><a href="#Parsing%20trace%20files%20using%20Hexagon%20Trace%20Analyzer">Parsing trace files using Hexagon Trace Analyzer</a></div><div class="tocLevel"><a href="#Hexagon%20Trace%20Analyzer%20Output">Hexagon Trace Analyzer Output</a></div></div></div><h2>
+<a name="Supported%20targets"></a>Supported targets
+</h2><p>
+SM8150, SM7150, SM6150
+</p><h2>
+<a name="Overview"></a>Overview
+</h2><p>
+Hexagon Trace Analyzer is a Software trace analysis tool. It processes Hexagon ETM (Embedded Trace Macrocell) traces generated by the software running on the Compute DSP and derives the flow of each thread of the processor. It is a valuable tool for giving insights into code execution, and allows in-depth analysis and optimization.
+</p><p>
+Hexagon Trace Analyzer requires ETM traces to be collected from the CDSP. These traces are then parsed for the binaries that are loaded and post-processed to present data in a meaningful manner. The outputs of Hexagon Trace Analyzer include various .csv files that give per function, per instruction and per section statistics. It also generates flamegraphs which provide a graphical view of the execution tree.
+</p><p>
+Hexagon Trace Analyzer can be found in the SDK at the following location ${HEXAGON_SDK_ROOT}/tools/debug/hexagon-trace-analyzer
+</p><p>
+<b>Note that this is an initial Alpha release of the tool.</b>
+</p><h3>
+<a name="Prerequisites"></a>Prerequisites
+</h3><p>
+Following are the prerequisites for using Hexagon Trace Analyzer:
+</p><ul type="circle">
+<li>
+<p>
+Hexagon SDK 3.5 or later
+</p><ul type="circle">
+<li>
+<p>
+Hexagon Trace Analyzer executable
+</p><ul type="circle">
+<li>
+<p>
+${HEXAGON_SDK_ROOT}/tools/debug/hexagon-trace-analyzer/hexagon-trace-analyzer
+</p>
+</li>
+</ul>
+</li>
+</ul>
+</li><li>
+<p>
+Linux
+</p>
+</li><li>
+<p>
+Python 2.7
+</p>
+</li><li>
+<p>
+sysMonApp
+</p><ul type="circle">
+<li>
+<p>
+Can be found here: ${HEXAGON_SDK_ROOT}/tools/utils/sysmon/sysMonApp
+</p>
+</li><li>
+<p>
+Used to enable ETM tracing and retrieve Hexagon shared object load addresses
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+adb drivers
+</p>
+</li><li>
+<p>
+Docker
+</p><ul type="circle">
+<li>
+<p>
+Running Hexagon Trace Analyzer does not strictly need Docker, but Docker allows you to set up a consistent virtualized linux environment.
+</p>
+</li><li>
+<p>
+Example here ${HEXAGON_SDK_ROOT}/tools/debug/hexagon-trace-analyzer this downloads the other tools required (Flamegraph &amp; Catapult).
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+FlameGraph (<a href="https://github.com/brendangregg/FlameGraph">https://github.com/brendangregg/FlameGraph</a>) and Catapult (<a href="https://github.com/catapult-project/catapult">https://github.com/catapult-project/catapult</a>) are required for visualization.
+</p><ul type="circle">
+<li>
+<p>
+To get these without docker, need to install the tools under the directory containing hexagon-trace-analyzer
+</p>
+</li>
+</ul><pre>cd ${HEXAGON_SDK_ROOT}/tools/debug/hexagon-trace-analyzer
+wget https://github.com/brendangregg/FlameGraph/archive/master.zip &amp;&amp; unzip master.zip &amp;&amp; rm master.zip &amp;&amp; mv FlameGraph-master FlameGraph
+wget https://github.com/catapult-project/catapult/archive/master.zip &amp;&amp; unzip master.zip -x *.json "*tracing/test_data/*" &amp;&amp; rm master.zip &amp;&amp; mv catapult-master catapult
+</pre>
+</li>
+</ul><h3>
+<a name="Collecting%20ETM%20Logs%20using%20an%20SDK%20example"></a>Collecting ETM Logs using an SDK example
+</h3><p>
+Step by step instructions on how to use the Hexagon Trace Analyzer tool, are also located here ${HEXAGON_SDK_ROOT}/examples/common/benchmark_v65/hexagon_trace_analyzer_instructions.txt
+</p><ol type="1">
+<li>
+<p>
+Run the one_time_setup script
+</p><pre>${HEXAGON_SDK_ROOT}/tools/debug/hexagon-trace-analyzer/one_time_setup.sh
+</pre><p>
+This pushes the sysMonApp to the device and retrieves the shared object libraries from the device.
+</p>
+</li><li>
+<p>
+Run the benchmark v65 walkthrough script that builds and loads the benchmark v65 binaries
+</p><pre>pushd &lt;SDK install dir&gt; &amp;&amp; source ./setup_sdk_env.source  &amp;&amp; popd
+${HEXAGON_SDK_ROOT}/examples/common/benchmark_v65/benchmark_v65_walkthrough.py -T sm8150
+</pre>
+</li><li>
+<p>
+Enable tracing
+</p><pre>${HEXAGON_SDK_ROOT}/tools/debug/hexagon-trace-analyzer/enable_trace.sh
+</pre><p>
+This enables the device to trace the Hexagon CDSP into a buffer in memory
+</p>
+</li><li>
+<p>
+Start the application running on the Hexagon CDSP.
+</p><pre>adb shell "ADSP_LIBRARY_PATH='/vendor/lib/rfsa/adsp:/system/lib/rfsa/adsp:/dsp;' &amp;&amp; /vendor/bin/benchmark -o /data/local/benchmark.csv -f fft -P 1 -L 1 -l 10000 -s &amp;" &amp;
+</pre><p>
+We increased the number of iterations to 10000, so that we can collect a trace whilst the application is actively running on CDSP, rather than collecting just the tail end of the processing.
+</p>
+</li><li>
+<p>
+Whilst the benchmark application is still running, we collect and download the trace.
+</p><pre>adb shell "cat /dev/coresight-tmc-etr &gt; /data/trace.bin" &amp;&amp; adb pull /data/trace.bin trace.bin
+</pre>
+</li><li>
+<p>
+Finally we extract the shared objects (and their load addresses) that got dynamically loaded onto Hexagon,
+</p><pre>adb shell /data/sysMonApp etmTrace --command dll --q6 CDSP
+</pre><p>
+This command will display the load offsets for each shared object and depends on the application. <br>For example, you should see output lines as follows
+</p><pre>data.ELF_NAME = libbenchmark_skel.so
+data.LOAD_ADDRESS = 0xe040c000
+data.ELF_IDENTIFIER = 0x00014000
+data.LOAD_TIMESTAMP = 0x1ea6b0def4
+data.UNLOAD_TIMESTAMP = 0x1ea726162d
+</pre><p>
+We use this information to configure Hexagon Trace Analyzer via the config.py file
+</p>
+</li><li>
+<p>
+Copy the cdsp image and all relevant .so files listed by sysmon from the device(or the build) to the trace location. <br>In the case of the benchmark_v65 example, the shared objects are located under
+</p><pre>${HEXAGON_SDK_ROOT}/examples/common/benchmark_v65/hexagon_ReleaseG_dynamic_toolv83_v66/ship/libbenchmark_skel.so
+</pre><p>
+and fastrpc_shell_3, which can be retrieved from your device as follows:
+</p><pre>cd ${HEXAGON_SDK_ROOT}/tools/debug/hexagon-trace-analyzer
+adb pull /vendor/dsp/cdsp/fastrpc_shell_3
+</pre><p>
+The cdsp image is retrived using this command
+</p><pre>adb pull /vendor/firmware_mnt/image/ $BINARY_FOLDER 
+</pre><p>
+The script {HEXAGON_SDK_ROOT}/tools/debug/hexagon-trace-analyzer/one_time_setup.sh also shows how the cdsp image and fastrpc_shell_3 shared object can be retrieved from your device.
+</p>
+</li>
+</ol><h3>
+<a name="Configuring%20Hexagon%20Trace%20Analyzer"></a>Configuring Hexagon Trace Analyzer
+</h3><p>
+Once the logs are collected, the appropriate configuration has to be specified to Hexagon Trace Analyzer using config.py. config.py contains data regarding CDSP image and shared object locations, the load addresses and the location of the Hexagon tools The list of shared objects and their load offsets are retrieved in Step 6 above using the sysMonApp. A sample config.py file is provided in the Hexagon Trace Analyzer folder ${HEXAGON_SDK_ROOT}/tools/debug/hexagon-trace-analyzer/config.py
+</p><p>
+You can copy config.py from the Hexagon Trace Analyzer folder and modify according to use case, important changes below:
+</p><ul type="circle">
+<li>
+<p>
+Include absolute path to each copied elf in the elflist in double quotes, separated by commas
+</p>
+</li><li>
+<p>
+Include load address of each shared object (given by sysmon) in elfoffset list, separated by commas
+</p>
+</li><li>
+<p>
+The CDSP image cdsp.mdt always has an offset of 0
+</p>
+</li>
+</ul><p>
+<b>Sample config.py</b>
+</p><div class="indent"><pre>LLVM_TOOLS_PATH = "/local/mnt/workspace/Hexagon_SDK/3.4.3/tools/HEXAGON_Tools/8.3.02/Tools/bin/"
+BINARY_PATH = "${HEXAGON_SDK_ROOT}/tools/debug/hexagon-trace-analyzer/binaries"
+elfList=["image/cdsp.mdt",
+         "fastrpc_shell_3",
+         "libbenchmark_skel.so"]
+elfOffsets=[0,
+            0xe0d00000,
+            0xe040c000]
+</pre></div><h3>
+<a name="Parsing%20trace%20files%20using%20Hexagon%20Trace%20Analyzer"></a>Parsing trace files using Hexagon Trace Analyzer
+</h3><p>
+<b>To run Hexagon Trace Analyzer under Docker use</b>
+</p><div class="indent"><pre>docker build -t hexagon_trace_analyzer_env .
+docker run -v "/pkg/qct/software/hexagon":"/app/hexagon" -v $WORKSPACE/results:"/app/results" hexagon_trace_analyzer_env /bin/bash -c './hexagon_trace_analyzer_env ./config.py ./results ./trace.bin '
+</pre></div><p>
+<b>To run Hexagon Trace Analyzer standalone, without using docker, use the following command.</b>
+</p><div class="indent"><pre>./hexagon-trace-analyzer ./config.py ./results ./trace.bin
+</pre></div><p>
+If you run the Trace Analyzer standalone, make sure first that you installed the catapult and flamegraph dependencies as shown above.
+</p><p>
+<b>Note:</b> The Trace Analyzer tool may take a few minutes to run until completion.
+</p><h3>
+<a name="Hexagon%20Trace%20Analyzer%20Output"></a>Hexagon Trace Analyzer Output
+</h3><p>
+The output of Hexagon Trace Analyzer is placed into the results folder.
+</p><p>
+First, inspect open debug.txt and ensure that the summary stats look right.
+</p><p>
+successfullyDecodedBytes is expected to equal or be close to 100%. If not, it means that not all instructions could be decoded successfully, which isn't expected.
+</p><p>
+PercentageProcessed indicates what fraction of the trace instructions can be associated to one of the provided binaries. If this percentage is low, please double-check that you provided all the dlls reported by sysMonApp with the correct load addresses in config.py. Unprocessed instructions will also occur if you call a library that wasn't loaded through FastRPC. This happens in benchmark_v65 for example when the DSP code invokes the dspCV APIs from the DSP directly. This is a current limitation of the Hexagon Trace Analyzer tool.
+</p><p>
+Note however that the trace includes regular synchronization points that allow the trace analyzer tool to process correctly subsequent instructions, thus resulting in a partially processed trace even when the Hexagon Trace Analyzer is missing some dlls.
+</p><p>
+<b>Excel Spreadsheets</b>
+</p><p>
+Detailed analysis of the number of cycles spent in each function and the packets in a function can be found in the perFunctionStats.xlsx and perPacketStats.xlsx files.
+</p><p>
+<b>Per Function Statistics</b>
+</p><left><img src="images/perFunctionStats.png"></left><p>
+<b>Per Packet Statistics</b>
+</p><left><img src="images/perPacketStats.png"></left><p>
+<b>Flamegraphs</b>
+</p><p>
+The Flamegraph output .svg files can be opened in any browser. The global cycles flamegraph shows a visualization of each task and the functions called in the task, the width of each bar is proportional to the number of cycles spent in that task/function and its children. More information can be found here <a href="http://www.brendangregg.com/flamegraphs.html">http://www.brendangregg.com/flamegraphs.html</a>
+</p><left><img src="images/flamegraph_global_cycles.png"></left><p>
+<b>Catapult Output</b>
+</p><p>
+The catapult subdirectory holds the catapult charts. These charts can be opened in a Chrome browser from the link chrome://tracing/ <br>Catapult charts show the call trees across the hardware threads over time
+</p><left><img src="images/catapult.png"></left><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

@@ -1,0 +1,22 @@
+#  min file
+
+
+
+# adjust paths to be relative to current working dir
+_pkg_deps = 
+__pkg_dir := $(filter-out ./,$(dir $(lastword $(MAKEFILE_LIST))))
+
+
+# assign these variables only for the top-level makefile
+ifeq ($(origin __pkg_root),undefined)
+  __pkg_root    := $(__pkg_dir).
+  __pkg_result  := $(__pkg_root)$(filter-out /.,/.)
+  __pkg_deps    := $(_pkg_deps)
+endif
+__pkg_version ?= 1242031
+
+ANDROID_TOOLS_DIR=$(ANDROID_NDK_DIR)/toolchains/aarch64-linux-android-4.9/prebuilt/windows-x86_64
+ANDROID_PLATFORM_DIR=$(ANDROID_NDK_DIR)/platforms/android-21/arch-arm64
+ANDROID_CXXSTL_DIR=$(ANDROID_NDK_DIR)/sources/cxx-stl
+ANDROID_GLIBSTDC_DIR=$(ANDROID_NDK_DIR)/sources/cxx-stl/gnu-libstdc++/4.9
+

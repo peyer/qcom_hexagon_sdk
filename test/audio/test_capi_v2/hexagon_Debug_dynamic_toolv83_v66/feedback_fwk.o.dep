@@ -1,0 +1,22 @@
+src/feedback_fwk.cpp:
+src/feedback_fwk.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_farf.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/test/common/test_profile/hexagon_Debug_dynamic_toolv83_v66/ship/test_profile.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/stddef/AEEStdDef.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_debug.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2_types.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2_events.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2_properties.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/mmdefs.h:
+hexagon_Debug_dynamic_toolv83_v66/feedback_fwk.o: src/feedback_fwk.cpp
+hexagon_Debug_dynamic_toolv83_v66/feedback_fwk.o: src/feedback_fwk.h
+hexagon_Debug_dynamic_toolv83_v66/feedback_fwk.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_farf.h
+hexagon_Debug_dynamic_toolv83_v66/feedback_fwk.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/test/common/test_profile/hexagon_Debug_dynamic_toolv83_v66/ship/test_profile.h
+hexagon_Debug_dynamic_toolv83_v66/feedback_fwk.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2.h
+hexagon_Debug_dynamic_toolv83_v66/feedback_fwk.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/stddef/AEEStdDef.h
+hexagon_Debug_dynamic_toolv83_v66/feedback_fwk.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_debug.h
+hexagon_Debug_dynamic_toolv83_v66/feedback_fwk.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2_types.h
+hexagon_Debug_dynamic_toolv83_v66/feedback_fwk.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2_events.h
+hexagon_Debug_dynamic_toolv83_v66/feedback_fwk.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2_properties.h
+hexagon_Debug_dynamic_toolv83_v66/feedback_fwk.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/mmdefs.h

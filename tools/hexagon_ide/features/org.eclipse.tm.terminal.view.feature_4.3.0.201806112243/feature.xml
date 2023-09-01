@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.tm.terminal.view.feature"
+      label="%featureName"
+      version="4.3.0.201806112243"
+      provider-name="%providerName"
+      plugin="org.eclipse.tm.terminal.view.core">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <url>
+      <update label="%updateSiteName" url="http://download.eclipse.org/tm/terminal/updates/4.3"/>
+   </url>
+
+   <requires>
+      <import plugin="org.eclipse.core.expressions" version="3.4.400" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.runtime" version="3.8.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.tm.terminal.view.core" version="4.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.tm.terminal.control" version="4.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui" version="3.8.0" match="greaterOrEqual"/>
+   </requires>
+
+   <plugin
+         id="org.eclipse.tm.terminal.view.core"
+         download-size="40"
+         install-size="66"
+         version="4.2.0.201609191434"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.tm.terminal.view.ui"
+         download-size="251"
+         install-size="511"
+         version="4.3.0.201803121111"
+         unpack="false"/>
+
+</feature>

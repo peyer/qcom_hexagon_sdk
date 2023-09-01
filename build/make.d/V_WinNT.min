@@ -1,0 +1,17 @@
+#============================================================================
+#  Name:
+#    V_WinNT.min
+#
+#  Description:
+#    This file specifies the items necessary to build all WinNT flavors using 
+#    Microsoft's compilers.
+#
+#        Copyright 2005 - 2010 QUALCOMM Incorporated.
+#               All Rights Reserved.
+#            QUALCOMM Confidential and Proprietary
+#----------------------------------------------------------------------------
+
+V_ARCH=x86
+V_TOOLCHAIN=msvc
+
+include $(MAKE_D_DIR)/defines_$(V_TOOLCHAIN).min

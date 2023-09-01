@@ -1,0 +1,31 @@
+#!/bin/bash
+#
+# Note: Do not call this script directly.  The Halide compiler will call
+# this script if the HL_HEXAGON_CODE_SIGNER environment variable is set.
+#
+# Usage: hl_signsav 'unsigned_lib' 'signed_lib'
+#
+#   Script to save generated Halide shared objects in $SIGNDIR
+#   to be signed externally at a later time.
+#
+#   Libraries will be created with increasing IDs based on the
+#   number of libraries already present in the directory.
+#
+# To use, before compiling, set the following env var:
+#
+#   export HL_HEXAGON_CODE_SIGNER=~/halide/scripts/hl_signsav
+#
+SIGNDIR=/tmp/hl_sign_$USER
+mkdir -p $SIGNDIR
+if [[ ! -d $SIGNDIR ]]; then
+   echo "Error: hl_signsav: could not create directory $SIGNDIR"
+   exit
+fi
+num=`ls $SIGNDIR/*.so 2> /dev/null | wc -l`
+
+LIB=$(printf "$SIGNDIR/lib%03d.so" $num)
+echo "hl_signsav: saving $1 as $LIB"
+
+cp $1 $LIB      # save unsigned library
+cp $1 $2        # copy unsigned to allow compilation to continue
+

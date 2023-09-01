@@ -1,0 +1,3 @@
+BUILD_QEXES += qurt_thread_t1_q
+qurt_thread_t1_q_OSTYPE = QURT
+qurt_thread_t1_q_C_SRCS+= src/qurt_thread_t1

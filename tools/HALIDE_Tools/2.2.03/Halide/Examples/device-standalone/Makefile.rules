@@ -1,0 +1,91 @@
+#/* ======================================================================= */
+#/*  QUALCOMM TECHNOLOGIES, INC.                                            */
+#/*                                                                         */
+#/*  HVX Intrinsics Examples with Boundary Conditions                       */
+#/*                                                                         */
+#/* ----------------------------------------------------------------------- */
+#/*          Copyright (c) 2016 QUALCOMM TECHNOLOGIES Incorporated.         */
+#/*                           All Rights Reserved.                          */
+#/*                  QUALCOMM Confidential and Proprietary                  */
+#/* ======================================================================= */
+
+
+.PHONY : run all clean
+run: all
+
+all: $(BIN)/remote/lib${TESTNAME}_skel.so run-${TESTNAME}
+
+PREF ?=
+
+run-%: $(BIN)/main-%.out
+	$(PREF) adb push $^ /data
+	$(PREF) adb push $(BIN)/host/lib${TESTNAME}_stub.so /data
+	$(PREF) adb push $(BIN)/remote/lib${TESTNAME}_skel.so /data
+	$(PREF) adb push ${HALIDE_ROOT}/lib/$(DSPTYPE)/arm-64-android/libhalide_hexagon_host.so /data
+	$(PREF) adb push ${HALIDE_ROOT}/lib/v60/libhalide_hexagon_remote_skel.so /data
+	$(PREF) adb shell "cp /system/lib/rfsa/adsp/testsig* /data/"
+	$(PREF) adb shell "cd /data; LD_LIBRARY_PATH=/data:/vendor/lib64:$$LD_LIBRARY_PATH ./main-$*.out $(TEST_ARGS_128)"
+
+#	$(PREF) adb shell /data/main-$*.out $(TEST_ARGS_64)
+sim-run-%: $(BIN)/sim-%.out
+	$(HEXAGON_SIM) $< $(HEXAGON_SIM_ARGS) -- $(HEXAGON_SIM_TEST_ARGS) 1>$(BIN)/run.stdout 2>$(BIN)/run.stderr;
+
+$(BIN)/main-%.out: $(BIN)/main-%.o $(UTILS)/libion_allocation.a $(BIN)/host/lib%_stub.so
+	mkdir -p $(@D)
+	${ARMCXX} ${ARM_CFLAGS} $< ${ARM_LDFLAGS} -lion_allocation -L$(UTILS) -l$*_stub -L$(BIN)/host -o $@;
+
+$(BIN)/sim-%.out: $(BIN)/$(SIM_DIR)/main-sim-%.o $(BIN)/sim-%_i.o
+	mkdir -p $(@D)
+	$(HEXAGON_CXX) $(HEXAGON_CFLAGS) $(HEXAGON_LDFLAGS) -DSIMULATOR=1 $(BIN)/$(SIM_DIR)/main-sim-$*.o $(BIN)/sim-$*_i.o -o $@
+
+$(BIN)/%_generate: halide/src/%_generator.cpp
+	mkdir -p $(@D)
+	$(CXX) $(HALIDE_GEN) $^ $(GENERATOR_DEPS) $(HALIDE_FLAGS) -o $@
+
+$(BIN)/%_halide.h $(BIN)/%_halide.o: $(BIN)/%_generate
+	mkdir -p $(@D)
+	$^ -g conv3x3a16_halide -e o,h -o . target=$(HALIDE_TARGET)
+	mv *.h *.o $(BIN)
+
+$(BIN)/src/%_stub.c $(BIN)/src/%_skel.c $(BIN)/src/%.h: rpc/%.idl
+	mkdir -p $(@D)
+	${HEXAGON_QAIC} $^ -o $(@D)
+
+$(BIN)/%_skel.o: $(BIN)/src/%_skel.c
+	mkdir -p $(@D)
+	${HEXAGON_CC} ${HEXAGON_CFLAGS}  -O3 -fPIC -c $^ -o $@
+
+$(BIN)/%_i.o: dsp/%_i.c $(BIN)/src/%.h $(BIN)/%_halide.h
+	mkdir -p $(@D)
+	$(HEXAGON_CC) ${HEXAGON_CFLAGS} -O2 -g  -fPIC -c $< -o $@
+
+$(BIN)/sim-%_i.o: dsp/%_i.c $(BIN)/src/%.h
+	mkdir -p $(@D)
+	$(HEXAGON_CC) -DSIMULATOR=1 ${HEXAGON_CFLAGS} -O2 -g -fPIC -c $< -o $@
+
+$(BIN)/remote/lib%_skel.so: $(BIN)/%_skel.o $(BIN)/%_i.o $(BIN)/%_halide.o
+	mkdir -p $(@D)
+	$(HEXAGON_CC) -mv60 -mG0lib -G0 -fpic -shared -lc $^ -o $@;
+
+$(BIN)/main-%.o: host/main.cpp $(BIN)/src/%.h $(UTILS)/host/include/buffer.h
+	$(ARMCXX) -DVERIFY $< -std=c++11 ${ARM_CFLAGS} -c -o $@
+
+$(BIN)/$(SIM_DIR)/main-sim-%.o: host/main.cpp $(BIN)/src/%.h $(UTILS)/host/include/buffer.h
+	mkdir -p $(@D)
+	$(HEXAGON_CXX) $< -std=c++11 ${HEXAGON_CFLAGS} -c -o $@
+
+$(BIN)/host/lib%_stub.so: $(BIN)/src/%_stub.c
+	mkdir -p $(@D)
+	$(ARMCC)  ${ARM_CFLAGS} $^ ${ARM_LDFLAGS} -Wl,-soname,lib$*_stub.so -shared -o $@ ;
+
+$(UTILS_BIN)/ion_allocation.o: $(UTILS)/ion_allocation.cpp $(UTILS)/ion_allocation.h
+	mkdir -p $(@D)
+	${ARMCXX} ${ARM_CFLAGS} -O3  -c $< -o $@
+
+$(UTILS)/libion_allocation.a: $(UTILS_BIN)/ion_allocation.o
+	ar q $@ $^
+
+clean:
+	rm -rf $(BIN) *.txt *.h *.o
+	rm -rf $(BIN) *.txt
+	rm -rf $(UTILS_BIN) $(UTILS)/*.a

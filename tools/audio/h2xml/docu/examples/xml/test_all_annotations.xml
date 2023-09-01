@@ -1,0 +1,260 @@
+<DSP type="WDSP" versionMajor="0x2" versionMinor="0x8" versionBranch="0x10" versionSubBranch="0x20" title1="This is Title 1" title2="This is Title 2"
+  title3="This is title 3" title4="This is title 4" title5="This is title 5" title6="This is title 6" title7="This is title 7" title8="This is title 8"
+  title9="This is title 9" title10="This is title 10">
+  <MODULE_LIST>
+    <MODULE name="MODULE_1" id="0x11111111" replacedBy="0x44444444" deprecated="true" description="This is the description for Module1\ndescription1 description1#[
+      #] description1 description1 description1 description1 description1 description1 description1 description1 description1 description1 description1#[
+      #] description1 description1 description1 description1 description1 description1 description1 ">
+      <MODULE_INFO pidFwk="0x12345678">
+        <META_DATA/>
+        <PIN_INFO type="STATIC">
+          <INPUT_PINS pinIdSize="0x2" max="0x2">
+            <PIN name="In1" id="0x1"/>
+            <PIN name="In2" id="0x2"/>
+          </INPUT_PINS>
+          <OUTPUT_PINS pinIdSize="0x2" max="0x4">
+            <PIN name="PIN1" id="0x0"/>
+            <PIN name="PIN1" id="0x7"/>
+            <PIN name="PIN2" id="0xf"/>
+            <PIN name="PIN5" id="0x123"/>
+          </OUTPUT_PINS>
+        </PIN_INFO>
+        <TOOL_POLICIES>
+          <POLICY name="CALIBRATION"/>
+          <POLICY name="RTC"/>
+          <POLICY name="RTM"/>
+          <POLICY name="NO_SUPPORT"/>
+        </TOOL_POLICIES>
+      </MODULE_INFO>
+      <PARAMETER_LIST>
+        <PARAMETER name="Parameter1" pid="0x11111199" maxSize="0xac" description="Description of Parameter 1. Description continued.\nDescription continued.\n#[
+          #] Description continued.\nDescription continued.\n" version="0x1">
+          <TOOL_POLICIES>
+            <POLICY name="CALIBRATION"/>
+            <POLICY name="RTC"/>
+            <POLICY name="RTM"/>
+            <POLICY name="NO_SUPPORT"/>
+          </TOOL_POLICIES>
+          <DEFAULT_DEPENDENCIES/>
+          <CONFIG_ELEMENT name="NameForA" type="short" byteSize="0x2" byteOffset="0x0" min="0xfff6" max="0x14" default="0xffff" visibility="HIDE"
+            readOnly="false" policy="ADVANCED" displayType="SLIDER" description="This is element a. Further description, Further description, Further#[
+            #] description, Further description, Further description, Further description" dataFormat="Q18" isVersion="true">
+            <RANGE_LIST>
+              <RANGE name="a" value="0xffff"/>
+              <RANGE name="b" value="0x20"/>
+            </RANGE_LIST>
+          </CONFIG_ELEMENT>
+          <CONFIG_ELEMENT name="b" type="int" byteSize="0x4" byteOffset="0x4" min="0x0" max="0x14" default="0x3" visibility="SHOW" readOnly="true"
+            policy="INTERNAL" displayType="DROPDOWN" description="This is element b. Further description, Further description, Further description, Further#[
+            #] description, Further description, Further description" dataFormat="Q8">
+            <RANGE_LIST>
+              <RANGE name="enable1" value="0x4"/>
+              <RANGE name="enable2" value="0x1"/>
+              <RANGE name="enable3" value="0x3"/>
+              <RANGE name="enable4" value="0x37"/>
+            </RANGE_LIST>
+          </CONFIG_ELEMENT>
+          <CONFIG_ELEMENT name="c" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x8" min="0x0" max="0x40" default="0x0" policy="BASIC"
+            increment="0x2" displayType="DUMP"/>
+          <CONFIG_ELEMENT name="d" type="long" byteSize="0x4" byteOffset="0xc" min="0x80000000" max="0x7fffffff" default="0x0" displayType="CHECKBOX"/>
+          <CONFIG_ELEMENT name="e_1" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x10" min="0x0" max="0xff" default="0x11"/>
+          <CONFIG_ELEMENT name="e_2" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x11" min="0x0" max="0xff" default="0x22"/>
+          <CONFIG_ELEMENT name="e_3" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x12" min="0x0" max="0xff" default="0x33"/>
+          <CONFIG_ELEMENT name="e_4" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x13" min="0x0" max="0xff" default="0x44"/>
+          <CONFIG_ELEMENT name="e_5" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x14" min="0x0" max="0xff" default="0x55"/>
+          <CONFIG_ELEMENT name="e_6" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x15" min="0x0" max="0xff" default="0x66"/>
+          <CONFIG_ELEMENT name="e_7" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x16" min="0x0" max="0xff" default="0x77"/>
+          <CONFIG_ELEMENT name="e_8" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x17" min="0x0" max="0xff" default="0x88"/>
+          <CONFIG_ELEMENT name="e_9" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x18" min="0x0" max="0xff" default="0x99"/>
+          <CONFIG_ELEMENT name="e_10" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x19" min="0x0" max="0xff" default="0x74"/>
+          <CONFIG_ELEMENT name="e_11" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x1a" min="0x0" max="0xff" default="0x91"/>
+          <CONFIG_ELEMENT name="e_12" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x1b" min="0x0" max="0xff" default="0x74"/>
+          <CONFIG_ELEMENT name="e_13" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x1c" min="0x0" max="0xff" default="0x91"/>
+          <CONFIG_ELEMENT name="e_14" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x1d" min="0x0" max="0xff" default="0x34"/>
+          <CONFIG_ELEMENT name="e_15" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x1e" min="0x0" max="0xff" default="0x71"/>
+          <CONFIG_ELEMENT name="e_16" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x1f" min="0x0" max="0xff" default="0x91"/>
+          <CONFIG_ELEMENT name="e_17" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x20" min="0x0" max="0xff" default="0xd"/>
+          <CONFIG_ELEMENT name="e_18" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x21" min="0x0" max="0xff" default="0xa"/>
+          <CONFIG_ELEMENT name="e_19" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x22" min="0x0" max="0xff" default="0x61"/>
+          <CONFIG_ELEMENT name="e_20" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x23" min="0x0" max="0xff" default="0x64"/>
+          <CONFIG_ELEMENT name="e_21" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x24" min="0x0" max="0xff" default="0x66"/>
+          <CONFIG_ELEMENT name="e_22" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x25" min="0x0" max="0xff" default="0x61"/>
+          <CONFIG_ELEMENT name="e_23" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x26" min="0x0" max="0xff" default="0x66"/>
+          <CONFIG_ELEMENT name="e_24" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x27" min="0x0" max="0xff" default="0x61"/>
+          <CONFIG_ELEMENT name="e_25" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x28" min="0x0" max="0xff" default="0x64"/>
+          <CONFIG_ELEMENT name="e_26" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x29" min="0x0" max="0xff" default="0x66"/>
+          <CONFIG_ELEMENT name="e_27" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x2a" min="0x0" max="0xff" default="0x61"/>
+          <CONFIG_ELEMENT name="e_28" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x2b" min="0x0" max="0xff" default="0x6d"/>
+          <CONFIG_ELEMENT name="e_29" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x2c" min="0x0" max="0xff" default="0x20"/>
+          <CONFIG_ELEMENT name="e_30" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x2d" min="0x0" max="0xff" default="0x6a"/>
+          <CONFIG_ELEMENT name="e_31" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x2e" min="0x0" max="0xff" default="0x6f"/>
+          <CONFIG_ELEMENT name="e_32" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x2f" min="0x0" max="0xff" default="0x70"/>
+          <CONFIG_ELEMENT name="e_33" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x30" min="0x0" max="0xff" default="0x77"/>
+          <CONFIG_ELEMENT name="e_34" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x31" min="0x0" max="0xff" default="0x61"/>
+          <CONFIG_ELEMENT name="e_35" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x32" min="0x0" max="0xff" default="0x66"/>
+          <CONFIG_ELEMENT name="e_36" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x33" min="0x0" max="0xff" default="0x61"/>
+          <CONFIG_ELEMENT name="e_37" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x34" min="0x0" max="0xff" default="0x66"/>
+          <CONFIG_ELEMENT name="e_38" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x35" min="0x0" max="0xff" default="0x61"/>
+          <CONFIG_ELEMENT name="e_39" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x36" min="0x0" max="0xff" default="0x20"/>
+          <CONFIG_ELEMENT name="e_40" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x37" min="0x0" max="0xff" default="0x20"/>
+          <CONFIG_ELEMENT name="e_41" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x38" min="0x0" max="0xff" default="0x67"/>
+          <CONFIG_ELEMENT name="e_42" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x39" min="0x0" max="0xff" default="0x61"/>
+          <CONFIG_ELEMENT name="e_43" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x3a" min="0x0" max="0xff" default="0x73"/>
+          <CONFIG_ELEMENT name="e_44" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x3b" min="0x0" max="0xff" default="0x67"/>
+          <CONFIG_ELEMENT name="e_45" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x3c" min="0x0" max="0xff" default="0x61"/>
+          <CONFIG_ELEMENT name="e_46" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x3d" min="0x0" max="0xff" default="0x72"/>
+          <CONFIG_ELEMENT name="e_47" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x3e" min="0x0" max="0xff" default="0x20"/>
+          <CONFIG_ELEMENT name="e_48" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x3f" min="0x0" max="0xff" default="0x33"/>
+          <CONFIG_ELEMENT name="e_49" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x40" min="0x0" max="0xff" default="0x72"/>
+          <CONFIG_ELEMENT name="e_50" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x41" min="0x0" max="0xff" default="0x71"/>
+          <CONFIG_ELEMENT name="e_51" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x42" min="0x0" max="0xff" default="0x20"/>
+          <CONFIG_ELEMENT name="e_52" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x43" min="0x0" max="0xff" default="0x65"/>
+          <CONFIG_ELEMENT name="e_53" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x44" min="0x0" max="0xff" default="0x64"/>
+          <CONFIG_ELEMENT name="e_54" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x45" min="0x0" max="0xff" default="0x66"/>
+          <CONFIG_ELEMENT name="e_55" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x46" min="0x0" max="0xff" default="0x61"/>
+          <CONFIG_ELEMENT name="e_56" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x47" min="0x0" max="0xff" default="0x66"/>
+          <CONFIG_ELEMENT name="e_57" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x48" min="0x0" max="0xff" default="0x61"/>
+          <CONFIG_ELEMENT name="e_58" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x49" min="0x0" max="0xff" default="0x20"/>
+          <CONFIG_ELEMENT name="e_59" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x4a" min="0x0" max="0xff" default="0x64"/>
+          <CONFIG_ELEMENT name="e_60" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x4b" min="0x0" max="0xff" default="0x66"/>
+          <CONFIG_ELEMENT name="e_61" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x4c" min="0x0" max="0xff" default="0x61"/>
+          <CONFIG_ELEMENT name="e_62" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x4d" min="0x0" max="0xff" default="0x66"/>
+          <CONFIG_ELEMENT name="e_63" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x4e" min="0x0" max="0xff" default="0x61"/>
+          <CONFIG_ELEMENT name="e_64" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x4f" min="0x0" max="0xff" default="0x66"/>
+          <CONFIG_ELEMENT name="e_65" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x50" min="0x0" max="0xff" default="0x61"/>
+          <CONFIG_ELEMENT name="e_66" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x51" min="0x0" max="0xff" default="0x73"/>
+          <CONFIG_ELEMENT name="e_67" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x52" min="0x0" max="0xff" default="0xd"/>
+          <CONFIG_ELEMENT name="e_68" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x53" min="0x0" max="0xff" default="0xa"/>
+          <CONFIG_ELEMENT name="e_69" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x54" min="0x0" max="0xff" default="0x61"/>
+          <CONFIG_ELEMENT name="e_70" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x55" min="0x0" max="0xff" default="0x73"/>
+          <CONFIG_ELEMENT name="e_71" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x56" min="0x0" max="0xff" default="0x66"/>
+          <CONFIG_ELEMENT name="e_72" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x57" min="0x0" max="0xff" default="0x61"/>
+          <CONFIG_ELEMENT name="e_73" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x58" min="0x0" max="0xff" default="0x66"/>
+          <CONFIG_ELEMENT name="e_74" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x59" min="0x0" max="0xff" default="0x61"/>
+          <CONFIG_ELEMENT name="e_75" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x5a" min="0x0" max="0xff" default="0x66"/>
+          <CONFIG_ELEMENT name="e_76" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x5b" min="0x0" max="0xff" default="0x61"/>
+          <CONFIG_ELEMENT name="e_77" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x5c" min="0x0" max="0xff" default="0xd"/>
+          <CONFIG_ELEMENT name="e_78" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x5d" min="0x0" max="0xff" default="0xa"/>
+          <CONFIG_ELEMENT name="e_79" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x5e" min="0x0" max="0xff" default="0x66"/>
+          <CONFIG_ELEMENT name="e_80" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x5f" min="0x0" max="0xff" default="0x61"/>
+          <CONFIG_ELEMENT name="e_81" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x60" min="0x0" max="0xff" default="0x64"/>
+          <CONFIG_ELEMENT name="e_82" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x61" min="0x0" max="0xff" default="0xd"/>
+          <CONFIG_ELEMENT name="e_83" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x62" min="0x0" max="0xff" default="0xa"/>
+          <CONFIG_ELEMENT name="e_84" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x63" min="0x0" max="0xff" default="0x66"/>
+          <CONFIG_ELEMENT name="e_85" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x64" min="0x0" max="0xff" default="0x61"/>
+          <CONFIG_ELEMENT name="e_86" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x65" min="0x0" max="0xff" default="0x66"/>
+          <CONFIG_ELEMENT name="e_87" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x66" min="0x0" max="0xff" default="0xd"/>
+          <CONFIG_ELEMENT name="e_88" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x67" min="0x0" max="0xff" default="0xa"/>
+          <CONFIG_ELEMENT name="e_89" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x68" min="0x0" max="0xff" default="0x61"/>
+          <CONFIG_ELEMENT name="e_90" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x69" min="0x0" max="0xff" default="0x20"/>
+          <CONFIG_ELEMENT name="e_91" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x6a" min="0x0" max="0xff" default="0x64"/>
+          <CONFIG_ELEMENT name="e_92" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x6b" min="0x0" max="0xff" default="0x66"/>
+          <CONFIG_ELEMENT name="e_93" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x6c" min="0x0" max="0xff" default="0xd"/>
+          <CONFIG_ELEMENT name="e_94" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x6d" min="0x0" max="0xff" default="0xa"/>
+          <CONFIG_ELEMENT name="e_95" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x6e" min="0x0" max="0xff" default="0x61"/>
+          <CONFIG_ELEMENT name="e_96" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x6f" min="0x0" max="0xff" default="0x64"/>
+          <CONFIG_ELEMENT name="e_97" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x70" min="0x0" max="0xff" default="0x66"/>
+          <CONFIG_ELEMENT name="e_98" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x71" min="0x0" max="0xff" default="0x61"/>
+          <CONFIG_ELEMENT name="e_99" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x72" min="0x0" max="0xff" default="0x66"/>
+          <CONFIG_ELEMENT name="e_100" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x73" min="0x0" max="0xff" default="0x61"/>
+          <CONFIG_ELEMENT name="e_101" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x74" min="0x0" max="0xff" default="0x66"/>
+          <CONFIG_ELEMENT name="e_102" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x75" min="0x0" max="0xff" default="0x61"/>
+          <CONFIG_ELEMENT name="e_103" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x76" min="0x0" max="0xff" default="0x66"/>
+          <CONFIG_ELEMENT name="e_104" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x77" min="0x0" max="0xff" default="0x61"/>
+          <CONFIG_ELEMENT name="e_105" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x78" min="0x0" max="0xff" default="0x66"/>
+          <CONFIG_ELEMENT name="e_106" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x79" min="0x0" max="0xff" default="0x38"/>
+          <CONFIG_ELEMENT name="e_107" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x7a" min="0x0" max="0xff" default="0x37"/>
+          <CONFIG_ELEMENT name="e_108" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x7b" min="0x0" max="0xff" default="0x72"/>
+          <CONFIG_ELEMENT name="e_109" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x7c" min="0x0" max="0xff" default="0x37"/>
+          <CONFIG_ELEMENT name="e_110" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x7d" min="0x0" max="0xff" default="0x77"/>
+          <CONFIG_ELEMENT name="e_111" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x7e" min="0x0" max="0xff" default="0x64"/>
+          <CONFIG_ELEMENT name="e_112" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x7f" min="0x0" max="0xff" default="0x66"/>
+          <CONFIG_ELEMENT name="e_113" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x80" min="0x0" max="0xff" default="0x75"/>
+          <CONFIG_ELEMENT name="e_114" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x81" min="0x0" max="0xff" default="0x61"/>
+          <CONFIG_ELEMENT name="e_115" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x82" min="0x0" max="0xff" default="0x6e"/>
+          <CONFIG_ELEMENT name="e_116" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x83" min="0x0" max="0xff" default="0x20"/>
+          <CONFIG_ELEMENT name="e_117" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x84" min="0x0" max="0xff" default="0x6f"/>
+          <CONFIG_ELEMENT name="e_118" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x85" min="0x0" max="0xff" default="0x64"/>
+          <CONFIG_ELEMENT name="e_119" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x86" min="0x0" max="0xff" default="0x66"/>
+          <CONFIG_ELEMENT name="e_120" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x87" min="0x0" max="0xff" default="0x61"/>
+          <CONFIG_ELEMENT name="e_121" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x88" min="0x0" max="0xff" default="0x70"/>
+          <CONFIG_ELEMENT name="e_122" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x89" min="0x0" max="0xff" default="0x6f"/>
+          <CONFIG_ELEMENT name="e_123" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x8a" min="0x0" max="0xff" default="0x64"/>
+          <CONFIG_ELEMENT name="e_124" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x8b" min="0x0" max="0xff" default="0x72"/>
+          <CONFIG_ELEMENT name="e_125" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x8c" min="0x0" max="0xff" default="0x66"/>
+          <CONFIG_ELEMENT name="e_126" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x8d" min="0x0" max="0xff" default="0x75"/>
+          <CONFIG_ELEMENT name="e_127" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x8e" min="0x0" max="0xff" default="0x7a"/>
+          <CONFIG_ELEMENT name="e_128" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x8f" min="0x0" max="0xff" default="0x61"/>
+          <CONFIG_ELEMENT name="e_129" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x90" min="0x0" max="0xff" default="0x39"/>
+          <CONFIG_ELEMENT name="e_130" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x91" min="0x0" max="0xff" default="0x64"/>
+          <CONFIG_ELEMENT name="e_131" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x92" min="0x0" max="0xff" default="0x72"/>
+          <CONFIG_ELEMENT name="e_132" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x93" min="0x0" max="0xff" default="0x37"/>
+          <CONFIG_ELEMENT name="e_133" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x94" min="0x0" max="0xff" default="0x38"/>
+          <CONFIG_ELEMENT name="e_134" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x95" min="0x0" max="0xff" default="0x66"/>
+          <CONFIG_ELEMENT name="e_135" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x96" min="0x0" max="0xff" default="0x61"/>
+          <CONFIG_ELEMENT name="e_136" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x97" min="0x0" max="0xff" default="0x6e"/>
+          <CONFIG_ELEMENT name="e_137" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x98" min="0x0" max="0xff" default="0x39"/>
+          <CONFIG_ELEMENT name="e_138" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x99" min="0x0" max="0xff" default="0x20"/>
+          <CONFIG_ELEMENT name="e_139" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x9a" min="0x0" max="0xff" default="0x66"/>
+          <CONFIG_ELEMENT name="e_140" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x9b" min="0x0" max="0xff" default="0x7a"/>
+          <CONFIG_ELEMENT name="e_141" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x9c" min="0x0" max="0xff" default="0x61"/>
+          <CONFIG_ELEMENT name="e_142" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x9d" min="0x0" max="0xff" default="0x68"/>
+          <CONFIG_ELEMENT name="e_143" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x9e" min="0x0" max="0xff" default="0x66"/>
+          <CONFIG_ELEMENT name="e_144" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0x9f" min="0x0" max="0xff" default="0x6f"/>
+          <CONFIG_ELEMENT name="e_145" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0xa0" min="0x0" max="0xff" default="0xd"/>
+          <CONFIG_ELEMENT name="e_146" type="unsigned char" typeUnSigned="true" byteSize="0x1" byteOffset="0xa1" min="0x0" max="0xff" default="0xa"/>
+          <CONFIG_ELEMENT name="f" type="unsigned int" typeUnSigned="true" byteSize="0x4" byteOffset="0xa4" min="0x0" max="0x0" default="0x0">
+            <BITFIELD bitMask="0x1" bitName="Bit_0" description="Description of Bit[0]" default="0x1"/>
+            <BITFIELD bitMask="0x6" bitName="Bit_2_1" description="Description of Bit[2:1]" default="0x2"/>
+            <BITFIELD bitMask="0xf0" bitName="Bit_7_4" description="Description of Bit[7:4]" default="0x7">
+              <RANGE_LIST>
+                <RANGE name="x0" value="0x0"/>
+                <RANGE name="x1" value="0x1"/>
+                <RANGE name="x2" value="0x2"/>
+                <RANGE name="x3" value="0x3"/>
+                <RANGE name="x4" value="0x7"/>
+              </RANGE_LIST>
+            </BITFIELD>
+            <BITFIELD bitMask="0xff000000" bitName="Bit_31_24" description="Description of Bit[31:24" default="0x4" min="0x1" max="0xa"/>
+          </CONFIG_ELEMENT>
+          <CONFIG_ELEMENT name="x" type="long" byteSize="0x4" byteOffset="0xa8" min="0x80000000" max="0x7fffffff" default="0x0"/>
+        </PARAMETER>
+      </PARAMETER_LIST>
+    </MODULE>
+    <MODULE name="MODULE_2" id="0x22222222" replacedBy="0x56785678" deprecated="false" description="This is the description for Module2\ndescription2#[
+      #] description2 description2 description2 description2 description2 description2 description2 description2 description2 description2 description2#[
+      #] description2 description2 description2 description2 description2 description2 description2 description2 ">
+      <MODULE_INFO pidFwk="0x87654321">
+        <META_DATA/>
+        <PIN_INFO type="DYNAMIC">
+          <INPUT_PINS max="0x2" pinIdSize="0x2">
+            <PIN name="In1" id="0x2"/>
+            <PIN name="In2" id="0x3"/>
+          </INPUT_PINS>
+          <OUTPUT_PINS max="0x2" pinIdSize="0x2">
+            <PIN name="Out1" id="0x4"/>
+            <PIN name="Out2" id="0x5"/>
+          </OUTPUT_PINS>
+        </PIN_INFO>
+        <TOOL_POLICIES>
+          <POLICY name="CALIBRATION"/>
+          <POLICY name="RTM"/>
+        </TOOL_POLICIES>
+      </MODULE_INFO>
+      <PARAMETER_LIST>
+        <PARAMETER name="Parameter2" pid="0x22222299" maxSize="0x8" description="Description of Parameter 2. Description continued.\nDescription continued.\n#[
+          #] Description continued.\nDescription continued.\n" version="0x2">
+          <TOOL_POLICIES>
+            <POLICY name="CALIBRATION"/>
+            <POLICY name="NO_SUPPORT"/>
+          </TOOL_POLICIES>
+          <DEFAULT_DEPENDENCIES/>
+          <CONFIG_ELEMENT visibility="SHOW" readOnly="true" policy="BASIC" name="a" type="int" byteSize="0x4" byteOffset="0x0" min="0x80000000" max="0x7fffffff"
+            default="0x33" increment="0xa"/>
+          <CONFIG_ELEMENT visibility="SHOW" readOnly="true" policy="ADVANCED" name="b" type="short" byteSize="0x2" byteOffset="0x4" min="0x0" max="0x55"
+            default="0x44"/>
+        </PARAMETER>
+      </PARAMETER_LIST>
+    </MODULE>
+  </MODULE_LIST>
+</DSP>

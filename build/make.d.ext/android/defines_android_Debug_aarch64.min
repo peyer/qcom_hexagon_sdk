@@ -1,0 +1,46 @@
+# The android tools path is located by the sdk using the environment 
+# variables ANDROID_TOOLS_DIR, ANDROID_PLATFORM_DIR.
+#If this variable is not defined then a default value is used.
+
+ifndef API_LEVEL
+  API_LEVEL=26
+endif
+
+ifndef ANDROID_ROOT_DIR
+  export ANDROID_ROOT_DIR=$(subst \,/,$(HEXAGON_SDK_ROOT))/tools/android-ndk-r19c#
+else
+  export ANDROID_ROOT_DIR:=$(subst \,/,$(ANDROID_ROOT_DIR))#
+endif
+
+ifndef ANDROID_GLIBSTDC_DIR
+  ifeq (1,$(V_GCC))
+    export ANDROID_GLIBSTDC_DIR=$(subst \,/,$(ANDROID_ROOT_DIR))/sources/cxx-stl/gnu-libstdc++/4.9/libs/arm64-v8a#
+  else 
+    export ANDROID_GLIBSTDC_DIR=$(subst \,/,$(ANDROID_ROOT_DIR))/sources/cxx-stl/llvm-libc++/libs/arm64-v8a#
+  endif
+else
+  export ANDROID_GLIBSTDC_DIR:=$(subst \,/,$(ANDROID_GLIBSTDC_DIR))#
+endif
+
+#use default tools location
+ifndef ANDROID_TOOLS_DIR
+  ifeq (1,$(V_GCC))
+    export ANDROID_TOOLS_DIR=$(subst \,/,$(ANDROID_ROOT_DIR))/toolchains/aarch64-linux-android-4.9/prebuilt/linux-x86_64#
+    $(warning "Using default tools location: ANDROID_TOOLS_DIR=$(ANDROID_TOOLS_DIR)")
+  else 
+    export ANDROID_TOOLS_DIR=$(subst \,/,$(ANDROID_ROOT_DIR))/toolchains/llvm/prebuilt/linux-x86_64#
+    $(warning "Using default tools location: ANDROID_TOOLS_DIR=$(ANDROID_TOOLS_DIR)")
+  endif
+else
+  export ANDROID_TOOLS_DIR:=$(subst \,/,$(ANDROID_TOOLS_DIR))#
+endif
+
+#use default platform directory
+ifndef ANDROID_PLATFORM_DIR
+  export ANDROID_PLATFORM_DIR=$(subst \,/,$(ANDROID_ROOT_DIR))/platforms/android-$(API_LEVEL)/arch-arm64#
+  $(warning "Using default platform location: ANDROID_PLATFORM_DIR=$(ANDROID_PLATFORM_DIR)")
+else
+  export ANDROID_PLATFORM_DIR:=$(subst \,/,$(ANDROID_PLATFORM_DIR))#
+endif
+
+export V?=android_Debug# default variant

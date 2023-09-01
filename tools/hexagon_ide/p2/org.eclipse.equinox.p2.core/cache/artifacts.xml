@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?artifactRepository version='1.1.0'?>
+<repository name='download cache' type='org.eclipse.equinox.p2.artifact.repository.simpleRepository' version='1.0.0'>
+  <properties size='2'>
+    <property name='p2.system' value='true'/>
+    <property name='p2.timestamp' value='1529495686854'/>
+  </properties>
+  <mappings size='3'>
+    <rule filter='(&amp; (classifier=osgi.bundle))' output='${repoUrl}/plugins/${id}_${version}.jar'/>
+    <rule filter='(&amp; (classifier=binary))' output='${repoUrl}/binary/${id}_${version}'/>
+    <rule filter='(&amp; (classifier=org.eclipse.update.feature))' output='${repoUrl}/features/${id}_${version}.jar'/>
+  </mappings>
+  <artifacts size='5'>
+    <artifact classifier='binary' id='org.eclipse.cdt_root' version='9.5.0.201806170908'>
+      <properties size='1'>
+        <property name='download.size' value='2410'/>
+      </properties>
+    </artifact>
+    <artifact classifier='binary' id='org.eclipse.platform_root' version='4.8.0.v20180611-0656'>
+      <properties size='1'>
+        <property name='download.size' value='195'/>
+      </properties>
+    </artifact>
+    <artifact classifier='binary' id='epp.package.cpp.executable.gtk.linux.x86_64' version='4.8.0.20180619-1200'>
+      <properties size='1'>
+        <property name='download.size' value='32776'/>
+      </properties>
+    </artifact>
+    <artifact classifier='binary' id='org.eclipse.platform.ide.executable.gtk.linux.x86_64' version='4.8.0.I20180611-0500'>
+      <properties size='1'>
+        <property name='download.size' value='43625'/>
+      </properties>
+    </artifact>
+    <artifact classifier='binary' id='org.eclipse.rcp_root' version='4.8.0.v20180611-0656'>
+      <properties size='1'>
+        <property name='download.size' value='26997'/>
+      </properties>
+    </artifact>
+  </artifacts>
+</repository>

@@ -1,0 +1,50 @@
+/*
+  Copyright (c) 2017 Qualcomm Technologies, Inc.
+  All Rights Reserved.
+  Confidential and Proprietary - Qualcomm Technologies, Inc.
+*/
+
+#ifndef ASYNCDSPQ_RPC_IDL
+#define ASYNCDSPQ_RPC_IDL
+
+#include "AEEStdDef.idl"
+
+interface asyncdspq {
+
+    AEEResult rpc_create(
+        in dmahandle queue,
+        rout uint32 queue_handle
+        );
+
+    AEEResult rpc_destroy(
+        in uint32 queue_handle
+        );
+
+    AEEResult rpc_wait_message(
+        in uint32 queue_handle,
+        rout int32 messages
+        );
+
+    AEEResult rpc_cancel_wait_message(
+        in uint32 queue_handle
+        );
+
+    AEEResult rpc_signal_message(
+        in uint32 queue_handle
+        );
+
+    AEEResult rpc_wait_space(
+        in uint32 queue_handle,
+        rout int32 space
+        );
+
+    AEEResult rpc_cancel_wait_space(
+        in uint32 queue_handle
+        );
+
+    AEEResult rpc_signal_space(
+        in uint32 queue_handle
+        );
+};
+
+#endif //ASYNCDSPQ_RPC_IDL

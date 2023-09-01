@@ -1,0 +1,42 @@
+#============================================================================
+#  Name:
+#    defines_qdsp.min
+#
+#  Description:
+#    This file specifies the items necessary to build libraries using the
+#    HEXAGON gcc toolchain
+#
+# Copyright (c) 2017 Qualcomm Technologies, Inc.  All Rights Reserved.
+#============================================================================
+#                             TOOL DEFINITIONS
+#============================================================================
+
+ifeq (1,$(V_toolv50))
+  include $(thisDir)/defines_hexagon_5_0.min
+else ifeq (1,$(V_toolv51))
+  include $(thisDir)/defines_hexagon_5_1.min
+else ifeq (1,$(V_toolv64))
+  include $(thisDir)/defines_hexagon_6_4.min
+else ifeq (1,$(V_toolv70))
+  include $(thisDir)/defines_hexagon_7_0.min
+else ifeq (1,$(V_toolv72))
+  include $(thisDir)/defines_hexagon_7_2.min
+else ifeq (1,$(V_toolv74))
+  include $(thisDir)/defines_hexagon_7_4.min
+else ifeq (1,$(V_toolv80))
+  include $(thisDir)/defines_hexagon_8_0.min
+else ifeq (1,$(V_toolv81))
+  include $(thisDir)/defines_hexagon_8_1.min
+else ifeq (1,$(V_toolv82))
+  include $(thisDir)/defines_hexagon_8_2.min
+else ifeq (1,$(V_toolv83))
+  include $(thisDir)/defines_hexagon_8_3.min
+else
+  # default (must be sync'd with HEXAGON_Tools\pak
+  include $(thisDir)/defines_hexagon_8_3.min
+endif
+
+ifneq ("$(wildcard $(HEXAGON_SDK_ROOT)/libs/common/qurt/qurt_libs_priv.min)","")
+NEW_QURT_SIMULATION = 1
+endif
+

@@ -1,0 +1,1262 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><style type="text/css">
+.html2d { position: relative; }
+.html2d div { position: absolute; border-width: 0; border-style: solid; }
+.html2d div div { position: absolute; border-width: 0; border-style: solid; }
+
+</style><title>Message logs</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="images/sidebar_top.jpg"></top><script src="scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, false)"><input id="searchButton" onclick="postFunction(false)" type="button" value="Search"></form><p>
+<a href="index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<p>
+<a href="sitemap.html">Sitemap</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="Audio/Applications.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="Voice/Applications.html">Voice</a>
+</p><p>
+<a href="Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="Audio/Examples.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="Examples_Common.html">Common</a>
+</p><p>
+<a href="Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="Tools_Signing.html">Signing</a>
+</p><p>
+<a href="Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="FAQ_Common.html">Common</a>
+</p><p>
+<a href="FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="Support_Contact.html">Contact</a>
+</p><center><img src="images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h1>
+<a name="Message%20logs"></a>Message logs
+</h1><div class="toc"><div class="tocLevel"><a href="#Overview">Overview</a></div><div class="tocLevel"><a href="#FARF">FARF</a></div><div class="tocLevel"><a href="#printf">printf</a></div><div class="tocLevel"><a href="#Runtime%20FARF">Runtime FARF</a><div class="tocLevel"><a href="#Introduction">Introduction</a></div><div class="tocLevel"><a href="#Enabling%20runtime%20FARF%20via%20config%20file">Enabling runtime FARF via config file</a><div class="tocLevel"><a href="#Config%20file%20name">Config file name</a></div><div class="tocLevel"><a href="#Contents%20of%20the%20config%20file">Contents of the config file</a></div><div class="tocLevel"><a href="#Enabling%20at%20process%20start-up">Enabling at process start-up</a></div></div><div class="tocLevel"><a href="#Enabling%20runtime%20FARF%20programmatically">Enabling runtime FARF programmatically</a></div><div class="tocLevel"><a href="#Obtaining%20PID%20and%20ASID%20of%20FastRPC%20processes">Obtaining PID and ASID of FastRPC processes</a></div></div><div class="tocLevel"><a href="#logcat">logcat</a><div class="tocLevel"><div class="tocLevel"><a href="#How%20to%20enable">How to enable</a></div><div class="tocLevel"><a href="#How%20to%20filter%20logcat%20for%20DSP%20messages">How to filter logcat for DSP messages</a></div></div></div><div class="tocLevel"><a href="#mini-dm">mini-dm</a><div class="tocLevel"><a href="#Connecting%20to%20a%20device">Connecting to a device</a><div class="tocLevel"><a href="#Hardware%20requirements">Hardware requirements</a></div><div class="tocLevel"><a href="#Software%20requirements">Software requirements</a></div><div class="tocLevel"><a href="#Steps%20to%20run%20mini-dm.exe">Steps to run mini-dm.exe</a></div></div><div class="tocLevel"><a href="#Command%20line%20options%20available%20for%20mini-dm.exe">Command line options available for mini-dm.exe</a><div class="tocLevel"><a href="#Connection%20options">Connection options</a></div><div class="tocLevel"><a href="#Logging%20options">Logging options</a></div><div class="tocLevel"><a href="#Performance%20monitor%20options">Performance monitor options</a></div><div class="tocLevel"><a href="#Usage%20exmaples">Usage exmaples</a></div></div></div><div class="tocLevel"><a href="#getpkt">getpkt</a><div class="tocLevel"><a href="#Usage%20of%20getpkt">Usage of getpkt</a></div></div></div><h2>
+<a name="Overview"></a>Overview
+</h2><p>
+The Hexagon SDK provides ability to collect diagnostic messages from the DSP.
+</p><ul type="circle">
+<li>
+<p>
+Read <a href="#FARF">FARF</a> for information on the recommended framework for sending log messages from the DSP.
+</p>
+</li><li>
+<p>
+Read <a href="#printf">printf</a> for information on how sending log messages from the DSP via standard printf prototype.
+</p>
+</li><li>
+<p>
+Read <a href="#Runtime%20FARF">Runtime FARF</a> for information on how to enable DSP messages at runtime.
+</p>
+</li><li>
+<p>
+READ <a href="#logcat">logcat</a> for information on how to view DSP messages in logcat.
+</p>
+</li><li>
+<p>
+Read <a href="#mini-dm">mini-dm</a> for information on how to view DSP the messages on the host PC.
+</p>
+</li>
+</ul><h2>
+<a name="FARF"></a>FARF
+</h2><p>
+Diagnostic messages are sent via the FARF API defined in /inc/HAP_farf.h.
+</p><pre>FARF(level, msg, ...)
+</pre><p>
+Logging is controlled via conditional compilation. A FARF level should be defined to 1 for FARF macros to be compiled in. For example:
+</p><pre><span style="color: blue">#define</span> FARF_LOW 1
+<span style="color: blue">#include</span> <span style="color: darkred">"HAP_farf.h"</span>
+
+FARF(LOW, <span style="color: darkred">"something happened: %s"</span>, (<span style="color: blue">const</span> <span style="color: blue">char</span>*)string);
+</pre><p>
+If FARF_LOW is defined to 0, as it is by default, the above FARF string will not be compiled in, if it is defined to 1 it will be compiled in. Users can also define their own custom levels. For example:
+</p><pre><span style="color: blue">#include</span> <span style="color: darkred">"HAP_farf.h"</span>
+<span style="color: blue">#define</span> FARF_MYTRACE 1
+<span style="color: blue">#define</span> FARF_MYTRACE_LEVEL HAP_LEVEL_LOW
+
+FARF(MYTRACE, <span style="color: darkred">"custom trace in file %s on line %d"</span>, __FILE__, __LINE__);
+</pre><p>
+The LEVEL define tells FARF what runtime logging level to use. These are mapped to their diag level counterparts, in the above example the message will be logged to diag's LOW level.
+</p><p>
+When building the Debug variant or builds defining _DEBUG the following FARF levels will be enabled:
+</p><ul type="circle">
+<li>
+<p>
+ALWAYS
+</p>
+</li><li>
+<p>
+HIGH
+</p>
+</li><li>
+<p>
+ERROR
+</p>
+</li><li>
+<p>
+FATAL
+</p>
+</li>
+</ul><p>
+Note: To push the FARF messages to logcat, check <a href="#logcat">logcat</a> column
+</p><h2>
+<a name="printf"></a>printf
+</h2><p>
+printf is enabled on newer targets and it can be used to send diagnostic messages similar to FARF. printf is supported in its standard prototype.
+</p><p>
+Any messages sent to STDOUT are considered as FARF_HIGH message. Messages sent to STDERR is considered as FARF_ERROR messages and displayed in QXDM.
+</p><pre>printf(<span style="color: darkred">"Helloworld!!!\n"</span>);
+</pre><h2>
+<a name="Runtime%20FARF"></a>Runtime FARF
+</h2><h3>
+<a name="Introduction"></a>Introduction
+</h3><p>
+Note: Support introduced on Snapdragon 810 targets.
+</p><p>
+Runtime FARF can be used to log messages that are disabled by default, and can be enabled at runtime as and when desired. Runtime FARF messages have no (or significantly low) overhead unless enabled.
+</p><p>
+Runtime FARF messages are always compiled in. A message can be logged via runtime FARF as below
+</p><pre><span style="color: blue">#include</span> <span style="color: darkred">"HAP_farf.h"</span>
+
+FARF(RUNTIME_LOW,<span style="color: darkred">"Runtime Low FARF message"</span>);
+FARF(RUNTIME_MEDIUM,<span style="color: darkred">"Runtime Medium FARF message"</span>);
+FARF(RUNTIME_HIGH,<span style="color: darkred">"Runtime High FARF message"</span>);
+FARF(RUNTIME_ERROR,<span style="color: darkred">"Runtime Error FARF message"</span>);
+FARF(RUNTIME_FATAL,<span style="color: darkred">"Runtime Fatal FARF message"</span>);
+</pre><p>
+Just as in regular FARF, The LEVEL tells FARF what runtime logging level to use.
+</p><p>
+Runtime FARF messages can be enabled either by
+</p><ul type="circle">
+<li>
+<p>
+<a href="#Enabling%20runtime%20FARF%20via%20config%20file">Adding a config file to the HLOS</a>
+</p>
+</li><li>
+<p>
+<a href="#Enabling%20runtime%20FARF%20programmatically">Programmatically calling an API in HLOS code</a>
+</p>
+</li>
+</ul><h3>
+<a name="Enabling%20runtime%20FARF%20via%20config%20file"></a>Enabling runtime FARF via config file
+</h3><p>
+The FastRPC Android user library (libadsprpc.so) watches the folder defined by ADSP_LIBRARY_PATH (/vendor|system/lib/rfsa/adsp) for config files that can be used to enable / disable runtime FARF message.
+</p><h4>
+<a name="Config%20file%20name"></a><b>Config file name</b>
+</h4><p>
+In order to reference a particular FastRPC process, the config file can be named in any one of the following formats:
+</p><ul type="circle">
+<li>
+<p>
+&lt;rpc_hlos_process_name&gt;.farf
+</p>
+</li><li>
+<p>
+&lt;rpc_hlos_pid&gt;.farf
+</p>
+</li><li>
+<p>
+&lt;rpc_adsp_asid&gt;.farf
+</p>
+</li>
+</ul><p>
+The FastRPC process PID and ASID can be discovered using the <a href="#Obtaining%20PID%20and%20ASID%20of%20FastRPC%20processes">adsp_ps tool</a> included with the SDK.
+</p><p>
+For example in order to reference a FastRPC process (say farf_runtime_test), the corresponding config file can be named:
+</p><ul type="circle">
+<li>
+<p>
+farf_runtime_test.farf
+</p>
+</li><li>
+<p>
+2.farf (Assuming that the ASID of this process is 2)
+</p>
+</li><li>
+<p>
+3492.farf (Assuming that the PID of this process is 3492)
+</p>
+</li>
+</ul><h4>
+<a name="Contents%20of%20the%20config%20file"></a><b>Contents of the config file</b>
+</h4><p>
+The contents of the config file are formatted as below:
+</p><pre>&lt;hex_mask&gt; &lt;comma separated filenames (optional)&gt;
+</pre><p>
+The mask has one bit for each level
+</p><ul type="circle">
+<li>
+<p>
+0x01 &#8211; LOW
+</p>
+</li><li>
+<p>
+0x02 &#8211; MEDIUM
+</p>
+</li><li>
+<p>
+0x04 &#8211; HIGH
+</p>
+</li><li>
+<p>
+0x08 &#8211; ERROR
+</p>
+</li><li>
+<p>
+0x10 - FATAL
+</p>
+</li>
+</ul><p>
+For example
+</p><ul type="circle">
+<li>
+<p>
+To enable all levels of runtime messages for all files in the process
+</p><ul type="circle">
+<li>
+<p>
+0x1f
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+To enable all levels of runtime messages for the file farf_runtime_test_adsp.c
+</p><ul type="circle">
+<li>
+<p>
+0x1f farf_runtime_test_adsp.c
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+To enable all levels of runtime messages for the files farf_runtime_test_adsp.c and foo.c
+</p><ul type="circle">
+<li>
+<p>
+0x1f farf_runtime_test_adsp.c,foo.c
+</p>
+</li>
+</ul>
+</li>
+</ul><h4>
+<a name="Enabling%20at%20process%20start-up"></a><b>Enabling at process start-up</b>
+</h4><p>
+If you would like to enable runtime FARF messages for a particular FastRPC process at <b>process startup</b>, place a config file with the name &lt;rpc_hlos_process_name&gt;.farf in the appropriate folder defined by ADSP_LIBRARY_PATH. The FastRPC user library scans for this file before it starts the RPC process. It will not look for the other filenames at startup (since the PID / ASID are non-deterministic)
+</p><h3>
+<a name="Enabling%20runtime%20FARF%20programmatically"></a>Enabling runtime FARF programmatically
+</h3><p>
+You can enable runtime FARF programmatically by calling the method
+</p><pre><span style="color: blue">int</span> HAP_setFARFRuntimeLoggingParams(<span style="color: blue">unsigned</span> <span style="color: blue">int</span> mask, <span style="color: blue">const</span> <span style="color: blue">char</span>* files[], <span style="color: blue">short</span> numberOfFiles);
+</pre><p>
+You can then use your own mechanism to enable or disable runtime logging. See
+</p><p>
+For Windows: . &lt;sdk root&gt;\examples\common\farf_runtime_test
+</p><p>
+For Linux: . &lt;sdk root&gt;/examples/common/farf_runtime_test
+</p><p>
+for an example on how to enable and use runtime FARF messages programmatically.
+</p><h3>
+<a name="Obtaining%20PID%20and%20ASID%20of%20FastRPC%20processes"></a>Obtaining PID and ASID of FastRPC processes
+</h3><p>
+It is possible to enable logging in a particular process, by referencing that process using either its ASID or HLOS PID. This allows you to target a specific process if there are multiple processes with the same name running. In order to obtain the ASID and PID of the running FastRPC processes, you can use the adsp_ps executable. See <a href="adsp_ps.html">adsp_ps</a> for more information
+</p><pre> root@msm8994:/data # ./adsp_ps
+ ./adsp_ps
+
+ FastRPC process list
+-----------------------
+
+ *****************************************************************************
+ ASID         HLOS PID     HLOS Process Name          DSP Process Name
+ *****************************************************************************
+ 2            3389         adsp_ps                    /frpc/f09f75d0 adsp_
+
+ *****************************************************************************
+</pre><h2>
+<a name="logcat"></a>logcat
+</h2><p>
+Regular FARF messages on DSP can be directed to logcat. When enabled, FARF messages on the DSP will show up in the logcat stream with the tag adsprpc.
+</p><h4>
+<a name="How%20to%20enable"></a>How to enable
+</h4><p>
+The same mechanism used for Runtime FARF is used to direct regular FARF messages
+</p><p>
+to logcat.
+</p><p>
+For example, to see the calculator example's messages printed in logcat place an file (an empty is also sufficient) in ADSP_LIBRARY_PATH (/system|vendor/lib/rfsa/adsp)
+</p><p>
+named
+</p><pre>calculator.farf
+</pre><p>
+Follow the <a href="#Runtime%20FARF">Runtime FARF</a> instructions for more on enabling logcat messages
+</p><h4>
+<a name="How%20to%20filter%20logcat%20for%20DSP%20messages"></a>How to filter logcat for DSP messages
+</h4><p>
+To view DSP messages (from ADSP/CDSP/SLPI/MDSP) use logcat's built in logcat filtering mechanism.
+</p><pre>adb logcat -s adsprpc
+</pre><p>
+Example output should look like this:
+</p><p>
+05-25 19:25:57.275 4442 4443 W adsprpc : calculator_imp.c:17:0x40a6:=============== DSP: sum result 499500 ===============
+</p><h2>
+<a name="mini-dm"></a>mini-dm
+</h2><p>
+mini-dm.exe is the mini-diagnostic monitor provided by Qualcomm's Hexagon Access Program. It is a tool that displays diagnostic messages generated by the Hexagon DSP.
+</p><p>
+Diagnostic messages are generated by calling FARF on the DSP either from static or dynamic code
+</p><p>
+For more information on generating diagnostic messages see <a href="#FARF">FARF</a> or <a href="#Runtime%20FARF">Runtime FARF</a>
+</p><h3>
+<a name="Connecting%20to%20a%20device"></a>Connecting to a device
+</h3><div class=diagram>
+<div class="html2d art" style="width:408px;height:192px;font-size:12.48px;white-space:nowrap;line-height:16px">
+<div class="rect round" style="border-width:3px;left:315px;top:71px;right:2px;bottom:38px"></div>
+<div class="rect round" style="border-width:3px;left:3px;top:39px;right:242px;bottom:6px"></div>
+<div style="border-bottom: 4px solid transparent;border-top: 4px solid transparent;border-left-width: 10.5px;left:301.5px;top:100px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:167px;top:103px;right:99px;bottom:87px;line-height:0"></div>
+<div class=line style="border-right-width:2px;border-top-width:2px;-webkit-border-top-right-radius:8px;-moz-border-radius-topright:8px;border-top-right-radius:8px;left:315px;top:87px;right:35px;bottom:80px"></div>
+<div class=line style="border-bottom-width:2px;border-right-width:2px;-webkit-border-bottom-right-radius:8px;-moz-border-radius-bottomright:8px;border-bottom-right-radius:8px;left:315px;top:112px;right:35px;bottom:55px"></div>
+<div class=line style="border-width:2px;border-right-width:0;-webkit-border-top-left-radius:8px;-moz-border-radius-topleft:8px;border-top-left-radius:8px;-webkit-border-bottom-left-radius:8px;-moz-border-radius-bottomleft:8px;border-bottom-left-radius:8px;left:99px;top:87px;right:243px;bottom:55px"></div>
+<div style="border-bottom: 4px solid transparent;border-top: 4px solid transparent;border-right-width: 10.5px;left:168px;top:116px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:171px;top:119px;right:95px;bottom:71px;line-height:0"></div>
+<div class=line style="border-width:2px;border-right-width:0;-webkit-border-top-left-radius:8px;-moz-border-radius-topleft:8px;border-top-left-radius:8px;-webkit-border-bottom-left-radius:8px;-moz-border-radius-bottomleft:8px;border-bottom-left-radius:8px;left:75px;top:71px;right:243px;bottom:23px"></div>
+<div style="text-align:center;left:40px;top:0px;right:312px;bottom:176px">Host PC</div>
+<div style="text-align:center;left:320px;top:0px;right:40px;bottom:176px">Target</div>
+<div style="left:192px;top:64px;right:160px;bottom:112px">Control</div>
+<div style="left:192px;top:80px;right:152px;bottom:96px">Messages</div>
+<div style="text-align:center;left:120px;top:96px;right:264px;bottom:80px">COM</div>
+<div style="text-align:center;left:328px;top:96px;right:48px;bottom:80px">DIAG</div>
+<div style="text-align:center;left:116px;top:112px;right:260px;bottom:64px">port</div>
+<div style="text-align:center;left:188px;top:128px;right:116px;bottom:48px">Diag Messages</div>
+<div style="text-align:center;left:92px;top:144px;right:260px;bottom:32px">mini-dm</div>
+</div>
+</div>
+<h4>
+<a name="Hardware%20requirements"></a>Hardware requirements
+</h4><ul type="circle">
+<li>
+<p>
+Target device
+</p>
+</li><li>
+<p>
+USB drivers ( For Windows: tools/debug/usb, For Linux: libusb is provided with SDK )
+</p>
+</li><li>
+<p>
+USB cable
+</p>
+</li>
+</ul><h4>
+<a name="Software%20requirements"></a>Software requirements
+</h4><ul type="circle">
+<li>
+<p>
+mini-dm (tools/debug/mini-dm)
+</p>
+</li>
+</ul><h4>
+<a name="Steps%20to%20run%20mini-dm.exe"></a>Steps to run mini-dm.exe
+</h4><ol type="1">
+<li>
+<p>
+Install USB drivers (tools/debug/usb). For more details, please go through <a href="Debugging_Connect%20to%20Device.html">Connecting to Device</a> section.
+</p>
+</li><li>
+<p>
+Power on the target device.
+</p>
+</li><li>
+<p>
+Connect the USB cable from the PC to the target device.
+</p>
+</li><li>
+<p>
+Open CLI shell and type:
+</p>
+</li><li>
+<p>
+cd tools/debug/mini-dm/&lt;HLOS&gt;
+</p>
+</li><li>
+<p>
+mini-dm.exe &#8212;comport &lt;port number&gt;
+</p><ul type="circle">
+<li>
+<p>
+Eg: mini-dm.exe &#8212;comport com35
+</p>
+</li><li>
+<p>
+Port number can be discovered by running the <a href="Tools_Scripts.html#com_finder.py">com_finder.py</a> script.
+</p>
+</li><li>
+<p>
+Port number can also be discovered by looking in Control Panel-&gt;Device manager-&gt; Ports. The port number to consider is the one corresponding to the diagnostics port.
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Play audio on the device or make a fastRPC call to generate messages
+</p>
+</li><li>
+<p>
+Diagnostic messages will start printing to console.
+</p>
+</li>
+</ol><h3>
+<a name="Command%20line%20options%20available%20for%20mini-dm.exe"></a>Command line options available for mini-dm.exe
+</h3><h4>
+<a name="Connection%20options"></a>Connection options
+</h4><ul type="circle">
+<li>
+<p>
+Specify com port to use when connecting to device via USB. Default: none.
+</p>
+</li>
+</ul><p>
+For Windows:
+</p><p>
+. &#8212;comport &lt;port number&gt; <a href="Tools_Scripts.html#com_finder.py">com_finder.py</a> python script can be used to discover active com ports
+</p><p>
+For Linux:
+</p><p>
+. &#8212;usbport &lt;port number&gt; If multiple devices are connected to Linux machine, please compare the outputs of <code>mini-dm --devices</code> and <code>adb devices -l</code> to find out the port number.
+</p><h4>
+<a name="Logging%20options"></a>Logging options
+</h4><ul type="circle">
+<li>
+<p>
+Output format of diag messages. Default: &#8220;[%05d{SS}/%02d{MASK}] %02d{M}:%02d{S}.%03d{MS} %s{STR} %04d{L} %s{F}&#8221;
+</p><pre>--format
+</pre>
+</li><li>
+<p>
+Enable the mesgs from sensor subsystems 122,123,124 and 125.
+</p><pre>--enable_sensor_ssids  true/false
+</pre>
+</li><li>
+<p>
+Enable subsystem messages using masks; Upto 6 values each corresponding to to subsystemId 8500,53,122,123,124 and 125.
+</p>
+</li>
+</ul><p>
+Note that by default all default message are also written to a file &#8220;msg.txt&#8221;
+</p><pre>--subsystem_masks &lt;mask_value1, mask_value2,...&gt; 
+</pre><ul type="circle">
+<li>
+<p>
+Change the default subsystem mask.
+</p><pre>--default_ss_mask &lt;mask_value&gt; 
+</pre>
+</li><li>
+<p>
+Diag log codes to activate. Default: 0. Note that the logs are written into a file indicated by log_file option.
+</p><pre>--log_codes
+</pre>
+</li><li>
+<p>
+Activate default log codes. Default: false
+</p><pre>--log_defaults
+</pre>
+</li><li>
+<p>
+Shows the default log codes (log codes activated by &#8212;log-defaults). Default: false
+</p><pre>--show_default_log_codes
+</pre>
+</li><li>
+<p>
+File name for logging of log messages. Default: logs.dlf
+</p><pre>--log_file
+</pre>
+</li><li>
+<p>
+Shows more output than you want. Default: false
+</p><pre>--verbose
+</pre>
+</li><li>
+<p>
+Shows the available color schemes for diag message output. Default: false
+</p><pre>--show_color_schemes
+</pre>
+</li><li>
+<p>
+Color scheme for diag message output. Default: 0 (no color)
+</p><pre>--color_scheme  &lt;color_scheme_number&gt;
+</pre>
+</li><li>
+<p>
+File name for debug logging of all diag packets
+</p><pre>--debug_log_file
+</pre>
+</li><li>
+<p>
+Enable verbose debug messages
+</p>
+</li>
+</ul><h4>
+<a name="Performance%20monitor%20options"></a>Performance monitor options
+</h4><ul type="circle">
+<li>
+<p>
+Activates performance monitor output of the given type. Default: none
+</p><p>
+The following types can be used:
+</p><pre>2 = task profiler output
+4 = performance monitor output
+</pre><pre>--perfmon
+</pre>
+</li><li>
+<p>
+Performance monitor time interval in milliseconds between logs. Default: 500 msec
+</p><pre>--perfmon_interval
+</pre>
+</li><li>
+<p>
+Number of logs needs to be captured for each event in event configuration file for performance monitor. This is not applicable to task profiler. Default: 8
+</p><pre>--perfmon_logs
+</pre>
+</li><li>
+<p>
+Performance monitor output mode. Logs in xml format Default: 0 . 0 = no performance monitor output . 1 = performance monitor output sent to 'stdout' . 2 = performance monitor output sent to 'stderr' . Anything else is considered a filename.
+</p><pre>--perf_mon_output
+</pre><ul type="circle">
+<li>
+<p>
+Events configuration file for performance monitor output. This file should contain the events that needs to be logged. Each line should have four events separated by space. This is not applicable to task profiler. Default:none
+</p><pre>--pmef
+</pre>
+</li><li>
+<p>
+Log the events until mini-dm is stopped Circularly. This is not applicable for task profiler. Default: false
+</p><pre>--pmm_circular
+</pre>
+</li>
+</ul>
+</li>
+</ul><h4>
+<a name="Usage%20exmaples"></a>Usage exmaples
+</h4><p>
+For Windows:
+</p><ul type="circle">
+<li>
+<p>
+mini-dm.exe &#8212;comport COM12
+</p>
+</li><li>
+<p>
+mini-dm.exe &#8212;comport COM12 &#8212;log_codes 0x1530,1531,1532
+</p>
+</li><li>
+<p>
+mini-dm.exe &#8212;comport COM29 &#8212;verbose true &#8212;enable_sensor_ssids true &#8212;logs 0x1527,0x19c5,0x19c6,0x19c7,0x19c8,0x19c9,0x19cb,0x19cc,0x19d6,0x19d8 &#8212;subsystem_masks 0x1F,0x10,0x1C &#8212;log-file test.dlf
+</p>
+</li>
+</ul><p>
+For Linux:
+</p><ul type="circle">
+<li>
+<p>
+mini-dm.exe &#8212;usbport 6
+</p>
+</li><li>
+<p>
+mini-dm.exe &#8212;showdevices
+</p>
+</li><li>
+<p>
+mini-dm.exe &#8212;usbport 6
+</p>
+</li><li>
+<p>
+mini-dm.exe &#8212;usbport 9 &#8212;log_codes 0x1530,1531,1532
+</p>
+</li><li>
+<p>
+mini-dm.exe &#8212;usbport 12 &#8212;verbose true &#8212;enable_sensor_ssids true &#8212;logs 0x1527,0x19c5,0x19c6,0x19c7,0x19c8,0x19c9,0x19cb,0x19cc,0x19d6,0x19d8 &#8212;subsystem_masks 0x1F,0x10,0x1C &#8212;log-file test.dlf
+</p>
+</li>
+</ul><p>
+Note: If errors are seen while using mini-dm binary on Linux, then please check Ubuntu version and use the appropriate binary.
+</p><h2>
+<a name="getpkt"></a>getpkt
+</h2><p>
+getpkt.exe is a tool for extracting and analyzing audio packets from .dlf logfiles.
+</p><p>
+It's located at tools/debug/getpkt/WinNT_Debug
+</p><h3>
+<a name="Usage%20of%20getpkt"></a>Usage of getpkt
+</h3><pre>getpkt.exe &lt;file_name&gt;
+&lt;file_name&gt; is the .dlf file.
+</pre><p>
+The following diagram shows an overview of the audio log codes:
+</p><left><img src="images/audio_log_codes.png"></left><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

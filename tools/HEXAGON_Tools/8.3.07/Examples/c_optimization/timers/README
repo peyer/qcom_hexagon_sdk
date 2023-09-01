@@ -1,0 +1,33 @@
+##################################################################
+# Copyright (c) $Date$ QUALCOMM INCORPORATED.
+# All Rights Reserved.
+# Modified by QUALCOMM INCORPORATED on $Date$
+##################################################################
+This example shows how to use the simulator cycle timers to gather
+performance statistics for a particular region of code.
+
+One of the most important steps in optimizing a program is to first
+identify the most frequently executed regions of the program.
+Naturally, optimizing these regions will lead to the largest overall
+impact on program performance.  Gprof is the best tool to start with,
+becuase it will identify the functions in which most of the running
+time is spent.  To get more fine grained measurements (a particular
+loop body within a procedure, for example), you must use the simulator
+cycle timers.
+
+The next most important step in optimizing a program is to implement
+an automatic performance evaluation framework.  This allows small code
+changes to be made incrementally while performance is modeled after
+each change.  In addition, an automatic correctness-verification
+framework is very important.  This allows any bugs in the program to
+be identified immediately.  Achieving high performance is very
+important, but it means nothing if correctness isn't maintained.
+
+The "timers.c" program shows how to use the simulator cycle timers.
+
+Running Example:
+
+1) make
+
+Default compiler and options can be modified on the make command line
+using the CC and CFLAGS make variables, respectively.

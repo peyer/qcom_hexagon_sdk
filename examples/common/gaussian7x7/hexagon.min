@@ -1,0 +1,53 @@
+# builds the static/dynamic skel
+ifeq (1,$(V_dynamic))
+BUILD_DLLS += libgaussian7x7_skel
+BUILD_DLLS += gaussian7x7_q
+else
+BUILD_LIBS += libgaussian7x7_skel
+endif
+
+
+CC_FLAGS += $(MHVX_DOUBLE_FLAG)
+ASM_FLAGS += $(MHVX_DOUBLE_FLAG)
+
+# Use -O0 temporarily when trying to debug C code.
+#_OPT = -O0
+
+libgaussian7x7_skel_QAICIDLS = inc/gaussian7x7
+libgaussian7x7_skel_C_SRCS += $V/gaussian7x7_skel \
+                              src/gaussian7x7_imp 
+
+# choose one of the implementations.                               
+libgaussian7x7_skel.ASM_SRCS += asm_src/gaussian7x7_asm.S
+#libgaussian7x7_skel_C_SRCS += src/gaussian7x7_C_intrinsics
+
+# Needs dspCV lib for worker pool
+libgaussian7x7_skel_DLLS+=libdspCV_skel
+
+# Also build a stand-alone simulation environment executable unit test 
+
+BUILD_QEXES += gaussian7x7_q
+gaussian7x7_q_OSTYPE = QURT
+# The following is needed to pull QuRT support into the executable for simulation
+
+gaussian7x7_q_DLLS+= rpcmem  libdspCV_skel
+
+
+gaussian7x7_q_C_SRCS+= $V/gaussian7x7_skel \
+                       src/gaussian7x7_imp \
+                       src/gaussian7x7 \
+
+# choose one of the implementations.
+gaussian7x7_q.ASM_SRCS += asm_src/gaussian7x7_asm.S
+#gaussian7x7_q_C_SRCS += src/gaussian7x7_C_intrinsics
+
+all:
+
+QEXE_EXEC+=--dsp_clock 800
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

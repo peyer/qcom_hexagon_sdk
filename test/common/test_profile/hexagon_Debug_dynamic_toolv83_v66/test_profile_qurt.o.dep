@@ -1,0 +1,20 @@
+src/test_profile_qurt.c:
+inc/profile.h:
+inc/test_profile.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_thread.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_cycles.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_alloc.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_farf.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_pmu.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/stddef/AEEStdDef.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_debug.h:
+hexagon_Debug_dynamic_toolv83_v66/test_profile_qurt.o: src/test_profile_qurt.c
+hexagon_Debug_dynamic_toolv83_v66/test_profile_qurt.o: inc/profile.h
+hexagon_Debug_dynamic_toolv83_v66/test_profile_qurt.o: inc/test_profile.h
+hexagon_Debug_dynamic_toolv83_v66/test_profile_qurt.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_thread.h
+hexagon_Debug_dynamic_toolv83_v66/test_profile_qurt.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_cycles.h
+hexagon_Debug_dynamic_toolv83_v66/test_profile_qurt.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_alloc.h
+hexagon_Debug_dynamic_toolv83_v66/test_profile_qurt.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_farf.h
+hexagon_Debug_dynamic_toolv83_v66/test_profile_qurt.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_pmu.h
+hexagon_Debug_dynamic_toolv83_v66/test_profile_qurt.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/stddef/AEEStdDef.h
+hexagon_Debug_dynamic_toolv83_v66/test_profile_qurt.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_debug.h

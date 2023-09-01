@@ -1,0 +1,38 @@
+# stub library
+BUILD_DLLS += libbenchmark
+
+libbenchmark_QAICIDLS += inc/benchmark \
+
+libbenchmark_C_SRCS += $V/benchmark_stub \
+
+libbenchmark_DLLS += libadsprpc
+
+# stand-alone benchmark executable
+BUILD_EXES+=benchmark
+benchmark_QAICIDLS += inc/benchmark \
+
+benchmark_C_SRCS += src_app/benchmark \
+                    src_app/dilate5x5_ref \
+                    src_app/dilate3x3_ref \
+                    src_app/integrate_ref \
+                    src_app/epsilon_ref \
+                    src_app/bilateral_ref \
+                    src_app/fast9_ref \
+                    src_app/conv3x3_ref \
+                    src_app/gaussian7x7_ref \
+                    src_app/sobel3x3_ref \
+                    src_app/crash10_ref \
+
+benchmark_LIBS += rpcmem
+
+benchmark_DLLS += libadsprpc \
+                  libbenchmark \
+
+benchmark_LD_FLAGS += -lpthread
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

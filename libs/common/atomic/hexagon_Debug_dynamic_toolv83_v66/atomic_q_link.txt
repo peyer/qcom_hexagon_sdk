@@ -1,0 +1,15 @@
+-mv66
+-mG0lib
+-G0
+-v
+-Wl,--no-threads
+-Wl,--dynamic-linker=
+-Wl,-E
+-Wl,--force-dynamic,-u,main
+-o
+hexagon_Debug_dynamic_toolv83_v66/atomic_q
+-Wl,--start-group
+hexagon_Debug_dynamic_toolv83_v66/atomic_q.o
+hexagon_Debug_dynamic_toolv83_v66/atomic.a
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/tools/HEXAGON_Tools/8.3.07/Tools/target/hexagon/lib/v66/G0/libhexagon.a
+-Wl,--end-group

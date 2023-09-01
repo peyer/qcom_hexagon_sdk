@@ -1,0 +1,9 @@
+<Testcases>
+	<Testcase Name="TestCase1">
+		<ConfigFile>../../data/imc_tx.cfg</ConfigFile>
+		<InputFile>../../data/input_8khz_tx.raw</InputFile>
+		<OutputFile>../../data/output__8khz_tx.raw</OutputFile>
+		<Reference/>
+		<RunStatus>True</RunStatus>
+	</Testcase>
+</Testcases>

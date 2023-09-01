@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.epp.mpc"
+      label="%featureName"
+      version="1.7.0.v20180613-1243"
+      provider-name="%providerName"
+      plugin="org.eclipse.epp.mpc.ui">
+
+   <description url="http://www.eclipse.org/epp/mpc/">
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <requires>
+      <import feature="org.eclipse.equinox.p2.discovery.feature" version="1.0.0.v201004" match="compatible"/>
+      <import feature="org.eclipse.userstorage" version="1.1.0" match="compatible"/>
+   </requires>
+
+   <plugin
+         id="org.eclipse.epp.mpc.core"
+         download-size="237"
+         install-size="515"
+         version="1.7.0.v20180613-1243"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.epp.mpc.core.win32"
+         os="win32"
+         download-size="12"
+         install-size="17"
+         version="1.7.0.v20180606-2225"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.epp.mpc.ui"
+         download-size="545"
+         install-size="1224"
+         version="1.7.0.v20180607-0001"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.epp.mpc.ui.css"
+         download-size="22"
+         install-size="39"
+         version="1.7.0.v20180606-2225"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.epp.mpc.help.ui"
+         download-size="749"
+         install-size="780"
+         version="1.7.0.v20180606-2225"
+         unpack="false"/>
+
+</feature>

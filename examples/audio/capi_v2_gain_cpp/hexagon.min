@@ -1,0 +1,77 @@
+
+V_ARCH_EXTN=CPP
+
+CXX_FLAGS += -fexceptions
+CXX_FLAGS += -std=c++14
+
+INCDIRS += \
+   inc \
+   src \
+   $(HEXAGON_SDK_ROOT)/incs/audio
+
+# only build the shared object if dynamic option specified in V
+ifeq (1,$(V_dynamic))
+BUILD_DLLS = capi_v2_gain
+endif
+
+BUILD_LIBS = capi_v2_gain 
+capi_v2_gain_CXX_FLAGS = -fexceptions
+
+capi_v2_gain_C_SRCS += src/capi_v2_gain
+
+capi_v2_gain_LIBS += capi_v2_utils_props
+
+ifeq (1, $(V_dynamic))
+  #Dynamic linking of libc++
+  capi_v2_gain_DLLS += $(TARGET_DIR)/pic/libc++
+  capi_v2_gain_DLLS += $(TARGET_DIR)/pic/libc++abi
+else
+  #Statically linking of libc++
+  capi_v2_gain_LIBS += $(TARGET_DIR)/pic/libc++.a
+  capi_v2_gain_LIBS += $(TARGET_DIR)/pic/libc++abi.a
+endif
+
+
+# quality test (voice_imc_utils)
+BUILD_QEXES += capi_v2_gain_q
+capi_v2_gain_q_OSTYPE = QURT
+
+capi_v2_gain_q_C_SRCS = src/capi_v2_gain_test
+capi_v2_gain_q_CPP_SRCS += src/foo 		  
+
+
+capi_v2_gain_q_LIBS += $(TARGET_DIR)/pic/libc_eh
+capi_v2_gain_q_LIBS += test_capi_v2_cpp \
+					  capi_v2_utils_props \
+					  capi_v2_gain \
+					  test_profile_qurt \
+				  	  atomic \
+					  test_main \
+
+capi_v2_gain_q_LD_FLAGS += --start-group --whole-archive $(TEST_MAIN_DIR)/$(V)/ship/test_main.a --no-whole-archive --end-group	
+
+#Dynamically linking of libc++
+capi_v2_gain_q_DLLS += $(TARGET_DIR)/pic/libc++
+capi_v2_gain_q_DLLS += $(TARGET_DIR)/pic/libc++abi
+
+# if building shared object must also list it as a dependency to the qtest
+ifeq (1,$(V_dynamic))
+$V/capi_v2_gain_q.ok: $V/capi_v2_gain_q $V/capi_v2_gain$(DLL_EXT)
+endif
+
+$(V)/capi_v2_gain.so: $(V)/libc++.so.1 $(V)/libc++abi.so.1
+
+$(V)/libc++.so.1:
+	$(call cp_af,$(TARGET_DIR)/pic/libc++.so.1 $(V))
+	$(call cp_af,$(TARGET_DIR)/pic/libc++.so.1.0 $(V))
+$(V)/libc++abi.so.1:
+	$(call cp_af,$(TARGET_DIR)/pic/libc++abi.so.1 $(V))
+	$(call cp_af,$(TARGET_DIR)/pic/libc++abi.so.1.0 $(V))
+
+# specify final build products, in this case the module's header file and
+# its associated libraries (and shared objects)
+BUILD_COPIES = \
+   inc/capi_v2_gain.h \
+   $(DLLS) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

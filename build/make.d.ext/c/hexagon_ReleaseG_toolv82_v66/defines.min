@@ -1,0 +1,17 @@
+CDEP = ../../../cdep/Linux/cdep
+CMET = ../../../cmet/Linux/cmet
+APP2ASM = ../../../../donotship/app2asm/Linux/app2asm
+CIFC = ../../../../donotship/cifc/Linux/cifc
+
+# adjust paths to be relative to current working dir
+__mkd_deps = CDEP CMET APP2ASM CIFC
+__mkd_dir := $(dir $(lastword $(MAKEFILE_LIST)))
+ifneq "$(__mkd_dir)" "./"
+  $(foreach v,$(__mkd_deps),$(eval $v := $(__mkd_dir)$$($v)))
+endif
+
+CDEP    := $(call cleanPath,$(CDEP))
+CIFC    := $(call cleanPath,$(CIFC))
+CMET    := $(call cleanPath,$(CMET))
+APP2ASM := $(call cleanPath,$(APP2ASM))
+

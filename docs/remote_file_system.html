@@ -1,0 +1,929 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><title>Remote file system</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="images/sidebar_top.jpg"></top><script src="scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, false)"><input id="searchButton" onclick="postFunction(false)" type="button" value="Search"></form><p>
+<a href="index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<p>
+<a href="sitemap.html">Sitemap</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="Audio/Applications.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="Voice/Applications.html">Voice</a>
+</p><p>
+<a href="Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="Audio/Examples.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="Examples_Common.html">Common</a>
+</p><p>
+<a href="Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="Tools_Signing.html">Signing</a>
+</p><p>
+<a href="Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="FAQ_Common.html">Common</a>
+</p><p>
+<a href="FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="Support_Contact.html">Contact</a>
+</p><center><img src="images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h1>
+<a name="Remote%20file%20system"></a>Remote file system
+</h1><div class="toc"><div class="tocLevel"><a href="#Overview">Overview</a></div><div class="tocLevel"><a href="#Dynamic%20loading%20within%20a%20FastRPC%20invocation">Dynamic loading within a FastRPC invocation</a></div><div class="tocLevel"><a href="#Dynamic%20loading%20outside%20of%20a%20FastRPC%20invocation">Dynamic loading outside of a FastRPC invocation</a></div><div class="tocLevel"><a href="#Using%20DSP_LIBRARY_PATH">Using DSP_LIBRARY_PATH</a><div class="tocLevel"><div class="tocLevel"><a href="#Default%20value">Default value</a></div><div class="tocLevel"><a href="#_Examples">Examples</a></div></div></div></div><h2>
+<a name="Overview"></a>Overview
+</h2><p>
+The Remote File System is used by the loader on the Hexagon DSP to read shared object files. The shared object files are stored on the HLOS's file system.
+</p><h2>
+<a name="Dynamic%20loading%20within%20a%20FastRPC%20invocation"></a>Dynamic loading within a FastRPC invocation
+</h2><ul type="circle">
+<li>
+<p>
+On these Android builds the remote file system is implicitly implemented by libadsprpc.so
+</p>
+</li><li>
+<p>
+It uses the calling processes context to open files
+</p>
+</li><li>
+<p>
+The default file system search directory PATH is /vendor/lib/rfsa/dsp;/vendor/dsp
+</p>
+</li><li>
+<p>
+The optional environment variable DSP_LIBRARY_PATH can be used to prepend user desired path to the default file system search directory. It contains a list of directories to search when dlopen(&lt;library&gt;) is called.
+</p>
+</li><li>
+<p>
+If there are multiple files with similar name, then DSP_LIBRARY_PATH environment variable needs to be used to prioritize user defined path, to avoid conflicts with default paths
+</p>
+</li><li>
+<p>
+It first seacrhes in the domain of the path and then searches in the path directly, for all the paths that are part of DSP_LIBRARY_PATH. If there are any shared objects specific to particular domain, they can be put under domain directory of the search path
+</p>
+</li><li>
+<p>
+Support of optional environment variable DSP_LIBRARY_PATH is present in Kona and above targets. If DSP_LIBRARY_PATH is not defined, then it looks for ADSP_LIBRARY_PATH environment variable. For older targets it checks only for ADSP_LIBRARY_PATH environment variable For more information see <a href="#Using%20DSP_LIBRARY_PATH">Using DSP_LIBRARY_PATH</a>
+</p>
+</li>
+</ul><h2>
+<a name="Dynamic%20loading%20outside%20of%20a%20FastRPC%20invocation"></a>Dynamic loading outside of a FastRPC invocation
+</h2><p>
+For non-rpc started threads (calling dlopen from static DSP code), a daemon (/vendor/bin/adsprpcd) will provide the context for requests back to the Android environment. Audio modules are loaded this way.
+</p><p>
+The default file system root on the Application processor is /vendor/lib/rfsa/dsp;/vendor/dsp but it can be configured via the DSP_LIBRARY_PATH environment variable. This means the remote file system's root will be /vendor/lib/rfsa/dsp;/vendor/dsp unless DSP_LIBRARY_PATH is defined. See <a href="#Using%20DSP_LIBRARY_PATH">Using DSP_LIBRARY_PATH</a> for more information on how to configure DSP_LIBRARY_PATH.
+</p><p>
+Follow these steps to setup the Remote File System
+</p><ul type="circle">
+<li>
+<p>
+Check if the driver exists
+</p><pre>adb shell ls /vendor/bin/adsprpcd
+</pre><ul type="circle">
+<li>
+<p>
+If that file does not exist contact the supplier of the Android Image.
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Check that the driver is running
+</p><pre>adb shell ps
+</pre><ul type="circle">
+<li>
+<p>
+Look for /vendor/bin/adsprpcd in the output, if found the remote file system is already running and no further action is required
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+If not already running you must start it. The following command will not return so it must be started in its own instance of adb.
+</p><pre>adb root
+adb wait-for-device
+adb remount
+adb shell chmod 777 /vendor/bin/adsprpcd
+adb shell /vendor/bin/adsprpcd
+</pre><ul type="circle">
+<li>
+<p>
+If you are able to recompile the Android build start the adsprpcd daemon automatically add the following lines to the init.target.rc file. The init.target.rc file is located in a target specific location, device/qcom/msm&lt;target&gt;/init.target.rc. For example, for 8974 its located at device/qcom/msm8974/init.target.rc.
+</p><pre>service adsprpcd /vendor/bin/adsprpcd
+  class main
+  user media
+  group media
+
+on property:sys.boot_completed=1
+  start adsprpcd 
+</pre>
+</li>
+</ul>
+</li><li>
+<p>
+Remote File System is now setup.
+</p>
+</li>
+</ul><h2>
+<a name="Using%20DSP_LIBRARY_PATH"></a>Using DSP_LIBRARY_PATH
+</h2><p>
+DSP_LIBRARY_PATH is a &#8220;;&#8221; delimited variable used for specifying search paths for dlopen to use when opening dynamic modules.
+</p><h4>
+<a name="Default%20value"></a>Default value
+</h4><p>
+When DSP_LIBRARY_PATH is unset, a default value for the module directory is used. This value is specific to the HLOS.
+</p><ul>
+<li>
+<p>
+on Android the path is
+</p><pre>/vendor/lib/rfsa/dsp;/vendor/dsp
+</pre>
+</li><li>
+<p>
+on Windows the path is
+</p><pre>c:\Program Files\Qualcomm\RFSA\aDSP
+</pre>
+</li>
+</ul><p>
+Note : When you run any HVX example that uses libdspCV_skel.so, it is recommended to set DSP_LIBRAY_PATH to <code>/vendor/lib/rfsa/dsp/sdk;/vendor/lib/rfsa/dsp/testsig</code> because sdk walkthrough script pushes libdspCV_skel.so to <code>/vendor/lib/rfsa/dsp/sdk</code>. On some of SDM820/SDM835 builds libdspCV_skel.so is present in <code>/system/lib/rfsa/adsp</code> and if <code>/vendor/lib/rfsa/dsp/sdk</code> is not present in beginning of the DSP_LIBRARY_PATH, old version of libdspCV_skel.so present in <code>/system/lib/rfsa/adsp</code> will be loaded and example tests will fail.
+</p><h4>
+<a name="_Examples"></a>Examples
+</h4><ul type="circle">
+<li>
+<p>
+unset
+</p><pre>#code on the DSP
+dlopen("libfoo.so")
+</pre><p>
+will search &#8220;libfoo.so&#8221; from the following path in this order
+</p><pre>"/vendor/lib/rfsa/dsp/cdsp/libfoo.so"
+"/vendor/lib/rfsa/dsp/libfoo.so"
+"/vendor/dsp/cdsp/libfoo.so"
+"/vendor/dsp/libfoo.so"
+</pre>
+</li><li>
+<p>
+single directory only
+</p><pre>adb shell
+export DSP_LIBRARY_PATH=foo
+
+#code on the DSP
+dlopen("libfoo.so")
+</pre><p>
+will try to open
+</p><pre>"foo/cdsp/libfoo.so"
+"foo/libfoo.so"
+"/vendor/lib/rfsa/dsp/cdsp/libfoo.so"
+"/vendor/lib/rfsa/dsp/libfoo.so"
+"/vendor/dsp/cdsp/libfoo.so"
+"/vendor/dsp/libfoo.so"
+</pre>
+</li><li>
+<p>
+multiple directories
+</p><pre>adb shell
+export DSP_LIBRARY_PATH="foo;bar"
+
+#code on the DSP
+dlopen("libfoo.so")
+</pre><p>
+will try to open
+</p><pre>"foo/cdsp/libfoo.so"
+"foo/libfoo.so"
+"bar/cdsp/libfoo.so"
+"bar/libfoo.so"
+"/vendor/lib/rfsa/dsp/cdsp/libfoo.so"
+"/vendor/lib/rfsa/dsp/libfoo.so"
+"/vendor/dsp/cdsp/libfoo.so"
+"/vendor/dsp/libfoo.so"
+</pre>
+</li><li>
+<p>
+multiple directories and process working directory
+</p><pre>adb shell
+export DSP_LIBRARY_PATH="foo;bar;"
+
+#code on the DSP
+dlopen("libfoo.so")
+</pre><p>
+will try to open
+</p><pre>"foo/cdsp/libfoo.so"
+"foo/libfoo.so"
+"bar/cdsp/libfoo.so"
+"bar/libfoo.so"
+"./cdsp/libfoo.so"
+"./libfoo.so"
+"/vendor/lib/rfsa/dsp/cdsp/libfoo.so"
+"/vendor/lib/rfsa/dsp/libfoo.so"
+"/vendor/dsp/cdsp/libfoo.so"
+"/vendor/dsp/libfoo.so"
+</pre>
+</li><li>
+<p>
+multiple directories and process working directory first
+</p><pre>adb shell
+export DSP_LIBRARY_PATH=";foo;bar"
+
+#code on the DSP
+dlopen("libfoo.so")
+</pre><p>
+will try to open
+</p><pre>"./cdsp/libfoo.so"
+"./libfoo.so"
+"foo/cdsp/libfoo.so"
+"foo/libfoo.so"
+"bar/cdsp/libfoo.so"
+"bar/libfoo.so"
+"/vendor/lib/rfsa/dsp/cdsp/libfoo.so"
+"/vendor/lib/rfsa/dsp/libfoo.so"
+"/vendor/dsp/cdsp/libfoo.so"
+"/vendor/dsp/libfoo.so"
+</pre>
+</li>
+</ul><ul type="circle">
+<li>
+<p>
+paths in file to open
+</p><pre>adb shell
+export DSP_LIBRARY_PATH=";foo;bar"
+
+#code on the DSP
+dlopen("far/libfoo.so")
+</pre>
+</li>
+</ul><p>
+will try to open
+</p><pre>"./cdsp/far/libfoo.so"
+"./far/libfoo.so"
+"foo/cdsp/far/libfoo.so"
+"foo/far/libfoo.so"
+"bar/cdsp/far/libfoo.so"
+"bar/far/libfoo.so"
+"/vendor/lib/rfsa/dsp/cdsp/far/libfoo.so"
+"/vendor/lib/rfsa/dsp/far/libfoo.so"
+"/vendor/dsp/cdsp/far/libfoo.so"
+"/vendor/dsp/far/libfoo.so"
+</pre><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

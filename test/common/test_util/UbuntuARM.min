@@ -1,0 +1,36 @@
+ifeq ($(V_TARGET),hexagon)
+include $(QURT_IMAGE_DIR)/qurt_libs.min
+endif
+
+INCDIRS += \
+   inc \
+   src \
+
+BUILD_LIBS += test_util
+BUILD_LIBS += HAP_debug_printf
+
+test_util_C_SRCS += \
+   src/test_utils \
+
+#Uncomment to enable runtime logging
+#test_utils_DEFINES+=FARF_RUNTIME
+
+ifeq ($(V_TARGET),hexagon)
+ifneq ($(V_ARCH),v55)
+ifneq ($(V_ARCH),v5)
+ifneq ($(V_ARCH),v4)
+test_util_C_SRCS += src/sysmon_vtcm_mgr_client
+test_util_C_SRCS += src/sysmon_vtcm_mgr_srv
+test_util_C_SRCS += src/sysmon_cachelock_srv
+test_util_C_SRCS += src/sysmon_cachelock_client
+endif
+endif
+endif
+endif
+
+HAP_debug_printf_C_SRCS += src/HAP_debug_printf
+
+BUILD_COPIES = \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;
+

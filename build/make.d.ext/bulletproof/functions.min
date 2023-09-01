@@ -1,0 +1,1 @@
+-include $(thisDir)/$(V_FLAVOR).functions.min

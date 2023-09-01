@@ -1,0 +1,173 @@
+#============================================================================
+#  Name:
+#    defines_vc7.min
+#
+#  Description:
+#    This file specifies the items necessary to build using Microsoft's 
+#       compilers.
+#
+#        Copyright  2005 - 2007 QUALCOMM Incorporated.
+#               All Rights Reserved.
+#            QUALCOMM Confidential and Proprietary
+#----------------------------------------------------------------------------
+
+VC7_DIR=$(subst \,/,$(VCINSTALLDIR))/Vc7
+
+#-----------------------------------------------------------------------------
+# compiler flags
+#-----------------------------------------------------------------------------
+
+ifeq ($(V_FLAVOR),Debug)
+CC_STATIC_CRT=-MTd#             # for projects that want to use static runtime
+CC_DYNAMIC_CRT=-MDd#            # for projects that want to use dynamic runtime
+CC_CODEGEN=-RTC1#               # runtime-error checks
+CC_OPTIMIZE=-Od -Ob1#           # disable optimization except inline
+else #ifeq ($(V_FLAVOR),Debug)
+CC_STATIC_CRT=-MT#              # for projects that want to use static runtime
+CC_DYNAMIC_CRT=-MD#             # for projects that want to use dynamic runtime
+CC_OPTIMIZE=-O2#                # higher optimization is buggy
+endif #ifeq ($(V_FLAVOR),Debug)
+
+ifneq ($(V_FLAVOR),Release)
+CC_CODEGEN+=-Z7#                # include symbols in ReleaseG and Debug
+PDB_EXT=.pdb
+endif
+
+CC_WARNING_LEVEL=-W3 -WX#       # high, but not too high, warnings as errors
+CC_CODEGEN+=-GR -EHsc -GS -Zl#  # enable RTTI
+                                #  synchronous exception handling
+                                #  stack security check
+                                #  suppress defaultlib in .o
+CC_CRT=$(CC_STATIC_CRT)#        # default to the static runtime
+
+CC_INC=-I"$(VC7_DIR)/Include" -I"$(VC7_DIR)/PlatformSDK/Include"# compiler and platform includes, used last
+
+CC_DEFINES+=-D_WIN32_WINNT=0x0400#
+
+CC_FLAGS=-nologo $(CC_DEFINES) $(CC_CRT) $(CC_CODEGEN) $(CC_OPTIMIZE) $(CC_WARNING_LEVEL) -c#
+CC_MIX_FLAGS=$(CC_FLAGS) -FAsc#
+
+CC_FLAGS+=-D__FILENAME__=\"$(notdir $(<))\"#
+
+CXX_FLAGS=$(CC_FLAGS)
+CXX_MIX_FLAGS=$(CC_MIX_FLAGS)
+
+CC="$(VC7_DIR)/bin/cl.exe"#
+CXX=$(CC)
+
+CC_INCFLAG=-I#
+CC_DEFINEFLAG=-D#
+CC_UNDEFINEFLAG=-U#
+CC_OUTPUTFLAG=-Fo#
+CC_MIX_OUTPUTFLAG=-Fo$(OBJ_DIR)- -Fa# 
+CPP=$(CC)#
+CPP_FLAGS=-nologo -E -C#
+
+#-----------------------------------------------------------------------------
+# assembler
+#-----------------------------------------------------------------------------
+ASM="$(VC7_DIR)/bin/ml.exe"
+
+ASM_OUTPUTFLAG = -Fo#                    # option to specify output filename
+
+ASM_FLAGS = -nologo -c
+
+#-----------------------------------------------------------------------------
+# fez (DUMPBIN is a freebie)
+#-----------------------------------------------------------------------------
+
+DUMPBIN="$(VC7_DIR)/bin/dumpbin.exe"#
+
+FEZ=$(DUMPBIN) -headers#
+
+#-----------------------------------------------------------------------------
+# librarian flags
+#-----------------------------------------------------------------------------
+
+AR="$(VC7_DIR)/bin/lib.exe"#
+AR_FLAGS=-nologo -NODEFAULTLIB#
+AR_OUTPUTFLAG=-out:#
+
+
+#-----------------------------------------------------------------------------
+# linker flags
+#-----------------------------------------------------------------------------
+
+ifneq ($(V_FLAVOR),Release)
+  LD_DEBUGFLAG=-DEBUG#
+endif #ifneq ($(FLAVOR),Release)
+
+ifneq ($(V_FLAVOR),Debug)
+  LD_DEBUGFLAG+=-OPT:REF,ICF#
+endif #ifneq ($(FLAVOR),Debug)
+
+LD="$(VC7_DIR)/bin/link.exe"#
+LD_OUTPUTFLAG=-out:#
+
+LD_LIBPATH=-LIBPATH:"$(VC7_DIR)/PlatformSDK/Lib" -LIBPATH:"$(VC7_DIR)/Lib"#
+
+LD_FLAGS=-NOLOGO -INCREMENTAL:NO $(LD_DEBUGFLAG) -MACHINE:X86 -FIXED:NO
+
+# ability to incorporate multiple definitions
+LD_FORCE_MULTIPLE=-force:multiple
+
+STATIC_CRT_LIBS=libcmt libcpmt
+STATIC_CRTD_LIBS=libcmtd libcpmtd
+DYNAMIC_CRT_LIBS=msvcrt msvcprt
+DYNAMIC_CRTD_LIBS=msvcrtd msvcprtd
+
+ifeq ($(CC_CRT),$(CC_STATIC_CRT))
+  LD_FLAGS+=$(addprefix -NODEFAULTLIB:,$(DYNAMIC_CRT_LIBS) $(DYNAMIC_CRTD_LIBS))
+  ifeq ($(V_FLAVOR),Debug)
+    LD_FLAGS+=$(addprefix -DEFAULTLIB:,$(STATIC_CRTD_LIBS))
+  else
+    LD_FLAGS+=$(addprefix -DEFAULTLIB:,$(STATIC_CRT_LIBS))
+  endif
+  LD_NO_CRT_INIT=-ENTRY:DllMain@12 -INCLUDE:__DllMainCRTStartup@12
+else
+  LD_FLAGS+=$(addprefix -NODEFAULTLIB:,$(STATIC_CRT_LIBS) $(STATIC_CRTD_LIBS))
+  ifeq ($(V_FLAVOR),Debug)
+    LD_FLAGS+=$(addprefix -DEFAULTLIB:,$(DYNAMIC_CRTD_LIBS))
+  else
+    LD_FLAGS+=$(addprefix -DEFAULTLIB:,$(DYNAMIC_CRT_LIBS))
+  endif
+endif
+
+LD_FLAGS+=-DEFAULTLIB:uuid -DEFAULTLIB:oldnames # put these back during link, 
+                                                # they're stripped with -Zl
+
+EXE_LD_FLAGS=$(LD_FLAGS) $(LD_LIBPATH)#
+
+DEFS_OF=$(addprefix -DEF:,$(call uniq,\
+           $(call XS_OF,$(1),DEFS,.def)))
+
+DLL_LD_FLAGS=$(LD_FLAGS) -DLL $(LD_LIBPATH) $(call DEFS_OF,$(@))
+
+MOD_LD_FLAGS=$(DLL_LD_FLAGS) $(LD_NO_CRT_INIT) -IMPLIB:$(@:$(MOD_EXT)=.implib)
+
+#-----------------------------------------------------------------------------
+# resource compiler flags
+#-----------------------------------------------------------------------------
+
+RC="$(VC7_DIR)/bin/rc.exe"#
+RC_INC=$(CC_INC)
+RC_INCFLAG=-I#
+RC_DEFINEFLAG=-D#
+RC_OUTPUTFLAG=-Fo#
+
+#-----------------------------------------------------------------------------
+# QEXE exec
+#-----------------------------------------------------------------------------
+QEXE_EXEC=$(call exec,$(1)) $(2)
+
+#-----------------------------------------------------------------------------
+# extensions
+#-----------------------------------------------------------------------------
+
+MOD_EXT=.dll1#
+EXE_EXT=.exe#
+DLL_EXT=.dll#
+DLL_LIB_EXT=.lib#
+
+# pull extensions
+$(call INCLUDE_MAKE_D_EXTS,defines_vc7.min)

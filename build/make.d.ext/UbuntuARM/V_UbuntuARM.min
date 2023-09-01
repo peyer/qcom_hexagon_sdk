@@ -1,0 +1,14 @@
+define \n
+
+
+
+endef
+include $(thisDir)/defines_UbuntuARM.min
+
+ifeq "$(wildcard $(UBUNTUARM_TOOLS_DIR))" ""
+   ifeq (1, $(OPENWRT))
+      $(error Cannot find OpenWRT Tools at $(UBUNTUARM_TOOLS_DIR).${\n}Hexagon SDK does not provide OpenWRT tools, Please install them yourself to $(UBUNTUARM_TOOLS_DIR))
+   else
+      $(error Cannot find Linaro Tools at $(UBUNTUARM_TOOLS_DIR).${\n}Hexagon SDK does not provide Ubuntu tools, Please install them yourself to $(UBUNTUARM_TOOLS_DIR))
+   endif
+endif

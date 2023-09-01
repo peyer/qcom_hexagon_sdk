@@ -1,0 +1,25 @@
+###############################################################################
+#  Name:
+#    go.min
+#
+#  Description:
+#    make.d's kickoff .min file
+#
+#  Assumptions: 
+#   1. This file lives in a directory next to a "defines.min" and a "rules.min"
+#   2. The current directory (where make was invoked) contains a "make.dfile".
+#
+#        Copyright 2009 QUALCOMM Incorporated.
+#               All Rights Reserved.
+#            QUALCOMM Confidential and Proprietary
+##########################################################################
+# choose a relatively unique name to keep the variable intact after
+# the includes below
+_go.min_dir:=$(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
+
+include $(_go.min_dir)/defines.min
+
+-include $(CURDIR)/make.dfile
+
+include $(_go.min_dir)/rules.min
+

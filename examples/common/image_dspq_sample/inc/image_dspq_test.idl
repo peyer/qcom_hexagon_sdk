@@ -1,0 +1,17 @@
+/*
+  Copyright (c) 2017 Qualcomm Technologies, Inc.
+  All Rights Reserved.
+  Confidential and Proprietary - Qualcomm Technologies, Inc.
+*/
+
+#ifndef IMAGE_DSPQ_TEST_IDL
+#define IMAGE_DSPQ_TEST_IDL
+
+#include "AEEStdDef.idl"
+
+interface image_dspq_test {
+
+    AEEResult set_clocks();
+};
+
+#endif //IMAGE_DSPQ_TEST_IDL

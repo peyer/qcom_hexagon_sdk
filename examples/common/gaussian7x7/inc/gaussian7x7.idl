@@ -1,0 +1,19 @@
+#ifndef GAUSSIAN7X7_APP_IDL
+#define GAUSSIAN7X7_APP_IDL
+
+#include "AEEStdDef.idl"
+
+interface gaussian7x7{
+
+AEEResult Gaussian7x7u8(in sequence<uint8> src,              // input buffer of unsigned 8-bit values
+                              in uint32 srcWidth,           // width of region of interest contained in src image
+                              in uint32 srcHeight,          // height of region of interest contained in src image
+                              in uint32 srcStride,          // stride of the src image
+		   					  rout   sequence<uint8> dst,   // output buffer of unsigned 8-bit values
+                              in uint32 dstStride           // stride of the dst image
+	);
+};
+
+
+
+#endif //GAUSSIAN7X7_APP_IDL

@@ -1,0 +1,53 @@
+# The hexagon tools path is located by the sdk using the environment 
+# variable HEXAGON_TOOLS_ROOT.  If this variable is not defined then a default
+# value is used.
+
+ifndef HEXAGON_TOOLS_ROOT
+  #use default tools location
+  ifeq (1,$(V_toolv50))
+    export HEXAGON_TOOLS_ROOT=$(HOME)/Qualcomm/HEXAGON_Tools/5.0.14#
+  else ifeq (1,$(V_toolv51))
+    export HEXAGON_TOOLS_ROOT=$(HOME)/Qualcomm/HEXAGON_Tools/5.1.05#
+  else ifeq (1,$(V_toolv64))
+    export HEXAGON_TOOLS_ROOT=$(HOME)/Qualcomm/HEXAGON_Tools/6.4.06#
+  else ifeq (1,$(V_toolv70))
+    export HEXAGON_TOOLS_ROOT=$(HOME)/Qualcomm/HEXAGON_Tools/7.0#
+  else ifeq (1,$(V_toolv72))
+    export HEXAGON_TOOLS_ROOT=$(HOME)/Qualcomm/HEXAGON_Tools/7.2.12#
+  else ifeq (1,$(V_toolv74))
+    export HEXAGON_TOOLS_ROOT=$(HOME)/Qualcomm/HEXAGON_Tools/7.4.02#
+  else ifeq (1,$(V_toolv80))
+    export HEXAGON_TOOLS_ROOT=$(HOME)/Qualcomm/HEXAGON_Tools/8.0.10#
+  else ifeq (1,$(V_toolv81))
+    export HEXAGON_TOOLS_ROOT=$(HOME)/Qualcomm/HEXAGON_Tools/8.1.05#
+  else ifeq (1,$(V_toolv82))
+    export HEXAGON_TOOLS_ROOT=$(HOME)/Qualcomm/HEXAGON_Tools/8.2.07#
+  else ifeq (1,$(V_toolv83))
+    export HEXAGON_TOOLS_ROOT=$(HEXAGON_SDK_ROOT)/tools/HEXAGON_Tools/8.3.07#
+  else
+    export HEXAGON_TOOLS_ROOT=$(HEXAGON_SDK_ROOT)/tools/HEXAGON_Tools/8.3.07#
+  endif
+  #$(warning "Using default tools location: HEXAGON_TOOLS_ROOT=$(HEXAGON_TOOLS_ROOT)")
+else
+  export HEXAGON_TOOLS_ROOT:=$(subst \,/,$(HEXAGON_TOOLS_ROOT))#
+endif
+
+ifeq "$(wildcard $(HEXAGON_TOOLS_ROOT) )" ""
+$(error Cannot find Hexagon Tools at $(HEXAGON_TOOLS_ROOT).  Environment variable HEXAGON_TOOLS_ROOT can be set to override the default location))
+endif
+
+export QURT_IMAGE_DIR=$(HEXAGON_SDK_ROOT)/libs/common/qurt#
+export RUN_MAIN_ON_HEXAGON=$(HEXAGON_SDK_ROOT)/libs/common/run_main_on_hexagon/ship/$V#
+
+MAKE_D_V_EXT_hexagon_DIR:=$(thisDir)
+
+#----------------------------------------------------------------------------
+# Arithmetic rules for Hexagon
+#----------------------------------------------------------------------------
+
+hexagon_ver_gt = $(call GREATER_THAN,$(call ENCODE,$(V_ARCH_NUM)),$(call ENCODE,$(1)))
+hexagon_ver_lt = $(call LESS_THAN,$(call ENCODE,$(V_ARCH_NUM)),$(call ENCODE,$(1)))
+hexagon_ver_eq = $(call EQUAL_TO,$(call ENCODE,$(V_ARCH_NUM)),$(call ENCODE,$(1)))
+hexagon_ver_ne = $(call NOT_EQUAL,$(call ENCODE,$(V_ARCH_NUM)),$(call ENCODE,$(1)))
+hexagon_ver_ge = $(call GREATER_EQUAL_TO,$(call ENCODE,$(V_ARCH_NUM)),$(call ENCODE,$(1)))
+hexagon_ver_le = $(call LESS_EQUAL_TO,$(call ENCODE,$(V_ARCH_NUM)),$(call ENCODE,$(1)))

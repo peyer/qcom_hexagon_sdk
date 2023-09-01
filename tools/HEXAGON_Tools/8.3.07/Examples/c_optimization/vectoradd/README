@@ -1,0 +1,37 @@
+##################################################################
+# Copyright (c) $Date$ QUALCOMM INCORPORATED.
+# All Rights Reserved.
+# Modified by QUALCOMM INCORPORATED on $Date$
+##################################################################
+This example demonstrates one of the most important C-optimization
+techniques available for the HEXAGON: vectorization.  The Hexagon
+architecture provides a large set of operations that process 8-byte
+vectors, treated as 8 individual bytes, 4 half-words (2-bytes each),
+or 2 words (4-bytes each).  Vector operations are SIMD (single
+instruction, multiple data); that is, they apply the same operation to
+several elements in a single cycle.  A single vector operation can
+produce the same result as 4 half-word operations, resulting in
+significant perforamnce improvement.  Programs that process multiple
+pieces of data may be able to leverage the vector operations if the
+following constraints are met:
+
+    1)  Data is contiguous (an array is easiest to identify)
+    2)  Data length is a multiple of the vector size (depends on packing factor)
+    3)  Data is 8-byte aligned (required for vector loads and stores)
+    4)  Absence of control flow
+    5)  Absence of loop-carried data dependence
+
+This example has been designed to satisfy all of the vectorization
+constraints; thus, it is relatively straightforward to vectorize this
+code.  Other examples will show how to handle situations where one or
+more of these constraints are not met.
+
+The file vectoradd.c contains the vectorization example.  Run the
+test_vectoradd program to view the impact on performance of
+vectorization.
+
+Running Example:
+1) make
+
+Default compiler and options can be modified on the make command line
+using the CC and CFLAGS make variables, respectively.

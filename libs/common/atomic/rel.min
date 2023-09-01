@@ -1,0 +1,9 @@
+ifeq (1,$(V_sconsrelease))
+PROD=atomic
+REL=$V/ship/rel/$(PROD)
+BUILD_COPIES += build/$(PROD).api $(REL)/build/$(PROD).api ;
+BUILD_COPIES += build/$(PROD).scons $(REL)/build/$(PROD).scons ;
+BUILD_COPIES += AEEatomic.h $(REL)/inc/AEEatomic.h ;
+BUILD_COPIES += cae.c $(REL)/src/cae.c ;
+BUILD_COPIES += atomic.c $(REL)/src/atomic.c ;
+endif

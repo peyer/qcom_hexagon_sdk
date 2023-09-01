@@ -1,0 +1,54 @@
+# only build the shared object if dynamic option specified in the variant
+ifeq (1,$(V_dynamic))
+BUILD_DLLS = libcornerApp_skel
+BUILD_DLLS += cornerApp_q
+else
+BUILD_LIBS += libcornerApp_skel
+endif
+
+
+
+# compile flags needed to build the shared lib. This flag required when project includes fastcv.h
+DEFINES += FASTCV_NO_INLINE_FUNCTIONS \
+
+DEFINES+=_MACH_I32=int
+
+# IDL files needed to generate skels and/or headers visible to the shared lib
+libcornerApp_skel_QAICIDLS = inc/cornerApp
+
+# .c files to build into the shared lib
+libcornerApp_skel_C_SRCS += $V/cornerApp_skel \
+                            src/cornerApp_imp \
+							
+
+# include paths required to build the shared lib source files
+INCDIRS += $(HEXAGON_SDK_ROOT)/libs/fastcv/fastcv/$(V)
+
+LIBDIRS += $(HEXAGON_SDK_ROOT)/libs/fastcv/fastcv/$(V)
+
+# Needs dspCV lib for worker pool
+libcornerApp_skel_DLLS+= \
+  libdspCV_skel \
+  libfastcvadsp \
+
+# Also build a stand-alone simulation environment executable unit test
+
+BUILD_QEXES += cornerApp_q  
+cornerApp_q_OSTYPE = QURT
+
+# cornerApp_q_LIBS+= apps_mem_heap_stub rpcmem  libdspCV_skel libfastcvadsp
+cornerApp_q_DLLS+=  rpcmem  libdspCV_skel libfastcvadsp
+
+cornerApp_q_C_SRCS+= $V/cornerApp_skel \
+                     src/cornerApp_imp \
+                     src/cornerApp
+
+QEXE_EXEC+=--dsp_clock 800
+
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

@@ -1,0 +1,18 @@
+# stand-alone qfxp_sample executable
+BUILD_EXES+=qfxp_sample
+qfxp_sample_QAICIDLS += inc/qfxp_sample \
+
+qfxp_sample_C_SRCS += src/qfxp_sample \
+                       $V/qfxp_sample_stub \
+
+qfxp_sample_DLLS += libadsprpc
+qfxp_sample_LIBS += rpcmem
+qfxp_sample_DEFINES += VERIFY_PRINT_ERROR
+qfxp_sample_LD_FLAGS += -lpthread
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

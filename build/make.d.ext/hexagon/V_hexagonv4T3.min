@@ -1,0 +1,4 @@
+V_ARCH=v4
+HEXAGON_NAME=qdsp6
+HEXAGON_TOOLS_VERSION=3.x
+include $(thisDir)/defines_hexagon.min

@@ -1,0 +1,184 @@
+#============================================================================
+#  Name:
+#    defines_UbuntuARM.min
+#
+#  Assumes:
+#    UBUNTUARM_TOOLS_DIR points to a copy of CodeSourcery ARM gcc OR the directory
+#      containing "arm-non-eabi-gcc" is in your path.
+#
+#  Description:
+#    This file specifies the items necessary to build libraries using the
+#    CodeSourcery gcc toolchain for ARM (EABI-NONE config).  
+#
+# Copyright 2009-2020 by Qualcomm Technologies, Inc.  All Rights Reserved.
+#----------------------------------------------------------------------------
+
+ifeq (1,$(V_aarch64))
+   ifeq (1,$(OPENWRT))
+       UBUNTUARM_LIB_DIR=$(UBUNTUARM_TOOLS_DIR)/libexec/gcc/aarch64-openwrt-linux-musl/5.2.0
+       ARMGCC_PREFIX=$(UBUNTUARM_TOOLS_DIR)/bin/aarch64-openwrt-linux-musl-
+   else
+       UBUNTUARM_LIB_DIR=$(UBUNTUARM_TOOLS_DIR)/lib/gcc/aarch64-linux-gnu/4.9.3
+       ARMGCC_PREFIX=$(UBUNTUARM_TOOLS_DIR)/bin/aarch64-linux-gnu-
+   endif
+   CC_PREFIX=$(ARMGCC_PREFIX)#
+
+   CC=$(CC_PREFIX)gcc#
+   ARMCC=$(CC_PREFIX)gcc#
+   CXX=$(CC_PREFIX)g++ $(LLVM_TRIPPLE)#
+   ARMCXX=$(CC_PREFIX)g++ $(LLVM_TRIPPLE)#
+
+   LD=$(CC)
+   AR=$(CC_PREFIX)ar#
+   AR_FLAGS=-rsc#
+
+   CPP=$(CC_PREFIX)cpp#
+else 
+   ifeq (1,$(OPENWRT))
+       UBUNTUARM_LIB_DIR=$(UBUNTUARM_TOOLS_DIR)/lib/gcc/arm-openwrt-linux-muslgnueabi/5.2.0
+       ARMGCC_PREFIX=$(UBUNTUARM_TOOLS_DIR)/bin/arm-openwrt-linux-muslgnueabi-
+   else
+       UBUNTUARM_LIB_DIR=$(UBUNTUARM_TOOLS_DIR)/lib/gcc/arm-linux-gnueabihf/4.9.3
+       UBUNTUARM_GCC_PREFIX=arm-linux-gnueabihf-#default HARD_FLOAT
+       ifeq (1,$(SOFT_FLOAT))
+          UBUNTUARM_GCC_PREFIX=arm-linux-gnueabi-# 
+          UBUNTUARM_LIB_DIR=$(UBUNTUARM_TOOLS_DIR)/lib/gcc/arm-linux-gnueabi/4.9.3     
+       endif
+       ARMGCC_PREFIX=$(UBUNTUARM_TOOLS_DIR)/bin/$(UBUNTUARM_GCC_PREFIX)
+   endif
+   CC_PREFIX=$(ARMGCC_PREFIX)#
+
+   CC=$(CC_PREFIX)gcc#
+   ARMCC=$(CC_PREFIX)gcc -marm#
+   CXX=$(CC_PREFIX)g++ $(LLVM_TRIPPLE)#
+   ARMCXX=$(CC_PREFIX)g++ $(LLVM_TRIPPLE) -marm#
+
+   LD=$(CC)
+   AR=$(CC_PREFIX)ar#
+   AR_FLAGS=-rsc#
+
+   CPP=$(CC_PREFIX)cpp#
+endif
+
+FEZ=$(ARMGCC_PREFIX)size
+
+__CXX_FLAGS+=-fPIC
+__CXX_FLAGS+=-Wall -Wno-missing-braces#
+ifeq (1,$(V_aarch64))
+   __CXX_FLAGS+=-fpic
+else
+   __CXX_FLAGS+=-mword-relocations -mthumb-interwork -mfpu=neon -mtune=cortex-a8#
+   __CXX_FLAGS+=-march=armv7-a#
+endif
+
+CC_NO_WARN_UNUSED_FUNCTIONS=-Wno-unused-function#
+CC_NO_WARN_UNINITIALIZED=-Wno-uninitialized#
+
+ifneq ($(V_FLAVOR),Release)
+__CXX_FLAGS+=-g
+endif
+
+ifneq ($(V_FLAVOR),Debug)
+ifneq ($(V_FLAVOR),Coverage)
+__CXX_FLAGS+=-O2 -fno-strict-aliasing#
+endif
+endif
+_LD_FLAG=-Wl,
+LD_FLAG=-Wl,
+
+ifeq (1,$(V_aarch64))
+   LD_FLAGS+=-Wl,-Map=$(basename $(@)).map -Wl,-unresolved-symbols=ignore-in-shared-libs --verbose#
+else
+   LD_FLAGS+=-Wl,-Map=$(basename $(@)).map -march=armv7-a -mthumb-interwork -mfpu=neon -mtune=cortex-a8 -Wl,-unresolved-symbols=ignore-in-shared-libs#
+endif
+
+ifeq ($(V_FLAVOR),Coverage)
+__CXX_FLAGS+=-fprofile-arcs -ftest-coverage#
+LD_FLAGS+=-fprofile-arcs -ftest-coverage#
+endif
+
+UBUNTUARM_SYSTEM_INCS=arm-linux-gnueabihf/libc/usr/include
+__CXX_FLAGS+=$(addprefix -isystem $(UBUNTUARM_TOOLS_DIR)/,$(UBUNTUARM_SYSTEM_INCS))
+__CXX_FLAGS+=-DARM_ARCH_7A -DUSE_SYSLOG
+
+DEFINES+=__FILENAME__=\"$(notdir $(<))\"
+
+CXX_FLAGS=-c $(__CXX_FLAGS) -std=c++11#
+CXX_MIX_FLAGS=-S $(__CXX_FLAGS) -std=c++11#
+
+CC_FLAGS=-c $(__CXX_FLAGS) -std=gnu99#
+CC_MIX_FLAGS=-S $(__CXX_FLAGS) -std=gnu99#
+
+CC_INC=#
+
+CC_INCFLAG=-I#
+CC_DEFINEFLAG=-D#
+CC_UNDEFINEFLAG=-U#
+CC_OUTPUTFLAG=-o#
+CC_MIX_OUTPUTFLAG=-o#
+
+CPP_FLAGS=-C#
+
+AR_OUTPUTFLAG=#
+
+LD_LIBDIRFLAG=#-L
+LD_OUTPUTFLAG=-o #
+
+LD_LIBS=-L$(UBUNTUARM_LIB_DIR) -lm -lc -lsupc++ -lgcc_eh
+LD_LIBS+=-lgcc#
+
+ifeq ($(V_FLAVOR),Coverage)
+LD_LIBS+=-lgcov#
+endif
+
+ld_inputs = $(strip \
+  $(foreach L,$1,\
+    $(if $(filter lib%$(DLL_EXT),$(notdir $L)),\
+        -L$(dir $L) -l$(patsubst lib%$(DLL_EXT),%,$(notdir $L)),\
+      $L)))
+
+LD_INPUTS=-Wl,--start-group $(call ld_inputs,$(1)) -Wl,--end-group $(LD_LIBS)#
+
+DEFS_OF=$(foreach def,$(addsuffix .lst,$(call uniq,$($(call NAME_OF,$(1))_DEFS)\
+           $(foreach comp,$(call COMPONENTS_OF,$(1)),$(COMPONENT_$(comp)_DEFS)))),\
+            -Wl,--version-script=$(def))
+
+EXE_LD_FLAGS+=$(LD_FLAGS)#
+
+DLL_LD_FLAGS+=$(LD_FLAGS) -fpic -nostartfiles -nostdlib -shared -Bsymbolc $(call DEFS_OF,$(@))#
+
+DLL_EXT=.so#
+DLL_LIB_EXT=.so#
+
+IMAR_OUTPUTFLAG=-o #
+
+define IMPLIB_AR_CMD
+	$(call exec,$(LD)) $(IMPLIB_LD_FLAGS) $(LD_OUTPUTFLAG)$(2) $(call LD_INPUTS,$(1))
+endef
+
+ASM=$(CC)#
+ASM_INCFLAG=$(CC_INCFLAG)#
+ASM_DEFINEFLAG=$(CC_DEFINEFLAG)#
+ASM_UNDEFINEFLAG=$(CC_UNDEFINEFLAG)#
+ASM_OUTPUTFLAG=$(CC_OUTPUTFLAG)#
+ASM_MIX_OUTPUTFLAG=$(CC_MIX_OUTPUTFLAG)#
+ASM_FLAGS=$(CC_FLAGS) -DRUN_ON_NEON -DHAVE_NEON=1 -mfpu=neon#
+
+#APP_FLAGS=-E -P - #
+#APP=$(CC)#
+
+#-----------------------------------------------------------------------------
+# QEXE exec
+#-----------------------------------------------------------------------------
+QEXE_EXEC=#$(call exec,$(CC_PREFIX)run) $(1) $(2)
+
+#-----------------------------------------------------------------------------
+# extensions
+#-----------------------------------------------------------------------------
+EXE_EXT=#
+LIB_EXT=.a#
+# TODO image not building!
+IMG_EXT=.elf#
+
+# pull extensions
+$(call INCLUDE_MAKE_D_EXTS,defines_UbuntuARM.min)

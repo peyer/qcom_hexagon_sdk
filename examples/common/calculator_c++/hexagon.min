@@ -1,0 +1,58 @@
+BUILD_LIBS += libcalculator_plus_skel
+BUILD_LIBS += calculator
+
+include $(QURT_IMAGE_DIR)/qurt_libs.min
+
+# only build the shared object if dynamic option specified in the variant
+ifeq (1,$(V_dynamic))
+BUILD_DLLS += libcalculator_plus_skel
+BUILD_DLLS += calculator
+BUILD_DLLS += calculator_q
+endif
+INCDIRS+=inc
+
+CXX_FLAGS+=-fexceptions
+ifeq (1,$(V_toolv83))
+CXX_FLAGS+= \
+   -std=c++03 
+endif
+libcalculator_plus_skel_QAICIDLS = inc/calculator
+libcalculator_plus_skel_C_SRCS += $V/calculator_plus_skel
+libcalculator_plus_skel.CPP_SRCS = src/calculator_dsp.cpp
+
+ifeq (1,$(V_dynamic))
+libcalculator_plus_skel_DLLS += $(HEXAGON_LIB_DIR)/$(V_ARCH)/G0/pic/libstdc++
+else
+libcalculator_plus_skel_LIBS += $(HEXAGON_LIB_DIR)/$(V_ARCH)/G0/pic/libstdc++.a
+endif
+
+libcalculator_plus_skel_CXX_FLAGS += -fexceptions
+
+calculator_C_SRCS+=src/calculator_test
+calculator_C_SRCS+=$V/calculator_plus_stub
+calculator_QAICIDLS = inc/calculator
+
+# quality test
+ifeq (,$(filter $(V_ARCH),v5 v55))
+#BUILD_QEXES += calculator_q
+endif
+
+calculator_q_OSTYPE = QURT
+calculator_q_QAICIDLS = inc/calculator
+calculator_q_C_SRCS = src/calculator_test_main src/calculator_test
+calculator_q_CPP_SRCS = src/calculator_dsp
+calculator_q_DLLS = rpcmem 
+calculator_q_DLLS += $(HEXAGON_LIB_DIR)/$(V_ARCH)/G0/pic/libstdc++
+
+$(V)/libcalculator_plus_skel.so: $(V)/libstdc++.so
+
+$(V)/libstdc++.so:
+		$(call cp_af,$(HEXAGON_LIB_DIR)/$(V_ARCH)/G0/pic/libstc++.so $(V))
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   calculator.input \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

@@ -1,0 +1,14 @@
+
+BUILD_EXES += run_main_on_hexagon
+
+run_main_on_hexagon_QAICIDLS += inc/run_main_on_hexagon
+run_main_on_hexagon_C_SRCS += src/run_main_on_hexagon_ap $V/run_main_on_hexagon_stub
+run_main_on_hexagon_DLLS += libadsprpc
+run_main_on_hexagon_LD_FLAGS += -ldl -lpthread
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

@@ -1,0 +1,168 @@
+########################################################################
+# Copyright (c) Date: Tue Aug 26 16:38:28 CDT 2008 QUALCOMM INCORPORATED 
+# All Rights Reserved 
+# Modified by QUALCOMM INCORPORATED on Tue Aug 26 16:38:28 CDT 2008 
+########################################################################
+
+
+* Fetch Align Directive
+
+This example illustrates the limitations of the ".falign" Hexagon assembler
+directive.
+
+* Fetch Align
+
+When the Hexagon processor branches to an instruction packet which crosses a
+16-byte boundary it stalls for a cycle.  This can be a significant penalty when
+this packet is the top of an inner loop, for example.
+
+As each instruction packet always takes one cycle to execute, independent of
+how many instructions it contains, the best way to avoid this stall cycle is to
+insert NOP instructions in previous packets with fewer instructions than the
+maximum of four, albeit at the cost of an increased code size.
+
+* Assembler
+
+The Hexagon assembler provides the ".falign" directive which performs this
+function.
+
+Consider the example below:
+
+	loop0 (foo, #10)
+
+	{ r0 = r1
+	  r2 = r3 }
+
+	{ r4 = r5
+	  r6 = r7 }
+
+foo:
+	{ r12 = r13
+	  r14 = r15
+	  r16 = r17
+	  r18 = r19 }:endloop0
+
+Assuming that the first instruction starts at address 0x00000000, the loop
+starting at the label "foo" starts at address 0x00000014, causing the
+instruction packet at the top of the loop to straddle across a 16-byte boundary.
+
+However, some of the previous packets have less than four instructions, where
+three extra NOP instructions could be inserted in order to push the instruction
+packet at "foo" farther to address 0x00000020, so that it would not cross a
+16-byte boundary.
+
+	loop0 (foo, #10)
+
+	{ r0 = r1
+	  r2 = r3
+	  nop }
+
+	{ r4 = r5
+	  r6 = r7
+	  nop
+	  nop }
+
+foo:
+	{ r12 = r13
+	  r14 = r15
+	  r16 = r17
+	  r18 = r19 }:endloop0
+
+Now the packet at "foo" does not cross a 16-byte boundary.  But manually adding
+NOP instructions may not be so trivial, especially when instruction packets
+contains an instruction with narrower restrictions on the instructions that can
+share the same packet with it.  Then the ".falign" directive is most
+convenient, achieving the desired result automatically.
+
+	loop0 (foo, #10)
+
+	{ r0 = r1
+	  r2 = r3 }
+
+	{ r4 = r5
+	  r6 = r7 }
+
+	.falign
+
+foo:
+	{ r12 = r13
+	  r14 = r15
+	  r16 = r17
+	  r18 = r19 }:endloop0
+
+There are cases though that no NOP instructions need to be added, such as when a
+packet that is to be fetch-aligned contains a single instruction or is already
+fetch-aligned.
+
+* Limitations
+
+If for some reason the Hexagon assembler cannot add enough NOP instructions to
+previous packets, it will add a new packet made solely of NOP instructions.  In
+this case, although it adds a cycle to the loop setup, the loop top is still
+guaranteed to not cross a 16-byte boundary.
+
+The Hexagon assembler will not consider an indefinite number of instruction
+packets preceding a ".falign" directive, limiting itself to a pre-defined number
+considered optimal for most cases.
+
+Likewise, other assembler directives may preclude previous instructions from
+being considered:  Consider the example below:
+
+	loop0 (foo, #10)
+
+	.align	8
+
+	.falign
+
+1:
+	{ r0 = r1
+	  r2 = r3
+	  r4 = r5 }
+
+	.falign
+
+foo:
+	{ r12 = r13
+	  r14 = r15
+	  r16 = r17
+	  r18 = r19 }:endloop0
+
+	{ r20 = r21
+	  r22 = r23 }
+
+2:
+	{ r24 = r25
+	  r26 = r27
+	  r28 = r29
+	  r30 = r31 }
+
+	.falign
+
+3:
+	{ r8 = r9
+	  r9 = r10
+	  r11 = r12
+	  r13 = r14 }
+
+- ".org", ".align", ".balign", ".p2align": when the location counter is forced
+to move, a subsequent ".falign" will not add any NOP instruction
+to packets preceding such directives.  In the example above, a NOP instruction
+packet is inserted before the label "1".
+
+- ".falign": when an instruction packet is fetch-aligned, a subsequent ".falign"
+will not add any NOP instruction to the fetch-aligned packet nor others packets
+preceding it.  In the example above, a NOP instruction packet is inserted before
+the label "foo".
+
+- labels: when a label is defined to the location counter, a subsequent
+".falign" will not add any NOP instruction to packets preceding it.  In the
+example above, a NOP instruction packet is inserted before the label "3".
+
+- ".section" or sub-section change: when the section or sub-section is changed,
+the assembler cannot guarantee their relative order anymore, which is decided by
+the linker, thus a subsequent ".falign" will not add any NOP instruction to
+packets preceding the section or sub-section change.  In this case, a NOP
+instruction packet is inserted.
+
+These limitations may or may not change in future releases of the Hexagon
+assembler.

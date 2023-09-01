@@ -1,0 +1,3 @@
+include $(thisDir)/defines_$V.min
+-include $(thisDir)/$(V_FLAVOR).defines.min
+

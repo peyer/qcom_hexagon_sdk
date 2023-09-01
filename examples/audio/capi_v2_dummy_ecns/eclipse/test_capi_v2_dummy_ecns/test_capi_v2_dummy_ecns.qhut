@@ -1,0 +1,9 @@
+<Testcases>
+	<Testcase Name="TestCase1">
+		<InputFile>../../data/input_ref_8khz.raw</InputFile>
+		<OutputFile>../../data/output__ref_8khz.raw</OutputFile>
+		<ConfigFile>../../data/dummy_ecns_4mic.cfg</ConfigFile>
+		<Reference/>
+		<RunStatus>True</RunStatus>
+	</Testcase>
+</Testcases>

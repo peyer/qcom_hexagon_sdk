@@ -1,0 +1,67 @@
+<DSP type="WDSP" versionMajor="0x2" versionMinor="0x8" versionBranch="0x10" versionSubBranch="0x20">
+  <MODULE_LIST>
+    <MODULE name="MODULE_1" id="0x11111111">
+      <MODULE_INFO pidFwk="0x20002">
+        <META_DATA/>
+        <PIN_INFO type="STATIC">
+          <INPUT_PINS/>
+          <OUTPUT_PINS/>
+        </PIN_INFO>
+      </MODULE_INFO>
+      <PARAMETER_LIST>
+        <PARAMETER name="Parameter1" pid="0x11111199" maxSize="0xc">
+          <TOOL_POLICIES>
+            <POLICY name="RTC"/>
+            <POLICY name="CALIBRATION"/>
+          </TOOL_POLICIES>
+          <DEFAULT_DEPENDENCIES>
+            <DEPENDENCY direction="TX" device="HANDSET" AV="AUDIO" samplerate="0x1f40"/>
+            <DEPENDENCY direction="RX" device="HANDSET" AV="AUDIO" samplerate="0x3e80"/>
+            <DEPENDENCY direction="TX" device="HANDSET" AV="AUDIO" samplerate="0xbb80"/>
+            <DEPENDENCY direction="TX" device="HANDSET" AV="AUDIO"/>
+            <DEPENDENCY direction="RX" device="HANDSET" samplerate="0x3e80"/>
+            <DEPENDENCY direction="RX" device="HANDSET" AV="AUDIO" samplerate="0x3e80"/>
+          </DEFAULT_DEPENDENCIES>
+          <CONFIG_ELEMENT name="a" type="char" byteSize="0x1" byteOffset="0x0" min="0x80" max="0x7f" default="0xa">
+            <DEFAULTS>
+              <DEFAULT direction="TX" device="HANDSET" AV="AUDIO" samplerate="0x1f40" default="0x2"/>
+              <DEFAULT direction="RX" device="HANDSET" AV="AUDIO" samplerate="0x3e80" default="0x3"/>
+              <DEFAULT direction="TX" device="HANDSET" AV="AUDIO" samplerate="0xbb80" default="0x4"/>
+            </DEFAULTS>
+          </CONFIG_ELEMENT>
+          <CONFIG_ELEMENT name="b" type="long" byteSize="0x4" byteOffset="0x4" min="0xfffffffb" max="0x14" default="0x0"/>
+          <CONFIG_ELEMENT name="c" type="char" byteSize="0x1" byteOffset="0x8" min="0x80" max="0x7f" default="0xa">
+            <DEFAULTS>
+              <DEFAULT direction="TX" device="HANDSET" AV="AUDIO" default="0x2"/>
+              <DEFAULT direction="RX" device="HANDSET" samplerate="0x3e80" default="0x3"/>
+              <DEFAULT direction="TX" device="HANDSET" AV="AUDIO" samplerate="0xbb80" default="0x28"/>
+              <DEFAULT direction="RX" device="HANDSET" AV="AUDIO" samplerate="0x3e80" default="0x3"/>
+              <DEFAULT direction="RX" device="HANDSET" AV="AUDIO" samplerate="0x3e80" default="0x3"/>
+            </DEFAULTS>
+          </CONFIG_ELEMENT>
+        </PARAMETER>
+        <PARAMETER name="Parameter2" pid="0x22222299" maxSize="0x8">
+          <TOOL_POLICIES>
+            <POLICY name="RTC"/>
+            <POLICY name="CALIBRATION"/>
+          </TOOL_POLICIES>
+          <DEFAULT_DEPENDENCIES>
+            <DEPENDENCY direction="TX" device="HANDSET" AV="AUDIO" samplerate="0x1f40"/>
+            <DEPENDENCY direction="RX" device="HANDSET" AV="AUDIO" samplerate="0x3e80"/>
+            <DEPENDENCY direction="TX" device="HANDSET" AV="AUDIO" samplerate="0xbb80"/>
+            <DEPENDENCY direction="TX" device="HANDSET" AV="AUDIO" VoiceBandWidth ="WB" samplerate="0xbb80"/>
+          </DEFAULT_DEPENDENCIES>
+          <CONFIG_ELEMENT name="a" type="char" byteSize="0x1" byteOffset="0x0" min="0x80" max="0x7f" default="0xa">
+            <DEFAULTS>
+              <DEFAULT direction="TX" device="HANDSET" AV="AUDIO" samplerate="0x1f40" default="0x2"/>
+              <DEFAULT direction="RX" device="HANDSET" AV="AUDIO" samplerate="0x3e80" default="0x3"/>
+              <DEFAULT direction="TX" device="HANDSET" AV="AUDIO" samplerate="0xbb80" default="0x4"/>
+              <DEFAULT direction="TX" device="HANDSET" AV="AUDIO" VoiceBandWidth ="WB" samplerate="0xbb80" default="0x4"/>
+            </DEFAULTS>
+          </CONFIG_ELEMENT>
+          <CONFIG_ELEMENT name="b" type="long" byteSize="0x4" byteOffset="0x4" min="0xfffffffb" max="0x14" default="0x0"/>
+        </PARAMETER>
+      </PARAMETER_LIST>
+    </MODULE>
+  </MODULE_LIST>
+</DSP>

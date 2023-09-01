@@ -1,0 +1,60 @@
+#!/bin/bash
+
+basedir=`dirname $0`
+cd $basedir
+. ../setup-env.sh
+declare -i result=0
+set -x
+
+INCLUDES="-I $HALIDE_ROOT/include/ -I $HALIDE_ROOT/tools/ -I $HALIDE_ROOT/apps/support/"
+HL_LIBS="$HALIDE_ROOT/lib/libHalide.a"
+HL_GGEN="$HALIDE_ROOT/tools/GenGen.cpp"
+
+#############################################################################
+cat <<EOT
+=== Build Android ARM-64/Hexagon executable for device ===
+EOT
+
+rm -f process-cam-android camera_pipe.a camera_pipe fcam/*.o
+${CXX} -std=c++11 $INCLUDES -g -fno-rtti -DHL_HEXAGON_DEVICE camera_pipe_generator.cpp $HL_GGEN $HL_LIBS -o camera_pipe  -ldl -lpthread -lz
+
+./camera_pipe -o . -g camera_pipe target=arm-64-android-hvx_128
+./camera_pipe -o . -g camera_pipe target=arm-64-android -f camera_pipe_cpu
+
+$ANDROID_ARM64_TOOLCHAIN/bin/aarch64-linux-android21-clang++ -std=c++11 $INCLUDES -DHL_HEXAGON_DEVICE -c -Wall -O3 fcam/Demosaic.cpp -o fcam/Demosaic.o
+$ANDROID_ARM64_TOOLCHAIN/bin/aarch64-linux-android21-clang++ -std=c++11 $INCLUDES -DHL_HEXAGON_DEVICE -c -Wall -O3 fcam/Demosaic_ARM.cpp -o fcam/Demosaic_ARM.o
+$ANDROID_ARM64_TOOLCHAIN/bin/aarch64-linux-android21-clang++ -std=c++11 $INCLUDES -DHL_HEXAGON_DEVICE -Wall -O3 process.cpp camera_pipe.a camera_pipe_cpu.a fcam/Demosaic.o fcam/Demosaic_ARM.o -o process-cam-android -DHALIDE_NOPNG -DHALIDE_NO_PNG -DHALIDE_NO_JPEG -llog -fPIE -pie
+
+result=$?
+
+if [ "z$RUNDROID" = "z" ]; then
+    set +x
+    export PREF=echo
+    echo To run this example on an Android device, do:
+else
+    num_device_lines=`adb devices -l | sed '/^$/d' | wc -l`
+    if [ $num_device_lines -gt 2 ]; then
+        if [ "z$ANDROID_SERIAL" == "z" ];  then
+            echo "Error: RUNDROID set to 1, but found more than one device. Set ANDROID_SERIAL"
+            exit 1
+        else
+            echo "Running tests on Device:$ANDROID_SERIAL"
+            set +x
+        fi
+    fi
+fi
+
+$PREF    adb push process-cam-android /data/
+$PREF    adb shell chmod +x /data/process-cam-android
+$PREF    adb push ../Images/bayer_raw.pgm /data/
+$PREF    rm -f out_host.ppm
+$PREF    adb shell rm /data/out_host.ppm
+$PREF    adb shell 'cd /data; ./process-cam-android bayer_raw.pgm 3700 2.0 50 5 out_host.ppm cpu'
+$PREF    adb pull /data/out_host.ppm .
+$PREF    cmp out_host.ppm ref_raw/out_cpu.ppm
+$PREF    rm -f out_hvx.ppm
+$PREF    adb shell rm /data/out_hvx.ppm
+$PREF    adb shell 'cd /data; ./process-cam-android bayer_raw.pgm 3700 2.0 50 5 out_hvx.ppm hvx128'
+$PREF    adb pull /data/out_hvx.ppm .
+$PREF    cmp out_hvx.ppm ref_raw/out.ppm
+exit $result

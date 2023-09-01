@@ -1,0 +1,2 @@
+include $(thisDir)/defines_$V.min
+MAKE_D_V_EXT_qnx_DIR:=$(thisDir)

@@ -1,0 +1,39 @@
+<DSP>
+  <MODULE_LIST>
+    <MODULE name="MODULE_1" ID="0x11111111">
+      <MODULE_INFO>
+        <META_DATA/>
+        <PIN_INFO Type="Static">
+          <INPUT_PINS Max="2" PinIdSize="2">
+            <PIN Name="In1" ID="1"/>
+            <PIN Name="In2" ID="2"/>
+          </INPUT_PINS>
+          <OUTPUT_PINS Max="2" PinIdSize="2">
+            <PIN Name="Out1" ID="3"/>
+            <PIN Name="Out2" ID="4"/>
+          </OUTPUT_PINS>
+        </PIN_INFO>
+      </MODULE_INFO>
+      <PARAMETER_LIST>
+        <PARAMETER name="Parameter1" PID="0x11111111" maxSize="12" hexStr="1100000022003344444444" description="Description Parameter 1">
+          <CONFIG_ELEMENT name="a" type="int" byteSize="4" byteOffset="0" min="-2147483648" max="2147483647" default="0x11"/>
+          <CONFIG_ELEMENT name="b" type="short" byteSize="2" byteOffset="4" min="-32768" max="32767" default="0x22"/>
+          <CONFIG_ELEMENT name="c" type="char" byteSize="1" byteOffset="6" min="-128" max="127" default="0x33"/>
+          <CONFIG_ELEMENT name="d" type="long" byteSize="4" byteOffset="8" min="-2147483648" max="2147483647" default="0x44444444"/>
+        </PARAMETER>
+        <PARAMETER name="Parameter2" PID="0x22222222" maxSize="12" hexStr="1100000022003344444444" description="Description Parameter 2">
+          <CONFIG_ELEMENT name="a" type="int" byteSize="4" byteOffset="0" min="-2147483648" max="2147483647" default="0x11"/>
+          <CONFIG_ELEMENT name="b" type="short" byteSize="2" byteOffset="4" min="-32768" max="32767" default="0x22"/>
+          <CONFIG_ELEMENT name="c" type="char" byteSize="1" byteOffset="6" min="-128" max="127" default="0x33"/>
+          <CONFIG_ELEMENT name="d" type="long" byteSize="4" byteOffset="8" min="-2147483648" max="2147483647" default="0x44444444"/>
+        </PARAMETER>
+        <PARAMETER name="Parameter3" PID="0x33333333" maxSize="12" hexStr="1100000022003344444444" description="Description Parameter 3">
+          <CONFIG_ELEMENT name="a" type="int" byteSize="4" byteOffset="0" min="-2147483648" max="2147483647" default="0x11"/>
+          <CONFIG_ELEMENT name="b" type="short" byteSize="2" byteOffset="4" min="-32768" max="32767" default="0x22"/>
+          <CONFIG_ELEMENT name="c" type="char" byteSize="1" byteOffset="6" min="-128" max="127" default="0x33"/>
+          <CONFIG_ELEMENT name="d" type="long" byteSize="4" byteOffset="8" min="-2147483648" max="2147483647" default="0x44444444"/>
+        </PARAMETER>
+      </PARAMETER_LIST>
+    </MODULE>
+  </MODULE_LIST>
+</DSP>

@@ -1,0 +1,24 @@
+INCDIRS += inc
+INCDIRS+=$(QURT_DIR)/api/qurt
+
+ifeq (1,$(V_dynamic))
+BUILD_DLLS+=librpcperf_skel
+endif
+librpcperf_skel_C_SRCS=$V/rpcperf_skel
+librpcperf_skel_DLLS=librpcperf
+librpcperf_skel_DLLIDLS=inc/rpcperf
+
+ifeq (1,$(V_dynamic))
+BUILD_DLLS+=librpcperf
+endif
+librpcperf_C_SRCS=src/rpcperf_imp
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;
+
+#DEFINES+=VERIFY_PRINT_INFO
+#DEFINES+=VERIFY_PRINT_ERROR

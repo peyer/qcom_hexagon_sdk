@@ -1,0 +1,9 @@
+#!/bin/bash
+export HALIDE_DISTRIB_PATH=${HALIDE_ROOT}
+
+make clean
+mkdir -p ./bin/arm-64-android
+cp ${HALIDE_ROOT}/support/halide_benchmark.h ./bin/arm-64-android/
+PARALLEL_SCHED=true PREFETCH_SCHED=true HL_TARGET=arm-64-android-hvx_128  ./adb_run_on_device.sh
+
+exit $?

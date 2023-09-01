@@ -1,0 +1,41 @@
+/*
+  Copyright (c) 2017 Qualcomm Technologies, Inc.
+  All Rights Reserved.
+  Confidential and Proprietary - Qualcomm Technologies, Inc.
+*/
+
+#ifndef FCVQUEUETEST_IDL
+#define FCVQUEUETEST_IDL
+
+#include "AEEStdDef.idl"
+
+interface fcvqueuetest {
+
+    AEEResult fastcv_dilate3x3(
+        in sequence<uint8> src,
+        rout sequence<uint8> dest,
+        in uint32 width,
+        in uint32 height,
+        in uint32 stride
+        );
+
+    AEEResult fastcv_gaussian3x3(
+        in sequence<uint8> src,
+        rout sequence<uint8> dest,
+        in uint32 width,
+        in uint32 height,
+        in uint32 stride
+        );
+
+    AEEResult fastcv_median3x3(
+        in sequence<uint8> src,
+        rout sequence<uint8> dest,
+        in uint32 width,
+        in uint32 height,
+        in uint32 stride
+        );
+
+    AEEResult set_clocks();
+};
+
+#endif //FCVQUEUE_DSP_IDL

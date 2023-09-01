@@ -1,0 +1,43 @@
+##################################################################
+# Copyright (c) $Date$ QUALCOMM INCORPORATED.
+# All Rights Reserved.
+# Modified by QUALCOMM INCORPORATED on $Date$
+##################################################################
+Very long instruction word (VLIW) architectures obtain high
+performance by exploiting instruction level parallelism (ILP) that is
+exposed by the compiler.  High ILP can be very difficult to achieve in
+the presence of control flow (branches caused by if-then blocks,
+for-loops, and any other control structures in the program).  This
+example, though very small and unrealistic, emphasizes the need for
+eliminating unnecessary control flow from programs.
+
+When the compiler finds independent operations in a program, it can
+schedule them in the same cycle.  For Hexagon, this means the operations
+will get scheduled in the same "packet", a group of up to 4
+instructions that will be issued and executed in parallel.  Operations
+cannot be scheduled in parallel when they have a dependence on one
+another.  A dependence can be a data dependence or a control
+dependence.  A data dependence exists when two operations are forced
+to execute sequentially becuase one depends on the output of the
+other.  A control dependence exists when two operations are forced to
+execute sequentially because there is the possibility of not executing
+the second operation due to a branch.  In other words, control flow
+prevents otherwise-independent operations from being scheduled in the
+same packet.
+
+When control flow is necessary for the correctness of the algorithm,
+it must be respected.  The MUX example shows one way to improve
+perormance in the face of necessary control flow.  This example, on
+the other hand, shows an algorithm where the control flow can be
+eliminated completely without changing the semantics of the code.  It
+may look like the optimized program is "doing more work", but it often
+turns out that the code without branches results in a better
+instruction schedule.  This translates to fewer packets and fewer
+cycles.
+
+Running Example:
+1) make
+
+Result:
+The output will show that the number of cycles will reduce for 
+the code with no control flow

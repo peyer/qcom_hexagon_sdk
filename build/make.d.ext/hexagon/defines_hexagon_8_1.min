@@ -1,0 +1,210 @@
+#============================================================================
+#  Name:
+#    defines_hexagon.min
+#
+#  Description:
+#    This file specifies the items necessary to build libraries using the
+#    HEXAGON clang toolchain
+#
+# Copyright (c) 2017 Qualcomm Technologies, Inc.  All Rights Reserved.
+#============================================================================
+#                             TOOL DEFINITIONS
+#============================================================================
+
+ifeq (,$(filter $(V_ARCH),v4 v5 v55 v56 v60 v62 v65))
+   $(error only hexagon v4 v5 v55 v56 v60 v62 v65 supported)
+endif
+
+#----------------------------------------------------------------------------
+# Software tool and environment definitions
+#----------------------------------------------------------------------------
+HEXAGON_BIN=$(addsuffix /Tools/bin/,$(HEXAGON_TOOLS_ROOT))#
+HEXAGON_LIB_DIR=$(HEXAGON_TOOLS_ROOT)/Tools/target/hexagon/lib#
+HEXAGON_ISS_DIR=$(HEXAGON_TOOLS_ROOT)/Tools/lib/iss#
+HEXAGON_QCC_DIR= $(HEXAGON_LIB_DIR)#
+
+ifeq (,$(HEXAGON_NAME))
+   HEXAGON_NAME=hexagon
+endif
+
+AR=$(HEXAGON_BIN)$(HEXAGON_NAME)-ar#
+CC=$(HEXAGON_BIN)$(HEXAGON_NAME)-clang#
+CXX=$(HEXAGON_BIN)$(HEXAGON_NAME)-clang++#
+LD=$(HEXAGON_BIN)$(HEXAGON_NAME)-clang#
+FEZ=$(HEXAGON_BIN)$(HEXAGON_NAME)-size#
+STRIP=$(HEXAGON_BIN)$(HEXAGON_NAME)-strip#
+SIM=$(HEXAGON_BIN)$(HEXAGON_NAME)-sim#
+
+_OPT = -O0
+ifneq ($(V_FLAVOR),Debug)
+   _OPT = -O2
+endif
+
+ifneq ($(V_FLAVOR),Release)
+   _DBG = -g
+   _DBG_ASM = --gdwarf2
+endif
+
+_CODE=$(addprefix -G,$(V_G_THRESHOLD))
+
+CTEMP_FLAGS= \
+   -m$(V_ARCH) \
+   -c \
+   -v \
+   -G0 \
+   $(_DBG) \
+   $(_OPT) \
+   $(_CODE) \
+   -Wall \
+   -Werror \
+   -Wno-cast-align \
+   -Wpointer-arith \
+   -Wno-missing-braces \
+   -Wno-strict-aliasing \
+   -fno-exceptions \
+   -fno-strict-aliasing \
+   -fno-zero-initialized-in-bss \
+   -fdata-sections
+
+ifneq ($(V_FLAVOR),Release)
+#CTEMP_FLAGS+= \
+#   -fstack-protector
+endif
+
+ifeq (1,$(V_dynamic))
+CTEMP_FLAGS += -fpic -D__V_DYNAMIC__
+endif
+
+CXX_MIX_FLAGS=-m$(V_ARCH) -S $(_DBG) $(_OPT) $(_CODE)
+
+CXX_FLAGS = $(CTEMP_FLAGS)
+CC_FLAGS = $(CTEMP_FLAGS)
+
+# TODO to enable static analyzer uncomment the following
+#CC_FLAGS += --compile-and-analyze#
+#CXX_FLAGS += --compile-and-analyze#
+
+CC_FLAGS+= \
+   -Wstrict-prototypes \
+   -Wnested-externs
+
+CC_MIX_FLAGS = $(CXX_MIX_FLAGS)
+
+DEFINES+=__FILENAME__=\"$(notdir $(<))\"
+
+CC_NO_WARN_UNUSED_FUNCTIONS=-Wno-unused-functions
+CC_INCFLAG = -I
+CC_DEFINEFLAG = -D
+CC_UNDEFINEFLAG = -U
+CC_OUTPUTFLAG = -o #
+CC_MIX_OUTPUTFLAG = -o #
+
+AR_FLAGS=-rsc
+AR_OUTPUTFLAG=
+
+IMPAR_OUTPUTFLAG=-o #
+
+#
+# Libraries from the toolchain
+#
+HEXAGON_LIB_PATH=$(HEXAGON_TOOLS_ROOT)/Tools/target/hexagon/lib/$(V_ARCH)/G0
+LIB_HEXAGON =$(HEXAGON_TOOLS_ROOT)/Tools/target/hexagon/lib/$(V_ARCH)/G0/libhexagon.a
+#LIBDL =$(HEXAGON_TOOLS_ROOT)/Tools/target/hexagon/lib/$(V_ARCH)/G0/libdl.a
+
+LD_FLAG=-Wl,#
+_LDFLAG=$(LD_FLAG)
+LD_LIBDIRFLAG=-L
+LD_OUTPUTFLAG=-o #
+LD_VERBOSE=#-v
+
+# strip off path of dependent .so so that DT_NEEDED tag in ELF contains
+# absolute path, also relies on dependent .so's listing DT_SONAME
+ld_inputs = $(strip \
+  $(foreach L,$1,\
+    $(if $(filter %$(DLL_EXT),$(notdir $L)),\
+        $(_LDFLAG)$L $(_LDFLAG), $L)))
+
+LD_INPUTS+=$(_LDFLAG)--start-group  $(call ld_inputs,$(1)) $(_LDFLAG)--end-group $(LD_VERBOSE)
+
+LD_FLAGS+=-m$(V_ARCH) -mG0lib -G0 -v $(_LDFLAG)--no-threads
+
+LD_FLAGS_WRAP += \
+  $(_LDFLAG)--wrap=malloc \
+  $(_LDFLAG)--wrap=calloc \
+  $(_LDFLAG)--wrap=free \
+  $(_LDFLAG)--wrap=realloc \
+  $(_LDFLAG)--wrap=memalign \
+  $(_LDFLAG)--wrap=__stack_chk_fail
+
+DLL_LD_FLAGS+=$(LD_FLAGS) -fpic -shared $(_LDFLAG)-Bsymbolic $(HEXAGON_LIB_DIR)/$(V_ARCH)/G0/pic/libgcc.a $(LD_FLAGS_WRAP) -lc $(_LDFLAG)-Map=$(@).map $(_LDFLAG)-soname=$(notdir $(@)) #
+
+MOD_LD_FLAGS+=$(LD_FLAGS) -fpic -shared $(_LDFLAG)-eIMod_New $(_LDFLAG)-Map=$(@).map#
+
+IMPLIB_LD_FLAGS+=$(LD_FLAGS) -shared 
+
+IMG_LD_FLAGS+=$(LD_FLAGS)
+
+EXE_LD_FLAGS=$(LD_FLAGS)
+
+EXE_LD_FLAGS += $(_LDFLAG)--start-group $(_LDFLAG)--whole-archive -lc -lgcc -lstdc++ $(LIBDL)\
+                $(LIB_HEXAGON) $(_LDFLAG)--no-whole-archive $(_LDFLAG)--end-group $(_LDFLAG)--dynamic-linker= \
+                $(_LDFLAG)-E $(_LDFLAG)--force-dynamic
+
+define IMPLIB_AR_CMD
+	$(call exec,$(LD)) $(IMPLIB_LD_FLAGS) $(LD_OUTPUTFLAG)$(2) $(call LD_INPUTS,$(1))
+endef
+
+MOD_EXT=.mod1#
+EXE_EXT=#
+IMG_EXT=#
+DLL_EXT=.so#
+DLL_LIB_EXT=.so#
+LIB_EXT=.a#
+IMP_LIB_EXT=.a#
+
+ASM=$(CXX)#
+ASM_FLAGS=$(CXX_FLAGS)#
+ASM_INCFLAG=$(CC_INCFLAG)#
+ASM_DEFINEFLAG=$(CC_DEFINEFLAG)#
+ASM_UNDEFINEFLAG=$(CC_UNDEFINEFLAG)#
+ASM_OUTPUTFLAG=$(CC_MIX_OUTPUTFLAG)#
+ASM_MIX_OUTPUTFLAG=$(CC_MIX_OUTPUTFLAG)#
+
+# code gen tools only accept v55 (for both v55 and v56) but sim rmakes a 
+# distinction
+ifeq ($(V_ARCH), v55)
+  SIM_V_ARCH=v56
+else
+  SIM_V_ARCH=$(V_ARCH)
+endif
+
+QEXE_EXEC=$(SIM) -m$(SIM_V_ARCH) --simulated_returnval#
+QEXE_EXEC+=--usefs $(V)#
+ifneq ($(V_ARCH), v60)
+ifneq ($(V_ARCH), v62)
+ifneq ($(V_ARCH), v65)
+QEXE_EXEC+=--statsfile $(V)/stats.txt#
+endif
+endif
+endif
+
+ifeq ($(V_ARCH), v65)
+QEXE_EXEC+= --l2tcm_base 0xd800
+endif
+
+QEXE_EXEC+=--pmu_statsfile $(V)/pmu_stats.txt#
+QEXE_EXEC+=$1 $2 -- $3#
+
+# definition of -mhvx-double flag, useful for configuring specific source 
+# files to be compiled assuming HVX 128-byte mode. Using this variable 
+# (which should only be defined for tools that support -mhvx-double) helps
+# avoid multiple tool version checks in the hexagon.min file.
+# example (in a hexagon.min file): scale_hvx_i128_CC_FLAGS += $(MHVX_DOUBLE_FLAG)
+MHVX_DOUBLE_FLAG=-mhvx-double
+MHVX_SINGLE_FLAG=-mhvx
+
+# pull extensions
+$(call INCLUDE_MAKE_D_EXTS,defines_hexagon.min)
+
+# pull QuRT support
+include $(QURT_IMAGE_DIR)/qurt_libs_priv.min

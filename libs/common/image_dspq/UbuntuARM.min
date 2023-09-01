@@ -1,0 +1,39 @@
+ifeq ($(CDSP_FLAG), 1) 
+	LIB_DSPRPC = libcdsprpc
+	DEFINES += CDSP
+else ifeq ($(MDSP_FLAG), 1) 
+	LIB_DSPRPC = libmdsprpc
+	DEFINES += MDSP
+else ifeq ($(SLPI_FLAG), 1) 
+	LIB_DSPRPC = libsdsprpc
+	DEFINES += SLPI
+else
+	LIB_DSPRPC = libadsprpc
+	DEFINES += ADSP
+endif
+
+
+BUILD_DLLS += libimage_dspq
+libimage_dspq_QAICIDLS += inc/image_dspq
+libimage_dspq_DLLS += $(LIB_DSPRPC)
+libimage_dspq_LIBS += rpcmem asyncdspq
+libimage_dspq_C_SRCS += $V/image_dspq_stub
+
+BUILD_LIBS += image_dspq
+image_dspq_LIBS += rpcmem asyncdspq
+image_dspq_QAICIDLS += inc/image_dspq
+image_dspq_C_SRCS += src/image_dspq
+libimage_dspq_DLLS += libimage_dspq
+
+INCDIRS += inc
+
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+    inc/image_dspq.idl \
+    inc/image_dspq_cpu.h \
+    inc/image_dspq_common.h \
+    $(DLLS) \
+    $(EXES) \
+    $(LIBS) \
+    $(SHIP_DIR)/ ;

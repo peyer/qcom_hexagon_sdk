@@ -1,0 +1,4 @@
+-rsc
+hexagon_Debug_dynamic_toolv83_v66/test_profile_qurt.a
+hexagon_Debug_dynamic_toolv83_v66/test_profile.o
+hexagon_Debug_dynamic_toolv83_v66/test_profile_qurt.o

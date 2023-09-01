@@ -1,0 +1,1264 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><style type="text/css">
+.html2d { position: relative; }
+.html2d div { position: absolute; border-width: 0; border-style: solid; }
+.html2d div div { position: absolute; border-width: 0; border-style: solid; }
+
+</style><title>FastRPC</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="images/sidebar_top.jpg"></top><script src="scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, false)"><input id="searchButton" onclick="postFunction(false)" type="button" value="Search"></form><p>
+<a href="index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<p>
+<a href="sitemap.html">Sitemap</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="Audio/Applications.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="Voice/Applications.html">Voice</a>
+</p><p>
+<a href="Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="Audio/Examples.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="Examples_Common.html">Common</a>
+</p><p>
+<a href="Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="Tools_Signing.html">Signing</a>
+</p><p>
+<a href="Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="FAQ_Common.html">Common</a>
+</p><p>
+<a href="FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="Support_Contact.html">Contact</a>
+</p><center><img src="images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h1>
+<a name="FastRPC"></a>FastRPC
+</h1><div class="toc"><div class="tocLevel"><a href="#Overview">Overview</a><div class="tocLevel"><a href="#FastRPC%20architecture">FastRPC architecture</a></div><div class="tocLevel"><a href="#Design%20Motivation">Design Motivation</a></div></div><div class="tocLevel"><a href="#Android">Android</a><div class="tocLevel"><a href="#Software%20components">Software components</a><div class="tocLevel"><a href="#Applications%20Processor">Applications Processor</a></div><div class="tocLevel"><a href="#DSP%20processor">DSP processor</a></div></div><div class="tocLevel"><a href="#Setup">Setup</a></div></div><div class="tocLevel"><a href="#Related%20tools%20and%20documentation">Related tools and documentation</a></div><div class="tocLevel"><a href="#Using%20the%20ION%20allocator">Using the ION allocator</a><div class="tocLevel"><a href="#ICS%20and%20later%20Android%20versions">ICS and later Android versions</a><div class="tocLevel"><a href="#ICS">ICS</a></div><div class="tocLevel"><a href="#JB/KK/L">JB/KK/L</a></div><div class="tocLevel"><a href="#Heap%20IDS">Heap IDS</a></div></div><div class="tocLevel"><a href="#RPCMem">RPCMem</a><div class="tocLevel"><a href="#Example">Example</a></div></div></div><div class="tocLevel"><a href="#Using%20persistent%20threads%20on%20the%20DSP">Using persistent threads on the DSP</a><div class="tocLevel"><a href="#Creating%20a%20thread%20with%20HAP_pls.h">Creating a thread with HAP_pls.h</a></div></div><div class="tocLevel"><a href="#Registering%20Destructors%20for%20HLOS%20exit">Registering Destructors for HLOS exit</a></div><div class="tocLevel"><a href="#DSP%20protection%20domains">DSP protection domains</a><div class="tocLevel"><a href="#Dynamic%20vs%20static%20PD">Dynamic vs static PD</a><div class="tocLevel"><a href="#Static%20PD">Static PD</a></div><div class="tocLevel"><a href="#Dynamic%20user%20PD">Dynamic user PD</a></div></div><div class="tocLevel"><a href="#Signed%20and%20unsigned%20PDs">Signed and unsigned PDs</a><div class="tocLevel"><a href="#Unsigned%20PD%20available%20services">Unsigned PD available services</a></div><div class="tocLevel"><a href="#Unsigned%20PD%20limitations">Unsigned PD limitations</a></div><div class="tocLevel"><a href="#Request%20signature-free%20offload">Request signature-free offload</a></div></div></div><div class="tocLevel"><a href="#FastRPC%20Domains">FastRPC Domains</a></div><div class="tocLevel"><a href="#FastRPC%20Debug%20Tips,%20FAQ%20and%20more">FastRPC Debug Tips, FAQ and more</a></div></div><h2>
+<a name="Overview"></a>Overview
+</h2><p>
+The FastRPC framework allows for clients to transparently make remote method invocations between applications and DSP processors. This guide will go over FastRPC architecture, using it on HLOS, and how to use the ION memory allocator for creating contiguous buffers to use with FastRPC.
+</p><h3>
+<a name="FastRPC%20architecture"></a>FastRPC architecture
+</h3><p>
+The below diagram depicts invocation of a single method where the client and object reside on different processors.
+</p><div class=diagram>
+<div class="html2d art" style="width:600px;height:176px;font-size:12.48px;line-height:16px;white-space:nowrap">
+<div class="rect round" style="border-width:3px;left:131px;top:7px;right:418px;bottom:70px"></div>
+<div class="rect round" style="border-width:3px;left:323px;top:7px;right:194px;bottom:70px"></div>
+<div class="rect round" style="border-width:3px;left:427px;top:7px;right:130px;bottom:70px"></div>
+<div class="rect round" style="border-width:3px;left:539px;top:7px;right:2px;bottom:70px"></div>
+<div class="rect round" style="border-width:3px;left:203px;top:7px;right:330px;bottom:70px"></div>
+<div class="rect round" style="border-width:3px;left:3px;top:7px;right:538px;bottom:70px"></div>
+<div style="border-top: 4px solid transparent;border-bottom: 4px solid transparent;border-right-width: 10.5px;left:184px;top:68px;line-height:0"></div>
+<div class=dline style="border-top-width:2px;left:187px;top:71px;right:399px;bottom:103px;line-height:0"></div>
+<div style="border-top: 4px solid transparent;border-bottom: 4px solid transparent;border-left-width: 10.5px;left:413.5px;top:36px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:407px;top:39px;right:179px;bottom:135px;line-height:0"></div>
+<div style="border-top: 4px solid transparent;border-bottom: 4px solid transparent;border-left-width: 10.5px;left:525.5px;top:36px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:471px;top:39px;right:67px;bottom:135px;line-height:0"></div>
+<div style="border-top: 4px solid transparent;border-bottom: 4px solid transparent;border-left-width: 10.5px;left:117.5px;top:36px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:63px;top:39px;right:475px;bottom:135px;line-height:0"></div>
+<div class=line style="border-width:2px;border-top-width:0;-webkit-border-bottom-right-radius:8px;-moz-border-radius-bottomright:8px;border-bottom-right-radius:8px;-webkit-border-bottom-left-radius:8px;-moz-border-radius-bottomleft:8px;border-bottom-left-radius:8px;left:307px;top:127px;right:3px;bottom:23px"></div>
+<div style="border-top: 4px solid transparent;border-bottom: 4px solid transparent;border-left-width: 10.5px;left:189.5px;top:36px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:183px;top:39px;right:403px;bottom:135px;line-height:0"></div>
+<div style="border-top: 4px solid transparent;border-bottom: 4px solid transparent;border-right-width: 10.5px;left:472px;top:68px;line-height:0"></div>
+<div class=dline style="border-top-width:2px;left:475px;top:71px;right:63px;bottom:103px;line-height:0"></div>
+<div class=line style="border-width:2px;border-top-width:0;-webkit-border-bottom-right-radius:8px;-moz-border-radius-bottomright:8px;border-bottom-right-radius:8px;-webkit-border-bottom-left-radius:8px;-moz-border-radius-bottomleft:8px;border-bottom-left-radius:8px;left:3px;top:127px;right:307px;bottom:23px"></div>
+<div style="border-top: 4px solid transparent;border-bottom: 4px solid transparent;border-right-width: 10.5px;left:64px;top:68px;line-height:0"></div>
+<div class=dline style="border-top-width:2px;left:67px;top:71px;right:471px;bottom:103px;line-height:0"></div>
+<div style="border-top: 4px solid transparent;border-bottom: 4px solid transparent;border-right-width: 10.5px;left:408px;top:68px;line-height:0"></div>
+<div class=dline style="border-top-width:2px;left:411px;top:71px;right:175px;bottom:103px;line-height:0"></div>
+<div style="border-top: 4px solid transparent;border-bottom: 4px solid transparent;border-right-width: 10.5px;left:272px;top:68px;line-height:0"></div>
+<div class=dline style="border-top-width:2px;left:275px;top:71px;right:279px;bottom:103px;line-height:0"></div>
+<div style="border-top: 4px solid transparent;border-bottom: 4px solid transparent;border-left-width: 10.5px;left:309.5px;top:36px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:271px;top:39px;right:283px;bottom:135px;line-height:0"></div>
+<div style="text-align:center;left:72px;top:16px;right:480px;bottom:144px">method</div>
+<div style="text-align:center;left:480px;top:16px;right:72px;bottom:144px">method</div>
+<div style="text-align:center;left:208px;top:32px;right:336px;bottom:128px">ADSPRPC</div>
+<div style="text-align:center;left:336px;top:32px;right:208px;bottom:128px">ADSPRPC</div>
+<div style="text-align:center;left:8px;top:48px;right:544px;bottom:112px">Client</div>
+<div style="text-align:center;left:140px;top:48px;right:428px;bottom:112px">Stub</div>
+<div style="text-align:center;left:212px;top:48px;right:340px;bottom:112px">Driver</div>
+<div style="text-align:center;left:328px;top:48px;right:200px;bottom:112px">Framework</div>
+<div style="text-align:center;left:432px;top:48px;right:136px;bottom:112px">Skel</div>
+<div style="text-align:center;left:544px;top:48px;right:8px;bottom:112px">Object</div>
+<div style="text-align:center;left:60px;top:128px;right:364px;bottom:32px">Applications Processor</div>
+<div style="text-align:center;left:400px;top:128px;right:96px;bottom:32px">DSP Processor</div>
+</div>
+</div>
+<table><tr><td><p>
+<b>Client</b>
+</p></td><td><p>
+User mode process that initiates the remote invocation
+</p></td></tr><tr><td><p>
+<b>Stub</b>
+</p></td></tr><tr><td><p>
+<b>ADSPRPC</b> <b>Driver</b>
+</p></td><td><p>
+ADSPRPC kernel driver that receives the remote invocation, queues them up and then waits for the response after signaling the remote side
+</p></td></tr><tr><td><p>
+<b>ADSPRPC</b> <b>Framework</b>
+</p></td><td><p>
+ADSPRPC framework dequeues the messages from the queue and dispatches them for processing
+</p></td></tr><tr><td><p>
+<b>Skel</b>
+</p></td><td><p>
+Auto generated code that takes care of unmarshaling parameters
+</p></td></tr><tr><td><p>
+<b>Object</b>
+</p></td><td><p>
+Method implementation
+</p></td></tr></table><p>
+See the <a href="FAQ_FastRPC.html">FastRPC FAQ</a> for more information
+</p><h3>
+<a name="Design%20Motivation"></a>Design Motivation
+</h3><p>
+FastRPC was designed to facilitate remote procedure calls between DSP and APPS (the application processor).
+</p><ul>
+<li>
+<p>
+DSP and APPS share DRAM but not l2/l1 caches
+</p>
+</li><li>
+<p>
+DSP has a small limited number of physical mappings it can efficiently support
+</p>
+</li>
+</ul><p>
+To support any high performance compute applications memory has to be mapped directly from the application processor to the DSP.
+</p><p>
+By separating buffers into &#8220;in&#8221; and &#8220;rout&#8221; the driver can overlap cache synchronization between DSP and APPS, cutting RPC latencies by 50%. &#8220;inrout&#8221; is not required because it is equivalent to passing the same buffer as in and rout.
+</p><p>
+The protocol is synchronous for these reasons:
+</p><ul>
+<li>
+<p>
+It's trivial for users to create a thread to add asynchronous behavior from userspace.
+</p>
+</li><li>
+<p>
+It would add additional complexity for the kernel to manage state between DSP and APPS in an asynchronous call.
+</p>
+</li><li>
+<p>
+It would not get memory to the DSP any faster, performance is dominated by the cache synchronization operations.
+</p>
+</li>
+</ul><h2>
+<a name="Android"></a>Android
+</h2><h3>
+<a name="Software%20components"></a>Software components
+</h3><p>
+Here's the list of different software components that are required for the integration of FastRPC:
+</p><h4>
+<a name="Applications%20Processor"></a>Applications Processor
+</h4><table><tr><td><p>
+/system/vendor/lib/libadsprpc.so
+</p><div class="indent"><p>
+(or)
+</p></div><p>
+/vendor/lib/libadsprpc.so
+</p></td><td><p>
+Shared object library that needs to be linked with the user space vendor application invoking the remote procedure call. This library interfaces with the kernel driver to initiate the remote invocation to aDSP
+</p></td></tr><tr><td><p>
+/system/vendor/lib/libcdsprpc.so
+</p><div class="indent"><p>
+(or)
+</p></div><p>
+/vendor/lib/libcdsprpc.so
+</p></td><td><p>
+Shared object library that needs to be linked with the user space vendor application invoking the remote procedure call. This library interfaces with the kernel driver to initiate the remote invocation to cDSP
+</p></td></tr><tr><td><p>
+/system/lib/libadsprpc_system.so
+</p></td><td><p>
+Shared object library that needs to be linked with the user space system application invoking the remote procedure call. This library interfaces with the kernel driver to initiate the remote invocation to aDSP This is applicable only for Android P system applications
+</p></td></tr><tr><td><p>
+/system/lib/libcdsprpc_system.so
+</p></td><td><p>
+Shared object library that needs to be linked with the user space system application invoking the remote procedure call. This library interfaces with the kernel driver to initiate the remote invocation to cDSP This is applicable only for Android P system applications
+</p></td></tr></table><h4>
+<a name="DSP%20processor"></a>DSP processor
+</h4><table><tr><td><p>
+adsp_proc/platform/fastrpc-s md/build/platform_libs/qdsp6 /AAAAAAAA/fastrpc-smd.lib
+</p></td><td><p>
+ADSPRPC framework library that gets linked with the ADSP image. It acts as the transport accepting remote invocations originating from applications processor.
+</p></td></tr><tr><td><p>
+cdsp_proc/platform/fastrpc-s md/build/platform_libs/qdsp6 /AAAAAAAA/fastrpc-smd.lib
+</p></td><td><p>
+ADSPRPC framework library that gets linked with the CDSP image. It acts as the transport accepting remote invocations originating from applications processor.
+</p></td></tr></table><h3>
+<a name="Setup"></a>Setup
+</h3><p>
+Follow these steps to setup the FastRPC driver.
+</p><p>
+Note: when making FastRPC calls, the <a href="remote_file_system.html#Dynamic%20loading%20within%20a%20FastRPC%20invocation">Remote file system</a> is also handled by the FastRPC driver, so no additional setup is required.
+</p><p>
+Check if the adsprpc driver is running
+</p><pre>adb shell ls /dev/adsprpc-smd
+</pre><p>
+If file does not exist start the driver as follows:
+</p><pre>adb root
+adb wait-for-device
+adb shell insmod /system/lib/modules/adsprpc.ko
+</pre><p>
+If module is not found and /dev/adsprpc-smd is not present this device doesn't support FastRPC.
+</p><p>
+Re-check if the adsprpc driver is running
+</p><pre>adb shell ls /dev/adsprpc-smd
+</pre><p>
+FastRPC driver is now setup.
+</p><p>
+Optionally check that adsprpcd process is running. This daemon could be located in <code>/system/bin</code> or <code>/system/vendor/bin</code> or some other vendor defined location. If running <code>adb logcat -s &lt;/system/bin/&gt;adsprpcd</code> doesn't show any errors FastRPC is enabled and operational. If not running start the daemon and check <code>logcat -s &lt;/system/bin/&gt;adsprpcd</code> for errors. On some releases if this daemon is not running, calls into DSP will block until the daemon starts.
+</p><h2>
+<a name="Related%20tools%20and%20documentation"></a>Related tools and documentation
+</h2><table><tr><td><p>
+QAIC IDL Compiler
+</p></td><td><p>
+Compiler used to generate stubs and skels from the IDL interface
+</p></td></tr><tr><td><p>
+<a href="qaic_users_guide.html">QAIC users guide</a> and <a href="qaic_idl_reference.html">IDL reference</a>
+</p></td><td><p>
+Remote procedure call methods are described in a language called IDL, which is based on the OMG IDL specification. The documents describe the syntax and semantics of IDL and compiler usage.
+</p></td></tr><tr><td><p>
+Standard IDL Interfaces and Headers
+</p></td><td><p>
+Standard interfaces included from inside the IDL and headers included from the generated stub and skel sources
+</p></td></tr><tr><td><p>
+Sample Application <a href="Examples_Common.html#calculator">Calculator</a>
+</p></td><td><p>
+Demonstrates how to define interface, generate stubs and skels, link and test the application
+</p></td></tr><tr><td><p>
+Android NDK
+</p></td><td><p>
+Compiler and tools required to build Android applications.
+</p></td></tr></table><h2>
+<a name="Using%20the%20ION%20allocator"></a>Using the ION allocator
+</h2><p>
+The DSP hardware is not well suited for handling dis-contiguous memory, which is commonly the kind of memory users get from a simple &#8220;malloc&#8221; call. Android provides a memory allocator called ION that can share buffers to clients. For more in depth documentation of ION see <a href="http://lwn.net/Articles/480055">http://lwn.net/Articles/480055</a>.
+</p><p>
+Different versions of Android provide slightly incompatible implementations of ion. This guide describes some of the differences between versions of ion APIs.
+</p><h3>
+<a name="ICS%20and%20later%20Android%20versions"></a>ICS and later Android versions
+</h3><p>
+ICS implementation contain incompatible structures for the ion_alloc ioctl when compared to later Android versions like JB/KK/L.
+</p><h4>
+<a name="ICS"></a>ICS
+</h4><pre><span style="color: blue">struct</span> ion_allocation_data {
+     size_t len;
+     size_t align;
+     <span style="color: blue">unsigned</span> <span style="color: blue">int</span> flags;
+     <span style="color: blue">struct</span> ion_handle *handle;
+};
+</pre><p>
+Callers should set the flags variable to specify the heap id
+</p><pre>alloc.flags = (0x1 &lt;&lt; HEAP_ID);
+</pre><h4>
+<a name="JB/KK/L"></a>JB/KK/L
+</h4><pre><span style="color: blue">struct</span> ion_allocation_data {
+     size_t len;
+     size_t align;
+   <span style="color: blue">unsigned</span> <span style="color: blue">int</span> heap_mask;
+     <span style="color: blue">unsigned</span> <span style="color: blue">int</span> flags;
+     <span style="color: blue">struct</span> ion_handle *handle;
+};
+</pre><p>
+Callers should set the heap_mask variable to specify the heap id
+</p><pre>alloc.heap_mask = (0x1 &lt;&lt; HEAP_ID);
+</pre><h4>
+<a name="Heap%20IDS"></a>Heap IDS
+</h4><p>
+ION segregates memory into separate heaps that users can use to allocate memory. Heaps are configured at build time for Android, and are limited by capacity. To find out what heaps are present on the device see the device's dtsi file.
+</p><p>
+For example, the adsp contiguous heap for 8998 is defined in kernel/arch/arm/boot/dts/msm8998.dtsi
+</p><pre>adsp_mem: adsp_region {
+   compatible = "shared-dma-pool";
+   alloc-ranges = &lt;0 0x00000000 0 0xffffffff&gt;;
+   reusable;
+   alignment = &lt;0 0x400000&gt;;
+   size = &lt;0 0x800000&gt;;
+};
+</pre><p>
+It is registered with ion as heap id 22 in kernel/arch/arm/boot/dts/msm8998-ion.dtsi
+</p><pre>qcom,ion-heap@22 { /* ADSP HEAP */
+    reg = &lt;22&gt;;
+    memory-region = &lt;&amp;adsp_mem&gt;;
+    qcom,ion-heap-type = "DMA";
+};
+</pre><p>
+These may change from one Android build to another, and from one use case to another. Implementers should take care to make the heap id they use configurable externally from the application. Or use one appropriate for their use case.
+</p><h3>
+<a name="RPCMem"></a>RPCMem
+</h3><p>
+This library is sample code on using Android's ION memory allocator.
+</p><p>
+Users should consult rpcmem.h and ion documentation in the Android build for more information.
+</p><h4>
+<a name="Example"></a>Example
+</h4><pre><span style="color: blue">int</span> main() {
+   <span style="color: blue">void</span>* buf = 0;
+   <span style="color: blue">int</span> heapid = RPCMEM_HEAP_ID_SYSTEM;
+
+   <span style="color: darkgreen">//call this once at the start of your program</span>
+   <span style="color: darkgreen">//Note: rpcmem_init is not thread safe</span>
+   rpcmem_init();
+
+   <span style="color: darkgreen">// Refer rpcmem.h for recommendation on heap id</span>
+   <span style="color: darkgreen">// For remote subsystems with SMMU (ADSP and CDSP), heapid = RPCMEM_HEAP_ID_SYSTEM;</span>
+   <span style="color: darkgreen">// For remote subsystesm without SMMU (SLPI, mDSP), heapid = RPCMEM_HEAP_ID_CONTIG;</span>
+   buf = rpcmem_alloc(heapid, RPCMEM_DEFAULT_FLAGS, 4096);
+
+   assert(buf);
+
+   memset(buf, 0xff, 4096);
+
+   rpcmem_free(buf);
+
+   <span style="color: darkgreen">//call this once at the end</span>
+   rpcmem_deinit();
+   <span style="color: blue">return</span> 0;
+}
+</pre><p>
+Note: RPCMEM_DEFAULT_HEAP is depricated and no longer supported.
+</p><h2>
+<a name="Using%20persistent%20threads%20on%20the%20DSP"></a>Using persistent threads on the DSP
+</h2><p>
+An important thing to consider is that a module loaded on the DSP is shared between all the processes that use it. So a HLOS specific context is required to track resources that are tied to the HLOS process requesting them.
+</p><h3>
+<a name="Creating%20a%20thread%20with%20HAP_pls.h"></a>Creating a thread with HAP_pls.h
+</h3><pre><span style="color: blue">struct</span> thread {
+   qurt_thread_t tid;
+   qurt_sem_t sem;
+   boolean running;
+   <span style="color: blue">void</span>* stack;
+}
+<span style="color: blue">static</span> <span style="color: blue">int</span> thread_start(<span style="color: blue">void</span>* data) {
+   <span style="color: blue">struct</span> thread* th = (<span style="color: blue">struct</span> thread*)data;
+   <span style="color: blue">while</span>(th-&gt;running) {
+      qurt_sem_down(&amp;th-&gt;sem);
+   }
+   <span style="color: blue">return</span> 0;
+}
+<span style="color: blue">static</span> <span style="color: blue">void</span> thread_dtor(<span style="color: blue">void</span>* data) {
+   <span style="color: blue">struct</span> thread* th = (<span style="color: blue">struct</span> thread*)data;
+   <span style="color: blue">if</span>(th-&gt;tid) {
+      <span style="color: blue">int</span> err;
+      th-&gt;running = 0;
+      qurt_sem_up(&amp;th-&gt;sem);
+      qurt_thread_join(th-&gt;tid, &amp;err);
+   }
+   <span style="color: blue">if</span>(th-&gt;stack) {
+      free(th-&gt;stack);
+      qurt_sem_destroy(&amp;th-&gt;sem);
+   }
+}
+<span style="color: blue">static</span> <span style="color: blue">int</span> thread_ctor (<span style="color: blue">void</span>* ctx, <span style="color: blue">void</span>* data) {
+   <span style="color: darkgreen">//this constructor may be called twice, but only one instance will survive</span>
+   qurt_thread_attr_t attr;
+   <span style="color: blue">struct</span> thread* th = (<span style="color: blue">struct</span> thread*)data;
+   <span style="color: blue">int</span> size = 1024*8;
+   <span style="color: blue">if</span>(0 == (th-&gt;stack = malloc(size))) {
+      <span style="color: blue">goto</span> error;
+   }
+   qurt_sem_init_val(&amp;th-&gt;sem, 0);
+   qurt_thread_attr_set_stack_size (&amp;attr, size);
+   qurt_thread_attr_set_stack_addr (&amp;attr, (<span style="color: blue">unsigned</span> <span style="color: blue">long</span> <span style="color: blue">long</span> *)th-&gt;stack);
+   qurt_thread_attr_set_name (&amp;attr, <span style="color: darkred">"my thread"</span>);
+   th-&gt;running = 1;
+   <span style="color: blue">if</span>(0 != qurt_thread_create(&amp;th-&gt;tid, &amp;attr, (<span style="color: blue">void</span>*)thread_start, th)) {
+      <span style="color: blue">goto</span> error;
+   }
+   <span style="color: blue">return</span> 0;
+error:
+   thread_dtor(th);
+   <span style="color: blue">return</span> -1;
+}
+<span style="color: darkgreen">//the first time this function is called the thread will be constructed</span>
+<span style="color: darkgreen">//all subsequent calls will return the same thread instance or non-zero failure</span>
+<span style="color: darkgreen">//this function should only be called from a FastRPC provided thread.</span>
+<span style="color: blue">static</span> <span style="color: blue">int</span> thread_instance(<span style="color: blue">struct</span> thread* th)  {
+   <span style="color: blue">return</span> HAP_pls_add_lookup((uint32)thread_ctor,  <span style="color: darkgreen">//type, some unique address</span>
+                              0,                   <span style="color: darkgreen">//key, for different type instances</span>
+                              <span style="color: blue">sizeof</span>(<span style="color: blue">struct</span> thread),  <span style="color: darkgreen">//size of our structure</span>
+                              thread_ctor,            <span style="color: darkgreen">//structure ctor</span>
+                              0,                      <span style="color: darkgreen">//additional user context for ctor</span>
+                              thread_dtor,            <span style="color: darkgreen">//destructor</span>
+                              &amp;th);                   <span style="color: darkgreen">//result</span>
+}
+</pre><ul>
+<li>
+<p>
+HAP_pls_add_lookup only works when called from a FastRPC thread (the thread you are on when you idl function is called). If this function is called from any other thread the behavior is undefined.
+</p>
+</li>
+</ul><h2>
+<a name="Registering%20Destructors%20for%20HLOS%20exit"></a>Registering Destructors for HLOS exit
+</h2><p>
+See <a href="#Using%20persistent%20threads%20on%20the%20DSP">Using persistent threads on the DSP</a> and HAP_pls. The same API can be used to attach destructor to cleanup any resources allocated on the DSP on behalf of the HLOS process.
+</p><h2>
+<a name="DSP%20protection%20domains"></a>DSP protection domains
+</h2><p>
+Since the DSP is a real-time processor whose stability critically affects the overall user experience, different protection domains (PDs) exist in the DSP software architecture. These PDs ensure the stability of the kernel software and the safety of Qualcomm proprietary hardware information. There are various types of protection domains on the DSP. Each type has different privileges.
+</p><ul>
+<li>
+<p>
+Kernel: Access to all memory of all PDs
+</p>
+</li><li>
+<p>
+Guest OS: Access to the memory of its own PD, the memory of all the user PDs on the DSP, and some system registers
+</p>
+</li><li>
+<p>
+User: Access only to the memory of its own PD
+</p>
+</li>
+</ul><p>
+DSP system libraries make system calls to the Guest OS or Kernel as appropriate to access operating system services. FastRPC client programs run in user PDs.
+</p><h3>
+<a name="Dynamic%20vs%20static%20PD"></a>Dynamic vs static PD
+</h3><p>
+User PDs can be created statically at boot time, but they are more often created dynamically at run time by CPU applications that need to offload modules to the DSP. Both static and dynamic PDs support dynamic loading of shared objects.
+</p><h4>
+<a name="Static%20PD"></a>Static PD
+</h4><p>
+Static PDs are created on DSPs to support specific use cases like Audio and Sensors. The static PDs allow the dynamic loading of shared objects with the help of a daemon running on the CPU.
+</p><h4>
+<a name="Dynamic%20user%20PD"></a>Dynamic user PD
+</h4><p>
+Every CPU user process that uses a DSP via FastRPC will have a corresponding dynamic user PD on the DSP. The FastRPC Kernel driver manages the life cycle of the dynamic user PD. That is, if the CPU user process exits, the corresponding user PD on the DSP is cleaned up as well.
+</p><p>
+The DSP supports different types of dynamic user PD environments, including signed and unsigned PDs.
+</p><p>
+Each DSP can only support a limited number of concurrent dynamic user PDs. This limit depends on the hardware configuration for each supported chip and DSP.
+</p><h3>
+<a name="Signed%20and%20unsigned%20PDs"></a>Signed and unsigned PDs
+</h3><p>
+DSPs support different types of dynamic execution environments (dynamic PDs) including signed and unsigned PDs.
+</p><p>
+Signed PDs are available on all the DSPs, and they require that the modules (shared objects) being loaded in the PD are signed with a digital signature. This signature must be verified at the time of loading the shared objects in the PD. For details on signing a shared object, see <a href="Tools_Signing.html">signing</a>.
+</p><p>
+Unsigned PDs are only supported in the cDSP, and they allow the DSP modules to load without any digital signatures.
+</p><p>
+An unsigned PD is a sandboxed low-rights process that allows the signature-free modules to run on the cDSP. In the event of a security compromise, access to full system functionality and data is prevented by the sandbox. Unsigned PDs are designed to support general compute applications and have limited access to underlying drivers (see the following sections for available services and limitations). The available/unavailable services in the unsigned PD may change in the future, depending on continuing security reviews.
+</p><h4>
+<a name="Unsigned%20PD%20available%20services"></a>Unsigned PD available services
+</h4><ul type="circle">
+<li>
+<p>
+Thread creation and thread services
+</p>
+</li><li>
+<p>
+Timer creation and timer services
+</p>
+</li><li>
+<p>
+HVX contexts
+</p>
+</li><li>
+<p>
+Clock frequency controls
+</p>
+</li><li>
+<p>
+VTCM
+</p>
+</li><li>
+<p>
+Cache operations
+</p>
+</li><li>
+<p>
+Map HLOS memory allocated by the corresponding HLOS application
+</p>
+</li>
+</ul><h4>
+<a name="Unsigned%20PD%20limitations"></a>Unsigned PD limitations
+</h4><ul type="circle">
+<li>
+<p>
+Access to limited drivers: UBWC/DMA and Camera Streamer are not available to unsigned PDs
+</p>
+</li><li>
+<p>
+No access to L2 cache locking APIs
+</p>
+</li><li>
+<p>
+Thread limitations
+</p><ul type="circle">
+<li>
+<p>
+Thread priority ceiling (highest priority for any unsigned PD thread): 64.
+</p>
+</li><li>
+<p>
+Maximum number of threads allowed per unsigned PD: 128
+</p>
+</li>
+</ul>
+</li>
+</ul><h4>
+<a name="Request%20signature-free%20offload"></a>Request signature-free offload
+</h4><p>
+To request a signature-free dynamic module offload, clients make the request as follows:
+</p><pre><span style="color: blue">#pragma</span> weak remote_session_control
+<span style="color: blue">if</span> (remote_session_control)
+{
+    <span style="color: blue">struct</span> remote_rpc_control_unsigned_module data;
+    data.enable = 1;
+    data.domain = CDSP_DOMAIN_ID;
+    remote_session_control(DSPRPC_CONTROL_UNSIGNED_MODULE, (<span style="color: blue">void</span>*)&amp;data, <span style="color: blue">sizeof</span>(data));
+}
+</pre><p>
+The <a href="Examples_ComputeHVX.html">benchmark example</a> illustrates how to run code in an unsigned PD using this approach.
+</p><p>
+The client's DSP process is instantiated as a signed or unsigned PD when it is first launched and this status cannot be changed. Because of this, the call to <code>remote_session_control</code> must be made before making any FastRPC calls to the DSP. A success message from the <code>remote_session_control()</code> function allows the client to offload the dynamic shared object to the cDSP without signing.
+</p><h2>
+<a name="FastRPC%20Domains"></a>FastRPC Domains
+</h2><p>
+A domain is a remote environment for loading and executing code. Each HLOS process can have concurrent PDs (sessions) running on different DSPs. One HLOS process can have only one PD running on any given DSP. Modules loaded by HLOS process get loaded into the corresponding PD on a specific DSP. The below diagram gives a overview of the functionality of domains. Here M# corresponds to modules loaded on the PD. If the users wants to off-load computation to multiple DSPs, without the need to re-link the binaries to different versions of the fastRPC library, domains can be used.
+</p><p>
+Note: Domains feature is supported from 8998 onwards
+</p><p>
+For more information about usage of domains, please refer to
+</p><ul type="circle">
+<li>
+<p>
+<a href="images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Guide to compute offload in Hexagon</a>
+</p>
+</li><li>
+<p>
+<a href="qaic_idl_reference.html#Domains">QAIC IDL reference.</a>
+</p>
+</li><li>
+<p>
+<a href="FastRPC_QoS.html">FastRPC QoS</a>
+</p>
+</li>
+</ul><div class=diagram>
+<div class="html2d art" style="width:544px;height:544px;font-size:12.48px;line-height:16px;white-space:nowrap">
+<div class="rect round" style="border-width:3px;left:331px;top:295px;right:50px;bottom:150px"></div>
+<div class="rect round" style="border-width:3px;left:331px;top:167px;right:50px;bottom:278px"></div>
+<div class="rect round" style="border-width:3px;left:339px;top:327px;right:170px;bottom:182px"></div>
+<div class="rect round" style="border-width:3px;left:331px;top:39px;right:50px;bottom:406px"></div>
+<div class="rect round" style="border-width:3px;left:395px;top:327px;right:114px;bottom:182px"></div>
+<div class="rect round" style="border-width:3px;left:3px;top:39px;right:378px;bottom:6px"></div>
+<div class="rect round" style="border-width:3px;left:331px;top:423px;right:50px;bottom:22px"></div>
+<div class="rect round" style="border-width:3px;left:339px;top:71px;right:170px;bottom:438px"></div>
+<div class="rect round" style="border-width:3px;left:339px;top:455px;right:170px;bottom:54px"></div>
+<div class="rect round" style="border-width:3px;left:339px;top:199px;right:170px;bottom:310px"></div>
+<div class="rect round" style="border-width:3px;left:395px;top:71px;right:114px;bottom:438px"></div>
+<div class=line style="border-right-width:2px;border-top-width:2px;-webkit-border-top-right-radius:8px;-moz-border-radius-topright:8px;border-top-right-radius:8px;left:331px;top:311px;right:99px;bottom:200px"></div>
+<div class=line style="border-bottom-width:2px;border-right-width:2px;-webkit-border-bottom-right-radius:8px;-moz-border-radius-bottomright:8px;border-bottom-right-radius:8px;left:331px;top:344px;right:99px;bottom:167px"></div>
+<div style="border-top: 4px solid transparent;border-bottom: 4px solid transparent;border-left-width: 10.5px;left:317.5px;top:212px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:167px;top:215px;right:219px;bottom:327px;line-height:0"></div>
+<div class=line style="border-right-width:2px;border-top-width:2px;-webkit-border-top-right-radius:8px;-moz-border-radius-topright:8px;border-top-right-radius:8px;left:331px;top:55px;right:99px;bottom:456px"></div>
+<div class=line style="border-bottom-width:2px;border-right-width:2px;-webkit-border-bottom-right-radius:8px;-moz-border-radius-bottomright:8px;border-bottom-right-radius:8px;left:331px;top:88px;right:99px;bottom:423px"></div>
+<div class=line style="border-right-width:2px;border-top-width:2px;-webkit-border-top-right-radius:8px;-moz-border-radius-topright:8px;border-top-right-radius:8px;left:331px;top:439px;right:99px;bottom:72px"></div>
+<div class=line style="border-bottom-width:2px;border-right-width:2px;-webkit-border-bottom-right-radius:8px;-moz-border-radius-bottomright:8px;border-bottom-right-radius:8px;left:331px;top:472px;right:99px;bottom:39px"></div>
+<div class=line style="border-right-width:2px;border-top-width:2px;-webkit-border-top-right-radius:8px;-moz-border-radius-topright:8px;border-top-right-radius:8px;left:331px;top:183px;right:99px;bottom:328px"></div>
+<div class=line style="border-bottom-width:2px;border-right-width:2px;-webkit-border-bottom-right-radius:8px;-moz-border-radius-bottomright:8px;border-bottom-right-radius:8px;left:331px;top:216px;right:99px;bottom:295px"></div>
+<div style="border-top: 4px solid transparent;border-bottom: 4px solid transparent;border-left-width: 10.5px;left:317.5px;top:468px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:167px;top:471px;right:219px;bottom:71px;line-height:0"></div>
+<div style="border-top: 4px solid transparent;border-bottom: 4px solid transparent;border-left-width: 10.5px;left:317.5px;top:340px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:167px;top:343px;right:219px;bottom:199px;line-height:0"></div>
+<div style="border-top: 4px solid transparent;border-bottom: 4px solid transparent;border-left-width: 10.5px;left:317.5px;top:84px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:167px;top:87px;right:219px;bottom:455px;line-height:0"></div>
+<div style="text-align:center;left:32px;top:0px;right:480px;bottom:528px">HLOS</div>
+<div style="text-align:center;left:368px;top:0px;right:152px;bottom:528px">DSP</div>
+<div style="text-align:center;left:348px;top:80px;right:180px;bottom:448px">M1</div>
+<div style="text-align:center;left:404px;top:80px;right:124px;bottom:448px">M2</div>
+<div style="left:448px;top:80px;right:80px;bottom:448px">PD</div>
+<div style="text-align:center;left:512px;top:80px;right:0px;bottom:448px">aDSP</div>
+<div style="text-align:center;left:348px;top:208px;right:180px;bottom:320px">M1</div>
+<div style="left:448px;top:208px;right:80px;bottom:320px">PD</div>
+<div style="text-align:center;left:512px;top:208px;right:0px;bottom:320px">cDSP</div>
+<div style="text-align:center;left:56px;top:256px;right:456px;bottom:272px">HLOS</div>
+<div style="text-align:center;left:40px;top:272px;right:448px;bottom:256px">Process</div>
+<div style="text-align:center;left:348px;top:336px;right:180px;bottom:192px">M1</div>
+<div style="text-align:center;left:404px;top:336px;right:124px;bottom:192px">M2</div>
+<div style="left:448px;top:336px;right:80px;bottom:192px">PD</div>
+<div style="text-align:center;left:512px;top:336px;right:0px;bottom:192px">SLPI</div>
+<div style="text-align:center;left:348px;top:464px;right:180px;bottom:64px">M1</div>
+<div style="left:448px;top:464px;right:80px;bottom:64px">PD</div>
+<div style="text-align:center;left:512px;top:464px;right:0px;bottom:64px">mDSP</div>
+</div>
+</div>
+<h2>
+<a name="FastRPC%20Debug%20Tips,%20FAQ%20and%20more"></a>FastRPC Debug Tips, FAQ and more
+</h2><ul type="circle">
+<li>
+<p>
+<a href="FAQ_FastRPC.html">FastRPC FAQ</a>
+</p>
+</li><li>
+<p>
+<a href="Introduction%20to%20FastRPC%20Debugging.html">FastRPC errors and debugging tips</a>
+</p>
+</li>
+</ul><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

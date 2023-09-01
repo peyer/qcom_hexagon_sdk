@@ -1,0 +1,3 @@
+BUILD_QEXES += qurt_multithread_q
+qurt_multithread_q_OSTYPE = QURT
+qurt_multithread_q_C_SRCS += src/qurt_multithread 

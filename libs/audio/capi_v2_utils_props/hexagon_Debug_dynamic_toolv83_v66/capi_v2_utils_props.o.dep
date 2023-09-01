@@ -1,0 +1,20 @@
+src/capi_v2_utils_props.c:
+inc/capi_v2_utils_props.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_farf.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/stddef/AEEStdDef.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_debug.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2_types.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2_events.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2_properties.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/mmdefs.h:
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_utils_props.o: src/capi_v2_utils_props.c
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_utils_props.o: inc/capi_v2_utils_props.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_utils_props.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_farf.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_utils_props.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_utils_props.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/stddef/AEEStdDef.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_utils_props.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_debug.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_utils_props.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2_types.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_utils_props.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2_events.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_utils_props.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2_properties.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_utils_props.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/mmdefs.h

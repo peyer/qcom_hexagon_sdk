@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.mylyn.wikitext.editors_feature"
+      label="%featureName"
+      version="3.0.19.201711172000"
+      provider-name="%providerName"
+      plugin="org.eclipse.mylyn.wikitext">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <plugin
+         id="org.eclipse.mylyn.wikitext"
+         download-size="364"
+         install-size="734"
+         version="3.0.19.20171117145831"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.mylyn.wikitext.ant"
+         download-size="45"
+         install-size="93"
+         version="3.0.19.20171117145831"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.mylyn.wikitext.osgi"
+         download-size="13"
+         install-size="20"
+         version="3.0.19.201711172000"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.mylyn.wikitext.asciidoc"
+         download-size="105"
+         install-size="197"
+         version="3.0.19.20171117145831"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.mylyn.wikitext.textile"
+         download-size="92"
+         install-size="176"
+         version="3.0.19.20171117145831"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.mylyn.wikitext.html"
+         download-size="49"
+         install-size="101"
+         version="3.0.19.20171117145831"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.mylyn.wikitext.markdown"
+         download-size="80"
+         install-size="152"
+         version="3.0.19.20171117145831"
+         unpack="false"/>
+
+   <plugin
+        id="org.eclipse.mylyn.wikitext.mediawiki"
+        download-size="83"
+        install-size="148"
+        version="3.0.19.20171117145831"
+        unpack="false"/>
+
+   <plugin
+         id="org.eclipse.mylyn.wikitext.confluence"
+         download-size="92"
+         install-size="177"
+         version="3.0.19.20171117145831"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.mylyn.wikitext.tracwiki"
+         download-size="72"
+         install-size="126"
+         version="3.0.19.20171117145831"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.mylyn.wikitext.twiki"
+         download-size="50"
+         install-size="87"
+         version="3.0.19.20171117145831"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.mylyn.wikitext.ui"
+         download-size="460"
+         install-size="957"
+         version="3.0.19.201711172000"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.mylyn.wikitext.help.ui"
+         download-size="1264"
+         install-size="1448"
+         version="3.0.19.201711172000"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.mylyn.wikitext.asciidoc.ui"
+         download-size="10"
+         install-size="20"
+         version="3.0.19.201711172000"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.mylyn.wikitext.textile.ui"
+         download-size="12"
+         install-size="21"
+         version="3.0.19.201711172000"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.mylyn.wikitext.markdown.ui"
+         download-size="9"
+         install-size="17"
+         version="3.0.19.201711172000"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.mylyn.wikitext.mediawiki.ui"
+         download-size="11"
+         install-size="17"
+         version="3.0.19.201711172000"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.mylyn.wikitext.confluence.ui"
+         download-size="11"
+         install-size="19"
+         version="3.0.19.201711172000"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.mylyn.wikitext.tracwiki.ui"
+         download-size="10"
+         install-size="16"
+         version="3.0.19.201711172000"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.mylyn.wikitext.twiki.ui"
+         download-size="10"
+         install-size="16"
+         version="3.0.19.201711172000"
+         unpack="false"/>
+
+</feature>

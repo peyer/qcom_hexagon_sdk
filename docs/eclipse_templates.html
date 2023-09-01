@@ -1,0 +1,1419 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><title>&#65279;Project templates</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="images/sidebar_top.jpg"></top><script src="scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, false)"><input id="searchButton" onclick="postFunction(false)" type="button" value="Search"></form><p>
+<a href="index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<p>
+<a href="sitemap.html">Sitemap</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="Audio/Applications.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="Voice/Applications.html">Voice</a>
+</p><p>
+<a href="Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="Audio/Examples.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="Examples_Common.html">Common</a>
+</p><p>
+<a href="Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="Tools_Signing.html">Signing</a>
+</p><p>
+<a href="Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="FAQ_Common.html">Common</a>
+</p><p>
+<a href="FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="Support_Contact.html">Contact</a>
+</p><center><img src="images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h1>
+<a name="﻿Project%20templates"></a>&#65279;Project templates
+</h1><div class="toc"><div class="tocLevel"><a href="#Overview">Overview</a></div><div class="tocLevel"><a href="#Audio%20post-processing%20interface%20template">Audio post-processing interface template</a></div><div class="tocLevel"><a href="#Audio%20encoder/decoder%20interface%20template">Audio encoder/decoder interface template</a></div><div class="tocLevel"><a href="#Voice%20interface%20template">Voice interface template</a></div><div class="tocLevel"><a href="#Unit%20test%20template">Unit test template</a></div><div class="tocLevel"><a href="#Custom%20templates">Custom templates</a><div class="tocLevel"><a href="#Template%20file%20format">Template file format</a></div><div class="tocLevel"><a href="#Template%20file%20elements">Template file elements</a></div><div class="tocLevel"><a href="#Template%20elements">Template elements</a></div><div class="tocLevel"><a href="#Pages%20elements">Pages elements</a></div><div class="tocLevel"><a href="#Buildsettings%20elements">Buildsettings elements</a></div><div class="tocLevel"><a href="#Postbuildstep%20elements">Postbuildstep elements</a></div><div class="tocLevel"><a href="#Projectproperty%20elements">Projectproperty elements</a></div><div class="tocLevel"><a href="#Files%20elements">Files elements</a></div><div class="tocLevel"><a href="#Open%20elements">Open elements</a></div><div class="tocLevel"><a href="#Example%20template%20file">Example template file</a></div></div></div><h2>
+<a name="Overview"></a>Overview
+</h2><p>
+The Hexagon IDE provides project templates for some standard library types in the Elite application framework, including the following:
+</p><ul type="circle">
+<li>
+<p>
+Audio Post Processor Interface (APPI)
+</p>
+</li><li>
+<p>
+Common Audio Processor Interface (CAPI)
+</p>
+</li><li>
+<p>
+Voice interface
+</p>
+</li>
+</ul><p>
+By providing empty implementations of all the functions for a particular library, the templates enable you to quickly get started with application development on Elite, without having to spend time managing details of the library interface.
+</p><p>
+The following project templates are supported:
+</p><ul type="circle">
+<li>
+<p>
+Audio post-processing (audio PP)
+</p>
+</li><li>
+<p>
+Audio encoder/decoder
+</p>
+</li><li>
+<p>
+Voice
+</p>
+</li><li>
+<p>
+Unit test for audio post-processing
+</p>
+</li>
+</ul><p>
+You can also create custom templates for commonly-used code modules.
+</p><h2>
+<a name="Audio%20post-processing%20interface%20template"></a>Audio post-processing interface template
+</h2><p>
+The project template for an APPI library provides an empty implementation of the functions comprising an APPI interface. This interface provides APIs for integrating audio processing libraries into the Elite framework.
+</p><p>
+The file and folder name structure for an APPI template follow the conventions defined for developing and integrating audio post-processing features into the Elite framework.
+</p><p>
+When you create a new project, specifying the <code>Audio PP Project</code> template will populate the newly-created project with APPI-compliant code, as shown in the following screen image. (The project shown here is named <code>equalizer</code>.)
+</p><left><img src="images/templates_equalizer.png"></left><p>
+The files in folder <code>equalizerAPPI</code> (which include the source file <code>appi_equalizer.c</code> and header file <code>appi_equalizer.h</code>) contain the prototype definitions and empty implementations for the functions constituting the APPI interface: <code>init</code>, <code>reinit</code>, <code>process</code>, etc.
+</p><p>
+NOTE - For more information on the APPI interface see <i>Hexagon Multimedia - Custom Audio Processing</i> (80-N7220-1).
+</p><h2>
+<a name="Audio%20encoder/decoder%20interface%20template"></a>Audio encoder/decoder interface template
+</h2><p>
+The project template for a a CAPI library provides an empty implementation of the functions comprising a CAPI interface. This interface provides APIs for integrating audio codecs into the Elite framework.
+</p><p>
+The file and folder name structure for a CAPI template follow the conventions defined for developing and integrating an audio codec into the Elite framework.
+</p><p>
+When you create a new project, specifying the <code>Audio Codec Project</code> template will populate the newly-created project with CAPI-compliant code, as shown in the following screen image. (The project shown here is named <code>mp3</code>, and the decoder was specified in the project creation wizard.)
+</p><left><img src="images/templates_mp3.png"></left><p>
+The files in folder <code>Cmp3DecoderLib</code> (which include source file <code>Cmp3DecoderLib.cpp</code> and header file <code>Cmp3DecoderLib.h</code>) contain the prototype definitions and empty implementations for the functions comprising the CAPI interface: <code>init</code>, <code>reinit</code>, <code>process</code>, <code>GetParam</code>, etc.
+</p><p>
+NOTE - For more information on the CAPI interface see <i>Hexagon Multimedia: Elite Audio Postprocessor API Reference Guide</i> (80-N3226-1).
+</p><h2>
+<a name="Voice%20interface%20template"></a>Voice interface template
+</h2><p>
+The project template for a a CAPI library provides an empty implementation of the functions comprising a voice interface.
+</p><p>
+When you create a new project, specifying the <code>Audio Codec Project</code> template will populate the newly-created project with voice-project-compliant code, as shown in the following screen image. (The project shown here is named <code>voice</code>.)
+</p><left><img src="images/templates_voice.png"></left><p>
+The files in folder <code>inc</code> and <code>src</code> (which include source file <code>voice_modules.c</code> and header <code>file voice.h</code>) contain the prototype definitions and empty implementations for the functions comprising the CAPI interface: <code>init</code>, <code>reinit</code>, <code>process</code>, <code>GetParam</code>, etc.
+</p><h2>
+<a name="Unit%20test%20template"></a>Unit test template
+</h2><p>
+The project template for a unit test provides an empty implementation for the APPI/CAPI-compliant testing of audio features.
+</p><p>
+The audio PP/Codec unit test template is automatically provided when a new library project is created in the IDE (<a href="eclipse_projects.html#Creating%20projects">Creating projects</a>).
+</p><p>
+The following screen image shows the audio PP unit test template when an executable project is created. (The project shown here is named <code>pputest</code>.)
+</p><left><img src="images/templates_pputest.png"></left><p>
+In this example, the file <code>pputest.cpp</code> (<code>project_name.cpp</code> in general) implements the main function that contains the infrastructure for parsing the program arguments for unit testing. The files <code>appi_test.cpp</code> and <code>test_utils.cpp</code> originate from the Hexagon SDK, and are linked to <code>pputest.cpp</code> to create the executable file.
+</p><p>
+NOTE - For more information on unit test frameworks see <a href="Testing_Unit%20Tests.html">Unit Test Framework</a>.
+</p><h2>
+<a name="Custom%20templates"></a>Custom templates
+</h2><p>
+Custom project templates can be created in the Hexagon IDE.
+</p><p>
+For example, if a development team decides that a specific module of code will be commonly used across all team projects (or that a certain directory structure must be used in all the projects), then a custom template can be created and kept in an area accessible to all team members. The team members can load the template into the Eclipse IDE and then create projects using the template.
+</p><p>
+Custom templates are specified as <a href="#Template%20file%20format">well-formed XML files</a>. The template file name must be identical to the directory name that the template file is stored in. For example, the custom templates <code>template1.xml</code> and <code>template2.xml</code> must be stored in locations <code>template1/template1.xml</code> and <code>template2/template2.xml</code>.
+</p><p>
+Both <code>template1</code> and <code>template2</code> can be stored in an arbitrary template directory, and the template can be added in the SDK preference page.
+</p><p>
+The directory where the custom templates reside can be specified by selecting <code>Windows -&gt; Preferences &gt; Hexagon &gt; SDK</code>, and then adding the directories to the <code>Templates</code> and <code>examples</code> field.
+</p><left><img src="images/templates_custom.png"></left><p>
+After a custom template has been added, you can select it when <a href="eclipse_projects.html#Creating%20projects">creating a new project</a>.
+</p><left><img src="images/templates_custom_select.png"></left><h3>
+<a name="Template%20file%20format"></a>Template file format
+</h3><p>
+A template file is a well-formed XML file. It consists of a single element (named <code>template</code>) which contains the following sub-elements:
+</p><ul type="circle">
+<li>
+<p>
+<code>pages</code>
+</p>
+</li><li>
+<p>
+<code>buildsettings</code>
+</p>
+</li><li>
+<p>
+<code>postbuildstep</code>
+</p>
+</li><li>
+<p>
+<code>projectproperty</code>
+</p>
+</li><li>
+<p>
+<code>files</code>
+</p>
+</li><li>
+<p>
+<code>open</code>
+</p>
+</li>
+</ul><p>
+The template properties are specified as attributes and sub-elements of these elements.
+</p><h3>
+<a name="Template%20file%20elements"></a>Template file elements
+</h3><table><tr><th><p>
+Element
+</p></th><th><p>
+Attributes
+</p></th><th><p>
+Sub-Elements
+</p></th></tr><tr><td><p>
+template
+</p></td><td><ul type="circle">
+<li>
+<p>
+name
+</p>
+</li><li>
+<p>
+type
+</p>
+</li><li>
+<p>
+category
+</p>
+</li><li>
+<p>
+icon
+</p>
+</li><li>
+<p>
+projecttype
+</p>
+</li><li>
+<p>
+description
+</p>
+</li>
+</ul></td><td><ul type="circle">
+<li>
+<p>
+pages
+</p>
+</li><li>
+<p>
+buildsettings
+</p>
+</li><li>
+<p>
+projectproperty
+</p>
+</li><li>
+<p>
+files
+</p>
+</li><li>
+<p>
+open
+</p>
+</li>
+</ul></td></tr><tr><td><p>
+pages
+</p></td><td></td><td><ul type="circle">
+<li>
+<p>
+page
+</p>
+</li>
+</ul></td></tr><tr><td><p>
+page
+</p></td><td><ul type="circle">
+<li>
+<p>
+description
+</p>
+</li>
+</ul></td><td><ul type="circle">
+<li>
+<p>
+property
+</p>
+</li>
+</ul></td></tr><tr><td><p>
+property
+</p></td><td><ul type="circle">
+<li>
+<p>
+id
+</p>
+</li><li>
+<p>
+value
+</p>
+</li><li>
+<p>
+type
+</p>
+</li>
+</ul></td><td><ul type="circle">
+<li>
+<p>
+val
+</p>
+</li>
+</ul></td></tr><tr><td><p>
+val
+</p></td><td><ul type="circle">
+<li>
+<p>
+value
+</p>
+</li>
+</ul></td><td></td></tr><tr><td><p>
+buildsettings
+</p></td><td></td><td><ul type="circle">
+<li>
+<p>
+option
+</p>
+</li>
+</ul></td></tr><tr><td><p>
+option
+</p></td><td><ul type="circle">
+<li>
+<p>
+id
+</p>
+</li><li>
+<p>
+type
+</p>
+</li>
+</ul></td><td><ul type="circle">
+<li>
+<p>
+val
+</p>
+</li>
+</ul></td></tr><tr><td><p>
+val
+</p></td><td><ul type="circle">
+<li>
+<p>
+value
+</p>
+</li>
+</ul></td><td></td></tr><tr><td><p>
+postbuildstep
+</p></td><td></td><td><ul type="circle">
+<li>
+<p>
+step
+</p>
+</li>
+</ul></td></tr><tr><td><p>
+step
+</p></td><td><ul type="circle">
+<li>
+<p>
+command
+</p>
+</li>
+</ul></td><td></td></tr><tr><td><p>
+projectproperty
+</p></td><td></td><td><ul type="circle">
+<li>
+<p>
+property
+</p>
+</li>
+</ul></td></tr><tr><td><p>
+property
+</p></td><td><ul type="circle">
+<li>
+<p>
+id
+</p>
+</li><li>
+<p>
+value
+</p>
+</li><li>
+<p>
+type
+</p>
+</li>
+</ul></td><td></td></tr><tr><td><p>
+files
+</p></td><td></td><td><ul type="circle">
+<li>
+<p>
+file
+</p>
+</li>
+</ul></td></tr><tr><td><p>
+file
+</p></td><td><ul type="circle">
+<li>
+<p>
+type
+</p>
+</li><li>
+<p>
+src
+</p>
+</li><li>
+<p>
+dest
+</p>
+</li><li>
+<p>
+replaceable
+</p>
+</li>
+</ul></td><td></td></tr><tr><td><p>
+open
+</p></td><td><ul type="circle">
+<li>
+<p>
+location
+</p>
+</li>
+</ul></td><td></td></tr></table><h3>
+<a name="Template%20elements"></a>Template elements
+</h3><table><tr><th><p>
+Name
+</p></th><th><p>
+Description
+</p></th></tr><tr><td><p>
+template
+</p></td><td><p>
+Template properties
+</p></td></tr><tr><td><p>
+template name
+</p></td><td><p>
+Name of template project or example project
+</p></td></tr><tr><td><p>
+template type
+</p></td><td><p>
+Indicates whether template file is template project or example project. Possible values:
+</p><ul type="circle">
+<li>
+<p>
+template
+</p>
+</li><li>
+<p>
+example
+</p>
+</li>
+</ul></td></tr><tr><td><p>
+template category
+</p></td><td><p>
+Category in which template should appear in the tree. The template name is shown under the category in the project template tree in the wizard (e.g., Elite/Audio)
+</p></td></tr><tr><td><p>
+template icon
+</p></td><td><p>
+File name of icon image to be displayed in project wizard
+</p></td></tr><tr><td><p>
+template projecttype
+</p></td><td><p>
+Project type. Possible values:
+</p><ul type="circle">
+<li>
+<p>
+<code>executable</code>, <code>exe</code> - Executable
+</p>
+</li><li>
+<p>
+<code>dll</code>, <code>shared</code>, <code>so</code> - Shared library
+</p>
+</li><li>
+<p>
+<code>lib</code>, <code>static</code> - Static library
+</p>
+</li>
+</ul></td></tr><tr><td><p>
+template description
+</p></td><td><p>
+Description of project
+</p></td></tr><tr><td><p>
+pages
+</p></td><td><p>
+Create New Project wizard pages
+</p></td></tr><tr><td><p>
+buildsettings
+</p></td><td><p>
+Template build settings
+</p></td></tr><tr><td><p>
+projectproperty
+</p></td><td><p>
+Project properties
+</p></td></tr><tr><td><p>
+files
+</p></td><td><p>
+Files to be copied or linked
+</p></td></tr><tr><td><p>
+open
+</p></td><td><p>
+File to open on project creation
+</p></td></tr></table><h3>
+<a name="Pages%20elements"></a>Pages elements
+</h3><p>
+The <code>pages</code> elements are used to specify the pages (i.e., dialog boxes) that appear in the <a href="eclipse_projects.html#Creating%20projects">&#8220;New Project&#8221; wizard</a>, and how they are set when a new project is created.
+</p><table><tr><th><p>
+Name
+</p></th><th><p>
+Description
+</p></th></tr><tr><td><p>
+pages
+</p></td><td><p>
+Create New Project wizard pages
+</p></td></tr><tr><td><p>
+page
+</p></td><td><p>
+Create New Project wizard page
+</p></td></tr><tr><td><p>
+page description
+</p></td><td><p>
+Text label on wizard page
+</p></td></tr><tr><td><p>
+property
+</p></td><td><p>
+Input field on wizard page
+</p></td></tr><tr><td><p>
+property id
+</p></td><td><p>
+Input field label
+</p></td></tr><tr><td><p>
+property value
+</p></td><td><p>
+Input field default value (<code>input</code> type only)
+</p></td></tr><tr><td><p>
+property type
+</p></td><td><p>
+Input field type. Possible values:
+</p><ul type="circle">
+<li>
+<p>
+<code>input</code> - Text input field
+</p>
+</li><li>
+<p>
+<code>select</code> - Drop-down select field
+</p>
+</li>
+</ul></td></tr><tr><td><p>
+val
+</p></td><td><p>
+Select field item (<code>select</code> type only)
+</p></td></tr><tr><td><p>
+val value
+</p></td><td><p>
+Select field item label
+</p></td></tr></table><h3>
+<a name="Buildsettings%20elements"></a>Buildsettings elements
+</h3><p>
+The <code>buildsettings</code> elements are used to specify include paths and preprocessor definitions.
+</p><table><tr><th><p>
+Name
+</p></th><th><p>
+Description
+</p></th></tr><tr><td><p>
+buildsettings
+</p></td><td><p>
+Build settings properties
+</p></td></tr><tr><td><p>
+option
+</p></td><td><p>
+Build options in the build settings
+</p></td></tr><tr><td><p>
+option id
+</p></td><td><p>
+Option name
+</p></td></tr><tr><td><p>
+option type
+</p></td><td><p>
+Indicate whether or not option is required:
+</p><ul type="circle">
+<li>
+<p>
+<code>true</code> - Option required
+</p>
+</li><li>
+<p>
+<code>false</code> - Option not required
+</p>
+</li>
+</ul></td></tr><tr><td><p>
+val
+</p></td><td><p>
+Set of values for option
+</p></td></tr><tr><td><p>
+val value
+</p></td><td><p>
+Option value
+</p></td></tr></table><h3>
+<a name="Postbuildstep%20elements"></a>Postbuildstep elements
+</h3><p>
+The <code>postbuildstep</code> elements specify commands that must be invoked after a build.
+</p><table><tr><th><p>
+Name
+</p></th><th><p>
+Description
+</p></th></tr><tr><td><p>
+postbuildstep
+</p></td><td><p>
+Post-build step properties
+</p></td></tr><tr><td><p>
+step
+</p></td><td><p>
+Step
+</p></td></tr><tr><td><p>
+step command
+</p></td><td><p>
+Step command name
+</p></td></tr></table><h3>
+<a name="Projectproperty%20elements"></a>Projectproperty elements
+</h3><table><tr><th><p>
+Name
+</p></th><th><p>
+Description
+</p></th></tr><tr><td><p>
+projectproperty
+</p></td><td><p>
+Project properties
+</p></td></tr><tr><td><p>
+property
+</p></td><td><p>
+Project property
+</p></td></tr><tr><td><p>
+property id
+</p></td><td><p>
+Property name
+</p></td></tr><tr><td><p>
+property value
+</p></td><td><p>
+Property value
+</p></td></tr><tr><td><p>
+property type
+</p></td><td><p>
+Indicate whether or not option is required:
+</p><ul type="circle">
+<li>
+<p>
+<code>replaceable</code> - Replace property if already set
+</p>
+</li><li>
+<p>
+<code>Append</code> - Append property to existing property
+</p>
+</li><li>
+<p>
+<code>Prepend</code> - Prepend property to existing property
+</p>
+</li>
+</ul></td></tr></table><h3>
+<a name="Files%20elements"></a>Files elements
+</h3><table><tr><th><p>
+Name
+</p></th><th><p>
+Description
+</p></th></tr><tr><td><p>
+files
+</p></td><td><p>
+File properties
+</p></td></tr><tr><td><p>
+file
+</p></td><td><p>
+File to be copied or linked
+</p></td></tr><tr><td><p>
+file replaceable
+</p></td><td><p>
+Operation to perform on file. Possible values:
+</p><ul type="circle">
+<li>
+<p>
+<code>copy</code>
+</p>
+</li><li>
+<p>
+<code>link</code>
+</p>
+</li>
+</ul></td></tr><tr><td><p>
+file src
+</p></td><td><p>
+Location where file should be copied from or linked relative to template location
+</p></td></tr><tr><td><p>
+file dest
+</p></td><td><p>
+Location inside project where file should be copied to or linked
+</p></td></tr><tr><td><p>
+file replaceable
+</p></td><td><p>
+Indicate whether or not file is replaceable:
+</p><ul type="circle">
+<li>
+<p>
+<code>true</code> - File replaceable
+</p>
+</li><li>
+<p>
+<code>false</code> - File not replaceable
+</p>
+</li>
+</ul></td></tr></table><h3>
+<a name="Open%20elements"></a>Open elements
+</h3><p>
+The <code>open</code> elements are used to specify the files that must be opened when a project is created with the template.
+</p><table><tr><th><p>
+Name
+</p></th><th><p>
+Description
+</p></th></tr><tr><td><p>
+open
+</p></td><td><p>
+Open properties
+</p></td></tr><tr><td><p>
+open location
+</p></td><td><p>
+Location of file inside project (relative to project file)
+</p></td></tr></table><h3>
+<a name="Example%20template%20file"></a>Example template file
+</h3><p>
+The following code example shows a template file description. The individual elements are described in the following sections.
+</p><pre><span style="color: blue">&lt;template </span>name=<span style="color: darkred">"PP Unit Test"</span> type=<span style="color: darkred">"template"</span> category=<span style="color: darkred">"Elite/Audio"</span> icon=<span style="color: darkred">"icon/mp3.jpeg"</span>
+projecttype=<span style="color: darkred">"exe"</span> description="This project helps user in unit testing
+stand alone static PP module. The Unit testing framework provides profiled data
+for the APPI module."<span style="color: blue">&gt;</span>
+
+  <span style="color: blue">&lt;pages&gt;</span>
+
+        <span style="color: blue">&lt;page </span>description=<span style="color: darkred">"General project specific information."</span> <span style="color: blue">&gt;</span>
+            <span style="color: blue">&lt;property </span>id=<span style="color: darkred">"Author"</span> value=<span style="color: darkred">""</span> type=<span style="color: darkred">"input"</span>/<span style="color: blue">&gt;</span>
+                 <span style="color: blue">&lt;property </span>id=<span style="color: darkred">"Source directory"</span> value=<span style="color: darkred">"src"</span> type=<span style="color: darkred">"input"</span>/<span style="color: blue">&gt;</span>
+                 <span style="color: blue">&lt;property </span>id=<span style="color: darkred">"Include directory"</span> value=<span style="color: darkred">"inc"</span> type=<span style="color: darkred">"input"</span>/<span style="color: blue">&gt;</span>
+                <span style="color: blue">&lt;/page&gt;</span>
+
+  <span style="color: blue">&lt;/pages&gt;</span>
+
+  <span style="color: blue">&lt;buildsettings&gt;</span>
+
+   <span style="color: blue">&lt;option </span>id=<span style="color: darkred">".*compiler\.option\.include.paths"</span> type=<span style="color: darkred">"true"</span> <span style="color: blue">&gt;</span>
+                 <span style="color: blue">&lt;val </span>value=<span style="color: darkred">"&amp;quot;${HEXAGON_SDK_ROOT}/inc&amp;quot;"</span>/<span style="color: blue">&gt;</span>
+                 <span style="color: blue">&lt;val </span>value="&amp;quot;${HEXAGON_SDK_ROOT}/test/test_appi/
+                                                   src&amp;quot;" /<span style="color: blue">&gt;</span>
+                <span style="color: blue">&lt;/option&gt;</span>
+
+                <span style="color: blue">&lt;option </span>id=<span style="color: darkred">".*link\.option\.libs"</span> type=<span style="color: darkred">"true"</span> <span style="color: blue">&gt;</span>
+                 <span style="color: blue">&lt;val </span>value=<span style="color: darkred">"qdsp"</span>/<span style="color: blue">&gt;</span>
+                <span style="color: blue">&lt;/option&gt;</span>
+
+                <span style="color: blue">&lt;option </span>id=<span style="color: darkred">".*compiler\.option\.preprocessor\.def"</span> type=<span style="color: darkred">"true"</span><span style="color: blue">&gt;</span>
+                 <span style="color: blue">&lt;val </span>value=<span style="color: darkred">"__qdsp6__"</span>/<span style="color: blue">&gt;</span>
+                 <span style="color: blue">&lt;val </span>value=<span style="color: darkred">"_DEBUG"</span> /<span style="color: blue">&gt;</span>
+                <span style="color: blue">&lt;/option&gt;</span>
+
+                <span style="color: blue">&lt;option </span>id=<span style="color: darkred">".*compiler\.option\.preprocessor\.def\.symbols"</span> type=<span style="color: darkred">"true"</span> <span style="color: blue">&gt;</span>
+                 <span style="color: blue">&lt;val </span>value=<span style="color: darkred">"__qdsp6__"</span>/<span style="color: blue">&gt;</span>
+                 <span style="color: blue">&lt;val </span>value=<span style="color: darkred">"_DEBUG"</span> /<span style="color: blue">&gt;</span>
+                <span style="color: blue">&lt;/option&gt;</span>
+
+  <span style="color: blue">&lt;/buildsettings&gt;</span>
+
+  <span style="color: blue">&lt;projectproperty&gt;</span>
+
+   <span style="color: blue">&lt;property </span>id=<span style="color: darkred">"HexagonProjectType"</span> value=<span style="color: darkred">"PPTest"</span> type=<span style="color: darkred">"replaceable"</span> /<span style="color: blue">&gt;</span>
+
+  <span style="color: blue">&lt;/projectproperty&gt;</span>
+
+  <span style="color: blue">&lt;files&gt;</span>
+
+   <span style="color: blue">&lt;file </span>type=<span style="color: darkred">"copy"</span> src=<span style="color: darkred">"src/Basename.cpp"</span>
+    dest=<span style="color: darkred">"$(Source directory)/$(projectName).cpp"</span> replaceable=<span style="color: darkred">"true"</span>/<span style="color: blue">&gt;</span>
+
+   <span style="color: blue">&lt;file </span>type=<span style="color: darkred">"copy"</span> src=<span style="color: darkred">"src/Basename.h"</span>
+    dest=<span style="color: darkred">"$(Include directory)/$(projectName).h"</span> replaceable=<span style="color: darkred">"true"</span>/<span style="color: blue">&gt;</span>
+
+   <span style="color: blue">&lt;file </span>type=<span style="color: darkred">"copy"</span> src=<span style="color: darkred">"src/Basename_Integration.h"</span>
+    dest=<span style="color: darkred">"$(Include directory)/$(projectName)_Integration.h"</span> replaceable=<span style="color: darkred">"true"</span>/<span style="color: blue">&gt;</span>
+
+   <span style="color: blue">&lt;file </span>type=<span style="color: darkred">"link"</span> src=<span style="color: darkred">"HEXAGON_SDK_ROOT/test/test_appi/src/appi_test.cpp"</span>
+    dest=<span style="color: darkred">"$(Source directory)/appi_test.cpp"</span> replaceable=<span style="color: darkred">"true"</span>/<span style="color: blue">&gt;</span>
+
+   <span style="color: blue">&lt;file </span>type=<span style="color: darkred">"link"</span> src=<span style="color: darkred">"HEXAGON_SDK_ROOT/test/test_util/src/test_utils.cpp"</span>
+    dest=<span style="color: darkred">"$(Source directory)/test_utils.cpp"</span> replaceable=<span style="color: darkred">"true"</span>/<span style="color: blue">&gt;</span>
+
+  <span style="color: blue">&lt;/files&gt;</span>
+
+  <span style="color: blue">&lt;open </span>location=<span style="color: darkred">"$(Source directory)/$(projectName).cpp"</span>/<span style="color: blue">&gt;</span>
+
+<span style="color: blue">&lt;/template&gt;</span>
+</pre><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

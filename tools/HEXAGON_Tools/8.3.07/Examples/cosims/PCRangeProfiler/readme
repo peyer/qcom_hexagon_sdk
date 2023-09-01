@@ -1,0 +1,70 @@
+PC Range Profiling cosimulation module
+-------------------
+
+PC Range Profiling cosim module
+
+This cosim model is for profiling sections of a Hexagon application.
+The section is defined as the code executing an instruction at the
+start address followed by executing an instruction at the end address.
+You specify the addresses as parameters to the cosim as follows:
+
+PCRangeProfiler.so <StartAddress> <EndAddress>
+
+Either address can be of the form of a hexadecimal constant (e.g.
+0x5f43) or a public symbol exported by the application (e.g.,
+main).
+
+This cosim will count the number of times the program executed the
+instruction at <StartAddress> followed by executing the instruction
+at <EndAddress>.  It will report the number of cycles for each
+iteration into a file as well as printing a summary to stdout of the form:
+
+For range StartIteration at address 0x501c through EndIteration at address 0x5028:
+        10 iterations
+        avg = 19597.20 cycles
+        max = 42882 cycles for iteration 1 starting at cycle 34949
+        min = 5730 cycles for iteration 10 starting at cycle 225839
+
+The file name will be of the form <start>-<end>.dat where <start> is
+the specified start address and <end> is the specified end address.
+
+This cosim illustrates how to get control when an instruction at a
+given PC value is executed (effectively a "breakpoint") as well as how
+to read global registers.
+
+
+To build:
+
+From the src directory, run the following commands in a shell:
+> make clean
+> make
+
+This will build the cosim and launch a simulation with the
+cosim attached. The makefile will run a hello world app on
+the simulator with the cosim attached.
+
+Windows:
+
+Note that building on Windows requires MSVC 2015 and Cygwin.
+
+Linux:
+
+Building on Linux requires a version of GCC compatible with
+4.8.4 to be installed in your system path.
+
+The path and name of the cosim is listed in a file which
+is passed to the simulator via the --cosim_file option:
+
+${COSIM_PATH}/${COSIM_LIB}
+
+Where:
+
+${COSIM_LIB} = PCRangeProfiler.so  on linux32/64
+${COSIM_LIB} = PCRangeProfiler.dll on cygwin
+
+Refer to the Hexagon Simulator System API User Guide
+(80-N2040-18) for more details on creating cosimulation
+models. The most recent version of the User Guide can
+be found here: go/hexagonsupport
+
+

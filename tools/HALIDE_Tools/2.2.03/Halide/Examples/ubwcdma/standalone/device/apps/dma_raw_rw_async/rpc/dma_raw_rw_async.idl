@@ -1,0 +1,27 @@
+// All the Interfacing Functions between Host and Hexagon should have the prototype declared here
+// IDL will generate the necessary Skel and Stub Files
+// This isolates Hexagon and Host code and simplifies compilation
+#include "AEEStdDef.idl"
+interface dma_raw_rw_async
+{
+  long power_on_hvx();
+
+  long power_off_hvx();
+
+  long set_hvx_perf_mode_turbo();
+
+  long set_hvx_perf_mode_nominal();
+
+  long set_hvx_perf_mode_low();
+
+  typedef sequence<octet> u8_buffer;
+  typedef sequence<char> i8_buffer;
+
+  long run(in u8_buffer input_buffer,
+           in long width,
+           in long height,
+           in long stride,
+           in long format,
+           in short is_ubwc,
+           rout u8_buffer output_buffer, in long iterations, rout unsigned long long avg_time);
+};

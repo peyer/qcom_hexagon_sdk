@@ -1,0 +1,814 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><title>&#65279;Using Eclipse to Run/Debug v65 application on Hexagon simulator</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="images/sidebar_top.jpg"></top><script src="scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, false)"><input id="searchButton" onclick="postFunction(false)" type="button" value="Search"></form><p>
+<a href="index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<p>
+<a href="sitemap.html">Sitemap</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="Audio/Applications.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="Voice/Applications.html">Voice</a>
+</p><p>
+<a href="Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="Audio/Examples.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="Examples_Common.html">Common</a>
+</p><p>
+<a href="Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="Tools_Signing.html">Signing</a>
+</p><p>
+<a href="Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="FAQ_Common.html">Common</a>
+</p><p>
+<a href="FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="Support_Contact.html">Contact</a>
+</p><center><img src="images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h1>
+<a name="﻿Using%20Eclipse%20to%20Run/Debug%20v65%20application%20on%20Hexagon%20simulator"></a>&#65279;Using Eclipse to Run/Debug v65 application on Hexagon simulator
+</h1><div class="toc"><div class="tocLevel"><a href="#Overview">Overview</a></div><div class="tocLevel"><a href="#Step%201%20–%20Import%20Hexagon%20SDK%20example%20project%20to%20workspace">Step 1 &#8211; Import Hexagon SDK example project to workspace</a></div><div class="tocLevel"><a href="#Step%202%20–%20Build%20project">Step 2 &#8211; Build project</a></div><div class="tocLevel"><a href="#Step%203%20–%20Run%20project">Step 3 &#8211; Run project</a></div><div class="tocLevel"><a href="#Step%204%20–%20Define%20LLDB_HEXAGON_BOOTER_PATH">Step 4 &#8211; Define LLDB_HEXAGON_BOOTER_PATH</a></div><div class="tocLevel"><a href="#Step%205%20–%20Debug%20project">Step 5 &#8211; Debug project</a></div></div><h2>
+<a name="Overview"></a>Overview
+</h2><p>
+This chapter describes how to use the IDE to run/debug v65 executable on the simulator. Here benchmark_v65 is taken as an example.
+</p><p>
+Please use the following steps. Steps to debug v66 application are also same as below, it is as simple as replacing v65 with v66 everywhere it appears in the instructions.
+</p><pre>
+Note : Screenshots in this doc are taken with toolv82 variant for v65 architecture, please replace them with the build variant and architecture that you want to use. 
+       For example if you want to build for v65 architecture using toolchain 8.3.0x then your variant will be hexagon_Debug_dynamic_toolv83_v65
+</pre><h2>
+<a name="Step%201%20–%20Import%20Hexagon%20SDK%20example%20project%20to%20workspace"></a>Step 1 &#8211; Import Hexagon SDK example project to workspace
+</h2><p>
+To import the example into your Eclipse workspace, right-click in Project Explorer and select
+</p><p>
+<code>Import -&gt; C/C++ -&gt; Existing Code as Makefile Project</code>.
+</p><left><img src="images/import_makefile_project.png"></left><p>
+In the dialog box, specify the following project properties:
+</p><ul type="circle">
+<li>
+<p>
+<b>Project name</b> &#8211; <code>benchmark_v65</code>
+</p>
+</li><li>
+<p>
+<b>Project location</b> &#8211; &lt;Hexagon SDK root dir&gt;\examples\compute\benchmark_v65
+</p>
+</li><li>
+<p>
+<b>Toolchain</b> &#8211; select Hexagon LLVM Tool chain
+</p>
+</li>
+</ul><p>
+Click on the <code>Finish</code> button to finish importing the project.
+</p><left><img src="images/import_benchmark_v65.png"></left><h2>
+<a name="Step%202%20–%20Build%20project"></a>Step 2 &#8211; Build project
+</h2><p>
+To build the imported project
+</p><p>
+Right-click on the project , select properties and then C/C++ Build . Under Builder settings, enter the build command as <b>make V=hexagon_Debug_dynamic_toolv82_v65 VERBOSE=1</b> (or enter your target-appropriate build flavor).
+</p><p>
+Note : In above build command, toolv82 represents 8.2 toolset. For SDK 3.5.3, default toolset is 8.3.07, so you need to use toolv83 instead of toolv82.
+</p><p>
+While debugging, Debug build flavors are recommended when possible over Release/ReleaseG, to avoid possible confusions caused by the compiler optimizer.
+</p><left><img src="images/benchmark_v65_build_settings.png"></left><p>
+Under Behaviour tab set Build textbox to <b>tree</b> and Clean textbox to <b>tree_clean</b>
+</p><left><img src="images/build_behaviour.png"></left><p>
+Build the project by right-clicking on the project and select Build Project
+</p><left><img src="images/target_debug_build_project.png"></left><h2>
+<a name="Step%203%20–%20Run%20project"></a>Step 3 &#8211; Run project
+</h2><p>
+To run the project, right-click on the project in Project Explorer and choose <code>Run As -&gt; Run Configuration</code>.
+</p><p>
+This command displays the <code>Run Configurations</code> dialog box, which enables you to configure the simulator, program arguments, and runtime environment.
+</p><p>
+For simulator target is runelf.pbn. It is a qurt image that loades user elf (benchmark_q) and calls main(). So please fill C/C++ Application field with the path of runelf.pbn
+</p><left><img src="images/benchmark_run_as.png"></left><p>
+The dialog box display tabs for configuring the simulator, program arguments, and runtime environment.
+</p><p>
+(Note that the left-hand pane in the dialog box includes a newly-created runtime configuration named <code>benchmark</code>, which appears under the item <code>Hexagon C/C++ Application</code>.)
+</p><p>
+To specify the simulator arguments, click on the <code>Simulator</code> tab in the dialog box. For this example please give following options in miscellaneous flag section.
+</p><pre>
+--simulated_returnval --usefs hexagon_Debug_dynamic_toolv83_v65 --l2tcm_base 0xd800 --rtos hexagon_Debug_dynamic_toolv83_v65/osam.cfg 
+</pre><left><img src="images/benchmark_sim_args.png"></left><p>
+To specify the program arguments, click on the <code>Arguments</code> tab in the dialog box and provide arguments as follows:
+</p><pre>
+D:\Qualcomm\Hexagon_SDK\3.4.1\libs\common\run_main_on_hexagon\ship\hexagon_Debug_dynamic_toolv82_v65\run_main_on_hexagon_sim
+-- hexagon_Debug_dynamic_toolv82_v65\benchmark_q.so -f epsilon -w 256 -h 64
+</pre><p>
+Starting from 3.4.1 SDK simulator command-line has been changed and it includes <b>run_main_on_hexagon_sim &#8212;</b> in the beginning.
+</p><left><img src="images/benchmark_program_args.png"></left><p>
+To execute the program, click on the <code>Run</code> button at the bottom of the dialog box.
+</p><p>
+For Run configuration, the goal is the have the final execution line same as we do it manually as run make in shell.
+</p><p>
+The dialog box closes and the following output (which includes the 'benchmark_q' output) is displayed in the console of the main IDE window.
+</p><left><img src="images/benchmark_run_output.png"></left><h2>
+<a name="Step%204%20–%20Define%20LLDB_HEXAGON_BOOTER_PATH"></a>Step 4 &#8211; Define LLDB_HEXAGON_BOOTER_PATH
+</h2><p>
+Before start debugging benchmark_v65 project, LLDB_HEXAGON_BOOTER_PATH env variable needs to be defined.
+</p><p>
+To define it right-click on the project -&gt; select properties -&gt; C/C++ Build -&gt; Environment tab and then click on Add button and fill name as &#8220;LLDB_HEXAGON_BOOTER_PATH&#8221; and value as &#8220;&lt;Hexagon SDK root dir&gt;\libs\common\qurt\computev65\sdksim_bin\runelf.pbn&#8221;.
+</p><left><img src="images/benchmark_v65_environment.png"></left><p>
+When lldb gets down to the simulator launch, it will check for this environment variable. If it exists, it will treat this environment variable as the main target (runelf.pbn) and pick the originial target(benchmark_q) as first argument to main target(runelf.pbn).
+</p><h2>
+<a name="Step%205%20–%20Debug%20project"></a>Step 5 &#8211; Debug project
+</h2><p>
+To configure the debug environment, right-click on the project in Project Explorer and choose <code>Debug As -&gt; Debug configuration</code>.
+</p><p>
+This command displays the <code>Debug Configurations</code> dialog box. Using the tabs in this dialog box you can configure the debugger, program arguments, and runtime environment.
+</p><left><img src="images/benchmark_debug_configs.png"></left><p>
+Change C/C++ Application to run_main_on_hexagon_sim. Please note that this value is runelf.pbn in Run configuration. runelf.pbn will be picked up from LLDB_HEXAGON_BOOTER_PATH env variable.
+</p><p>
+you will see a error message &#8220;Multiple launchers available - select one to continue&#8221; on top of the debug wizard. Please click on &#8220;Select one ...&#8221;
+</p><p>
+A prompt will appear asking you to Select Preferred Launcher (This dialog won't appear if Run was performed previously)
+</p><left><img src="images/select_preffered_launcher.png"></left><p>
+Click on <code>Use configuration specific settings</code> and then select <code>Standard Create LLDB Debug Process Launcher</code>
+</p><p>
+Arguments under Target tab are same as Simulator tab arguments in Run configuration.
+</p><pre>
+Note : You can pass arguments in either of the following ways
+      1. --hexagon_Debug_dynamic_toolv82_v65\benchmark_q.so -f epsilon -w 256 -h 64 (Make sure there is no space between hyphen (-) and the variant name)
+      2. -- -- hexagon_Debug_dynamic_toolv82_v65\benchmark_q.so -f epsilon -w 256 -h 64. (If you are using four hyphen (-) space is not mandatory)
+</pre><p>
+Please remove run_main_on_hexagon_sim from Program arguments as run_main_on_hexagon_sim is specified as C/C++ application in Main tab
+</p><left><img src="images/benchmark_debug_program_args.png"></left><p>
+set breakpoint at test_main_start() as follows
+</p><left><img src="images/benchmark_set_breakpoint.png"></left><p>
+Breakpoint can be set at main also , but it will hit main() of run_main_on_hexagon_sim first and main() of your simulator test next. To avoid this it is recommended to set breakpoint at test_main_start() so that lldb can directly break in simulator test.
+</p><p>
+Click and Apply and Debug. You should be prompted now to open the Debug perspective, and click Yes. It should launch the executable and break at main(), as shown below.
+</p><left><img src="images/benchmark_debug_view.png"></left><p>
+The debug perspective enables you to perform debugging operations such as stepping, disassembly, setting breakpoints, viewing/modifying variables, and viewing registers.
+</p><p>
+For example, clicking on the Registers tab of the debug perspective displays the contents of the Hexagon processor registers.
+</p><p>
+If any debug-related information is not displayed, you can display it by choosing Show View from the Window menu.
+</p><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

@@ -1,0 +1,1 @@
+include $(thisDir)/defines_android.min

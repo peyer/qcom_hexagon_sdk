@@ -1,0 +1,930 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><style type="text/css">
+.html2d { position: relative; }
+.html2d div { position: absolute; border-width: 0; border-style: solid; }
+.html2d div div { position: absolute; border-width: 0; border-style: solid; }
+
+</style><title>Memory Management</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="images/sidebar_top.jpg"></top><script src="scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, false)"><input id="searchButton" onclick="postFunction(false)" type="button" value="Search"></form><p>
+<a href="index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<p>
+<a href="sitemap.html">Sitemap</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="Audio/Applications.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="Voice/Applications.html">Voice</a>
+</p><p>
+<a href="Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="Audio/Examples.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="Examples_Common.html">Common</a>
+</p><p>
+<a href="Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="Tools_Signing.html">Signing</a>
+</p><p>
+<a href="Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="FAQ_Common.html">Common</a>
+</p><p>
+<a href="FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="Support_Contact.html">Contact</a>
+</p><center><img src="images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h1>
+<a name="Memory%20Management"></a>Memory Management
+</h1><div class="toc"><div class="tocLevel"><a href="#Overview">Overview</a></div><div class="tocLevel"><a href="#Hardware%20Overview">Hardware Overview</a><div class="tocLevel"><a href="#System%20Memory">System Memory</a></div><div class="tocLevel"><a href="#Memory%20Translation%20in%20Hexagon%20DSP">Memory Translation in Hexagon DSP</a></div><div class="tocLevel"><a href="#TLB%20Pressure">TLB Pressure</a></div></div><div class="tocLevel"><a href="#Allocating%20Physically%20Contiguous%20Buffers">Allocating Physically Contiguous Buffers</a><div class="tocLevel"><a href="#Memory%20Carveout">Memory Carveout</a></div><div class="tocLevel"><a href="#SMMU">SMMU</a></div></div></div><h2>
+<a name="Overview"></a>Overview
+</h2><p>
+This document describes the various memory types that are available to the developers of HAP modules, their usage, and the impact of memory choices on the functionality and performance.
+</p><h2>
+<a name="Hardware%20Overview"></a>Hardware Overview
+</h2><h3>
+<a name="System%20Memory"></a>System Memory
+</h3><p>
+The Hexagon DSP processor is one of the several processing units available on the SoC package. For example, the high level operating system such as Android, runs on the Application Processor. The various processors typically have access to the same hardware memory unit e.g. DDR3. However the memory is logically divided so that various processing units have exclusive/shared access to various portions of the physical DDR. This is described in the diagram below:
+</p><div class=diagram>
+<div class="html2d art" style="width:592px;height:240px;font-size:12.48px;white-space:nowrap;line-height:16px">
+<div class="rect round" style="border-width:3px;left:371px;top:183px;right:122px;bottom:6px"></div>
+<div class="rect round" style="border-width:3px;left:99px;top:183px;right:362px;bottom:6px"></div>
+<div class="rect round" style="border-width:3px;left:51px;top:7px;right:2px;bottom:150px"></div>
+<div class=rect style="border-width:3px;left:187px;top:119px;right:194px;bottom:86px"></div>
+<div class=line style="border-left-width:2px;left:387px;top:87px;right:203px;bottom:119px"></div>
+<div class=line style="border-left-width:2px;left:459px;top:7px;right:131px;bottom:151px"></div>
+<div class=line style="border-left-width:2px;left:83px;top:7px;right:507px;bottom:151px"></div>
+<div class=line style="border-left-width:2px;left:379px;top:7px;right:211px;bottom:151px"></div>
+<div class=line style="border-left-width:2px;left:275px;top:7px;right:315px;bottom:151px"></div>
+<div class=line style="border-left-width:2px;left:315px;top:87px;right:275px;bottom:119px"></div>
+<div class=line style="border-left-width:2px;left:251px;top:7px;right:339px;bottom:151px"></div>
+<div class=line style="border-left-width:2px;left:355px;top:7px;right:235px;bottom:151px"></div>
+<div class=line style="border-left-width:2px;left:387px;top:151px;right:203px;bottom:55px"></div>
+<div class=line style="border-left-width:2px;left:203px;top:151px;right:387px;bottom:55px"></div>
+<div class=line style="border-left-width:2px;left:307px;top:87px;right:283px;bottom:119px"></div>
+<div class=line style="border-left-width:2px;left:203px;top:87px;right:387px;bottom:119px"></div>
+<div style="text-align:center;left:292px;top:16px;right:252px;bottom:208px">Shared</div>
+<div style="text-align:right;left:-40px;top:32px;right:552px;bottom:192px">DDR -</div>
+<div style="left:112px;top:32px;right:448px;bottom:192px">HLOS</div>
+<div style="text-align:center;left:292px;top:32px;right:252px;bottom:192px">Memory</div>
+<div style="text-align:center;left:400px;top:32px;right:168px;bottom:192px">DSP</div>
+<div style="left:112px;top:48px;right:432px;bottom:176px">Memory</div>
+<div style="text-align:center;left:396px;top:48px;right:148px;bottom:176px">Memory</div>
+<div style="text-align:center;left:200px;top:128px;right:208px;bottom:96px">Memory Protection Units</div>
+<div style="text-align:center;left:120px;top:192px;right:384px;bottom:32px">Application</div>
+<div style="text-align:center;left:392px;top:192px;right:144px;bottom:32px">Hexagon</div>
+<div style="text-align:center;left:128px;top:208px;right:392px;bottom:16px">Processor</div>
+<div style="text-align:center;left:384px;top:208px;right:136px;bottom:16px">Processor</div>
+</div>
+</div>
+<p>
+Therefore, although the same physical memory device is used by all the SoC processing units, the logical separation of memory between various processing units is enforced by memory protection units. These units either allow or prevent access to various memory areas depending on which processing unit initiates the access request.
+</p><h3>
+<a name="Memory%20Translation%20in%20Hexagon%20DSP"></a>Memory Translation in Hexagon DSP
+</h3><p>
+The above view of the memory represents the <i>PHYSICAL ADDRESS (PA) LAYOUT</i> of system memory. In order to manage the physical chunk of memory assigned to the Hexagon DSP processor, the Hexagon core contains an internal Memory Management Unit (MMU). This allows the RTOS to provide a <i>VIRTUAL ADDRESS (VA) LAYOUT</i> of memory to running applications. The translation of virtual addresses to physical addresses is performed by the MMU with the help of Page Tables maintained by the RTOS. Recently used Page Table entries are cached inside the MMU using <i>Translation Look-ahead Buffers (TLBs)</i>.
+</p><p>
+This scheme is described below.
+</p><div class=diagram>
+<div class="html2d art" style="width:568px;height:432px;font-size:12.48px;white-space:nowrap;line-height:16px">
+<div class=rect style="border-width:3px;left:155px;top:247px;right:338px;bottom:150px"></div>
+<div class="rect round" style="border-width:3px;left:107px;top:167px;right:154px;bottom:22px"></div>
+<div class=line style="border-top-width:2px;left:47px;top:87px;right:-1px;bottom:343px;line-height:0"></div>
+<div class=line style="border-left-width:2px;left:331px;top:7px;right:235px;bottom:343px"></div>
+<div class=line style="border-top-width:2px;left:47px;top:7px;right:-1px;bottom:423px;line-height:0"></div>
+<div class=line style="border-bottom-width:2px;border-right-width:2px;left:155px;top:167px;right:291px;bottom:151px"></div>
+<div class=line style="border-left-width:2px;left:155px;top:167px;right:411px;bottom:151px"></div>
+<div class=line style="border-left-width:2px;left:211px;top:87px;right:355px;bottom:263px"></div>
+<div class=line style="border-left-width:2px;left:107px;top:7px;right:459px;bottom:343px"></div>
+<div class=line style="border-left-width:2px;left:171px;top:279px;right:395px;bottom:95px"></div>
+<div class=line style="border-left-width:2px;left:203px;top:87px;right:363px;bottom:263px"></div>
+<div style="text-align:center;left:0px;top:32px;right:528px;bottom:384px">DDR -</div>
+<div style="left:128px;top:32px;right:360px;bottom:384px">DSP Memory</div>
+<div style="left:128px;top:48px;right:304px;bottom:368px">Physical (on DDR)</div>
+<div style="text-align:center;left:232px;top:128px;right:88px;bottom:288px">Physical Address on Address Bus</div>
+<div style="text-align:center;left:196px;top:192px;right:332px;bottom:224px">M M U</div>
+<div style="text-align:center;left:180px;top:256px;right:364px;bottom:160px">TLB</div>
+<div style="left:184px;top:304px;right:240px;bottom:112px">Virtual Address to</div>
+<div style="left:184px;top:320px;right:288px;bottom:96px">Hexagon apps</div>
+<div style="text-align:center;left:160px;top:368px;right:304px;bottom:48px">H E X A G O N</div>
+<div style="text-align:center;left:288px;top:368px;right:240px;bottom:48px">D S P</div>
+</div>
+</div>
+<p>
+The Qualcomm QURT RTOS provides MMU with the translation information on how to convert the Virtual Addresses into Physical Addresses. This is done by populating VA-PA translation entries in the MMU TLB buffers table. The number of TLB entries is limited and TLB table cannot represent the entire memory available to the Hexagon DSP processor.
+</p><p>
+Hence, when a read/write request is issued on a VA, the MMU intercepts the request and looks for VA-PA mapping in the TLB table. If no entry matching the VA is found in the TLB table, then a TLB miss exception is raised which is handled by the QURT RTOS. The RTOS then looks to see if the requested VA is available in the page tables that the RTOS manages. If found, it adds the VA-PA mapping in one of the TLB buffers (if all the TLC buffers are occupied, an eviction scheme is used to remove an existing TLB entry to make room for new one). After filling the TLB entry, the Program Counter is reset to the Load/Store request instruction. However, if the mapping is not found, then the exception is bubbled up possibly resulting in rest of Hexagon DSP processor.
+</p><p>
+The scheme is described in the flow diagram below:
+</p><div class=diagram>
+<div class="html2d art" style="width:432px;height:704px;font-size:12.48px;white-space:nowrap;line-height:16px">
+<div class=rect style="border-width:3px;left:11px;top:7px;right:362px;bottom:662px"></div>
+<div class=rect style="border-width:3px;left:91px;top:7px;right:282px;bottom:662px"></div>
+<div class=rect style="border-width:3px;left:299px;top:7px;right:2px;bottom:662px"></div>
+<div class=rect style="border-width:3px;left:179px;top:7px;right:154px;bottom:662px"></div>
+<div class=rect style="border-width:3px;left:179px;top:311px;right:138px;bottom:326px"></div>
+<div class=rect style="border-width:3px;left:3px;top:167px;right:306px;bottom:486px"></div>
+<div class=line style="border-left-width:2px;left:35px;top:47px;right:395px;bottom:535px"></div>
+<div class=line style="border-left-width:2px;left:107px;top:143px;right:323px;bottom:535px"></div>
+<div class=line style="border-left-width:2px;left:211px;top:47px;right:219px;bottom:399px"></div>
+<div class=line style="border-left-width:2px;left:107px;top:215px;right:323px;bottom:15px"></div>
+<div style="border-top: 4px solid transparent;border-left-width: 10.5px;border-bottom: 4px solid transparent;left:93.5px;top:116px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:35px;top:119px;right:331px;bottom:583px;line-height:0"></div>
+<div style="border-right-width: 10.5px;border-top: 4px solid transparent;border-bottom: 4px solid transparent;left:112px;top:404px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:115px;top:407px;right:219px;bottom:295px;line-height:0"></div>
+<div style="border-top: 4px solid transparent;border-left-width: 10.5px;border-bottom: 4px solid transparent;left:197.5px;top:244px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:35px;top:247px;right:227px;bottom:455px;line-height:0"></div>
+<div style="border-right-width: 10.5px;border-top: 4px solid transparent;border-bottom: 4px solid transparent;left:48px;top:68px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:51px;top:71px;right:75px;bottom:631px;line-height:0"></div>
+<div class=line style="border-left-width:2px;left:107px;top:47px;right:323px;bottom:575px"></div>
+<div class=line style="border-left-width:2px;left:211px;top:383px;right:219px;bottom:15px"></div>
+<div style="border-top: 4px solid transparent;border-left-width: 10.5px;border-bottom: 4px solid transparent;left:341.5px;top:468px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:211px;top:471px;right:83px;bottom:231px;line-height:0"></div>
+<div style="border-right-width: 10.5px;border-top: 4px solid transparent;border-bottom: 4px solid transparent;left:40px;top:564px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:43px;top:567px;right:75px;bottom:135px;line-height:0"></div>
+<div class=line style="border-left-width:2px;left:355px;top:47px;right:75px;bottom:15px"></div>
+<div class=line style="border-left-width:2px;left:35px;top:215px;right:395px;bottom:15px"></div>
+<div style="text-align:center;left:28px;top:16px;right:380px;bottom:672px">MMU</div>
+<div style="text-align:center;left:108px;top:16px;right:300px;bottom:672px">TLB</div>
+<div style="text-align:center;left:212px;top:16px;right:188px;bottom:672px">RTOS</div>
+<div style="text-align:center;left:320px;top:16px;right:24px;bottom:672px">Application</div>
+<div style="text-align:center;left:224px;top:48px;right:88px;bottom:640px">Load/Store to a</div>
+<div style="text-align:center;left:288px;top:80px;right:128px;bottom:608px">VA</div>
+<div style="text-align:center;left:48px;top:96px;right:336px;bottom:592px">Lookup</div>
+<div style="left:48px;top:128px;right:312px;bottom:560px">VA in TLB</div>
+<div style="left:8px;top:176px;right:328px;bottom:512px">If TLB found</div>
+<div style="text-align:center;left:12px;top:192px;right:316px;bottom:496px">use the VA-PA</div>
+<div style="text-align:center;left:112px;top:224px;right:224px;bottom:464px">No TLB entry</div>
+<div style="left:112px;top:256px;right:248px;bottom:432px">raise TLB</div>
+<div style="text-align:center;left:120px;top:272px;right:232px;bottom:416px">miss excep</div>
+<div style="text-align:center;left:192px;top:320px;right:152px;bottom:368px">Search page</div>
+<div style="text-align:center;left:196px;top:336px;right:156px;bottom:352px">tables for</div>
+<div style="left:192px;top:352px;right:184px;bottom:336px">mapping</div>
+<div style="text-align:center;left:116px;top:384px;right:228px;bottom:304px">Add mapping</div>
+<div style="left:120px;top:416px;right:264px;bottom:272px">to TLB</div>
+<div style="left:216px;top:448px;right:112px;bottom:240px">Restore PC to</div>
+<div style="text-align:center;left:232px;top:480px;right:112px;bottom:208px">Application</div>
+<div style="text-align:center;left:268px;top:496px;right:132px;bottom:192px">code</div>
+<div style="text-align:center;left:128px;top:544px;right:240px;bottom:144px">Re-issue</div>
+<div style="left:224px;top:544px;right:128px;bottom:144px">Load/Store</div>
+<div style="text-align:center;left:116px;top:576px;right:228px;bottom:112px">instruction</div>
+</div>
+</div>
+<h3>
+<a name="TLB%20Pressure"></a>TLB Pressure
+</h3><p>
+As the number of TLB entries is limited in the TLB table, the TLB table can quickly fill-up. From then on, each new addition into the TLB table has to be proceeded by the eviction of an existing TLB entry. This is referred to as <i>TLB Pressure</i>.
+</p><p>
+To reduce the TLB pressure, the Hexagon MMU accommodates various sizes of TLB entries e.g. 4k, 16k, 64k, 256k, 1MB, 4MB, 16MB. Therefore, to optimize data usage for large buffers, it is essential that these large buffers use minimum number of TLB entries. This can be achieved by allocating large physically contiguous chunks of buffers to map corresponding large virtual address range (instead of mapping several physically discontinguous chunks to represent a virtually contiguous range).
+</p><h2>
+<a name="Allocating%20Physically%20Contiguous%20Buffers"></a>Allocating Physically Contiguous Buffers
+</h2><h3>
+<a name="Memory%20Carveout"></a>Memory Carveout
+</h3><p>
+As described in the section <a href="#TLB%20Pressure">TLB Pressure</a>, it is essential for applications offloading large data buffers to the DSP to allocate physically contiguous buffers so that least number of TLB entries are used to represent these buffers.
+</p><p>
+On the HLOS, this can be achieved by allocating compute buffers using a contiguous memory allocator such as ION. A <a href="APIs_FastRPC.html#Using%20the%20ION%20allocator">discussion of ION is available here</a>. The SDK also provides a <a href="APIs_FastRPC.html#RPCMem">mechanism called RPCMem</a>, that allows user to allocate SMMU or CMA memory by simply passing the heap id and flags.
+</p><p>
+This section describes various implementations of the system memory and how buffers are transferred between HLOS and Hexagon DSP.
+</p><p>
+Typically a portion of the HLOS memory is carved out for usage by Hexagon DSP. The Hexagon DSP processor is given READ/WRITE access to this subset of the HLOS memory.
+</p><div class=diagram>
+<div class="html2d art" style="width:584px;height:240px;font-size:12.48px;white-space:nowrap;line-height:16px">
+<div class="rect round" style="border-width:3px;left:51px;top:7px;right:2px;bottom:150px"></div>
+<div class="rect round" style="border-width:3px;left:371px;top:183px;right:114px;bottom:6px"></div>
+<div class="rect round" style="border-width:3px;left:99px;top:183px;right:354px;bottom:6px"></div>
+<div class=rect style="border-width:3px;left:187px;top:119px;right:186px;bottom:86px"></div>
+<div class=line style="border-left-width:2px;left:451px;top:7px;right:131px;bottom:151px"></div>
+<div class=line style="border-top-width:2px;border-left-width:2px;left:227px;top:39px;right:263px;bottom:151px"></div>
+<div class=line style="border-left-width:2px;left:83px;top:7px;right:499px;bottom:151px"></div>
+<div class=line style="border-left-width:2px;left:315px;top:87px;right:267px;bottom:119px"></div>
+<div class=line style="border-left-width:2px;left:387px;top:151px;right:195px;bottom:55px"></div>
+<div class=line style="border-left-width:2px;left:387px;top:87px;right:195px;bottom:119px"></div>
+<div class=line style="border-left-width:2px;left:371px;top:7px;right:211px;bottom:151px"></div>
+<div class=line style="border-left-width:2px;left:203px;top:87px;right:379px;bottom:119px"></div>
+<div class=line style="border-left-width:2px;left:323px;top:7px;right:259px;bottom:151px"></div>
+<div class=line style="border-left-width:2px;left:307px;top:87px;right:275px;bottom:119px"></div>
+<div class=line style="border-left-width:2px;left:203px;top:151px;right:379px;bottom:55px"></div>
+<div style="text-align:right;left:-40px;top:32px;right:544px;bottom:192px">DDR -</div>
+<div style="left:112px;top:32px;right:440px;bottom:192px">HLOS</div>
+<div style="text-align:center;left:400px;top:32px;right:160px;bottom:192px">DSP</div>
+<div style="left:112px;top:48px;right:424px;bottom:176px">Memory</div>
+<div style="text-align:center;left:244px;top:48px;right:276px;bottom:176px">DSP Heap</div>
+<div style="text-align:center;left:388px;top:48px;right:148px;bottom:176px">Memory</div>
+<div style="text-align:center;left:236px;top:64px;right:268px;bottom:160px">(carveout)</div>
+<div style="text-align:center;left:200px;top:128px;right:200px;bottom:96px">Memory Protection Units</div>
+<div style="text-align:center;left:120px;top:192px;right:376px;bottom:32px">Application</div>
+<div style="text-align:center;left:392px;top:192px;right:136px;bottom:32px">Hexagon</div>
+<div style="text-align:center;left:128px;top:208px;right:384px;bottom:16px">Processor</div>
+<div style="text-align:center;left:384px;top:208px;right:128px;bottom:16px">Processor</div>
+</div>
+</div>
+<p>
+Buffers allocated from DSP Heap memory carveout can be mapped into the DSP MMU so that the Hexagon DSP applications can also read/write to these buffers. Allocations in this area are made using ION/RPCMem APIs.
+</p><p>
+Note: This approach is not recommended for ADSP/CDSP usecases, as SMMU is available to provide us physically contiguous memory. Explained in detail below.
+</p><h3>
+<a name="SMMU"></a>SMMU
+</h3><p>
+One of the limitations of <a href="#Memory%20Carveout">Memory Carveout</a> is that it imposes the need to allocate physically contiguous buffers on the HLOS memory. Therefore, HLOS has to set-aside a portion of it's precious memory to be used exclusively by DSP. This is inefficient as the memory is not fully utilized. To avoid this, some Snapdragon devices contain an SMMU in between the Hexagon Processor and the System Memory. The SMMU provides another translation layer and can be used to scatter-gather physically discontiguous chunks of DDR memory, but present a <i>physically contiguous view</i> to the Hexagon DSP processor.
+</p><div class=diagram>
+<div class="html2d art" style="width:640px;height:245px;font-size:10.61px;white-space:nowrap;line-height:13.61px">
+<div class="rect round" style="border-width:3px;left:43px;top:5px;right:145px;bottom:169px"></div>
+<div class="rect round" style="border-width:3px;left:315px;top:196px;right:240px;bottom:5px"></div>
+<div class=rect style="border-width:3px;left:329px;top:128px;right:261px;bottom:87px"></div>
+<div class=dline style="border-left-width:2px;left:193px;top:6px;right:445px;bottom:169px"></div>
+<div class=line style="border-top-width:2px;border-right-width:2px;left:271px;top:101px;right:289px;bottom:115px"></div>
+<div class=line style="border-left-width:2px;left:343px;top:101px;right:295px;bottom:115px"></div>
+<div class=line style="border-left-width:2px;left:336px;top:101px;right:302px;bottom:115px"></div>
+<div class=line style="border-left-width:2px;left:70px;top:6px;right:568px;bottom:169px"></div>
+<div class=line style="border-left-width:2px;left:383px;top:6px;right:255px;bottom:169px"></div>
+<div class=line style="border-left-width:2px;left:315px;top:6px;right:323px;bottom:169px"></div>
+<div class=line style="border-left-width:2px;left:275px;top:6px;right:363px;bottom:169px"></div>
+<div class=line style="border-left-width:2px;left:343px;top:156px;right:295px;bottom:47px"></div>
+<div style="left:211px;top:14px;right:422px;bottom:218px">o</div>
+<div style="text-align:right;left:211px;top:14px;right:375px;bottom:218px">o  o</div>
+<div style="text-align:right;left:-34px;top:27px;right:606px;bottom:204px">DDR -</div>
+<div style="left:95px;top:27px;right:518px;bottom:204px">HLOS</div>
+<div style="left:211px;top:27px;right:422px;bottom:204px">o</div>
+<div style="text-align:right;left:211px;top:27px;right:375px;bottom:204px">o  o</div>
+<div style="text-align:center;left:333px;top:27px;right:286px;bottom:204px">DSP</div>
+<div style="left:95px;top:41px;right:504px;bottom:191px">Memory</div>
+<div style="left:204px;top:41px;right:402px;bottom:191px">IOMMU</div>
+<div style="text-align:right;left:252px;top:41px;right:375px;bottom:191px">o</div>
+<div style="text-align:center;left:330px;top:41px;right:269px;bottom:191px">Memory</div>
+<div style="text-align:right;left:170px;top:54px;right:375px;bottom:177px">HEAP  o</div>
+<div style="text-align:right;left:245px;top:82px;right:368px;bottom:150px">WW</div>
+<div style="text-align:right;left:259px;top:95px;right:368px;bottom:136px">^</div>
+<div style="left:361px;top:109px;right:0px;bottom:123px">Physical addresses (discontiguous blocks)</div>
+<div style="text-align:center;left:340px;top:136px;right:273px;bottom:95px">SMMU</div>
+<div style="left:354px;top:163px;right:21px;bottom:68px">Intermediate address (contiguous block)</div>
+<div style="text-align:center;left:333px;top:204px;right:259px;bottom:27px">Hexagon</div>
+<div style="text-align:center;left:327px;top:218px;right:252px;bottom:14px">Processor</div>
+</div>
+</div>
+<p>
+With SMMU, the allocations on the HLOS are made on an IOMMU heap and the physical pages can be discontiguous chunks. After allocating the pages, the HLOS IOMMU driver is used to map the pages into the SMMU in front of the Hexagon DSP such that, the MMU inside the Hexagon Processor views them as a single physically contiguous chunk. This reduces TLB pressure and optimizes code performance.
+</p><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

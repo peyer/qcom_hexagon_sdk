@@ -1,0 +1,1383 @@
+#============================================================================
+#  Name:
+#    rules.min
+#
+#  Description:
+#    This file specifies the items necessary to build static libraries, dynamic
+#    and/or static modules, and simple executables.
+#    This file works best if included by a project makefile after 
+#    the accompanying defines.min is included, and after build definitions are
+#    assigned.
+#
+#  Assumptions: 
+#   MAKE_D_DIR is set to the directory that contains this file
+#   defines.min has been included first, setting up these rules...
+#
+#        Copyright  2005 - 2009 QUALCOMM Incorporated.
+#               All Rights Reserved.
+#            QUALCOMM Confidential and Proprietary
+#----------------------------------------------------------------------------
+
+.SUFFIXES:
+
+#----------------------------------------------------------------------------
+# functions
+#----------------------------------------------------------------------------
+# Standard 'map' function (apply function $(1) to each element of $(2))
+MAP=$(foreach element,$(2),$(call $(1),$(element)))
+
+NAME_OF=$(basename $(notdir $(1)))
+
+FIND_IN=$(foreach file,$(1),$(firstword $(wildcard $(file) $(addsuffix /$(file),$(2)))))
+
+RECURSE_DIR_OF=$(patsubst ./%,%,$(foreach name,$(call NAME_OF,$(1)),$($(name)_RECURSE_DIR)))
+
+# components of this lib/mod, plus components of those components
+SUBCOMPONENTS_OF=$(addprefix $(1)/,$(COMPONENT_$(1)_COMPONENTS))
+
+COMPONENTS_OF=$(foreach comp,$($(call NAME_OF,$(1))_COMPONENTS),\
+                  $(comp) $(call SUBCOMPONENTS_OF,$(comp)))
+
+# return component ($2) if thing ($1) is in COMPONENT_component_*
+IN_COMPONENT=$(if $(filter $(basename $(1)) ./$(basename $(1)),\
+                      $(addprefix $(2)/,\
+                            $(COMPONENT_$(2)_C_SRCS)\
+                            $(COMPONENT_$(2)_CPP_SRCS)\
+                            $(COMPONENT_$(2)_CXX_SRCS)\
+                            $(COMPONENT_$(2)_ASM_SRCS))),\
+                  $(2))
+
+# returns first component containing name
+COMPONENT_OF=$(firstword $(foreach build,$(BUILDS),\
+                            $(foreach comp,$(call COMPONENTS_OF,$(build)),\
+                               $(call IN_COMPONENT,$(1),$(comp)))))
+
+COMPONENT_NAME_OF=$(subst /,_,$(subst ..,x,$(patsubst ./%,%,$(call COMPONENT_OF,$(1)))))
+
+XS_OF=$(addsuffix $(3),$($(call NAME_OF,$(1))_$(2))\
+                       $(foreach comp,$(call COMPONENTS_OF,$(1)),\
+                          $(addprefix $(comp)/,$(COMPONENT_$(comp)_$(2)))))\
+      $($(call NAME_OF,$(1)).$(2)) # no suffix or COMPONENT support for foo.C_SRCS
+
+#same as XS_OF, except doesn't prepend component path to name 
+XSNP_OF=$(addsuffix $(3),$($(call NAME_OF,$(1))_$(2))\
+                       $(foreach comp,$(call COMPONENTS_OF,$(1)),\
+                          $(COMPONENT_$(comp)_$(2))))\
+        $($(call NAME_OF,$(1)).$(2)) # no suffix or COMPONENT support for foo.LIBS
+
+OBJ_DIR_OF=$(OBJ_DIR)/$(filter-out /,$(call COMPONENT_NAME_OF,$(1))/)$(call NAME_OF,$(1))
+
+OBJ_OF=$(call OBJ_DIR_OF,$(1))$(OBJ_EXT)
+
+MIX_OF=$(call OBJ_DIR_OF,$(1)).mix
+
+C_SRCS_OF=$(call XS_OF,$(1),C_SRCS,.c)
+
+C_OBJS_OF=$(call MAP,OBJ_OF,$(call C_SRCS_OF,$(1)))
+
+CXX_SRCS_OF=$(call XS_OF,$(1),CPP_SRCS,.cpp)\
+            $(call XS_OF,$(1),CXX_SRCS,.cxx)
+
+CXX_OBJS_OF=$(call MAP,OBJ_OF,$(call CXX_SRCS_OF,$(1)))
+
+ASM_SRCS_OF=$(call XS_OF,$(1),ASM_SRCS,.S)
+
+ASM_OBJS_OF=$(call MAP,OBJ_OF,$(call ASM_SRCS_OF,$(1)))
+
+VPATH_FIND=$(firstword $(wildcard $(1)\
+              $(foreach src,$(1),\
+                 $(addsuffix /$(src),$(subst :, ,$(VPATH))))))
+
+LEGACY_SRCS_OF=$(foreach obj,$($(call NAME_OF,$(1))_OBJS),\
+                   $(call VPATH_FIND,$(addprefix $(obj),.c .cxx .cpp .S)))
+
+LEGACY_OBJS_OF=$(call MAP,OBJ_OF,$($(call NAME_OF,$(1))_OBJS))
+
+OBJS_OF=$(call C_OBJS_OF,$(1))\
+        $(call CXX_OBJS_OF,$(1))\
+        $(call ASM_OBJS_OF,$(1))\
+        $(call LEGACY_OBJS_OF,$(1))
+
+# find a file of basename:$(1) that's like a lib, that might be a "BUILD" type: $(2)
+# with optional extension:$(3), return file with extension
+LIB_SRCH=$(strip $(if $(filter $(1),$(BUILD_$(2))),$(OBJ_DIR)/$(1)$(3),\
+              $(if $($(1)_RECURSE_DIR),$($(1)_RECURSE_DIR)/$(OBJ_DIR)/$(1)$(3),\
+                 $(firstword $(or $(call FIND_IN,$(1)$(3),$(LIBDIRS) $(addsuffix /$(OBJ_DIR),$(LIBDIRS))), \
+                                  $(call FIND_IN,$(1),$(LIBDIRS) $(addsuffix /$(OBJ_DIR),$(LIBDIRS))),\
+                                  $(call VPATH_FIND,$(1)$(3) $(1)),\
+                                  $(1)$(3))))))
+
+PRELIBS_OF=$(foreach lib,$(call uniq,$(call XSNP_OF,$(1),PRELIBS,)),\
+            $(call LIB_SRCH,$(lib),PRELIBS,$(LIB_EXT)))
+
+LIBS_OF=$(foreach lib,$(call uniq,$(call XSNP_OF,$(1),LIBS,)),\
+            $(call LIB_SRCH,$(lib),LIBS,$(LIB_EXT)))
+
+OSTYPE_OF=$(call XSNP_OF,$(1),OSTYPE,)
+
+POSTLIBS_OF=$(foreach lib,$(call uniq,$(call XSNP_OF,$(1),POSTLIBS,)),\
+            $(call LIB_SRCH,$(lib),POSTLIBS,$(LIB_EXT)))
+
+DLLS_OF=$(foreach dll,$(call uniq,$(call XSNP_OF,$(1),DLLS,)),\
+            $(call LIB_SRCH,$(dll),DLLS,$(2)))
+
+IMPLIBS_OF=$(foreach lib,$(call uniq,$(call XSNP_OF,$(1),IMPLIBS,)),\
+              $(addprefix $(patsubst %$(IMP_LIB_EXT),%,$(call LIB_SRCH,$(lib),IMPLIBS,$(IMP_LIB_EXT))),\
+                          $(IMP_LIB_EXT) $(IMPSYM_EXT)))
+
+CLIFS_OF=$(foreach clif,$(call uniq,$(call XSNP_OF,$(1),CLIFS,)),\
+            $(call LIB_SRCH,$(clif),LIBS,.clif))
+
+CIFS_OF=$(patsubst %,% $(BUILD_VERSION_CIF),$(call XS_OF,$(1),CIFS,.cif))
+
+PATSUBST_CIFS_OF=$(patsubst %_CIFS,%,$(patsubst %_d,%,$(patsubst %_s,%,$(1))))
+
+STATIC_CIFS_OBJ_OF=$(if $(strip $(call CIFS_OF,$(1))$(call CLIFS_OF,$(1))),\
+                     $(OBJ_DIR)/$(call NAME_OF,$(1))_CIFS_s$(OBJ_EXT))
+DYNAMIC_CIFS_OBJ_OF=$(if $(strip $(call CIFS_OF,$(1))$(call CLIFS_OF,$(1))),\
+                     $(OBJ_DIR)/$(call NAME_OF,$(1))_CIFS_d$(OBJ_EXT))
+
+RCSOBJ_OF=$(OBJ_DIR)/$(filter-out /,$(call COMPONENT_NAME_OF,$(1))/)$(call NAME_OF,$(1)).res
+
+RCS_OF=$(call XS_OF,$(1),RCS,.rc)$($(call NAME_OF,$(1)).RCS)
+
+RCSOBJS_OF=$(call MAP,RCSOBJ_OF,$(call RCS_OF,$(1)))
+
+OKS_MAIN_SIM_OPTIONS_OF=$(call XSNP_OF,$(notdir $(basename $(1))),QEXE_SIM_OPTIONS)
+OKS_MAIN_PRIMORDIAL_STACK_SIZE_OF=$(call XSNP_OF,$(notdir $(basename $(1))),PRIMORDIAL_STACK_SIZE)
+OKS_MAIN_ARGS_OF=$(call XSNP_OF,$(notdir $(basename $(1))),QEXE_ARGS)
+
+#----------------------------------------------------------------------------
+# tags defines
+#----------------------------------------------------------------------------
+TAGS=$(addprefix $(OBJ_DIR)/,$(addsuffix .tags,$(NOQBUILDS)))
+
+TAGS_SRCS_OF=$(call C_SRCS_OF,$(1)) \
+             $(call CXX_SRCS_OF,$(1)) \
+             $(call ASM_SRCS_OF,$(1)) \
+             $(call LEGACY_SRCS_OF,$(1))
+
+LIBTAGS_OF=$(foreach lib,\
+                $(call uniq,$(call XSNP_OF,$(1),LIBS,))\
+                $(call uniq,$(call XSNP_OF,$(1),IMPLIBS,))\
+                $(call uniq,$(call XSNP_OF,$(1),DLLS,)),\
+              $(if $(filter $(lib),\
+                      $(BUILD_LIBS)\
+                      $(BUILD_IMPLIBS)\
+                      $(BUILD_DLLS)),\
+                 $(OBJ_DIR)/$(lib).tags,\
+              $(if $($(lib)_RECURSE_DIR),$($(lib)_RECURSE_DIR)/$(OBJ_DIR)/$(lib).tags)))
+
+#----------------------------------------------------------------------------
+# cmets defines
+#----------------------------------------------------------------------------
+CMETS=$(addprefix $(OBJ_DIR)/,$(addsuffix .cmet,$(NOQBUILDS)))
+
+FEZ_OF=$(patsubst %$(OBJ_EXT),%.fez,$(call OBJ_OF,$(1)))
+
+CMET_LISTS_OF=$(addprefix $(1:.cmet=),.cdeplist .fezlist)
+
+FEZLIST_SRCS_OF=$(call C_SRCS_OF,$(1)) \
+                $(call CXX_SRCS_OF,$(1)) \
+                $(call ASM_SRCS_OF,$(1)) \
+                $(call LEGACY_SRCS_OF,$(1))
+
+LIBCMETS_OF=$(foreach lib,\
+                         $(call uniq,$(call XSNP_OF,$(1),LIBS,))\
+                         $(call uniq,$(call XSNP_OF,$(1),IMPLIBS,))\
+                         $(call uniq,$(call XSNP_OF,$(1),DLLS,)),\
+              $(if $(filter $(lib),\
+                      $(BUILD_LIBS)\
+                      $(BUILD_IMPLIBS)\
+                      $(BUILD_DLLS)),\
+                 $(OBJ_DIR)/$(lib).cmet,\
+              $(if $($(lib)_RECURSE_DIR),$($(lib)_RECURSE_DIR)/$(OBJ_DIR)/$(lib).cmet)))
+
+#----------------------------------------------------------------------------
+# flags defines
+#----------------------------------------------------------------------------
+# per-source file flags (incdirs, defines, other compiler flags) are equal to
+#
+#    global flags + ( if cif, module's flags, else component's flags )
+#
+# TODO: this is broken, the _CIFS file do not exist and %.mif doesn't 
+# cover everything 
+_FLAGS_OF_BUILD=\
+      $(foreach comp,$(call COMPONENTS_OF,$(2)),$(COMPONENT_$(comp)_$(1)))
+
+_FLAGS_OF=$($(call NAME_OF,$(2))_$(1))\
+          $($(call NAME_OF,$(2)).$(1))\
+         $(if $(filter %_CIFS %_CIFS_d %_CIFS_s,$(basename $(2))),\
+           $(call _FLAGS_OF_BUILD,$(1),$(call PATSUBST_CIFS_OF,$(basename $(2)))),\
+           $(if $(filter %.mif,$(2)),\
+              $(call $(1)_FLAGS_OF_BUILD,$(basename $(2))),\
+              $(if $(call COMPONENT_OF,$(2)),$(COMPONENT_$(call COMPONENT_OF,$(2))_$(1)))))
+
+##########################################################################
+# Append MAKE_D_%_INCDIRS and MAKE_D_%_LIBDIRS to INCDIRS and LIBDIRS
+##########################################################################
+
+INCDIRS+=$(foreach x,$(filter MAKE_D_%_INCDIR,$(.VARIABLES)),$($x))
+TEMP_LIBDIRS=$(foreach x,$(filter MAKE_D_%_LIBDIR,$(.VARIABLES)),$($x))
+LIBDIRS += $(subst /ship , , $(TEMP_LIBDIRS))
+
+# all the incdirs of all the components of this build
+INCDIRS_OF=$(call _FLAGS_OF,INCDIRS,$(1)) $(if $(QEXES_MAIN),$(QURT_INCDIRS),) $(INCDIRS)
+# these function prefix the incdirs with the appropriate flag
+CC_INCDIRS_OF=$(addprefix $(CC_INCFLAG),$(call INCDIRS_OF,$(1)))
+ASM_INCDIRS_OF=$(addprefix $(ASM_INCFLAG),$(call INCDIRS_OF,$(1)))
+CDEP_INCDIRS_OF=$(addprefix $(CDEP_INCFLAG),$(call INCDIRS_OF,$(1)))
+CIFC_INCDIRS_OF=$(addprefix $(CIFC_INCFLAG),$(call INCDIRS_OF,$(1)))
+RC_INCDIRS_OF=$(addprefix $(RC_INCFLAG),$(call INCDIRS_OF,$(1)))
+
+# all the defines of all the components of this build
+ifeq ($(V_FLAVOR),Debug)
+DEFINES += _DEBUG
+endif
+
+DEFINES_OF=$(DEFINES)\
+           $(call _FLAGS_OF,DEFINES,$(1))
+
+# all the undefines of all the components of this build
+UNDEFINES_OF=$(UNDEFINES)\
+             $(call _FLAGS_OF,UNDEFINES,$(1))
+
+CC_DEFINES_OF=$(addprefix $(CC_DEFINEFLAG),$(call DEFINES_OF,$(1)))
+CC_UNDEFINES_OF=$(addprefix $(CC_UNDEFINEFLAG),$(call UNDEFINES_OF,$(1)))
+
+ASM_DEFINES_OF=$(addprefix $(ASM_DEFINEFLAG),$(call DEFINES_OF,$(1)))
+ASM_UNDEFINES_OF=$(addprefix $(ASM_UNDEFINEFLAG),$(call UNDEFINES_OF,$(1)))
+
+# all the CXX or CC flags of all the components of this build
+CC_FLAGS_OF=$(C_FLAGS) $(CC_FLAGS)\
+            $(call _FLAGS_OF,C_FLAGS,$(1))\
+	    $(call _FLAGS_OF,CC_FLAGS,$(1))
+
+CC_MIX_FLAGS_OF=$(CC_MIX_FLAGS)\
+                $(call _FLAGS_OF,C_FLAGS,$(1))\
+                $(call _FLAGS_OF,CC_FLAGS,$(1))
+
+CXX_FLAGS_OF=$(CPP_FLAGS) $(CXX_FLAGS)\
+             $(call _FLAGS_OF,CPP_FLAGS,$(1))\
+             $(call _FLAGS_OF,CXX_FLAGS,$(1))
+
+CXX_MIX_FLAGS_OF=$(CXX_MIX_FLAGS)\
+                 $(call _FLAGS_OF,CPP_FLAGS,$(1))
+                 $(call _FLAGS_OF,CXX_FLAGS,$(1))
+
+# flags specific for this build
+LD_FLAGS_OF=$(addprefix $(LD_FLAG),$($(call NAME_OF,$(1))_LD_FLAGS) $($(call NAME_OF,$(1)).LD_FLAGS))
+
+IMPAR_FLAGS_OF=$($(call NAME_OF,$(1))_IMPAR_FLAGS) $($(call NAME_OF,$(1)).IMPAR_FLAGS)
+
+# which C compiler 
+CC_OF=$(or $($(call NAME_OF,$(1))_CC),\
+           $(COMPONENT_$(call COMPONENT_OF,$(1))_CC),\
+           $(CC))
+
+# which C++ compiler 
+CXX_OF=$(or $($(call NAME_OF,$(1))_CXX),\
+            $(COMPONENT_$(call COMPONENT_OF,$(1))_CXX),\
+            $(CXX))
+
+#----------------------------------------------------------------------------
+# big lists
+#----------------------------------------------------------------------------
+
+NOQBUILDS=$(call uniq,$(BUILD_LIBS) $(BUILD_IMPLIBS) $(BUILD_DLLS) $(BUILD_MODS) $(BUILD_MODOS) $(BUILD_MIFS) $(BUILD_IMGS) $(BUILD_EXES))
+
+BUILDS=$(call uniq,$(NOQBUILDS) $(BUILD_QEXES))
+
+CIFS_D_SRCS=$(addprefix $(OBJ_DIR)/,$(addsuffix _CIFS_d.c,$(BUILD_MODS)))
+CIFS_S_SRCS=$(addprefix $(OBJ_DIR)/,$(addsuffix _CIFS_s.c,$(call uniq,$(BUILD_MODOS)\
+                                                              $(BUILD_LIBS)\
+                                                              $(BUILD_IMPLIBS)\
+                                                              $(BUILD_EXES)\
+                                                              $(BUILD_IMGS)\
+                                                              $(BUILD_DLLS))))
+
+
+CIFS=$(call uniq,$(call MAP,CIFS_OF,$(BUILDS)))
+
+CLIFS=$(strip $(foreach build,$(BUILDS),\
+          $(if $(strip $(call CIFS_OF,$(build))$(call CLIFS_OF,$(build))),\
+          $(OBJ_DIR)/$(build).clif)))
+
+C_SRCS=$(call uniq,$(call MAP,C_SRCS_OF,$(BUILDS))) $(CIFS_D_SRCS) $(CIFS_S_SRCS)
+
+C_OBJS=$(call MAP,OBJ_OF,$(C_SRCS))
+
+C_MIXS=$(call MAP,MIX_OF,$(C_SRCS))
+
+RCS=$(call uniq,$(call MAP,RCS_OF,$(BUILDS)))
+
+RCS_OBJS=$(call MAP,RCSOBJ_OF,$(RCS))
+
+CXX_SRCS=$(call uniq,$(call MAP,CXX_SRCS_OF,$(BUILDS)))
+
+CXX_OBJS=$(call MAP,OBJ_OF,$(CXX_SRCS))
+
+CXX_MIXS=$(call MAP,MIX_OF,$(CXX_SRCS))
+
+ASM_SRCS=$(call uniq,$(call MAP,ASM_SRCS_OF,$(BUILDS)))
+
+ASM_OBJS=$(call MAP,OBJ_OF,$(ASM_SRCS))
+
+OBJS=$(call uniq,$(call MAP,OBJS_OF,$(BUILDS)))
+
+NOQOBJS=$(call uniq,$(call MAP,OBJS_OF,$(NOQBUILDS)))
+
+LIBS=$(addprefix $(OBJ_DIR)/,$(addsuffix $(LIB_EXT),$(BUILD_LIBS)))
+
+IMPLIBS=$(addprefix $(OBJ_DIR)/,$(addsuffix $(IMP_LIB_EXT),$(BUILD_IMPLIBS)))
+
+IMPSYMS=$(if $(IMPSYM_EXT),$(addprefix $(OBJ_DIR)/,$(addsuffix $(IMPSYM_EXT),$(BUILD_IMPLIBS))))
+
+DLLS=$(addprefix $(OBJ_DIR)/,$(addsuffix $(DLL_EXT),$(BUILD_DLLS)))
+DLLS+=$(QEXES_MAIN)
+
+DLL_LIBS=$(filter-out $(DLLS),$(addprefix $(OBJ_DIR)/,$(addsuffix $(DLL_LIB_EXT),$(BUILD_DLLS))))
+
+EXEDLLS=$(foreach exe,$(BUILD_EXES),\
+           $(foreach suffix,$(DLL_EXT) $(PDB_EXT),\
+              $(addsuffix $(suffix),$(addprefix $(OBJ_DIR)/,\
+                 $(call NAME_OF,$(call DLLS_OF,$(exe)))))))
+
+DLLDLLS=$(foreach dll,$(BUILD_DLLS),\
+           $(foreach suffix,$(DLL_EXT) $(PDB_EXT),\
+              $(addsuffix $(suffix),$(addprefix $(OBJ_DIR)/,\
+                 $(call NAME_OF,$(call DLLS_OF,$(dll)))))))
+
+MODS=$(addprefix $(OBJ_DIR)/,$(addsuffix $(MOD_EXT),$(BUILD_MODS)))
+
+MODOS=$(if $(MODO_EXT),$(addprefix $(OBJ_DIR)/,$(addsuffix $(MODO_EXT),$(BUILD_MODOS))))
+
+MIFS=$(foreach mod,$(BUILD_MODS) $(BUILD_MIFS),$(if $(strip $(call CIFS_OF,$(mod))),$(OBJ_DIR)/$(mod).mif))
+
+EXES=$(addprefix $(OBJ_DIR)/,$(addsuffix $(EXE_EXT),$(BUILD_EXES)))
+
+QEXES=$(foreach exe,$(BUILD_QEXES),\
+          $(if $(filter QURT,$(call OSTYPE_OF,$(exe))),,\
+              $(addprefix $(OBJ_DIR)/,$(addsuffix $(EXE_EXT),$(exe)))))
+
+ifndef NO_QEXES_MAIN
+QEXES_MAIN=$(strip $(foreach exe,$(BUILD_QEXES),\
+        $(if $(filter QURT,$(call OSTYPE_OF,$(exe))),\
+           $(foreach suffix,$(DLL_EXT) $(PDB_EXT),\
+              $(addsuffix $(suffix),$(addprefix $(OBJ_DIR)/,$(exe)))),)))
+endif
+
+IMGS=$(addprefix $(OBJ_DIR)/,$(addsuffix $(IMG_EXT),$(BUILD_IMGS)))
+
+OKS_MAIN=$(addsuffix .ok,$(QEXES_MAIN))
+
+OKS=$(addsuffix .ok,$(QEXES))
+
+DEPS=$(filter-out $(LIBS) $(IMPLIBS) $(DLLS:$(DLL_EXT)=$(DLL_LIB_EXT)) $(DLLS) $(CMETS) $(TAGS),\
+        $(call uniq,$(foreach build,$(BUILDS),\
+                  $(call LIBS_OF,$(build))\
+                  $(call IMPLIBS_OF,$(build))\
+                  $(call DLLS_OF,$(build),$(DLL_LIB_EXT))\
+                  $(call DLLS_OF,$(build),$(DLL_EXT))\
+                  $(call CLIFS_OF,$(build))\
+                  $(call LIBCMETS_OF,$(build))\
+                  $(call LIBTAGS_OF,$(build)))))
+
+ifneq ($(NO_RECURSE),1)
+RECURSE_DIRS=$(call uniq,$(call RECURSE_DIR_OF,$(DEPS)))
+RECURSE_DEPS=$(foreach dep,$(DEPS),$(if $(call RECURSE_DIR_OF,$(dep)),$(dep)))
+RECURSE_DEP_MARKERS=$(addsuffix _$(RECURSE_ID),$(RECURSE_DEPS))
+RECURSE_DIRS_CLEAN=$(addsuffix _clean,$(RECURSE_DIRS))
+endif
+
+#----------------------------------------------------------------------------
+# component min files
+#----------------------------------------------------------------------------
+define COMPONENT_INCLUDE
+   # empty defaults, in case min file doesn't set these
+   COMPONENT_COMPONENTS=
+   COMPONENT_IDLS=
+   COMPONENT_HEADERS_IDLS=
+   COMPONENT_IMPL_IDLS=
+   COMPONENT_CIF_IDLS=
+   COMPONENT_C_SRCS=
+   COMPONENT_CC=
+   COMPONENT_CC_FLAGS=
+   COMPONENT_CPP_SRCS=
+   COMPONENT_CXX=
+   COMPONENT_CXX_SRCS=
+   COMPONENT_CXX_FLAGS=
+   COMPONENT_ASM_SRCS=
+   COMPONENT_OBJS=
+   COMPONENT_CIFS=
+   COMPONENT_CLIFS=
+   COMPONENT_INCDIRS=
+   COMPONENT_LIBS=
+   COMPONENT_IMPLIBS=
+   COMPONENT_RCS=
+   COMPONENT_DEFINES=
+   COMPONENT_UNDEFINES=
+
+   # min file can use this variable to find its own files
+   COMPONENT_DIR=$(1)
+
+   include $(1)/make.min
+
+   # setup unique variables to hold the info for this component
+   COMPONENT_$(1)_COMPONENTS:=$$(COMPONENT_COMPONENTS)
+   COMPONENT_$(1)_IDLS:=$$(COMPONENT_IDLS)
+   COMPONENT_$(1)_HEADERS_IDLS:=$$(COMPONENT_HEADERS_IDLS)
+   COMPONENT_$(1)_IMPL_IDLS:=$$(COMPONENT_IMPL_IDLS)
+   COMPONENT_$(1)_CIF_IDLS:=$$(COMPONENT_CIF_IDLS)
+   COMPONENT_$(1)_C_SRCS:=$$(COMPONENT_C_SRCS)
+   COMPONENT_$(1)_CC:=$$(COMPONENT_CC)
+   COMPONENT_$(1)_CC_FLAGS:=$$(COMPONENT_CC_FLAGS)
+   COMPONENT_$(1)_CPP_SRCS:=$$(COMPONENT_CPP_SRCS)
+   COMPONENT_$(1)_CXX:=$$(COMPONENT_CXX)
+   COMPONENT_$(1)_CXX_SRCS:=$$(COMPONENT_CXX_SRCS)
+   COMPONENT_$(1)_CXX_FLAGS:=$$(COMPONENT_CXX_FLAGS)
+   COMPONENT_$(1)_ASM_SRCS:=$$(COMPONENT_ASM_SRCS)
+   COMPONENT_$(1)_OBJS:=$$(COMPONENT_OBJS)
+   COMPONENT_$(1)_CIFS:=$$(COMPONENT_CIFS)
+   COMPONENT_$(1)_CLIFS:=$$(COMPONENT_CLIFS)
+   COMPONENT_$(1)_INCDIRS:=$$(COMPONENT_INCDIRS)
+   COMPONENT_$(1)_LIBS:=$$(COMPONENT_LIBS)
+   COMPONENT_$(1)_IMPLIBS:=$$(COMPONENT_IMPLIBS)
+   COMPONENT_$(1)_RCS:=$$(COMPONENT_RCS)
+   COMPONENT_$(1)_DEFINES:=$$(COMPONENT_DEFINES)
+   COMPONENT_$(1)_UNDEFINES:=$$(COMPONENT_UNDEFINES)
+
+   # recurse over sub-components
+   $$(foreach comp, $$(COMPONENT_COMPONENTS), $$(eval $$(call COMPONENT_INCLUDE,$(1)/$$(comp))))
+
+endef
+
+# deal with each component of each build, using COMPONENT_INCLUDE
+$(foreach build,$(BUILDS),$(foreach comp, $($(build)_COMPONENTS), $(eval $(call COMPONENT_INCLUDE,$(comp)))))
+
+# simple deprule, $(eval)ed by DEPENDS
+define DEPRULE
+$(1):$(2)
+endef
+
+DEPENDS=$(eval $(DEPRULE))#$(info $(DEPRULE))
+
+#----------------------------------------------------------------------------
+# ZIP functions, variables
+#----------------------------------------------------------------------------
+# try to minimize the amount of eval'ing and wildcard'ing we do for the
+# ZIP targets...
+ZIPS=$(if $(filter zips zips_clean,$(MAKECMDGOALS)),\
+         $(addsuffix .zip,$(BUILD_ZIPS)),\
+         $(filter $(MAKECMDGOALS),$(addsuffix .zip,$(BUILD_ZIPS))))
+
+# recursive file-only wildcard with a filter-out list
+FILE_WILDCARD_FILTER_R=$(foreach path,$(filter-out $2,$1),\
+                          $(if $(wildcard $(path)/.),\
+                              $(call $0,$(call filter-outExact,$(path)/. $(path)/..,$(wildcard $(path)/* $(path)/.*)),$2),\
+                              $(wildcard $(path))))
+
+ZIP_SRCHROOT_OF=$(firstword $(call XS_OF,$(1),ZIP_SRCHROOT,) .)
+
+ZIP_SRCH_PATHS_OF=$(sort $(addprefix $(call ZIP_SRCHROOT_OF,$(1))/,\
+                            $(patsubst $(2)%,%,\
+                               $(filter $(2)%,$(call XS_OF,$(1),ZIP_SPEC,)))))
+
+ZIP_SPEC_EXCLUDE_DIRS_OF=$(patsubst %/.,%,$(wildcard $(addsuffix /.,$(call ZIP_SRCH_PATHS_OF,$(1),-))))
+
+ZIP_SPEC_EXCLUDE_FILES_OF=$(filter-out $(call ZIP_SPEC_EXCLUDE_DIRS_OF,$(1)),\
+                             $(wildcard $(call ZIP_SRCH_PATHS_OF,$(1),-)))
+
+ZIP_FILES_OF=$(filter-out $(call ZIP_SPEC_EXCLUDE_FILES_OF,$(1)),\
+                 $(sort $(call FILE_WILDCARD_FILTER_R,\
+                            $(call ZIP_SRCH_PATHS_OF,$(1),+),\
+                            $(call ZIP_SPEC_EXCLUDE_DIRS_OF,$(1)))))
+
+ZIP_INTERMEDIATE_FILE=$(patsubst $(call ZIP_SRCHROOT_OF,$(1))%,$(call NAME_OF,$(1))%,$(2))
+
+ZIP_INTERMEDIATE_FILES_OF=$(call ZIP_INTERMEDIATE_FILE,$(1),$(call ZIP_FILES_OF,$(1)))
+
+
+#----------------------------------------------------------------------------
+# CMET functions, variables
+#----------------------------------------------------------------------------
+
+ifdef BUILD_CMET_INFOS
+
+$(foreach n,$(BUILD_CMET_INFOS),\
+   $(call DEPENDS,$(OBJ_DIR)/$(n)_cmet_info.txt,$(OBJ_DIR)/$(n).cmet))
+
+CMET_INFOS = $(patsubst %,$(OBJ_DIR)/%_cmet_info.txt,$(BUILD_CMET_INFOS))
+
+endif
+
+#----------------------------------------------------------------------------
+# IDL and make.d extension functions functions
+# These must be included after variable and function definitions, but before
+# the rest of rules, because some variables/functions may be updated, 
+# which must happen before they are evaluated.
+#----------------------------------------------------------------------------
+include $(MAKE_D_DIR)/idl_functions.min
+
+# pull extensions
+$(call INCLUDE_MAKE_D_EXTS,functions.min)
+
+#----------------------------------------------------------------------------
+# end of functions stuff.
+#----------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------
+# rules begin in earnest
+#----------------------------------------------------------------------------
+
+.PHONY: all clean info help libs implibs mods modos mifs exes imgs oks subdirs 
+
+#define default goals for subdirectories as same goals for current directory
+SUBDIRGOALS = $(MAKECMDGOALS)
+
+all: libs implibs mods modos mifs dlls exes imgs oks subdirs
+
+#pragma runlocal
+clean: subdirs
+	-$(call rm_rf,$(OBJ_DIR))
+
+#----------------------------------------------------------------------------
+# debugging rule, allows make syntax commands to be passed as goals, e.g.
+#  make '$(info hello world)'
+#pragma runlocal
+$$%:;@$(call true)$(info $(call or,$$$*))
+
+info:
+	@$(call echo,================================================================)
+	@$(call echo, MAKE_D_DIR=$(MAKE_D_DIR))
+	@$(call echo, )
+	@$(call echo, Use make V=<variation> to build using a particular variation.)
+	@$(call echo, )
+	@$(call echo, Current variation:)
+	@$(call echo,    V_FILE=$(V_FILE))
+	@$(call echo,         V=$(V))
+	@$(call echo,   OBJ_DIR=$(OBJ_DIR))
+	@$(call echo, )
+	@$(call echo, )
+	@$(call echo, BUILDS Info:)
+	@$(if $(LIBS),    $(call echo,    LIBS: $(LIBS)))
+	@$(if $(IMPLIBS), $(call echo, IMPLIBS: $(IMPLIBS)))
+	@$(if $(MODS),    $(call echo,    MODS: $(MODS)))
+	@$(if $(MODOS),   $(call echo,   MODOS: $(MODOS)))
+	@$(if $(CIFS),    $(call echo,    CIFS: $(CIFS)))
+	@$(if $(MIFS),    $(call echo,    MIFS: $(MIFS)))
+	@$(if $(DLLS),    $(call echo,    DLLS: $(DLLS)))
+	@$(if $(EXES),    $(call echo,    EXES: $(EXES)))
+	@$(if $(EXEDLLS), $(call echo, EXEDLLS: $(EXEDLLS)))
+	@$(if $(DLLDLLS), $(call echo, DLLDLLS: $(DLLDLLS)))
+	@$(if $(QEXES),   $(call echo,   QEXES: $(QEXES)))
+	@$(if $(BUILD_EXES),   $(call echo,   BUILD_EXES: $(BUILD_EXES)))
+	@$(if $(QEXES_MAIN),   $(call echo,   QEXES_MAIN: $(QEXES_MAIN)))
+	@$(if $(QEXE_EXEC),   $(call echo,   QEXE_EXEC: $(QEXE_EXEC)))
+	@$(if $(QURT_QEXE_EXEC),   $(call echo,   QURT_QEXE_EXEC: $(QURT_QEXE_EXEC)))
+	@$(if $(OKS_MAIN),   $(call echo,   OKS_MAIN: $(OKS_MAIN)))
+	@$(if $(IMGS),    $(call echo,    IMGS: $(IMGS)))
+	@$(if $(OBJS),    $(call echo,    OBJS: $(OBJS)))
+	@$(if $(DEPS),    $(call echo,    DEPS: $(DEPS)))
+	@$(call echo, )
+	@$(call echo,================================================================)
+
+libs: $(LIBS)
+
+
+dlls: $(DLLS) $(DLL_LIBS) $(DLLDLLS)
+
+mods: $(MODS)
+
+modos: $(MODOS)
+
+mifs: $(MIFS)
+
+exes: $(EXES) $(EXEDLLS)
+
+imgs: $(IMGS)
+
+oks: $(OKS) $(OKS_MAIN)
+
+$(foreach qexe,$(QEXES),\
+       $(call DEPENDS,$(qexe).ok,$(qexe)))
+
+$(foreach qexe,$(QEXES_MAIN),\
+       $(call DEPENDS,$(qexe).ok,$(qexe)))
+
+$(OKS):
+	echo ok $(<) 
+	$(call QEXE_EXEC,$(call OKS_SIM_OPTIONS_OF,$(<)),$(<),$(call OKS_ARGS_OF,$(<)))
+	$(call touch,$(@))
+
+$(OKS_MAIN):
+	echo ok main $(<)
+	$(call QURT_QEXE_EXEC,$(call OKS_MAIN_SIM_OPTIONS_OF,$(<)),$(call OKS_MAIN_PRIMORDIAL_STACK_SIZE_OF,$(<)),$(<),$(call OKS_MAIN_ARGS_OF,$(<)))
+	$(call touch,$(@))
+
+subdirs: $(BUILD_SUBDIRS)
+
+.PHONY: $(BUILD_SUBDIRS)
+
+$(BUILD_SUBDIRS):
+	$(RECURSE_MAKE) -C $(@) $(SUBDIRGOALS)
+
+# deps and rules for C_OBJS
+$(foreach src,$(C_SRCS),\
+   $(call DEPENDS,$(call OBJ_OF,$(src)),$(src)))
+
+$(C_OBJS): | $(AUTOGEN_HEADERS)
+	$(_@)$(call mkdir_p,$(@D))
+	$(_@)$(call exec,$(CDEP)) $(call CDEP_INCDIRS_OF,$(<)) -o $(@) $(<) > $(@).dep
+	$(call exec,$(call CC_OF,$(<))) $(call CC_FLAGS_OF,$(<)) $(call CC_DEFINES_OF,$(<)) $(call CC_UNDEFINES_OF,$(<)) $(call CC_INCDIRS_OF,$(<)) $(CC_INC) $(CC_OUTPUTFLAG)$(@) $(<)
+
+# deps and rules for C_MIXS
+$(foreach src,$(C_SRCS),\
+   $(call DEPENDS,$(call MIX_OF,$(src)),$(src)))
+
+$(C_MIXS): | $(AUTOGEN_HEADERS)
+	$(_@)$(call mkdir_p,$(@D))
+	$(_@)$(call exec,$(CDEP)) $(call CDEP_INCDIRS_OF,$(<)) -o $(@) $(<) > $(@).dep
+	$(call exec,$(call CC_OF,$(<))) $(call CC_MIX_FLAGS_OF,$(<)) $(call CC_DEFINES_OF,$(<)) $(call CC_UNDEFINES_OF,$(<)) $(call CC_INCDIRS_OF,$(<)) $(CC_INC) $(CC_MIX_OUTPUTFLAG)$(@) $(<)
+
+
+# deps and rules for CXX_OBJS
+$(foreach src,$(CXX_SRCS),\
+   $(call DEPENDS,$(call OBJ_OF,$(src)),$(src)))
+
+$(CXX_OBJS): | $(AUTOGEN_HEADERS)
+	$(_@)$(call mkdir_p,$(@D))
+	$(_@)$(call exec,$(CDEP)) $(call CDEP_INCDIRS_OF,$(<)) -o $(@) $(<) > $(@).dep
+	$(call exec,$(call CXX_OF,$(<))) $(call CXX_FLAGS_OF,$(<)) $(call CC_DEFINES_OF,$(<)) $(call CC_UNDEFINES_OF,$(<)) $(call CC_INCDIRS_OF,$(<)) $(CC_INC) $(CC_OUTPUTFLAG)$(@) $(<)
+
+# deps and rules for CXX_MIXS
+$(foreach src,$(CXX_SRCS),\
+   $(call DEPENDS,$(call MIX_OF,$(src)),$(src)))
+
+$(CXX_MIXS): | $(AUTOGEN_HEADERS)
+	$(_@)$(call mkdir_p,$(@D))
+	$(_@)$(call exec,$(CDEP)) $(call CDEP_INCDIRS_OF,$(<)) -o $(@) $(<) > $(@).dep
+	$(call CXX_OF,$(<)) $(call CXX_MIX_FLAGS_OF,$(<)) $(call CC_DEFINES_OF,$(<)) $(call CC_UNDEFINES_OF,$(<)) $(call CC_INCDIRS_OF,$(<)) $(CC_INC) $(CC_MIX_OUTPUTFLAG)$(@) $(<)
+
+# deps and rules for ASM_OBJS
+$(foreach src,$(ASM_SRCS),\
+   $(call DEPENDS,$(call OBJ_OF,$(src)),$(src)))
+
+$(ASM_OBJS):
+	$(_@)$(call mkdir_p,$(@D))
+	$(_@)$(call exec,$(CDEP)) $(call CDEP_INCDIRS_OF,$(<)) -o $(@) $(<) > $(@).dep
+	$(if $(APP),\
+		$(call exec,$(APP)) $(APP_FLAGS) $(call CC_DEFINES_OF,$(<)) $(call CC_UNDEFINES_OF,$(<)) $(call CC_INCDIRS_OF,$(<)) $(CC_INC) < $(<) | $(call exec,$(APP2ASM)) -o $(@:$(OBJ_EXT)=_app.S),@$(call true))
+	$(call exec,$(ASM)) $(ASM_FLAGS) $(call ASM_DEFINES_OF,$(<)) $(call ASM_UNDEFINES_OF,$(<)) $(call ASM_INCDIRS_OF,$(<)) $(ASM_INC) $(ASM_OUTPUTFLAG)$(@) $(ASM_INPUTFLAG)$(if $(APP),$(@:$(OBJ_EXT)=_app.S),$(<))
+
+# deps and rules for RCS_OBJS
+$(foreach src,$(RCS),\
+   $(call DEPENDS,$(call RCSOBJ_OF,$(src)),$(src)))
+
+$(RCS_OBJS):
+	$(_@)$(call mkdir_p,$(@D))
+	$(call exec,$(RC)) $(call RC_INCDIRS_OF,$(<)) $(RC_INC) $(addprefix $(RC_DEFINEFLAG),$(call DEFINES_OF,$(<))) $(RC_FLAGS) $(RC_OUTPUTFLAG)$(@) $(<)
+
+# deps and rules for libs, 
+$(foreach lib,$(LIBS),\
+   $(foreach dep,$(call PRELIBS_OF,$(lib))\
+                 $(call OBJS_OF,$(lib))\
+                 $(call LIBS_OF,$(lib))\
+                 $(call RCSOBJS_OF,$(lib))\
+                 $(call STATIC_CIFS_OBJ_OF,$(lib))\
+                 $(call POSTLIBS_OF,$(lib)),\
+       $(call DEPENDS,$(lib),$(dep))))
+
+$(LIBS):
+	$(_@)$(call mkdir_p,$(@D))	
+	$(eval ARCHIVER_TXT_FILE=$(subst .,_,$(@))_archiver.txt)
+	$(eval variable := $(shell cat $(ARCHIVER_TXT_FILE) 2>&0))
+	$(if $(variable),$(if $(filter-out $(AR_FLAGS) $(AR_OUTPUTFLAG)$(@) $(^),$(variable)),$(foreach option,$(AR_FLAGS) $(AR_OUTPUTFLAG)$(@) $(^), \
+           $(_@)echo $(subst \,/,$(option) >> $(subst .,_,$(@))_archiver.txt$(_nl))),),$(foreach option,$(AR_FLAGS) $(AR_OUTPUTFLAG)$(@) $(^), \
+           $(_@)echo $(subst \,/,$(option) >> $(subst .,_,$(@))_archiver.txt$(_nl))))
+	$(call exec,$(AR)) @$(subst .,_,$(@))_archiver.txt	
+
+# deps and rules for implibs, 
+$(foreach implib,$(IMPLIBS),\
+   $(foreach dep,$(call OBJS_OF,$(implib)),\
+       $(call DEPENDS,$(implib),$(dep))))
+
+# IMPLIB_AR_CMD can be overridden by toolchain files to perform a multi-step link
+#
+# This is useful for things created a shared object implib vs a archive implib.
+#
+ifndef IMPLIB_AR_CMD
+define IMPLIB_AR_CMD
+	$(call exec,$(AR)) $(AR_FLAGS) $(AR_OUTPUTFLAG)$(@) $(^)        
+endef
+endif
+
+$(IMPLIBS):
+	$(_@)$(call mkdir_p,$(@D))
+	$(call IMPLIB_AR_CMD,$(^),$(@))
+
+# LD_INPUTS can be overridden by toolchain files to control what gets 
+# passed to LD as inputs.
+#
+# This is useful for things like:
+#
+# 1) GNU linker is a single-pass linker, and the rules.min/idl_rules.min 
+#    prevents the command-line from being ordered properly causing linker
+#    errors, this option allows the targets using GNU tool chain to override
+#    LD_INPUTS so as to perform an exhaustive search
+#
+# 2) some LD_INPUTS are steering files, we can have the toolchain files
+#    recognize and flag these by extension
+#
+ifndef LD_INPUTS
+LD_INPUTS=$(1)
+endif
+
+# deps and rules for mods
+$(foreach mod,$(MODS),\
+   $(foreach dep,$(call PRELIBS_OF,$(mod))\
+                 $(call DLLS_OF,$(mod),$(DLL_LIB_EXT))\
+                 $(call LIBS_OF,$(mod))\
+                 $(call IMPLIBS_OF,$(mod))\
+                 $(call OBJS_OF,$(mod))\
+                 $(call RCSOBJS_OF,$(mod))\
+                 $(call DYNAMIC_CIFS_OBJ_OF,$(mod))\
+                 $(call POSTLIBS_OF,$(mod)),\
+       $(call DEPENDS,$(mod),$(dep))))
+
+# MOD_LD_CMD can be overridden by toolchain files to perform a multi-step link
+#
+# This is useful for things like compiling an elf, then stripping it to a .mod1, 
+# as done with our ARM toolchains.
+#
+ifndef MOD_LD_CMD
+define MOD_LD_CMD
+	$(call exec,$(LD)) $(MOD_LD_FLAGS) $(call LD_FLAGS_OF,$(2)) $(LD_OUTPUTFLAG)$(2) $(call LD_INPUTS,$(1))
+endef
+endif
+
+# Module compression command. As of now, compression needs to be specified on a
+# per module basis with the default being NO compression.
+# Once MODPACK is mainlined, this command can be changed to the following to turn
+# on compression by default:
+#
+#   MODPACK_CMD=$(call exec,$(MODPACK)) -o $(2) $(1)
+#
+MODPACK_CMD=$(if $(MODPACK_ALL)$($(call NAME_OF,$(1))_MODPACK),$(call exec,$(MODPACK)) -o $(2) $(1),$(call cp_af,$(1) $(2)))
+
+$(MODS):
+	$(_@)$(call mkdir_p,$(@D))
+	$(call MOD_LD_CMD,$(^),$(@))
+
+# deps and rules for modos (they're just like mods)
+$(foreach modo,$(MODOS),\
+   $(foreach dep,$(call PRELIBS_OF,$(modo))\
+                 $(call DLLS_OF,$(modo),$(DLL_LIB_EXT))\
+                 $(call LIBS_OF,$(modo))\
+                 $(call OBJS_OF,$(modo))\
+                 $(call RCSOBJS_OF,$(modo))\
+                 $(call STATIC_CIFS_OBJ_OF,$(modo))\
+                 $(call POSTLIBS_OF,$(modo)),\
+       $(call DEPENDS,$(modo),$(dep))))
+
+# MODO_LD_CMD can be overridden by toolchain files to perform a multi-step link
+#
+# This is useful for things like defining what partial linking is for a toolchain, 
+#   which may require multiple steps
+#
+ifndef MODO_LD_CMD
+define MODO_LD_CMD
+	$(call exec,$(LD)) $(MODO_LD_FLAGS) $(call LD_FLAGS_OF,$(2)) $(LD_OUTPUTFLAG)$(2) $(call LD_INPUTS,$(1))
+endef
+endif
+
+$(MODOS):
+	@$(call mkdir_p,$(@D))
+	$(call MODO_LD_CMD,$(^),$(@))
+
+# deps and rules for mifs (they're just like mods)
+$(foreach mif,$(MIFS),$(call DEPENDS,$(mif),$(mif:.mif=).clif))
+
+$(MIFS):
+	$(_@)$(call mkdir_p,$(@D))
+	$(call exec,$(CIFC)) -mod $(@F:.mif=) -mif $(@) $(^)
+
+# deps and rules for shared libs
+$(foreach dll,$(DLLS),\
+  $(foreach dep,$(call PRELIBS_OF,$(dll))\
+                $(call OBJS_OF,$(dll))\
+                $(call STATIC_CIFS_OBJ_OF,$(dll))\
+                $(call RCSOBJS_OF,$(dll))\
+                $(call DLLS_OF,$(dll),$(DLL_LIB_EXT))\
+                $(call LIBS_OF,$(dll))\
+                $(call POSTLIBS_OF,$(dll)),\
+     $(call DEPENDS,$(dll),$(dep))))
+
+ifndef DLL_LD_INPUTS
+DLL_LD_INPUTS=$(LD_INPUTS)
+endif
+
+$(DLLS):
+	$(_@)$(call mkdir_p,$(@D))
+	$(eval LINK_TXT_FILE=$(subst .,_,$(@))_link.txt)
+	$(eval variable := $(shell cat $(LINK_TXT_FILE) 2>&0))
+	$(eval link_flag_diff1 := $(filter-out $(variable) $(LIB_HEXAGON), $(DLL_LD_FLAGS) $(call LD_FLAGS_OF,$(@)) $(LD_OUTPUTFLAG)$(@) $(call DLL_LD_INPUTS,$(subst \,/,$(^)))))
+	$(eval link_flag_diff2 := $(filter-out $(DLL_LD_FLAGS) $(call LD_FLAGS_OF,$(@)) $(LD_OUTPUTFLAG)$(@) $(call DLL_LD_INPUTS,$(subst \,/,$(^))),$(variable)))
+	$(if $(variable),\
+         $(if $(or $(link_flag_diff1),$(link_flag_diff2)),\
+              $(eval variable := ) \
+	          $(_@)$(call rm_f,$(subst .,_,$(@))_link.txt),\
+          ),\
+     )
+	$(if $(variable),$(info),\
+          $(foreach option,$(DLL_LD_FLAGS) $(call LD_FLAGS_OF,$(@)) $(LD_OUTPUTFLAG)$(@) $(call DLL_LD_INPUTS,$(^)), \
+          $(if $(filter $(LIB_HEXAGON),$(option)), $(info), $(_@)echo $(subst \,/,$(option) >> $(subst .,_,$(@))_link.txt$(_nl)))))
+	$(call exec,$(LD)) @$(subst .,_,$(@))_link.txt
+
+# this loop makes any DLL import libraries depend upon their accompanying dll
+$(foreach lib,$(DLL_LIBS),\
+    $(call DEPENDS,$(lib),$(lib:$(DLL_LIB_EXT)=$(DLL_EXT))))
+
+# every non-phony target must have a command
+$(DLL_LIBS):;
+
+# Rules for copying exedll's and dlldll's into the bin dir for running
+$(foreach suffix,$(PDB_EXT) $(DLL_EXT),\
+   $(foreach dll,$(foreach build,$(BUILD_EXES) $(BUILD_DLLS),\
+                    $(call DLLS_OF,$(build),$(suffix))),\
+      $(if $(filter-out $(dll),$(OBJ_DIR)/$(call NAME_OF,$(dll))$(suffix)),\
+               $(call DEPENDS,$(OBJ_DIR)/$(call NAME_OF,$(dll))$(suffix),$(dll)),\
+       )\
+   )\
+)
+
+#pragma runlocal
+$(call uniq,$(filter-out $(DLLS),$(EXEDLLS) $(DLLDLLS))):
+	$(call cp_af,$(<) $(@))
+
+
+# deps and rules for exes
+$(foreach exe,$(EXES) $(QEXES),\
+   $(foreach dep,$(call PRELIBS_OF,$(exe))\
+                 $(call OBJS_OF,$(exe))\
+                 $(call LIBS_OF,$(exe))\
+                 $(call STATIC_CIFS_OBJ_OF,$(exe))\
+                 $(call RCSOBJS_OF,$(exe))\
+                 $(call DLLS_OF,$(exe),$(DLL_LIB_EXT))\
+                 $(call POSTLIBS_OF,$(exe)),\
+      $(call DEPENDS,$(exe),$(dep))))
+
+$(EXES):
+	$(_@)$(call mkdir_p,$(@D))
+	$(eval LINK_TXT_FILE=$(subst .,_,$(@))_link.txt)
+	$(eval variable := $(shell cat $(LINK_TXT_FILE) 2>&0))
+	$(eval link_flag_diff1 := $(filter-out $(variable), $(EXE_LD_FLAGS) $(call LD_FLAGS_OF,$(@)) $(LD_OUTPUTFLAG)$(@) $(call LD_INPUTS,$(subst \,/,$(^)))))
+	$(eval link_flag_diff2 := $(filter-out $(EXE_LD_FLAGS) $(call LD_FLAGS_OF,$(@)) $(LD_OUTPUTFLAG)$(@) $(call LD_INPUTS,$(subst \,/,$(^))),$(variable)))
+	$(if $(variable),\
+         $(if $(or $(link_flag_diff1),$(link_flag_diff2)),\
+              $(eval variable := ) \
+              $(_@)$(call rm_f,$(subst .,_,$(@))_link.txt),\
+          ),\
+     )
+	$(if $(variable),$(info),\
+        $(foreach option,$(EXE_LD_FLAGS) $(call LD_FLAGS_OF,$(@)) $(LD_OUTPUTFLAG)$(@) $(call LD_INPUTS,$(^)), \
+            $(_@)echo $(subst \,/,$(option) >> $(subst .,_,$(@))_link.txt$(_nl))))
+	$(call exec,$(LD)) @$(subst .,_,$(@))_link.txt
+
+$(QEXES):
+	$(_@)$(call mkdir_p,$(@D))
+	$(eval LINK_TXT_FILE=$(subst .,_,$(@))_link.txt)
+	$(eval variable := $(shell cat $(LINK_TXT_FILE) 2>&0))
+	$(eval link_flag_diff1 := $(filter-out $(variable), $(if $(QEXE_LD_FLAGS),$(QEXE_LD_FLAGS),$(EXE_LD_FLAGS)) $(call LD_FLAGS_OF,$(@)) $(LD_OUTPUTFLAG)$(@) $(call LD_INPUTS,$(subst \,/,$(^)))))
+	$(eval link_flag_diff2 := $(filter-out $(if $(QEXE_LD_FLAGS),$(QEXE_LD_FLAGS),$(EXE_LD_FLAGS)) $(call LD_FLAGS_OF,$(@)) $(LD_OUTPUTFLAG)$(@) $(call LD_INPUTS,$(subst \,/,$(^))),$(variable)))
+	$(if $(variable),\
+         $(if $(or $(link_flag_diff1),$(link_flag_diff2)),\
+              $(eval variable := ) \
+              $(_@)$(call rm_f,$(subst .,_,$(@))_link.txt),\
+          ),\
+     )
+	$(if $(variable),$(info),\
+	    $(foreach option,$(if $(QEXE_LD_FLAGS),$(QEXE_LD_FLAGS),$(EXE_LD_FLAGS)) $(call LD_FLAGS_OF,$(@)) $(LD_OUTPUTFLAG)$(@) $(call LD_INPUTS,$(^)), \
+            $(_@)echo '$(subst \,/,$(call strUnquote,$(option))' >> $(subst .,_,$(@))_link.txt$(_nl))))
+	$(call exec,$(LD)) @$(subst .,_,$(@))_link.txt
+ifdef QEXE_POST_CMDS
+	$(call exec,$(subst qexe,$(@),$(QEXE_POST_CMDS)))
+endif
+
+
+# deps and rules for imgs (handset images)
+$(foreach img,$(IMGS),\
+   $(foreach dep,$(call PRELIBS_OF,$(img))\
+                 $(call OBJS_OF,$(img))\
+                 $(call STATIC_CIFS_OBJ_OF,$(img))\
+                 $(call LIBS_OF,$(img))\
+                 $(call POSTLIBS_OF,$(img)),\
+      $(call DEPENDS,$(img),$(dep))))
+
+$(IMGS):
+	$(_@)$(call mkdir_p,$(@D))
+	$(eval LINK_TXT_FILE=$(subst .,_,$(@))_link.txt)
+	@$(eval variable := $(shell cat $(LINK_TXT_FILE)))
+	$(if $(variable),$(if $(filter-out $(IMG_LD_FLAGS) $(call LD_FLAGS_OF,$(@)) $(LD_OUTPUTFLAG)$(@) $(call LD_INPUTS,$(^)),$(variable)),$(foreach option,$(IMG_LD_FLAGS) $(call LD_FLAGS_OF,$(@)) $(LD_OUTPUTFLAG)$(@) $(call LD_INPUTS,$(^)), \
+           $(_@)echo $(subst \,/,$(option) >> $(subst .,_,$(@))_link.txt$(_nl))),),$(foreach option,$(IMG_LD_FLAGS) $(call LD_FLAGS_OF,$(@)) $(LD_OUTPUTFLAG)$(@) $(call LD_INPUTS,$(^)), \
+           $(_@)echo $(subst \,/,$(option) >> $(subst .,_,$(@))_link.txt$(_nl))))
+	$(call exec,$(LD)) @$(subst .,_,$(@))_link.txt
+
+# deps and rules for deps (for libraries, dlls, clifs, in other directories)
+.PHONY: $(RECURSE_DIRS_CLEAN)
+
+clean: $(RECURSE_DIRS_CLEAN)
+
+%_$(RECURSE_ID):
+	$(_@)$(call mkdir_p,$(@D))
+	$(_@)$(call touch,$(@))
+
+$(foreach dep,$(RECURSE_DEPS),\
+   $(call DEPENDS,$(dep),$(dep)_$(RECURSE_ID)))
+
+$(RECURSE_DEPS): ;
+
+$(RECURSE_DEP_MARKERS):
+	$(RECURSE_MAKE) V=$(V) -C$(call RECURSE_DIR_OF,$(@)) $(patsubst $(call RECURSE_DIR_OF,$(@))/%,%,$(@:_$(RECURSE_ID)=) $(@))
+
+#pragma RUNLOCAL
+$(RECURSE_DIRS_CLEAN):
+	$(call if_exists,$(@:_clean=)/$(OBJ_DIR),$(RECURSE_MAKE) -C$(@:_clean=) V=$(V) clean)
+
+# CIFS source rules, we compile all CIFs into a single _CIFS.c file, 
+#  after first constructing a single .clif
+$(foreach clif,$(CLIFS),\
+   $(foreach cif,$(call CIFS_OF,$(clif)) $(call CLIFS_OF,$(clif)),\
+      $(call DEPENDS,$(clif),$(cif))))
+
+$(CLIFS): | $(AUTOGEN_HEADERS)
+	$(_@)$(call mkdir_p,$(@D))
+	$(call exec,$(CIFC)) $(call CIFC_INCDIRS_OF,$(*)_CIFS.c) $(filter %.cif %.clif,$(^)) -pre $(@) -M > $(@).dep
+	$(call exec,$(CIFC)) $(call CIFC_INCDIRS_OF,$(*)_CIFS.c) $(filter %.cif %.clif,$(^)) -pre $(@)
+
+# make the _CIFS.c compile for ARM state for dynamic modules
+$(foreach src,$(notdir $(CIFS_D_SRCS)),$(eval $(src:.c=_CC)=$$(ARMCC)))
+# build the _CIFS.c file out of the clif, 
+$(foreach src,$(CIFS_D_SRCS),$(call DEPENDS,$(src),$(src:_CIFS_d.c=.clif)))
+$(foreach src,$(CIFS_S_SRCS),$(call DEPENDS,$(src),$(src:_CIFS_s.c=.clif)))
+
+# no need to generate deps for these, they all have exactly 1 dependency, the .clif
+$(OBJ_DIR)/%_CIFS_d.c:
+	$(_@)$(call mkdir_p,$(@D))
+	$(call exec,$(CIFC)) -mod $(*) -d -src $(@) $(^)
+
+$(OBJ_DIR)/%_CIFS_s.c:
+	$(_@)$(call mkdir_p,$(@D))
+	$(call exec,$(CIFC)) -mod $(*) -s -src $(@) $(^)
+
+# legacy, one-dep rules
+
+$(OBJ_DIR)/%$(OBJ_EXT) : %.c | $(AUTOGEN_HEADERS)
+	$(_@)$(call mkdir_p,$(@D))
+	$(_@)$(call exec,$(CDEP)) $(call CDEP_INCDIRS_OF,$(*)) -o $(@) $(<) > $(@).dep
+	$(call exec,$(call CC_OF,$(*))) $(call CC_FLAGS_OF,$(<)) $(call CC_DEFINES_OF,$(*)) $(call CC_UNDEFINES_OF,$(*)) $(call CC_INCDIRS_OF,$(*)) $(CC_INC) $(CC_OUTPUTFLAG)$(@) $(<)
+
+$(OBJ_DIR)/%$(OBJ_EXT) : %.cpp | $(AUTOGEN_HEADERS)
+	$(_@)$(call mkdir_p,$(@D))
+	$(_@)$(call exec,$(CDEP)) $(call CDEP_INCDIRS_OF,$(*)) -o $(@) $(<) > $(@).dep
+	$(call exec,$(call CXX_OF,$(*))) $(call CXX_FLAGS_OF,$(<)) $(call CC_DEFINES_OF,$(*)) $(call CC_UNDEFINES_OF,$(*)) $(call CC_INCDIRS_OF,$(*)) $(CC_INC) $(CC_OUTPUTFLAG)$(@) $(<)
+
+$(OBJ_DIR)/%$(OBJ_EXT) : %.cxx | $(AUTOGEN_HEADERS)
+	$(_@)$(call mkdir_p,$(@D))
+	$(_@)$(call exec,$(CDEP)) $(call CDEP_INCDIRS_OF,$(*)) -o $(@) $(<) > $(@).dep
+	$(call exec,$(call CXX_OF,$(*))) $(call CXX_FLAGS_OF,$(<)) $(call CC_DEFINES_OF,$(*)) $(call CC_UNDEFINES_OF,$(*)) $(call CC_INCDIRS_OF,$(*)) $(CC_INC) $(CC_OUTPUTFLAG)$(@) $(<)
+
+$(OBJ_DIR)/%$(OBJ_EXT) : %.S | $(AUTOGEN_HEADERS)
+	$(_@)$(call mkdir_p,$(@D))
+	$(_@)$(call exec,$(CDEP)) $(call CDEP_INCDIRS_OF,$(*)) -o $(@) $(<) > $(@).dep
+	$(if $(APP),\
+	   $(call exec,$(APP)) $(APP_FLAGS) $(call CC_DEFINES_OF,$(*)) $(call CC_UNDEFINES_OF,$(*)) $(call CC_INCDIRS_OF,$(*)) $(CC_INC) < $(<) | $(call exec,$(APP2ASM)) -o $(OBJ_DIR)/$*_app.S,\
+	   $(call cat,$(<)) > $(OBJ_DIR)/$*_app.S)
+	$(call exec,$(ASM)) $(ASM_FLAGS) $(OBJ_DIR)/$*_app.S $(ASM_OUTPUTFLAG)$(@)
+
+$(OBJ_DIR)/%.mix : %.c | $(AUTOGEN_HEADERS)
+	$(_@)$(call mkdir_p,$(@D))
+	$(_@)$(call exec,$(CDEP)) $(call CDEP_INCDIRS_OF,$(*)) -o $(@) $(<) > $(@).dep
+	$(call exec,$(call CC_OF,$(*))) $(call CC_MIX_FLAGS_OF,$(<)) $(call CC_DEFINES_OF,$(*)) $(call CC_UNDEFINES_OF,$(*)) $(call CC_INCDIRS_OF,$(*)) $(CC_INC) $(CC_MIX_OUTPUTFLAG)$(@) $(<)
+
+$(OBJ_DIR)/%.mix : %.cpp | $(AUTOGEN_HEADERS)
+	$(_@)$(call mkdir_p,$(@D))
+	$(_@)$(call exec,$(CDEP)) $(call CDEP_INCDIRS_OF,$(*)) -o $(@) $(<) > $(@).dep
+	$(call exec,$(call CXX_OF,$(*))) $(call CXX_MIX_FLAGS_OF,$(<)) $(call CC_DEFINES_OF,$(*)) $(call CC_UNDEFINES_OF,$(*)) $(call CC_INCDIRS_OF,$(*)) $(CC_INC) $(CC_MIX_OUTPUTFLAG)$(@) $(<)
+
+$(OBJ_DIR)/%.mix : %.cxx | $(AUTOGEN_HEADERS)
+	$(_@)$(call mkdir_p,$(@D))
+	$(_@)$(call exec,$(CDEP)) $(call CDEP_INCDIRS_OF,$(*)) -o $(@) $(<) > $(@).dep
+	$(call exec,$(call CXX_OF,$(*))) $(call CXX_MIX_FLAGS_OF,$(<)) $(call CC_DEFINES_OF,$(*)) $(call CC_UNDEFINES_OF,$(*)) $(call CC_INCDIRS_OF,$(*)) $(CC_INC) $(CC_MIX_OUTPUTFLAG)$(@) $(<)
+
+# %.fez (FromElf -Z) describes object file footprint
+%.fez: %$(OBJ_EXT)
+	$(call exec,$(FEZ)) $(<) > $(@)
+
+# include OBJS deps
+-include $(addsuffix .dep,$(OBJS))
+
+# include CLIFS deps
+-include $(addsuffix .dep,$(CLIFS))
+
+#----------------------------------------------------------------------------
+# install Rules
+#----------------------------------------------------------------------------
+__INSTALL_MODS=$(filter-out $(BUILDONLY_MODS),$(BUILD_MODS))
+
+# TODO: remove MIF_INSTALL_DIR stuff when all customers are decamped
+ifdef MIF_INSTALL_DIR
+MIF_INSTALL=$(addprefix $(MIF_INSTALL_DIR)/,$(addsuffix .mif,$(__INSTALL_MODS)))
+else
+MIF_INSTALL=$(foreach mod,$(__INSTALL_MODS),\
+                  $(MOD_INSTALL_DIR)/$(mod)/$(mod).mif)
+endif
+
+$(foreach mif,$(MIF_INSTALL),\
+   $(call DEPENDS,$(mif),$(OBJ_DIR)/$(notdir $(mif))))
+
+MOD_INSTALL=$(foreach mod,$(__INSTALL_MODS),\
+                          $(addprefix $(MOD_INSTALL_DIR)/,\
+                          $(addprefix $(mod)/$(mod),$(MOD_EXT) $(PDB_EXT))))
+
+$(foreach f,$(MOD_INSTALL),\
+   $(call DEPENDS,$(f),$(OBJ_DIR)/$(notdir $(f))))
+
+# deps and rules for misc data copying
+$(foreach mod,$(__INSTALL_MODS),\
+   $(foreach data,$($(mod)_DATA),\
+      $(call DEPENDS,$(MOD_INSTALL_DIR)/$(mod)/$(data),$(data))))
+
+DATA_INSTALL=$(foreach mod,$(__INSTALL_MODS),$(addprefix $(MOD_INSTALL_DIR)/$(mod)/,$($(mod)_DATA)))
+
+__INSTALL_MODOS=$(filter-out $(BUILDONLY_MODOS),$(BUILD_MODOS))
+MODO_INSTALL=$(if $(MODO_EXT),$(foreach modo,$(__INSTALL_MODOS),\
+                  $(LIB_INSTALL_DIR)/$(addsuffix /,$($(modo)_INSTALL_DIR))$(modo)$(MODO_EXT)))
+
+$(foreach modo,$(MODO_INSTALL),\
+       $(call DEPENDS,$(modo),$(OBJ_DIR)/$(notdir $(modo))))
+
+__INSTALL_EXES=$(filter-out $(BUILDONLY_EXES),$(BUILD_EXES))
+EXE_INSTALL=$(foreach exe,$(__INSTALL_EXES),\
+                $(addprefix $(EXE_INSTALL_DIR)/$(if $($(exe)_INSTALL_DIR),$($(exe)_INSTALL_DIR)/),\
+                        $(exe)$(EXE_EXT) $(addprefix $(exe),$(PDB_EXT))))
+
+$(foreach f,$(EXE_INSTALL),\
+   $(call DEPENDS,$(f),$(OBJ_DIR)/$(notdir $(f))))
+
+EXEDLL_INSTALL=$(foreach exe,$(__INSTALL_EXES),\
+                  $(addprefix $(EXE_INSTALL_DIR)/$(if $($(exe)_INSTALL_DIR),$($(exe)_INSTALL_DIR)/),\
+                     $(foreach suffix,$(DLL_EXT) $(PDB_EXT),\
+                        $(addsuffix $(suffix),\
+                           $(call NAME_OF,$(call DLLS_OF,$(exe)))))))
+
+__INSTALL_DLLS=$(filter-out $(BUILDONLY_DLLS),$(BUILD_DLLS))
+DLL_INSTALL=$(foreach dll,$(__INSTALL_DLLS),\
+                $(addprefix $(DLL_INSTALL_DIR)/$(addsuffix /,$($(dll)_INSTALL_DIR))$(dll),\
+                    $(call uniq,$(DLL_EXT) $(if $(call DEFS_OF,$(dll)),$(DLL_LIB_EXT))) $(PDB_EXT)))
+
+$(foreach dll,$(DLL_INSTALL),\
+    $(call DEPENDS,$(dll),$(OBJ_DIR)/$(notdir $(dll))))
+
+DLLDLL_INSTALL=$(foreach dll,$(__INSTALL_DLLS),\
+                  $(addprefix $(DLL_INSTALL_DIR)/$(if $($(dll)_INSTALL_DIR),$($(dll)_INSTALL_DIR)/),\
+                     $(foreach suffix,$(DLL_EXT) $(PDB_EXT),\
+                        $(addsuffix $(suffix),\
+                           $(call NAME_OF,$(call DLLS_OF,$(dll)))))))
+
+__INSTALL_LIBS=$(filter-out $(BUILDONLY_LIBS),$(BUILD_LIBS))
+LIB_INSTALL=$(foreach lib,$(__INSTALL_LIBS),\
+              $(LIB_INSTALL_DIR)/$(addsuffix /,$($(lib)_INSTALL_DIR))$(lib)$(LIB_EXT))
+
+$(foreach lib,$(LIB_INSTALL),\
+    $(call DEPENDS,$(lib),$(OBJ_DIR)/$(notdir $(lib))))
+
+CLIF_INSTALL=$(foreach lib,$(__INSTALL_LIBS),\
+                 $(if $(strip $(call CLIFS_OF,$(lib))$(call CIFS_OF,$(lib))),\
+                    $(LIB_INSTALL_DIR)/$(addsuffix /,$($(lib)_INSTALL_DIR))$(lib).clif))\
+             $(foreach dll,$(__INSTALL_DLLS),\
+                 $(if $(strip $(call CLIFS_OF,$(dll))$(call CIFS_OF,$(dll))),\
+                    $(DLL_INSTALL_DIR)/$(addsuffix /,$($(dll)_INSTALL_DIR))$(dll).clif))
+
+$(foreach clif,$(CLIF_INSTALL),\
+   $(call DEPENDS,$(clif),$(OBJ_DIR)/$(notdir $(clif))))
+
+__INSTALL_IMPLIBS=$(filter-out $(BUILDONLY_IMPLIBS),$(BUILD_IMPLIBS))
+IMPLIB_INSTALL=$(foreach implib,$(__INSTALL_IMPLIBS),\
+                 $(addprefix $(IMPLIB_INSTALL_DIR)/$(if $($(implib)_INSTALL_DIR),$($(implib)_INSTALL_DIR)/)$(implib),$(IMP_LIB_EXT) $(IMPSYM_EXT)))
+
+$(foreach f,$(IMPLIB_INSTALL),\
+   $(call DEPENDS,$(f),$(OBJ_DIR)/$(notdir $(f))))
+
+install: all mod_install modo_install mif_install exe_install exedll_install lib_install implib_install data_install dll_install clif_install
+
+#pragma runlocal
+deinstall: clean
+	-$(if $(strip $(MOD_INSTALL)), $(call rm_f,$(MOD_INSTALL)))
+	-$(if $(strip $(EXE_INSTALL)), $(call rm_f,$(EXE_INSTALL)))
+	-$(if $(strip $(LIB_INSTALL)), $(call rm_f,$(LIB_INSTALL)))
+	-$(if $(strip $(MODO_INSTALL)),$(call rm_f,$(MODO_INSTALL)))
+	-$(if $(strip $(DLL_INSTALL)), $(call rm_f,$(DLL_INSTALL)))
+	-$(if $(strip $(DATA_INSTALL)),$(call rm_f,$(DATA_INSTALL)))
+	-$(if $(strip $(MIF_INSTALL)), $(call rm_f,$(MIF_INSTALL)))
+
+
+mod_install: $(MOD_INSTALL)
+modo_install: $(MODO_INSTALL)
+mif_install: $(MIF_INSTALL)
+exe_install: $(EXE_INSTALL)
+lib_install: $(LIB_INSTALL)
+clif_install: $(CLIF_INSTALL)
+implib_install: $(IMPLIB_INSTALL)
+dll_install: $(DLL_INSTALL)
+data_install: $(DATA_INSTALL)
+exedll_install: $(EXEDLL_INSTALL)
+
+.PHONY: install deinstall mod_install modo_install mif_install exe_install exedll_install lib_install dll_install data_install
+
+#pragma runlocal
+$(uniq $(filter-out $(DLL_INSTALL),$(EXEDLL_INSTALL))): $(EXEDLLS)
+	@$(call echo,------------------------------------------------------------------------)
+	@$(call echo,INSTALLING $(OBJ_DIR)/$(@F) to $(@))
+	$(_@)$(call mkdir_p,$(@D))
+	$(_@)$(call cp_af,$(OBJ_DIR)/$(@F) $(@D))
+	@$(call echo,------------------------------------------------------------------------)
+
+#pragma runlocal
+$(uniq $(filter-out $(DLL_INSTALL),$(DLLDLL_INSTALL))): $(DLLDLLS)
+	@$(call echo,------------------------------------------------------------------------)
+	@$(call echo,INSTALLING $(OBJ_DIR)/$(@F) to $(@))
+	$(_@)$(call mkdir_p,$(@D))
+	$(_@)$(call cp_af,$(OBJ_DIR)/$(@F) $(@D))
+	@$(call echo,------------------------------------------------------------------------)
+
+#pragma runlocal
+$(EXE_INSTALL) $(DLL_INSTALL) $(LIB_INSTALL) $(CLIF_INSTALL) $(IMPLIB_INSTALL) \
+  $(MOD_INSTALL) $(MIF_INSTALL) $(DATA_INSTALL) $(MODO_INSTALL): 
+	@$(call echo,------------------------------------------------------------------------)
+	@$(call echo,INSTALLING $(<) to $(@))
+	$(_@)$(call mkdir_p,$(@D))
+	$(_@)$(call cp_af,$(<) $(@))
+	@$(call echo,------------------------------------------------------------------------)
+
+#----------------------------------------------------------------------------
+# everything rules
+#----------------------------------------------------------------------------
+everything_%:
+	$(foreach v,$(EVERY_V),$(RECURSE_MAKE) $(*) V=$(v)$(cmdsep))
+
+#----------------------------------------------------------------------------
+# smoke rules
+#----------------------------------------------------------------------------
+smoke_%:
+	$(foreach v,$(SMOKE_VS),$(RECURSE_MAKE) $(*) V=$(v)$(cmdsep))
+
+#----------------------------------------------------------------------------
+# helpful list rules?
+#----------------------------------------------------------------------------
+
+build_srcs: $(call uniq,$(foreach build,$(BUILDS),\
+                $(call C_SRCS_OF,$(build)) \
+                $(call CXX_SRCS_OF,$(build)) \
+                $(call ASM_SRCS_OF,$(build)) \
+                $(call LEGACY_SRCS_OF,$(build))))
+	@$(call echo,$(^))
+
+q_srcs: $(call uniq,$(foreach build,$(BUILD_QEXES),\
+                      $(call C_SRCS_OF,$(build)) \
+                      $(call CXX_SRCS_OF,$(build)) \
+                      $(call ASM_SRCS_OF,$(build)) \
+                      $(call LEGACY_SRCS_OF,$(build))))
+	@$(call echo,$(^))
+
+.PHONY: build_srcs q_srcs
+
+#----------------------------------------------------------------------------
+# tags rules
+#----------------------------------------------------------------------------
+$(foreach tag,$(TAGS),\
+       $(foreach src,$(call TAGS_SRCS_OF,$(tag)),\
+           $(call DEPENDS,$(tag),$(src))\
+       $(foreach libtag,$(call LIBTAGS_OF,$(tag)),\
+           $(call DEPENDS,$(tag),$(libtag)))))
+
+$(TAGS):
+	$(_@)$(call mkdir_p,$(@D))
+	$(if $(strip $(^)),$(ETAGS) $(patsubst %.tags,-i../%.tags,$(^)) -o $(@),$(call touch,$(@)))
+
+#----------------------------------------------------------------------------
+# metrics rules
+#----------------------------------------------------------------------------
+$(foreach cmet,$(CMETS),\
+   $(foreach list,$(call CMET_LISTS_OF,$(cmet)),\
+      $(call DEPENDS,$(cmet),$(list)))\
+   $(foreach src,$(call FEZLIST_SRCS_OF,$(cmet)),\
+      $(call DEPENDS,$(cmet),$(call FEZ_OF,$(src))))\
+   $(foreach libcmet,$(call LIBCMETS_OF,$(cmet)),\
+      $(call DEPENDS,$(cmet),$(libcmet))))
+
+CDEPLISTS=$(addprefix $(OBJ_DIR)/,$(addsuffix .cdeplist,$(BUILDS)))
+
+$(foreach list,$(CDEPLISTS),\
+   $(foreach src,$(call FEZLIST_SRCS_OF,$(list)),\
+      $(call DEPENDS,$(list),$(src))))
+
+,=,# need comma
+
+$(CDEPLISTS):
+	$(_@)$(call mkdir_p,$(@D))
+	($(call echo,#csv file$(,)bytes$(,)lines$(,)ploc$(,)icount$(,)ibytes$(,)ilines$(,)iploc)&&\
+         $(call echo,#set group=$(call NAME_OF,$(@)))&&\
+         $(call exec,$(CDEP)) -S,FBLSnbls $(call CDEP_INCDIRS_OF,$(^)) $(^)) > $(@)
+
+FEZLISTS=$(addprefix $(OBJ_DIR)/,$(addsuffix .fezlist,$(BUILDS)))
+
+$(foreach list,$(FEZLISTS),\
+   $(foreach src,$(call FEZLIST_SRCS_OF,$(list)),\
+      $(call DEPENDS,$(list),$(src))))
+
+$(FEZLISTS):
+	$(_@)$(call mkdir_p,$(@D))
+	($(call echo,#csv file$(,)fez)&&\
+         $(call echo,#set group=$(call NAME_OF,$(@)))\
+         $(foreach c,$(^),&&$(call echo,$(c)$(,)$(call FEZ_OF,$(c)))))> $(@)
+
+$(CMETS):
+	$(call exec,$(CMET)) $(call LIBCMETS_OF,$(@)) $(call CMET_LISTS_OF,$(@)) -o $(@)
+
+cmets: $(CMETS)
+
+all: $(CMET_INFOS)
+
+$(CMET_INFOS):
+	$(call exec,$(CMET)) $(<) > $(@)
+
+CMETS_INSTALL=$(addprefix $(METRICS_INSTALL_DIR)/,\
+                $(addsuffix .cmet,$(NOQBUILDS)))
+
+cmets_install: $(CMETS_INSTALL)
+
+# CMETS_INSTALL to depends on CMETS
+$(foreach build,$(NOQBUILDS),\
+  $(call DEPENDS,$(METRICS_INSTALL_DIR)/$(build).cmet,$(OBJ_DIR)/$(build).cmet))
+
+#pragma runlocal
+$(CMETS_INSTALL):
+	$(_@)$(call mkdir_p,$(@D))
+	$(call cp_af,$(<) $(@))
+
+.PHONY: cmets cmets_install
+
+%_cmet_info: $(OBJ_DIR)/%.cmet
+	$(call exec,$(CMET)) $(<)
+
+
+#----------------------------------------------------------------------------
+# ZIP rules
+#----------------------------------------------------------------------------
+define ZIP_INTERMEDIATE_FILE_RULE_DEF
+#pragma runlocal
+$(1):$(2)
+	$$(_@)$$(call mkdir_p,$$(@D))
+	$$(call cp_af,$$(<) $$(@))
+endef
+
+ZIP_INTERMEDIATE_FILE_RULE=$(eval $(call ZIP_INTERMEDIATE_FILE_RULE_DEF,$(1),$(2)))
+
+$(foreach zip,$(ZIPS),\
+   $(foreach file,$(call ZIP_INTERMEDIATE_FILES_OF,$(zip)),\
+      $(call DEPENDS,$(zip),$(file))\
+      $(call ZIP_INTERMEDIATE_FILE_RULE,$(file),$(file:$(call NAME_OF,$(zip))/%=$(call ZIP_SRCHROOT_OF,$(zip))/%))))
+
+#pragma runlocal
+$(ZIP_INTERMEDIATE_FILES):;
+
+#pragma runlocal
+$(ZIPS):
+	$(call rm_f,$@)
+	$(call exec,$(ZIP)) -r $@ $(call NAME_OF,$@)
+
+.PHONY: zips zips_clean
+
+zips: $(ZIPS)
+
+#pragma runlocal
+zips_clean:
+	$(call rm_rf,$(BUILD_ZIPS))
+	$(call rm_f,$(ZIPS))
+
+
+################################
+## BUILD_COPIES
+##
+## BUILD_COPIES holds a list of ";"-delimited copy specs.  Copy specs come
+## in two forms: (1) two file names, and (2) zero or more file names
+## followed by a directory name (ending in "/").
+##
+##    srcFile destFile
+##    ...srcFile... destDir/
+##
+## Example:
+##
+##   BUILD_COPIES += inc/myfoo.h ship/inc/foo.h ;
+##   BUILD_COPIES += src/foo.h $V/foo$(OBJ_EXT) ship/ ;
+##
+
+ifdef BUILD_COPIES
+
+.PHONY: copies
+all: copies
+
+define _copiesRule
+copies: $2
+#pragma runlocal
+$2: $1
+	$(_@)$$(call mkdir_p,$$(@D))
+	$(call cp_af,$1 $2)
+
+endef
+
+# generate rule to copy source file(s) $1 to dest $2
+_genCopiesAB = \
+  $(if $(filter %/,$2),$(foreach f,$1,$(call _copiesRule,$f,$2$(notdir $f))),\
+    $(if $(filter 1,$(words $1)),$(call _copiesRule,$1,$2),\
+      $(error Bad BUILD_COPIES spec: "$1 $2")))
+
+_genCopies = $(if $1,$(call _genCopiesAB,$(wordlist 2,$(words $1),X $1),$(lastword $1)))
+
+# split word list $1 at ";", calling $2
+_splitList = $(foreach c,$(subst ;, ,$(subst $() ,|,$1)),$(call $2,$(strip $(subst |, ,$c))))
+
+$(eval $(call _splitList,$(BUILD_COPIES),_genCopies))
+
+endif
+
+################################
+## CLEAN_DIRS: list of directories other than OBJ_DIR to be cleaned
+##
+## This might arise when constructing a V-independent 'ship' directory.
+##
+ifdef CLEAN_DIRS
+
+clean: clean_dirs
+
+.PHONY: clean_dirs
+
+clean_dirs:
+	-$(call rm_rf,$(CLEAN_DIRS))
+
+endif
+
+
+#----------------------------------------------------------------------------
+# IDL rules
+#----------------------------------------------------------------------------
+include $(MAKE_D_DIR)/idl_rules.min
+
+########################################################################
+# additional site-specific rules and rules extensions
+########################################################################
+$(call INCLUDE_MAKE_D_EXTS,rules.min)
+
+
+

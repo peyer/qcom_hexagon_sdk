@@ -1,0 +1,51 @@
+# This builds the skel library
+BUILD_LIBS += libadsp_calculator_skel libmdsp_calculator_skel libsdsp_calculator_skel 
+
+ifeq ($(CDSP_PRESENT_FLAG), 1)  
+	BUILD_LIBS += libcdsp_calculator_skel
+endif
+
+# only build the shared object if dynamic option specified in the variant
+ifeq (1,$(V_dynamic))
+BUILD_DLLS = libadsp_calculator_skel libmdsp_calculator_skel libsdsp_calculator_skel 
+ifeq ($(CDSP_PRESENT_FLAG), 1) 
+	BUILD_DLLS += libcdsp_calculator_skel
+endif
+endif
+
+libadsp_calculator_skel_QAICIDLS = inc/calculator_multi_legacy
+libadsp_calculator_skel_C_SRCS += $V/adsp_calculator_skel
+libadsp_calculator_skel_C_SRCS += src/calculator_imp
+
+libmdsp_calculator_skel_QAICIDLS = inc/calculator_multi_legacy
+libmdsp_calculator_skel_C_SRCS += $V/mdsp_calculator_skel
+libmdsp_calculator_skel_C_SRCS += src/calculator_imp
+
+libsdsp_calculator_skel_QAICIDLS = inc/calculator_multi_legacy
+libsdsp_calculator_skel_C_SRCS += $V/sdsp_calculator_skel
+libsdsp_calculator_skel_C_SRCS += src/calculator_imp
+
+ifeq ($(CDSP_PRESENT_FLAG), 1) 
+	DEFINES += CDSP_PRESENT_FLAG
+	libcdsp_calculator_skel_QAICIDLS = inc/calculator_multi_legacy_w_cdsp
+	libcdsp_calculator_skel_C_SRCS += $V/cdsp_calculator_skel
+	libcdsp_calculator_skel_C_SRCS += src/calculator_imp
+endif
+
+# quality test
+BUILD_QEXES += calculator_q
+
+calculator_q_QAICIDLS = inc/calculator_multi_legacy
+ifeq ($(CDSP_PRESENT_FLAG), 1)
+calculator_q_QAICIDLS += inc/calculator_multi_legacy_w_cdsp
+endif
+
+calculator_q_C_SRCS = src/calculator_test_main src/calculator_test src/calculator_imp
+calculator_q_LIBS = rtld rpcmem test_util atomic
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

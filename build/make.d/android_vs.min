@@ -1,0 +1,7 @@
+default_VS += \
+  android_Debug \
+  android_Release \
+  android_ReleaseG \
+  android_Debug_aarch64 \
+  android_Release_aarch64 \
+  android_ReleaseG_aarch64

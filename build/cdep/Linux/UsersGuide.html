@@ -1,0 +1,141 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>
+cdep User's Guide
+</title><meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<style type="text/css">
+body {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 14px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+    font-size: 200%;
+    margin-left: -30px;
+}
+h2 {
+    font-size: 160%;
+    margin: 32px -40px 24px -42px;
+    padding: 3px 24px 8px;
+    border-bottom: 2px solid #5088c5;
+}
+h3 {
+    font-size: 130%;
+    margin: 20px -4px 10px;
+    padding: 4px;
+}
+h4 {
+    margin: 0.8em 0;
+}
+
+pre {
+  font-size: 85%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Monaco", "Lucida Console", monospace;
+}
+code {
+  font-size: 85%; font-family: "Monaco", "Lucida Console", monospace;
+}
+h3 code {
+  font-size: 100% ;
+}
+
+p {
+    margin: 0.8em 0;
+}
+ul, ol {
+    margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+    margin: 0 3em;
+}
+
+a {
+    text-decoration: none;
+    color: #2020b0;
+}
+a:hover {
+    border-bottom: 1px dotted #2030d0;
+}
+
+.diagram {
+  font-family: "Monaco", "Lucida Console", monospace;
+  line-height: 14px ; margin: 24px
+}
+
+.tocLevel { margin-left: 2em; font-weight: normal; }
+.tocLevel .tocLevel { font-size: 0.9em; }
+.toc>.tocLevel { font-weight: bold; margin: 0.5em 0 }
+.toc { column-count: 2; column-gap: 2em;
+       -moz-column-count: 2; -moz-column-gap: 2em;}
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.5in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center; }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+}
+
+</style>
+</head><body>
+<h1>
+<a name="cdep%20User's%20Guide"></a>cdep User's Guide
+</h1><h3>
+<a name="Command-line%20Usage"></a>Command-line Usage
+</h3><pre>
+Usage:  cdep [option | filename]...
+       
+Filenames specify source files to scan for dependencies.
+
+Options:
+    -M         : Output dependency lines in 'make' format.
+    -M+        : Like -M, but includes an additional empty dependency
+                 line for each included file.  This allows 'make' to
+                 proceed when the included file does not exist (which
+                 can occur when dependency files are stale).
+    -1         : Output simple list of included files.
+    -S&lt;d&gt;&lt;f&gt;   : Output statistics.  &lt;d&gt; and &lt;f&gt; are optional.
+                 Characters in &lt;f&gt; denote fields:
+                    'F' = source file name
+                    'B' = source file size in bytes
+                    'L' = source file size in lines
+                    'S' = source file score (lines not blank or comments)
+                    'n' = number of included files
+                    'b' = total bytes in included files
+                    'l' = total lines in included files
+                    's' = total score for included files
+                 Default for &lt;f&gt; is 'FBLnbls'.  &lt;d&gt; is a non-alphanumeric
+                 separator character; default is space.
+
+    -I&lt;dir&gt;    : Add &lt;dir&gt; to include search path.
+    -I &lt;dir&gt;   : Same as -I&lt;dir&gt;.
+    -o &lt;obj&gt;   : Specify name for object file (LHS of dependency line).
+    -o &lt;dir/&gt;  : A trailing slash specifies a directory for objects.
+                 Object names are contructed from source names by
+                 replacing the extension with '.o'.
+    -f &lt;file&gt;  : Read file names or -I&lt;dir&gt; directives from &lt;file&gt;.
+    -i &lt;incs&gt;  : Read list of include directories from &lt;incs&gt;.
+    -w         : Show warnings.
+    -n         : Do not recurse into included files.
+    -s         : Strip path from source/object file name in output.
+    -x...      : Diagnostic switches (see source code).
+
+Default output mode = -M+
+</pre>
+</body>
+</html>

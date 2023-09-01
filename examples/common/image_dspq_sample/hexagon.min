@@ -1,0 +1,35 @@
+# builds the static/dynamic skel
+ifeq (1,$(V_dynamic))
+BUILD_DLLS =  libimage_dspq_test_skel
+else
+BUILD_LIBS += libimage_dspq_test_skel
+endif
+
+include $(QURT_INSTALL)/qurt_libs.min
+
+CC_FLAGS += $(MHVX_DOUBLE_FLAG)
+ASM_FLAGS += $(MHVX_SINGLE_FLAG)
+
+INCDIRS += inc
+
+# Use -O0 temporarily when trying to debug C code.
+#_OPT = -O0
+
+
+# image_dspq_test
+libimage_dspq_test_skel_QAICIDLS = inc/image_dspq_test
+libimage_dspq_test_skel_C_SRCS += $V/image_dspq_test_skel \
+                                   src/image_dspq_test_dsp
+
+libimage_dspq_test_skel_DLLS += libasyncdspq_skel libimage_dspq_skel
+
+BUILD_DLLS += libimage_dspq_example_lib
+libimage_dspq_example_lib_C_SRCS += src/image_dspq_example_lib
+#libexample_lib_DLLS += libfastcvadsp
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

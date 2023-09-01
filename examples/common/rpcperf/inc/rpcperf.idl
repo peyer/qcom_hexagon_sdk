@@ -1,0 +1,14 @@
+#ifndef RPCPERF_IDL
+#define RPCPERF_IDL
+
+#include "AEEStdDef.idl"
+
+interface rpcperf {
+   long noop();
+   long init(in long attr);
+   long inbuf(in sequence<uint8> seq, in long rw);
+   long routbuf(rout sequence<uint8> seq, in long rw);
+   long power_boost(in uint32 on);
+};
+
+#endif RPCPERF_IDL

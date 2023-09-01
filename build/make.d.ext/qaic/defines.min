@@ -1,0 +1,3 @@
+include $(thisDir)/defines_$V.min
+
+Q=$(QAIC_DIR)/qaic$(EXEC_EXT) 

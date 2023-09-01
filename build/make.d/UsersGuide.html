@@ -1,0 +1,569 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%; 
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; 
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+</style><style type="text/css">
+.html2d { position: relative; }
+.html2d div { position: absolute; border-width: 0; border-style: solid; }
+.html2d div div { position: absolute; border-width: 0; border-style: solid; }
+
+</style><title>Make.d User's Guide</title>
+</head><body>
+<div class="smarkdoc"><h1>
+<a name="Make.d%20User's%20Guide"></a>Make.d User's Guide
+</h1><p>
+Rob Walker, Principal Engineer &lt;rwalker@qualcomm.com&gt;
+</p><p>
+Greg Fitzgerald, Staff Engineer &lt;gregf@qualcomm.com&gt;
+</p><p>
+April 8, 2011
+</p><h2>
+<a name="Contents"></a>Contents
+</h2><div class="toc"><div class="tocLevel"><a href="#Description">Description</a><div class="tocLevel"><a href="#Make.d%20increases%20productivity">Make.d increases productivity</a></div><div class="tocLevel"><a href="#Make.d%20improves%20software%20quality">Make.d improves software quality</a></div><div class="tocLevel"><a href="#Make.d%20by%20Example">Make.d by Example</a></div></div><div class="tocLevel"><a href="#Theory%20of%20Operation">Theory of Operation</a><div class="tocLevel"><a href="#Build%20Variations">Build Variations</a></div></div><div class="tocLevel"><a href="#make.d%20Extensions">make.d Extensions</a><div class="tocLevel"><a href="#Specifying%20Extensions">Specifying Extensions</a><div class="tocLevel"><a href="#MAKE_D_SITE_DIR">MAKE_D_SITE_DIR</a></div><div class="tocLevel"><a href="#MAKE_D_EXT_%3cext%3e_DIR">MAKE_D_EXT_&lt;ext&gt;_DIR</a></div><div class="tocLevel"><a href="#MAKE_D_EXT_%3cfile%3e_%3cext%3e_MIN">MAKE_D_EXT_&lt;file&gt;_&lt;ext&gt;_MIN</a></div></div><div class="tocLevel"><a href="#Extension%20Ordering">Extension Ordering</a></div></div></div><h2>
+<a name="Description"></a>Description
+</h2><p>
+Make.d is a GNU Make library that allows developers to write descriptions of <i>what</i> their build produces, rather than <i>how</i> to produce it. By removing the &#8220;how&#8221;, developers can render multiple build variations using the same declarative descriptions.
+</p><h3>
+<a name="Make.d%20increases%20productivity"></a>Make.d increases productivity
+</h3><p>
+Make.d improves developer productively by allowing developer to use their preferred toolchain without sacrificing software quality. Binaries produced by Make.d are <i>functionally consistent</i> across build variations. Make.d's build rules carefully manage the subtle differences between toolchains to ensure the resulting product functions identically regardless of which build variation is chosen. A developer could troubleshoot bugs with the Visual Studio debugger, make fixes and test locally, and then recompile for the ARM architecture and expect the target device to function identically.
+</p><h3>
+<a name="Make.d%20improves%20software%20quality"></a>Make.d improves software quality
+</h3><p>
+Make.d users use <i>qualification tests</i> (Q-tests) to ensure functional consistency at build-time. For example, a Make.d user might build both a static library and Q-test executable. The Q-test links in the library and runs tests to ensure it works as we expect. When the user runs Make, the static library is built, then the Q-test is built and immediately executed. If any of its tests fail, the Q-test returns nonzero, which halts the build and informs the user of the failure.
+</p><p>
+With Q-tests, Make.d users can verify that not only does their code work, but it works consistently across build variations. In the case of target builds, Make.d will run Q-tests locally on the configured simulator.
+</p><h3>
+<a name="Make.d%20by%20Example"></a>Make.d by Example
+</h3><p>
+To build a &#8220;hello world&#8221; executable with make.d, one would write a simple <code>Makefile</code> such as:
+</p><pre>include path_to_my_make.d/defines.min
+
+BUILD_EXES        = helloworld
+
+helloworld.C_SRCS = hello.c
+
+include $(RULES_MIN)
+</pre><p>
+To build, just launch GNU Make from the directory with <code>hello.c</code>:
+</p><pre>&gt; make
+&gt; WinNT_Debug\hello.exe
+Hello make.d!
+</pre><p>
+The Makfile contains no build rules and does not mention specifics about about the output, such as the file extension or target directory. This lets make.d render the same Makefile in different contexts. A <b>build variation</b> is specified with the <code>V</code> variable. Make.d recognizes many different values for <code>V</code>, such as what CPU architecture to target, what C compiler to use, and whether or not debug symbols should be included.
+</p><p>
+To build <code>hello.exe</code> without debug symbols, set <code>V</code> to <code>WinNT_Release</code>:
+</p><pre>&gt; make V=WinNT_Release
+&gt; WinNT_Release\hello.exe
+Hello make.d!
+</pre><p>
+Make.d keeps each build variation and all intermediary files isolated, allowing multiple build variations to coexist side-by-side.
+</p><h2>
+<a name="Theory%20of%20Operation"></a>Theory of Operation
+</h2><p>
+Developers write a build specification in terms of declarative <code>BUILD</code> constructs described below and place them between make.d's defines.min and rules.min. The defines.min provides variables and functions to help writing <code>BUILD</code> definitions, and the rules.min tells Make how to interpret those definitions in the context of a particular build variation.
+</p><div class=diagram>
+<div class="html2d art" style="width:360px;height:224px;line-height:16px;font-size:12.48px;white-space:nowrap">
+<div class="rect round" style="border-width:3px;left:3px;top:7px;right:2px;bottom:6px"></div>
+<div class="rect round" style="border-width:3px;left:67px;top:151px;right:194px;bottom:38px"></div>
+<div class="rect round" style="border-width:3px;left:67px;top:55px;right:178px;bottom:134px"></div>
+<div style="border-top: 4px solid transparent;border-left-width: 10.5px;border-bottom: 4px solid transparent;left:53.5px;top:116px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:35px;top:119px;right:299px;bottom:103px;line-height:0"></div>
+<div style="border-top: 4px solid transparent;border-left-width: 10.5px;border-bottom: 4px solid transparent;left:53.5px;top:164px;line-height:0"></div>
+<div class=line style="border-bottom-width:2px;border-left-width:2px;-webkit-border-bottom-left-radius:8px;-moz-border-radius-bottomleft:8px;border-bottom-left-radius:8px;left:35px;top:31px;right:299px;bottom:55px"></div>
+<div style="border-top: 4px solid transparent;border-left-width: 10.5px;border-bottom: 4px solid transparent;left:53.5px;top:68px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:35px;top:71px;right:299px;bottom:151px;line-height:0"></div>
+<div style="left:16px;top:16px;right:280px;bottom:192px">Makefile</div>
+<div style="text-align:center;left:80px;top:64px;right:192px;bottom:144px">defines.min</div>
+<div style="left:72px;top:112px;right:48px;bottom:96px">User-defined BUILD definitions</div>
+<div style="text-align:center;left:80px;top:160px;right:208px;bottom:48px">rules.min</div>
+</div>
+</div>
+<table><tr><th><p>
+File name
+</p></th><th><p>
+Description
+</p></th></tr><tr><td><p>
+<b>Makefile</b>
+</p></td><td><p>
+A user-defined file that includes make.d's defines.min, sets BUILD variables, and lastly includes $(RULES_MIN).
+</p></td></tr><tr><td><p>
+<b>defines.min</b>
+</p></td><td><p>
+Supplied by make.d. It sets up all the predefined variables and functions exported by make.d, also has &#8220;all:&#8221;, the default rule, so it'll be first.
+</p></td></tr><tr><td><p>
+<b>rules.min</b>
+</p></td><td><p>
+Supplied by make.d. It sets up all the rules based on the make.d primitives, tells GNU Make what to execute and how.
+</p></td></tr></table><p>
+Developers specify build targets using a set of specially named variables in their <code>Makefile</code>:
+</p><table><tr><th><p>
+Variable
+</p></th><th><p>
+Description
+</p></th></tr><tr><td><p>
+<code>BUILD_LIBS</code>
+</p></td><td><p>
+static libraries
+</p></td></tr><tr><td><p>
+<code>BUILD_DLLS</code>
+</p></td><td><p>
+shared, or dynamic libraries
+</p></td></tr><tr><td><p>
+<code>BUILD_EXES</code>
+</p></td><td><p>
+executables
+</p></td></tr><tr><td><p>
+<code>BUILD_QEXES</code>
+</p></td><td><p>
+test executables
+</p></td></tr><tr><td><p>
+<code>BUILD_MODS</code>
+</p></td><td><p>
+Component Services (CS) modules, mod1s
+</p></td></tr><tr><td><p>
+<code>BUILD_SUBDIRS</code>
+</p></td><td><p>
+a list of sub-directories relative to <code>$(CURDIR)</code> in which to execute <code>$(MAKE)</code>
+</p></td></tr><tr><td><p>
+<code>BUILD_ZIPS</code>
+</p></td><td><p>
+a list of .zip files to be generated.
+</p></td></tr><tr><td><p>
+<code>BUILD_COPIES</code>
+</p></td><td><p>
+a list of &#8220;;&#8221;-delimited copy specs.
+</p></td></tr><tr><td><p>
+<code>BUILD_HEADERS_FROM_IDL</code>
+</p></td><td><p>
+a special target for .idl &#8594; .h compilation
+</p></td></tr></table><p>
+In addition, make.d has partial support for these top-level targets:
+</p><table><tr><th><p>
+Variable
+</p></th><th><p>
+Description
+</p></th></tr><tr><td><p>
+<code>BUILD_IMPLIBS</code>
+</p></td><td><p>
+special, Component Services dynamic link targets that enable symbol resolution from CS modules
+</p></td></tr><tr><td><p>
+<code>BUILD_IMGS</code>
+</p></td><td><p>
+handset images, support is extremely partial
+</p></td></tr></table><p>
+A <code>Makefile</code> typically has only one or two BUILD directives.
+</p><h3>
+<a name="Build%20Variations"></a>Build Variations
+</h3><p>
+Make.d uses a single set of rules to build for multiple platforms, multiple execution targets, multiple flavors, and multiple toolchains. Each of these factors are allowed to vary independently from build to build. A supported combination of these factors is called a &#8220;V&#8221;, where &#8220;V&#8221; stands for &#8220;variation&#8221;. Each V has a .min file that specifies the toolchain to be used to build the V and other variables that control the build.
+</p><p>
+Most proceeds from a Make run are placed in a subdirectory named <code>$(V)</code>. Exceptions include proceeds of install, zip, and copies targets.
+</p><p>
+Make.d can only make one V per invocation of make, but make.d can run multiple sub-makes to support building multiple Vs in a single user invocation.
+</p><p>
+The following syntax grammar represents all Vs accepted by make.d
+</p><pre>v           ::= target "_" flavor
+
+target      ::= "ARM"
+              | "ADS12arm9"
+              | "armgcc"
+              | "cygwin"
+              | "Darwin"
+              | "Linux"
+              | "mingw"
+              | "qdsp6v3"
+              | "qdsp6v4"
+              | "RVCT" rvct_ver rvct_arch
+              | "SunOS"
+              | "WinNT"
+              | "Win32"
+
+flavor      ::= "Debug"
+              | "Release"
+              | "ReleaseG"
+
+rvct_ver    ::= "22"
+              | "30"
+              | "40"
+              | "41"
+
+rvct_arch   ::= "arm9"
+              | "arm11"
+              | "CortexA8"
+              | "CortexM3"
+              | "Scorpion"
+</pre><p>
+Each target represents a set of constraints that must be satisfied by the execution environment.
+</p><table><tr><th><p>
+Target
+</p></th><th><p>
+Execution environment constraints
+</p></th></tr><tr><td><p>
+<code>ARM</code>
+</p></td><td><p>
+Requires ARM runtime
+</p></td></tr><tr><td><p>
+<code>ADS12arm9</code>
+</p></td><td><p>
+Requires ADS12 runtime and arm9 or later CPU
+</p></td></tr><tr><td><p>
+<code>armgcc</code>
+</p></td><td><p>
+Requires armgcc runtime and arm9 or later CPU
+</p></td></tr><tr><td><p>
+<code>cygwin</code>
+</p></td><td><p>
+Requires cygwin runtime libraries
+</p></td></tr><tr><td><p>
+<code>Darwin</code>
+</p></td><td><p>
+Requires Darwin runtime on x86
+</p></td></tr><tr><td><p>
+<code>Linux</code>
+</p></td><td><p>
+Requires Linux runtime on x86
+</p></td></tr><tr><td><p>
+<code>mingw</code>
+</p></td><td><p>
+Requires MinGW runtime
+</p></td></tr><tr><td><p>
+<code>qdsp6v3</code>
+</p></td><td><p>
+Requires Hexagon runtime, arch 3 or later
+</p></td></tr><tr><td><p>
+<code>qdsp6v4</code>
+</p></td><td><p>
+Requires Hexagon runtime, arch 4 or later
+</p></td></tr><tr><td><p>
+<code>RVCT ver arch</code>
+</p></td><td><p>
+Requires ARM runtime at <code>ver</code> or later and optimized for <code>arch</code> CPU or later
+</p></td></tr><tr><td><p>
+<code>SunOS</code>
+</p></td><td><p>
+Requires SunOS runtime
+</p></td></tr><tr><td><p>
+<code>WinNT</code>
+</p></td><td><p>
+Requires 32-bit (or later) Windows on x86
+</p></td></tr><tr><td><p>
+<code>Win32</code>
+</p></td><td><p>
+Requires 32-bit (or later) Windows on x86
+</p></td></tr></table><p>
+Each flavor represents a set of properties of the binary.
+</p><table><tr><th><p>
+Flavor
+</p></th><th><p>
+Properties of resulting binary
+</p></th></tr><tr><td><p>
+<code>Debug</code>
+</p></td><td><p>
+Contains debug symbols. Compiled with DEBUG
+</p></td></tr><tr><td><p>
+<code>Release</code>
+</p></td><td><p>
+Contains no debug symbols
+</p></td></tr><tr><td><p>
+<code>ReleaseG</code>
+</p></td><td><p>
+Contains debug symbols, but compiled for Release
+</p></td></tr></table><h2>
+<a name="make.d%20Extensions"></a>make.d Extensions
+</h2><p>
+Make.d can be extended to support new tools, programming languages, and build variations. Extending make.d does not require modifications to make.d &#8212; instead, extensions can be implemented outside of make.d. Much of the build system is, in fact, implemented as extensions.
+</p><p>
+An extension consists of one or more <code>.min</code> files that are included at various points in make.d's execution. Generally, each of make.d's own <code>.min</code> files will include extension files as a final step of execution, as illustrated below:
+</p><div class=diagram>
+<div class="html2d art" style="width:496px;height:544px;line-height:16px;font-size:12.48px;white-space:nowrap">
+<div class="rect round" style="border-width:3px;left:3px;top:7px;right:2px;bottom:6px"></div>
+<div class="rect round" style="border-width:3px;left:67px;top:55px;right:66px;bottom:294px"></div>
+<div class="rect round" style="border-width:3px;left:131px;top:199px;right:114px;bottom:310px"></div>
+<div class="rect round" style="border-width:3px;left:131px;top:151px;right:114px;bottom:358px"></div>
+<div class="rect round" style="border-width:3px;left:67px;top:311px;right:66px;bottom:38px"></div>
+<div class="rect round" style="border-width:3px;left:131px;top:359px;right:98px;bottom:150px"></div>
+<div class="rect round" style="border-width:3px;left:131px;top:455px;right:130px;bottom:54px"></div>
+<div style="border-top: 4px solid transparent;border-left-width: 10.5px;border-bottom: 4px solid transparent;left:53.5px;top:276px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:35px;top:279px;right:435px;bottom:263px;line-height:0"></div>
+<div style="border-top: 4px solid transparent;border-left-width: 10.5px;border-bottom: 4px solid transparent;left:117.5px;top:420px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:99px;top:423px;right:371px;bottom:119px;line-height:0"></div>
+<div style="border-top: 4px solid transparent;border-left-width: 10.5px;border-bottom: 4px solid transparent;left:117.5px;top:468px;line-height:0"></div>
+<div class=line style="border-bottom-width:2px;border-left-width:2px;-webkit-border-bottom-left-radius:8px;-moz-border-radius-bottomleft:8px;border-bottom-left-radius:8px;left:99px;top:335px;right:371px;bottom:71px"></div>
+<div style="border-top: 4px solid transparent;border-left-width: 10.5px;border-bottom: 4px solid transparent;left:117.5px;top:372px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:99px;top:375px;right:371px;bottom:167px;line-height:0"></div>
+<div style="border-top: 4px solid transparent;border-left-width: 10.5px;border-bottom: 4px solid transparent;left:53.5px;top:68px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:35px;top:71px;right:435px;bottom:471px;line-height:0"></div>
+<div style="border-top: 4px solid transparent;border-left-width: 10.5px;border-bottom: 4px solid transparent;left:117.5px;top:164px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:99px;top:167px;right:371px;bottom:375px;line-height:0"></div>
+<div style="border-top: 4px solid transparent;border-left-width: 10.5px;border-bottom: 4px solid transparent;left:117.5px;top:212px;line-height:0"></div>
+<div class=line style="border-bottom-width:2px;border-left-width:2px;-webkit-border-bottom-left-radius:8px;-moz-border-radius-bottomleft:8px;border-bottom-left-radius:8px;left:99px;top:79px;right:371px;bottom:327px"></div>
+<div style="border-top: 4px solid transparent;border-left-width: 10.5px;border-bottom: 4px solid transparent;left:53.5px;top:324px;line-height:0"></div>
+<div class=line style="border-bottom-width:2px;border-left-width:2px;-webkit-border-bottom-left-radius:8px;-moz-border-radius-bottomleft:8px;border-bottom-left-radius:8px;left:35px;top:31px;right:435px;bottom:215px"></div>
+<div style="border-top: 4px solid transparent;border-left-width: 10.5px;border-bottom: 4px solid transparent;left:117.5px;top:116px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:99px;top:119px;right:371px;bottom:423px;line-height:0"></div>
+<div style="left:16px;top:16px;right:416px;bottom:512px">Makefile</div>
+<div style="left:80px;top:64px;right:328px;bottom:464px">defines.min</div>
+<div style="left:136px;top:112px;right:248px;bottom:416px">Make.d defines</div>
+<div style="text-align:center;left:144px;top:160px;right:128px;bottom:368px">Each extension's defines.min</div>
+<div style="text-align:center;left:148px;top:208px;right:132px;bottom:320px">Variation-specific "V File"</div>
+<div style="left:72px;top:272px;right:184px;bottom:256px">User-defined BUILD definitions</div>
+<div style="left:80px;top:320px;right:344px;bottom:208px">rules.min</div>
+<div style="text-align:center;left:144px;top:368px;right:112px;bottom:160px">Each extension's functions.min</div>
+<div style="left:136px;top:416px;right:264px;bottom:112px">Make.d rules</div>
+<div style="text-align:center;left:144px;top:464px;right:144px;bottom:64px">Each extension's rules.min</div>
+</div>
+</div>
+<p>
+Extensions named <b><code>defines.min</code></b> are included before V resolution s performed in make.d's <code>defines.min</code>. This lets the user add custom V-specific files and specify global toolchain locations (e.g. cdep or qidlc).
+</p><p>
+Extensions named <b><code>functions.min</code></b> are included by Make.d's <code>rules.min</code> just before Make.d starts interpreting BUILD definitions. This lets the extension, for example, extend <code>BUILD_LIBS</code> with support for other programming languages by adding <code>_OBJS</code> entries to the build, and then rules for how to create those object files in the extension's <code>rules.min</code>.
+</p><p>
+Extensions named <b><code>rules.min</code></b> are included at the end of make.d's <code>rules.min</code>. This is where the extension can add Make rules for any new BUILD definitions it introduces.
+</p><p>
+Extensions named <b><code>defines_&lt;toolchain&gt;.min</code></b> can be used to extend or override make.d's default configurations, such as specifying the location of an installation of Visual Studio.
+</p><h3>
+<a name="Specifying%20Extensions"></a>Specifying Extensions
+</h3><p>
+Make variables are used to tell make.d about extensions. These variables should be defined before make.d's <code>defines.min</code> is executed. Some variables name extension directories &#8212; directories to search for <code>.min</code> files &#8212; and some name individual extension files.
+</p><h4>
+<a name="MAKE_D_SITE_DIR"></a><code>MAKE_D_SITE_DIR</code>
+</h4><p>
+If <code>MAKE_D_SITE_DIR</code> is defined, make.d searches that directory for override/extension files. These &#8220;site files&#8221; are typically included at the end of make.d's normal .min files, as described above. Site files need to have the same name as the file from which they're to be included. For example, make.d's rules.min includes <code>$(MAKE_D_SITE_DIR)/rules.min</code> if present.
+</p><h4>
+<a name="MAKE_D_EXT_%3cext%3e_DIR"></a><code>MAKE_D_EXT_&lt;ext&gt;_DIR</code>
+</h4><p>
+Every make variable whose name matches this pattern specifies a directory of extension files. This is similar to <code>MAKE_D_SITE_DIR</code>, the difference being that there can be more than one <code>MAKE_D_EXT_&lt;ext&gt;_DIR</code>. For example, the following assignment:
+</p><pre>MAKE_D_EXT_myext_DIR = mydir
+</pre><p>
+... will cause <code>mydir/&lt;file&gt;.min</code>, if it exists, to be included by each corresponding <code>&lt;file&gt;.min</code> in make.d. The extension name (&#8220;<code>myext</code>&#8221; in this example) is ignored; it serves only to construct a unique name for the variable.
+</p><h4>
+<a name="MAKE_D_EXT_%3cfile%3e_%3cext%3e_MIN"></a><code>MAKE_D_EXT_&lt;file&gt;_&lt;ext&gt;_MIN</code>
+</h4><p>
+Every make variable whose name matches this pattern specifies an extension file to be included by <code>&lt;file&gt;.min</code>. For example, to include <code>myrules.min</code> after make.d's <code>rules.min</code>, use the following:
+</p><pre>MAKE_D_EXT_rules_myext_MIN = myrules.min
+</pre><h3>
+<a name="Extension%20Ordering"></a>Extension Ordering
+</h3><p>
+The order make.d includes extension files depends on which of these variables were used to describe the extension. First the <code>MAKE_D_SITE_DIR</code> files are included, then <code>MAKE_D_EXT_&lt;ext&gt;_DIR</code> files, and finally the <code>MAKE_D_EXT_&lt;file&gt;_&lt;ext&gt;_MIN</code> files. If there are multiple extensions in one category, the order of their inclusion is undefined.
+</p></div>
+</body>
+</html>

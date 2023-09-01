@@ -1,0 +1,73 @@
+This file contains instructions on how to capture and analyze a trace
+from the Linux environment. Similar steps can be used to perform the
+same in Windows.
+
+1. One-time setup
+
+  Push sysMonApp on device and retrieve from device the binaries
+  needed for trace analysis:
+
+  ${HEXAGON_SDK_ROOT}/tools/debug/hexagon-trace-analyzer/one_time_setup.sh
+
+2. Run the walkthrough script (optional)
+
+  You may skip this step if you already built and ran the executable successfully before:
+
+  ./benchmark_v65_walkthrough.py [options]
+
+3. Enable tracing
+
+  Run this script to configure and enable tracing:
+  
+  ${HEXAGON_SDK_ROOT}/tools/debug/hexagon-trace-analyzer/enable_trace.sh
+
+  Note that any reboot of the device will reset the trace settings.
+  Since the walkthrough script reboots the device, it is necessary to
+  enable tracing afterwards.
+
+4. Run the actual test
+
+   adb shell /vendor/bin/benchmark -o /data/local/benchmark.csv -f conv3x3 -P 1 -L 100 -l 10 -s
+
+5. Pull the trace
+
+  adb shell "cat /dev/coresight-tmc-etr > /data/trace.bin" 
+  adb pull /data/trace.bin trace.bin
+
+6. Get the dll load addresses
+
+  adb shell /data/sysMonApp etmTrace --command dll --q6 CDSP
+
+7. Update (if needed) config.py with the correct load addresses
+
+  vi config.py
+
+  The first array, elfList, should list all binary names
+  (data.ELF_NAME) reported by the previous sysMonApp command for which
+  the load address (data.LOAD_ADDRESS) is not null.  The second array,
+  elfOffsets, should list the load addresses in the same order.
+
+  Note: If sysmon returned multiple load addresses for a given
+  library, specify all of them in the config.py file (by adding one
+  more entry in both the elfList and elfOssets arrays).
+
+8. Run Hexagon Trace Analyzer
+
+  ${HEXAGON_SDK_ROOT}/tools/debug/hexagon-trace-analyzer/hexagon-trace-analyzer ./config.py ./results ./trace.bin
+
+  Note: This command may throw errors because of missing dependencies.
+  You have a couple of options available to resolve these
+  dependencies:
+
+  - Install these dependencies on your own (using pip install) and set the PYTHONPATH environment
+    to point to the installed packages,
+    
+  - Follow the setup instructions for python 2.7 in $HEXAGON_SDK_ROOT/examples/hexagon_nn/README.md and
+    set PYTHONPATH as follows before running the hexagon-trace-analyzer script:
+    export PYTHONPATH=$HEXAGON_SDK_ROOT/hexagon-nn-examples/env2/local/lib/python2.7/site-packages:$PYTHONPATH
+
+9. Interpret the contents of the results folder following the Hexagon Trace Analyzer documentation located here:
+
+   $HEXAGON_SDK_ROOT/docs/hexagon_trace_analyzer_doc.html
+
+   

@@ -1,0 +1,970 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><title>&#65279;Editors</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="images/sidebar_top.jpg"></top><script src="scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, false)"><input id="searchButton" onclick="postFunction(false)" type="button" value="Search"></form><p>
+<a href="index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<p>
+<a href="sitemap.html">Sitemap</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="Audio/Applications.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="Voice/Applications.html">Voice</a>
+</p><p>
+<a href="Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="Audio/Examples.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="Examples_Common.html">Common</a>
+</p><p>
+<a href="Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="Tools_Signing.html">Signing</a>
+</p><p>
+<a href="Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="FAQ_Common.html">Common</a>
+</p><p>
+<a href="FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="Support_Contact.html">Contact</a>
+</p><center><img src="images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h1>
+<a name="﻿Editors"></a>&#65279;Editors
+</h1><div class="toc"><div class="tocLevel"><a href="#Overview">Overview</a></div><div class="tocLevel"><a href="#Assembly%20language%20editor">Assembly language editor</a></div><div class="tocLevel"><a href="#IDL%20editor">IDL editor</a></div><div class="tocLevel"><a href="#API%20editor">API editor</a></div></div><h2>
+<a name="Overview"></a>Overview
+</h2><p>
+The Hexagon IDE includes editors which are specifically designed for editing the following kinds of code:
+</p><ul type="circle">
+<li>
+<p>
+Hexagon assembly language
+</p>
+</li><li>
+<p>
+Interface Definition Language (IDL)
+</p>
+</li><li>
+<p>
+Application programming interface (API)
+</p>
+</li>
+</ul><p>
+These editors support language-specific features which make coding faster and more efficient:
+</p><ul type="circle">
+<li>
+<p>
+<b>Syntax highlighting</b> - Display keywords, comments, and preprocessor constructs in distinctive colors
+</p>
+</li><li>
+<p>
+<b>Syntax checking</b> - Perform syntax checking in the editor itself (on each file open or save)
+</p>
+</li><li>
+<p>
+<b>Editing options</b> - Auto-format code; use short cuts for adding or removing blocks or single-line comments
+</p>
+</li><li>
+<p>
+<b>Mark occurrences</b> - Highlight all occurrences of a search item
+</p>
+</li>
+</ul><p>
+In addition to these features, the editors support the standard Eclipse editor features (undo/redo, copy/paste, etc.).
+</p><h2>
+<a name="Assembly%20language%20editor"></a>Assembly language editor
+</h2><p>
+The assembly language editor supports the following features:
+</p><ul type="circle">
+<li>
+<p>
+Syntax highlighting
+</p>
+</li><li>
+<p>
+Content assist
+</p>
+</li><li>
+<p>
+Code formatting
+</p>
+</li><li>
+<p>
+Syntax checking
+</p>
+</li><li>
+<p>
+Auto indent and auto complete
+</p>
+</li><li>
+<p>
+Mark occurrences
+</p>
+</li><li>
+<p>
+Miscellaneous
+</p>
+</li>
+</ul><left><img src="images/editors_asm_window.png"></left><p>
+<b>Syntax highlighting</b>
+</p><p>
+Highlighting displays the various syntax elements of Hexagon assembly language in different colors. The colors used are configurable through preference settings (<code>Assembly Editor -&gt; Syntax Coloring</code>).
+</p><p>
+<b>Content assist</b>
+</p><p>
+Content assist provides automatic completion by displaying possible alternatives on the screen as you type in assembly language instructions. For example, if you type the text &#8220;<code>R0 = ADD(</code>&#8221;, the editor will display all the possible syntax options for the Hexagon <code>ADD</code> instruction. You can then choose one of the displayed options to complete the instruction.
+</p><p>
+Whenever you type <code>(</code> in the editor the option display automatically appears. This can be disabled through preference settings (<code>Assembly Editor -&gt; Content Assist</code>).
+</p><p>
+The option display can be displayed in the editor at any time by pressing <code>Ctrl-Space</code>.
+</p><p>
+<b>Code formatting</b>
+</p><p>
+Code formatting automatically formats the assembly code as you type it. Code formatting can be enabled by pressing <code>Ctrl-F</code>. The formatting can be configured through preference settings (<code>Assembly Editor -&gt; Code Formatting</code>).
+</p><p>
+<b>Syntax checking</b>
+</p><p>
+Syntax checking automatically checks the assembly code syntax whenever a file is saved in the editor. If any errors are found, the erroneous text is marked in the edit window.
+</p><p>
+NOTE - Syntax checking is performed by the Hexagon GNU G++ compiler.
+</p><p>
+NOTE - Syntax checking does not work if the compiler is not present in the system path, checking does not work, or if the file is not in the IDE workspace.
+</p><p>
+<b>Auto indent and auto complete</b>
+</p><p>
+Auto indent automatically indents code as it is typed, based on various code formatting options. Whenever you type a paired symbol (e.g., a quote or left bracket), auto complete automatically inserts the corresponding closing symbol into the text.
+</p><p>
+<b>Mark occurrences</b>
+</p><p>
+If you select a text string in the edit window, the mark-occurrences feature automatically highlights all the other occurrences of that string in the file.
+</p><ul type="circle">
+<li>
+<p>
+If the selected string is a register, all occurrences of that register are highlighted in color. Different colors are used to indicate whether the register is being read or written.
+</p>
+</li><li>
+<p>
+If the selected string is a register, all occurrences of register pairs that contain the selected register are additionally highlighted.
+</p>
+</li><li>
+<p>
+If the selected string is a register pair, all occurrences of registers that are contained in the selected register pair are additionally highlighted.
+</p>
+</li>
+</ul><p>
+<b>Miscellaneous</b>
+</p><p>
+The assembly language editor supports additional features such as toggle comments (<code>Ctrl-/</code>) and add/remove block comments (<code>Ctrl+Shift+/</code>, <code>Ctrl+Shift+\</code>).
+</p><p>
+<b>Configuration</b>
+</p><p>
+The assembly language editor features are configurable through the preference settings (<code>Window -&gt; Preferences -&gt; Hexagon -&gt; Assembly Editor</code>).
+</p><h2>
+<a name="IDL%20editor"></a>IDL editor
+</h2><p>
+The Interface Definition Language (IDL) editor supports the following features:
+</p><ul type="circle">
+<li>
+<p>
+Syntax highlighting
+</p>
+</li><li>
+<p>
+Code formatting
+</p>
+</li><li>
+<p>
+Syntax checking
+</p>
+</li><li>
+<p>
+Mark occurrences
+</p>
+</li><li>
+<p>
+Miscellaneous
+</p>
+</li>
+</ul><left><img src="images/editors_idl_window.png"></left><p>
+<b>Syntax highlighting</b>
+</p><p>
+Highlighting displays the various syntax elements of IDL code in different colors. The colors used are configurable through preference settings (<code>IDL Editor -&gt; Syntax Coloring</code>).
+</p><p>
+<b>Code formatting</b>
+</p><p>
+Code formatting automatically formats the IDL code as you type it. Code formatting can be enabled by pressing <code>Ctrl-F</code>. The formatting can be configured through preference settings (<code>IDL Editor -&gt; Code Formatting</code>).
+</p><p>
+<b>Syntax checking</b>
+</p><p>
+Syntax checking automatically checks the IDL code syntax whenever a file is saved in the editor. If any errors are found, the erroneous text is marked in the edit window.
+</p><p>
+NOTE - Syntax checking is performed by the <code>qaic</code> compiler.
+</p><p>
+NOTE - Syntax checking does not work if the compiler is not present in the system path, checking does not work, or if the file is not in the IDE workspace.
+</p><p>
+<b>Mark occurrences</b>
+</p><p>
+If you select a text string in the edit window, the mark-occurrences feature automatically highlights all the other occurrences of that string in the file.
+</p><p>
+<b>Miscellaneous</b>
+</p><p>
+The IDL editor supports additional features such as toggle comments (<code>Ctrl-/</code>) and add/remove block comments (<code>Ctrl+Shift+/</code>, <code>Ctrl+Shift+\</code>).
+</p><p>
+<b>Configuration</b>
+</p><p>
+The IDL editor features are configurable through the preference settings (<code>Window -&gt; Preferences -&gt; Hexagon -&gt; IDL Editor</code>).
+</p><h2>
+<a name="API%20editor"></a>API editor
+</h2><p>
+The application programming interface (API) editor is mainly used to convert the parameters of an API function to IDL format. This is useful for cases where the API parameters are more complex than what is supported by IDL. The conversion automates the normally tedious task of reducing such parameters to IDL.
+</p><p>
+The API editor supports the following features:
+</p><ul type="circle">
+<li>
+<p>
+Add new API
+</p>
+</li><li>
+<p>
+Modify existing API
+</p>
+</li><li>
+<p>
+Remove API
+</p>
+</li><li>
+<p>
+Search for an existing API function
+</p>
+</li><li>
+<p>
+Convert API function parameters to IDL format
+</p>
+</li>
+</ul><p>
+<b>Launch editor</b>
+</p><p>
+The API editor operates on header files with the suffix <code>.api</code>.
+</p><ul type="circle">
+<li>
+<p>
+To open an existing header file, right-click on the file.
+</p>
+</li><li>
+<p>
+To create a new header file, right-click on the project in Project Explorer and choose <code>New -&gt; File</code>. Name the new file with the <code>.api</code> suffix.
+</p>
+</li>
+</ul><p>
+The editor then appears with the specified header file.
+</p><left><img src="images/editors_api_window.png"></left><p>
+NOTE - Changes made in the API editor must be explicitly saved with <code>File -&gt; Save</code> (or <code>Ctrl-S</code>).
+</p><p>
+<b>Search for existing API</b>
+</p><p>
+The <code>List Of Available APIs</code> pane lists all the API functions defined in the current header file.
+</p><p>
+To search for specific API functions in the header file, type one or more search strings into the <code>Type to filter</code> field. The pane is automatically updated to display only those APIs whose names contain the specified search strings.
+</p><left><img src="images/editors_api_window_search.png"></left><p>
+<b>Add new API</b>
+</p><p>
+To add a new API function in the current header file, click on the <code>Add new API</code> button, and enter the required values into the input fields under the <code>Selected API</code> label.
+</p><p>
+Use the <code>Next</code> and <code>Previous</code> buttons to quickly navigate through the input fields.
+</p><p>
+<b>Modify existing API</b>
+</p><p>
+To edit an existing API function in the current header file, select the API name in the <code>List Of Available APIs</code> panel, and update the values in the input fields under the <code>Selected API</code> label.
+</p><p>
+<b>Remove API</b>
+</p><p>
+To delete an existing API function from the current header file, select the API name in the <code>List Of Available APIs</code> panel, and click on the <code>Remove API</code> button.
+</p><p>
+<b>Convert API parameters to IDL</b>
+</p><p>
+To convert the parameters of an API to IDL format, select the API name in the <code>List Of Available APIs</code> panel, and click on the <code>Generate</code> button.
+</p><p>
+The conversion inputs the parameters associated with the API (each with a name and data type), and outputs the following files:
+</p><ul type="circle">
+<li>
+<p>
+IDL file
+</p>
+</li><li>
+<p>
+Interface C file
+</p>
+</li><li>
+<p>
+Skel file
+</p>
+</li>
+</ul><p>
+This is useful for cases where the parameters of an API function are more complex than the IDL convention of simply passing a buffer and buffer size. The conversion automates the normally tedious task of reducing such parameters to IDL.
+</p><p>
+NOTE - Any changes made to an API in the editor will not be reflected in the IDL files until the <code>Generate</code> button is clicked.
+</p><p>
+NOTE - All IDL files are generated inside the project.
+</p><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

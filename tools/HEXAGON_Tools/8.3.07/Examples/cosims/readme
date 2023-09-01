@@ -1,0 +1,45 @@
+Cosim Examples
+
+Cosim examples brief summary:
+1. badmem (Cosim that monitors memory accesses to invalid memory addresses)
+2. bus (Cosim that models latencies incurred by a bus access)
+3. l2vic_test (Cosim demonstrates dll/shared object using libwrapper.lib)
+4. PCRangeProfiler (min,max,avg for an address range)
+5. FunctionProfiler (min,max,avg cycle time for a specified function)
+6. qtimer_test (how to use l2vic and qtimer cosims in subsystem)
+7. Semi-HostedFunction (Cosim demonstrates use of a semi-hosted function)
+8. streamer (Cosim emulates a camera streaming interface to Hexagon)
+9. qtimer_test2 (how to program irq per thread and fastirq)
+
+These cosims have been built in compliance with the new simulator API. Refer
+to the Hexagon Simulator System API User Guide (80-N2040-18) for details on
+the available APIs.
+
+To build:
+	make clean
+	make
+
+Requirements:
+1. The hexagon tools release directory must be available in your system path:
+   export PATH=/tools/install/path/gnu/bin:/tools/install/path/qc/bin:$PATH
+2. GCC 4.8.4 must be available in your system path to build on Linux. Your
+   LD_LIBRARY_PATH must also be set to point to the g++ distribution lib dir, 
+   typically $(g++-4.8.4-or-later-install-dir)/lib64 for linux64 
+3. MSVC 2015 and Cygwin must be available in your system path to build on Windows.    
+
+General usage:
+Execute an app with a cosim described in the "cosimFile" as follows:
+>hexagon-sim --cosim_file cosimFile app.elf
+Refer to the readme files in each cosim directory for specific details 
+
+
+Makefile:
+--------
+The compilation of the cosim example on Cygwin platform requires Microsoft
+Visual Studio 2015 to be installed on the machine.
+
+Please note that in order to preserve the integrety of the PATH environment
+variable, it is saved prior to calling the vcvarsall.bat program, then it
+is restored to its original value.  This allows you to execute the make.cmd
+file multiple times without growing the PATH enviroment variable.
+

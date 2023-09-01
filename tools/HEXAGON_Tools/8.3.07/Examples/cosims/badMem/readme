@@ -1,0 +1,54 @@
+BADMEM cosim:
+-------------
+
+The badMem cosim example registers valid memory regions with the simulator.
+If the application tries to access (read/write) memory outside the valid
+bounds, the cosim flags a failure or a warning.
+
+To build:
+
+From the src directory, run the following commands in a shell:
+> make clean
+> make
+
+This will build the cosim and launch a simulation with the
+cosim attached. The makefile will run a hello world app on
+the simulator with the cosim attached.
+
+Windows:
+
+Note that building on Windows requires MSVC 2015 and Cygwin.
+
+Linux:
+
+Building on Linux requires a version of GCC compatible with
+4.8.4 to be installed in your system path.
+
+The path and name of the cosim is listed in a file which
+is passed to the simulator via the --cosim_file option:
+
+${COSIM_PATH}/${COSIM_LIB}
+
+Where:
+
+${COSIM_LIB} = badMem.so  on linux32/64
+${COSIM_LIB} = badMem.dll on Windows
+
+Refer to the Hexagon Simulator System API User Guide
+(80-N2040-18) for more details on creating cosimulation
+models. The most recent version of the User Guide can
+be found at go/hexagonsupport
+
+Arguments:
+
+For valid memory regions from 0x10000 to 0x1ffffff and 0x40000000 to 0x7fffffff
+the cosim arguments are
+
+${COSIM_LIB} = badMem.so  // linux32/64
+${COSIM_LIB} = badMem.dll // cygwin
+
+For fatal errors use -f switch:
+${COSIM_PATH}/${COSIM_LIB} -f 0x10000--0x1ffffff; 0x40000000--0x7fffffff; 
+For warning use -w switch:
+${COSIM_PATH}/${COSIM_LIB} -w 0x10000--0x1ffffff; 0x40000000--0x7fffffff; 
+

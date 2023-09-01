@@ -1,0 +1,50 @@
+#!/bin/bash
+basedir=`dirname $0`
+cd $basedir
+. ../setup-env.sh
+declare -i result=0
+set -x
+
+echo to run on ADSP rather than CDSP: export CDSP_FLAG=0
+export CDSP_FLAG=${CDSP_FLAG-1}
+
+
+if [ "z$RUNDROID" = "z" ]; then
+    set +x
+    export PREF=@echo
+else
+    num_device_lines=`adb devices -l | sed '/^$/d' | wc -l`
+    if [ $num_device_lines -gt 2 ]; then
+        if [ "z$ANDROID_SERIAL" == "z" ];  then
+            echo "Error: RUNDROID set to 1, but found more than one device. Set ANDROID_SERIAL"
+            exit 1
+        fi
+    fi
+fi
+
+
+cd conv3x3a16
+make $1  clean all PREF=$PREF
+
+result=$?
+exit $result
+
+
+Notes: if rpcmem.a is not found , do
+
+#rebuild rpcmem.a
+ 
+cd <SDKPATH>/Hexagon_SDK/3.3.0
+ 
+. setup_sdk_env.source
+cd libs/common/rpcmem/
+ 
+make V=android_Release
+
+cd android_Release
+mkdir ship
+cp rpcmem.a ship
+cp ../inc/*.h ship
+
+ 
+

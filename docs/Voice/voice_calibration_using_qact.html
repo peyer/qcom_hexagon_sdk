@@ -1,0 +1,1109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><title>QACT Lite : Testing the Voice Module on Target</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="../images/sidebar_top.jpg"></top><script src="../scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, true)"><input id="searchButton" onclick="postFunction(true)" type="button" value="Search"></form><p>
+<a href="../index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="../feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="../hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="../images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="../hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="../images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="../images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="../Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="../Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="../Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="../Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="../Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="../Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="../HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="../Audio/Applications.html">Audio</a>
+</p><p>
+<a href="../Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="../Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="../FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="../Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="../Voice/Applications.html">Voice</a>
+</p><p>
+<a href="../Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="../APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="../APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="../APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="../APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="../Audio/Examples.html">Audio</a>
+</p><p>
+<a href="../Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="../Examples_Common.html">Common</a>
+</p><p>
+<a href="../Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="../Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="../Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="../Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="../CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="../Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="../Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="../Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="../Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="../Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="../Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="../Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="../Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="../Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="../Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="../Tools_Signing.html">Signing</a>
+</p><p>
+<a href="../Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="../Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="../FAQ_Common.html">Common</a>
+</p><p>
+<a href="../FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="../FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="../FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="../Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="../Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="../Support_Contact.html">Contact</a>
+</p><center><img src="../images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h1>
+<a name="QACT%20Lite%20:%20Testing%20the%20Voice%20Module%20on%20Target"></a>QACT Lite : Testing the Voice Module on Target
+</h1><div class="toc"><div class="tocLevel"><a href="#Overview">Overview</a></div><div class="tocLevel"><a href="#Prerequisites">Prerequisites</a></div><div class="tocLevel"><a href="#Setting%20up%20the%20workspace">Setting up the workspace</a></div><div class="tocLevel"><a href="#Add%20custom%20topologies%20and%20associated%20modules">Add custom topologies and associated modules</a><div class="tocLevel"><a href="#Open%20the%20workspace">Open the workspace</a></div><div class="tocLevel"><a href="#Add%20parameters%20using%20“Parameter%20Designer”">Add parameters using &#8220;Parameter Designer&#8221;</a></div><div class="tocLevel"><a href="#Create%20module%20using%20“Module%20Designer”">Create module using &#8220;Module Designer&#8221;</a></div><div class="tocLevel"><a href="#Create%20custom%20topology%20using%20“Topology%20Designer”">Create custom topology using &#8220;Topology Designer&#8221;</a></div><div class="tocLevel"><a href="#Add%20newly%20created%20topologies%20to%20database%20using%20“Database%20Designer”">Add newly created topologies to database using &#8220;Database Designer&#8221;</a></div><div class="tocLevel"><a href="#Add%20Dynamic%20module%20using%20“DSP%20Module%20Manager”">Add Dynamic module using &#8220;DSP Module Manager&#8221;</a></div><div class="tocLevel"><a href="#Associate%20topologies%20with%20devices">Associate topologies with devices</a></div><div class="tocLevel"><a href="#NOTE:%20Settings%20for%20capi_v2_dummy_ecns%20example:">NOTE: Settings for capi_v2_dummy_ecns example:</a></div></div><div class="tocLevel"><a href="#Save%20the%20workspace%20changes%20to%20ACDB">Save the workspace changes to ACDB</a></div><div class="tocLevel"><a href="#Replacing%20the%20ACDB%20on%20the%20Target%20Device">Replacing the ACDB on the Target Device</a></div></div><h2>
+<a name="Overview"></a>Overview
+</h2><p>
+QACT (Qualcomm Audio Calibration Tool) Lite is a PC based tool that lets you modify the ACDB (Audio Calibration Database). ACDB is a set of binary files containing calibration data for all devices, networks and sample rates. The default set of acdb files can be found in the folder &#8220;/etc&#8221; on your target device.
+</p><p>
+To enable a custom voice module on target the module must be added to a new topology definition. These are the steps from a high level:
+</p><ol type="1">
+<li>
+<p>
+Setting up the workspace
+</p>
+</li><li>
+<p>
+Add custom topologies and associated modules
+</p>
+</li><li>
+<p>
+Associate topologies with devices
+</p>
+</li><li>
+<p>
+Save the workspace changes to ACDB
+</p>
+</li><li>
+<p>
+Replacing the ACDB on the Target Device
+</p>
+</li>
+</ol><h2>
+<a name="Prerequisites"></a>Prerequisites
+</h2><ol type="1">
+<li>
+<p>
+Android Device
+</p>
+</li><li>
+<p>
+QACT Lite and QPST installed on system.
+</p><div class="indent"><p>
+Please <a href="../Support_Contact.html">../Support_Contact</a> Qualcomm to obtain them. The User Guide shipped along with QACT will take you through the installation. You can refer section 2 of the document for more details
+</p></div>
+</li><li>
+<p>
+ADB drivers installed on system.
+</p>
+</li>
+</ol><h2>
+<a name="Setting%20up%20the%20workspace"></a>Setting up the workspace
+</h2><ol type="1">
+<li>
+<p>
+Pull the existing acdb files from the target device. (Assuming 'C:\Work\ACDB' is the working directory)
+</p><div class="indent"><pre>adb pull /etc/Speaker_cal.acdb C:\Work\ACDB
+adb pull /etc/Headset_cal.acdb C:\Work\ACDB
+adb pull /etc/Handset_cal.acdb C:\Work\ACDB
+adb pull /etc/Hdmi_cal.acdb C:\Work\ACDB
+adb pull /etc/Global_cal.acdb C:\Work\ACDB
+adb pull /etc/General_cal.acdb C:\Work\ACDB
+adb pull /etc/Bluetooth_cal.acdb C:\Work\ACDB
+</pre></div>
+</li>
+</ol><p>
+NOTE: Few devices storing acdb files in /etc/acdbdata/&lt;TargetType&gt;/. Change the adb commands based on your device acdb files to push and pull.
+</p><ol type="1">
+<li>
+<p>
+Create a workspace file 'workspaceFile.qwsp' in the same folder. You can modify the existing qwsp file, if you are provided with one.
+</p><div class="indent"><p>
+If creating new, a text file with contents as shown should suffice
+</p><pre>&lt;WorkSpace_Data WSVersID="Badger_3"&gt;
+</pre><div class="indent"><pre>&lt;ACDBFile_Paths&gt;
+</pre><div class="indent"><pre>&lt;ACDBFile_Paths path="Bluetooth_cal.acdb" /&gt;
+&lt;ACDBFile_Paths path="General_cal.acdb" /&gt;
+&lt;ACDBFile_Paths path="Global_cal.acdb" /&gt;
+&lt;ACDBFile_Paths path="Handset_cal.acdb" /&gt;
+&lt;ACDBFile_Paths path="Hdmi_cal.acdb" /&gt;
+&lt;ACDBFile_Paths path="Headset_cal.acdb" /&gt;
+&lt;ACDBFile_Paths path="Speaker_cal.acdb" /&gt;
+</pre></div><pre>&lt;/ACDBFile_Paths&gt;
+&lt;GUI_Data&gt;
+&lt;/GUI_Data&gt;
+</pre></div><pre>&lt;/WorkSpace_Data&gt;
+</pre></div>
+</li><li>
+<p>
+Launch QACT Lite. Choose 'Open File' icon as shown.
+</p><div class="indent"><left><img alt="<Image not found&gt;" src="images/qact_open_file.png"></left></div><p>
+Browse to the location C:\Work\ACDB and choose the file workspaceFile.qwsp.
+</p><p>
+Now we are ready to modify the acdb for the custom requirement.
+</p>
+</li>
+</ol><h2>
+<a name="Add%20custom%20topologies%20and%20associated%20modules"></a>Add custom topologies and associated modules
+</h2><p>
+Add custom topologies defined in voiceproc.json file in earlier steps to ACDB.
+</p><h3>
+<a name="Open%20the%20workspace"></a>Open the workspace
+</h3><div class="indent"><p>
+Open the workspace created in the previous step (workspaceFile.qwsp)
+</p><left><img alt="<Image not found&gt;" src="images/qact_open_workspace.jpg"></left></div><h3>
+<a name="Add%20parameters%20using%20“Parameter%20Designer”"></a>Add parameters using &#8220;Parameter Designer&#8221;
+</h3><ol class="indent" type="1">
+<li>
+<p>
+Choose parameter designer: Tools -&gt; Parameter Designer -&gt; Add+
+</p>
+</li><li>
+<p>
+Add parameters of a module
+</p>
+</li>
+</ol><div class="indent"><p>
+As an example, Add parameters of CAPI_V2_GAIN module, refer &lt;SDK_ROOT&gt;\examples\voice\capi_v2_gain\inc\capi_v2_gain.h.
+</p><ul type="circle">
+<li>
+<p>
+Enter the parameter name and parameter id
+</p><ul type="circle">
+<li>
+<p>
+Parameter Name: CAPI_V2_GAIN_PARAM_ID_MASTER_GAIN
+</p>
+</li><li>
+<p>
+Parameter ID : 0x10001011
+</p>
+</li>
+</ul>
+</li>
+</ul><left><img alt="<Image not found&gt;" src="images/voice_qct_add_param.jpg"></left><p>
+Click &#8220;OK&#8221;
+</p><ul type="circle">
+<li>
+<p>
+Add information about the parameter (Gain value, data type, default value and etc.)
+</p><ul type="circle">
+<li>
+<p>
+Name: master_gain
+</p>
+</li><li>
+<p>
+Type: uint16
+</p>
+</li><li>
+<p>
+Default vlaue: 0x3000
+</p>
+</li>
+</ul>
+</li>
+</ul><left><img alt="<Image not found&gt;" src="images/voice_qct_add_param_data.jpg"></left><p>
+Click &#8220;Done&#8221;
+</p><ul type="circle">
+<li>
+<p>
+Similarly add another parameter defined for gain module
+</p><ul type="circle">
+<li>
+<p>
+Parameter Name: CAPI_V2_GAIN_PARAM_ID_ENABLE
+</p>
+</li><li>
+<p>
+Parameter ID : 0x10001001
+</p>
+</li>
+</ul>
+</li>
+</ul><p>
+Finally the parameter designer has two parameters as shown in the image below.
+</p><left><img alt="<Image not found&gt;" src="images/voice_qct_add_param_final.jpg"></left></div><h3>
+<a name="Create%20module%20using%20“Module%20Designer”"></a>Create module using &#8220;Module Designer&#8221;
+</h3><ol class="indent" type="1">
+<li>
+<p>
+Choose module designer: Tools -&gt; Module Designer -&gt; Add+
+</p>
+</li><li>
+<p>
+Add modules
+</p><ul type="circle">
+<li>
+<p>
+Add CAPI_V2_GAIN module
+</p><ul class="indent" type="circle">
+<li>
+<p>
+Module Name: VOICE_MODULE_DYNAMIC_GAIN_TX_1
+</p>
+</li><li>
+<p>
+Module ID : 0x11111111
+</p>
+</li><li>
+<p>
+Module Type: TX
+</p>
+</li>
+</ul>
+</li>
+</ul><left><img alt="<Image not found&gt;" src="images/voice_qct_add_module_data.jpg"></left><p>
+Select list of parameters applicable and Click &#8220;OK&#8221;
+</p><ul class="indent" type="circle">
+<li>
+<p>
+Module Name: VOICE_MODULE_DYNAMIC_GAIN_RX_1
+</p>
+</li><li>
+<p>
+Module ID : 0x33333333
+</p>
+</li><li>
+<p>
+Module Type: RX
+</p>
+</li>
+</ul>
+</li>
+</ol><div class="indent"><p>
+Finally module designer now contains 2 modules (1 for TX and 1 for RX processing)
+</p></div><h3>
+<a name="Create%20custom%20topology%20using%20“Topology%20Designer”"></a>Create custom topology using &#8220;Topology Designer&#8221;
+</h3><ol class="indent" type="1">
+<li>
+<p>
+Choose topology designer: Tools -&gt; Topology Designer -&gt; Add+
+</p>
+</li><li>
+<p>
+Add custom topology
+</p><ul type="circle">
+<li>
+<p>
+Create custom topologies
+</p><ul class="indent" type="circle">
+<li>
+<p>
+Topology Name: VPM_TX_SINGLE_MIC_DYNAMIC_TOPOLOGY
+</p>
+</li><li>
+<p>
+Topology ID : 0x00010F83
+</p>
+</li><li>
+<p>
+Topology Type: TX
+</p>
+</li>
+</ul>
+</li>
+</ul><left><img alt="<Image not found&gt;" src="images/topology_tx.JPG"></left><p>
+Select list of modules and click &#8220;OK&#8221;
+</p><ul type="circle">
+<li>
+<p>
+Similarly add other topologies for TX and RX.
+</p>
+</li>
+</ul>
+</li>
+</ol><ul class="indent" type="circle">
+<li>
+<p>
+Topology Name: VPM_RX_DYNAMIC_TOPOLOGY
+</p><ul class="indent" type="circle">
+<li>
+<p>
+Topology ID : 0x00010F82
+</p>
+</li><li>
+<p>
+Topology Type: RX
+</p>
+</li>
+</ul><left><img alt="<Image not found&gt;" src="images/topology_rx.jpg"></left>
+</li>
+</ul><h3>
+<a name="Add%20newly%20created%20topologies%20to%20database%20using%20“Database%20Designer”"></a>Add newly created topologies to database using &#8220;Database Designer&#8221;
+</h3><ul class="indent" type="circle">
+<li>
+<p>
+Tools -&gt; Database Designer
+</p>
+</li><li>
+<p>
+Add newly created TX and RX topologies to VOICE_COPP_TX and VOICE_COPP_RX respectively
+</p>
+</li>
+</ul><div class="indent"><left><img alt="<Image not found&gt;" src="images/database_design_tx.jpg"></left><left><img alt="<Image not found&gt;" src="images/database_design_rx.jpg"></left></div><h3>
+<a name="Add%20Dynamic%20module%20using%20“DSP%20Module%20Manager”"></a>Add Dynamic module using &#8220;DSP Module Manager&#8221;
+</h3><div class="indent"><p>
+Add the module information in DSP module manager. This is a new feature in QACT to allow addition of dynamic modules to AMDB(Audio Module Database).It allows addition of CAPIv2, CAPI as well as APPI modules to AMDB.
+</p><ol class="indent" type="1">
+<li>
+<p>
+Select &#8220;DSP Module Manager&#8221; from the &#8220;Tools&#8221; menu.
+</p>
+</li><li>
+<p>
+Click on &#8220;Add Module&#8221; button.
+</p>
+</li><li>
+<p>
+Select the options for capi_v2_gain module for TX topology.
+</p><ul class="indent" type="circle">
+<li>
+<p>
+To add a custom shared object information, Tag1 should be the same as the tag specified as follows:
+</p><div class="indent"><pre>&lt;tag&gt;_get_static_properties
+</pre><ul class="indent" type="circle">
+<li>
+<p>
+Example: capi_v2_gain_get_static_properties
+</p>
+</li>
+</ul><pre>&lt;tag&gt;_init
+</pre><ul class="indent" type="circle">
+<li>
+<p>
+Example: capi_v2_gain_init
+</p>
+</li>
+</ul><p>
+In this example, specify Tag1 as capi_v2_gain
+</p></div>
+</li><li>
+<p>
+Custom shared object can be loaded either at boot up or on demand based on the selection for Load Module.
+</p>
+</li><li>
+<p>
+If a custom module is not required in a specific product, the module can be marked as not required (optional).
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Similarly add the other modules to AMDB.
+</p><div class="indent"><left><img alt="<Image not found&gt;" src="images/capi_v2_gain_tx1.jpg"></left></div>
+</li>
+</ol><p>
+NOTE: For capi_v2_dummy_ecns example, single example overloads Single Mic(SM), Dual Mic(DM) and Quad Mic(QM) dummy ECNS modules.
+</p><div class="indent"><p>
+For Single Mic, specify Tag1 as capi_v2_custom_dummy_sm_ecns
+</p><left><img alt="<Image not found&gt;" src="images/single_mic.jpg"></left><p>
+For Dual Mic, specify Tag1 as capi_v2_custom_dummy_dm_ecns
+</p><left><img alt="<Image not found&gt;" src="images/dual_mic.jpg"></left><p>
+For Quad Mic, specify Tag1 as capi_v2_custom_dummy_qm_ecns
+</p><left><img alt="<Image not found&gt;" src="images/quad_mic.jpg"></left></div></div><h3>
+<a name="Associate%20topologies%20with%20devices"></a>Associate topologies with devices
+</h3><ul class="indent" type="circle">
+<li>
+<p>
+Associate voice topologies with device using &#8220;Device designer&#8221; Tools -&gt; Device Designer
+</p>
+</li><li>
+<p>
+Associate the topologies to specific devices where voip call will be made
+</p><left><img alt="<Image not found&gt;" src="images/device_design_rx.jpg"></left><left><img alt="<Image not found&gt;" src="images/device_design_tx.JPG"></left>
+</li>
+</ul><div class="indent"><h3>
+<a name="NOTE:%20Settings%20for%20capi_v2_dummy_ecns%20example:"></a>NOTE: Settings for capi_v2_dummy_ecns example:
+</h3><ul class="indent" type="circle">
+<li>
+<p>
+In Device Designer,choose
+</p><div class="indent"><pre>For single mic, use device SPKR_PHONE_MIC 
+For dual mic, use device SPKR_PHONE_MIC_ENDFIRE_FLUENCEV5
+For quald mic, use device SPKR_PHONE_QUAD_MIC_FLUENCE_PROV2
+</pre></div>
+</li><li>
+<p>
+To enable fluence property on the platform for dummy ecns, following are the steps:
+</p><div class="indent"><pre>adb root
+adb remount
+adb pull /system/build.prop
+</pre></div>
+</li><li>
+<p>
+Change the value of the property in build.prop: For dual: &#8220;fluence&#8221;; for quad: fluencepro&#8220;.
+</p><div class="indent"><pre>ro.qc.sdk.audio.fluencetype=fluence
+</pre></div>
+</li><li>
+<p>
+Push the file on target.
+</p><div class="indent"><pre>adb push build.prop /system/
+adb shell chmod 644 /system/build.prop
+adb reboot
+</pre></div>
+</li>
+</ul></div><h2>
+<a name="Save%20the%20workspace%20changes%20to%20ACDB"></a>Save the workspace changes to ACDB
+</h2><div class="indent"><p>
+Choose &#8220;Save As&#8221; from &#8220;File&#8221; menu.
+</p><p>
+A window will pop up where you can browse to the folder to save all the acdb files and workspace file. For the workspace file, browse to your desired location. The same location will be picked up for all other files.
+</p><p>
+Assuming you have saved all the files in C:\WORK\ACDB\GAIN_ADDED
+</p><left><img alt="<Image not found&gt;" src="images/qact_save_worksapce.png"></left></div><h2>
+<a name="Replacing%20the%20ACDB%20on%20the%20Target%20Device"></a>Replacing the ACDB on the Target Device
+</h2><p>
+Now that we are done with modifying the ACDB, it's time to push the files to Target. Assuming the saved acdb files are kept at C:\WORK\ACDB\GAIN_ADDED. Issue the following commands from the folder in a CLI shell.
+</p><div class="indent"><pre>adb push Speaker_cal.acdb /etc/acdbdata/MTP
+adb push Headset_cal.acdb /etc/acdbdata/MTP
+adb push Handset_cal.acdb /etc/acdbdata/MTP
+adb push Hdmi_cal.acdb /etc/acdbdata/MTP
+adb push Global_cal.acdb /etc/acdbdata/MTP
+adb push General_cal.acdb /etc/acdbdata/MTP
+adb push Bluetooth_cal.acdb /etc/acdbdata/MTP
+adb push adsp_avs_config.acdb /etc/acdbdata/
+</pre></div><p>
+Reboot the device.
+</p><p>
+NOTE: Few devices storing acdb files in /etc/acdbdata/&lt;TargetType&gt;/. Change the adb commands based on your device acdb files to push and pull.
+</p><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

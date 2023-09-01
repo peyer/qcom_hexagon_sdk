@@ -1,0 +1,56 @@
+##################################################################
+# Copyright (c) $Date$ QUALCOMM INCORPORATED.
+# All Rights Reserved.
+# Modified by QUALCOMM INCORPORATED on $Date$
+##################################################################
+The MUX example shows how to eliminate control flow from the main loop
+in the findmin function.  This example takes the optimization one step
+further by vectorizing the loop.  The control flow must still be
+eliminated, however.  This example shows how to eliminate control flow
+with VMUX, the vector version of MUX.
+
+VMUX operates on two 8-byte vectors and a single-byte predicate,
+returning a new 8-byte vector:
+
+    Word64 Q6_P_vmux_pPP(Byte Pu, Word64 Rss, Word64 Rtt)
+
+Each bit in the predicate determines whether the corresponding byte in
+the input vectors is taken from Rss or Rtt.  VMUX then, must be used
+in conjunction with the vector comparison operations.  For example:
+
+    Byte Q6_p_vcmph_gt_PP(Word64 Rss, Word64 Rtt)
+
+This vector-compare-halfwords operation executes a pairwise compare
+between the 4 halfword elements in the two input vectors.  The bits in
+the predicate are set according to the result of the corresponding
+byte in the input vectors.  For halfwords, then, two bits will be set
+both 0 or both 1, depending on the comparison.  This means only single
+VMUX operation is needed.
+
+The findmin algorithm is also an execellent example of a reduction.  A
+reduction is a computation that combines many data elements (a long
+array) array into a single piece of data.  Findmin takes an n-element
+array and returns 2 values: the smallest element and the index of that
+element.  Other reductions include summing the values in an array and
+averaging the values in an array.  A reduction algorithm often uses an
+accumulator to keep track of the reduction value as it processes the
+elements in the array.  A single accumulator inherently adds a
+dependence to the body of the loop, restricting direct vectorization.
+Reductions can often be implemented with a divide-and-conquer
+approach.  That is, the reduction can use multiple accumulators to
+reduce disjoint subsets of the entire array in parallel.  Then, at the
+end, the accumulators will be reduced to get the final result.  This
+is how the findmin function is vectorized.  It uses a vector as 4
+parallel accumulators, each finding the minimum element in the
+corresponding quarter of the input.  Then, that array is reduced at
+the end.
+
+The findmin.c file contains the example of a vectorized findmin
+function.  Run the test program to view the performance impact of
+vectorizing this example.
+
+Running Example:
+1) make
+
+Default compiler and options can be modified on the make command line
+using the CC and CFLAGS make variables, respectively.

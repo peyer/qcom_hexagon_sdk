@@ -1,0 +1,33 @@
+
+ifeq ($(CDSP_FLAG), 1) 
+	LIB_DSPRPC = libcdsprpc
+	DEFINES += CDSP
+else ifeq ($(MDSP_FLAG), 1) 
+	LIB_DSPRPC = libmdsprpc
+	DEFINES += MDSP
+else ifeq ($(SLPI_FLAG), 1) 
+	LIB_DSPRPC = libsdsprpc
+	DEFINES += SLPI
+else
+	LIB_DSPRPC = libadsprpc
+	DEFINES += ADSP
+endif
+
+$(info ************  LIB=$(LIB_DSPRPC) ************)
+
+# stand-alone calculator_plus executable
+BUILD_EXES+=calculator_plus
+calculator_plus_QAICIDLS += inc/calculator
+calculator_plus_DEFINES += __LE_FLAG
+calculator_plus_C_SRCS += src/calculator_apps $V/calculator_plus_stub
+calculator_plus_LIBS += rpcmem
+calculator_plus_DLLS += $(LIB_DSPRPC)
+calculator_plus_LD_FLAGS +=  -ldl -lpthread
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   calculator.input \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

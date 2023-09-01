@@ -1,0 +1,1363 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><title>sysMon DSP Profiler V2</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="images/sidebar_top.jpg"></top><script src="scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, false)"><input id="searchButton" onclick="postFunction(false)" type="button" value="Search"></form><p>
+<a href="index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<p>
+<a href="sitemap.html">Sitemap</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="Audio/Applications.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="Voice/Applications.html">Voice</a>
+</p><p>
+<a href="Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="Audio/Examples.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="Examples_Common.html">Common</a>
+</p><p>
+<a href="Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="Tools_Signing.html">Signing</a>
+</p><p>
+<a href="Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="FAQ_Common.html">Common</a>
+</p><p>
+<a href="FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="Support_Contact.html">Contact</a>
+</p><center><img src="images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h1>
+<a name="sysMon%20DSP%20Profiler%20V2"></a>sysMon DSP Profiler V2
+</h1><div class="toc"><div class="tocLevel"><a href="#Overview">Overview</a></div><div class="tocLevel"><a href="#Supported%20chipsets">Supported chipsets</a></div><div class="tocLevel"><a href="#Setup">Setup</a></div><div class="tocLevel"><a href="#sysMon%20DSP%20Profiler%20V2%20Latest%20Updates">sysMon DSP Profiler V2 Latest Updates</a><div class="tocLevel"><a href="#Stats%20collection">Stats collection</a></div></div><div class="tocLevel"><a href="#Post-processing">Post-processing</a><div class="tocLevel"><a href="#Post%20processing%20script%20output%20file">Post processing script output file</a><div class="tocLevel"><a href="#Summary%20sheet">Summary sheet</a></div><div class="tocLevel"><a href="#PostProcessed%20sheet">PostProcessed sheet</a></div></div><div class="tocLevel"><a href="#Analyzing%20profiling%20data">Analyzing profiling data</a><div class="tocLevel"><a href="#_Summary%20sheet">Summary sheet</a></div><div class="tocLevel"><a href="#Post%20processed%20sheet">Post processed sheet</a></div></div></div><div class="tocLevel"><a href="#New%20post-processing%20tool">New post-processing tool</a><div class="tocLevel"><a href="#Usage">Usage</a><div class="tocLevel"><a href="#Optional%20arguments">Optional arguments</a></div></div><div class="tocLevel"><a href="#Files%20generated">Files generated</a></div></div><div class="tocLevel"><a href="#Command%20Line%20Execution">Command Line Execution</a></div><div class="tocLevel"><a href="#CDSP%20Benchmarking%20Overview">CDSP Benchmarking Overview</a><div class="tocLevel"><a href="#_Supported%20chipsets">Supported chipsets</a></div><div class="tocLevel"><a href="#_Usage">Usage</a></div><div class="tocLevel"><a href="#Analyzing%20output%20data">Analyzing output data</a></div></div></div><h2>
+<a name="Overview"></a>Overview
+</h2><p>
+sysMon DSP Profiler is an Android UI application for profiling DSP work load. This UI app uses FastRPC to communicate with SysMon service running on DSP for profiling activities. The Android application can be used to profile services running on DSP to gather information like the clocks voted for, resource usage, load distribution across available hardware threads, load on processor, bus bandwidth metrics and various other profiling metrics useful in measuring performance, debugging performance related issues and in identifying possible optimizations. This document captures steps to setup and use sysMon DSP Profiler and ways to analyze the captured profiling data.
+</p><h2>
+<a name="Supported%20chipsets"></a>Supported chipsets
+</h2><p>
+8998, SDM660, SDM630, SDM845, SDM710, QCS605, SM8150.
+</p><h2>
+<a name="Setup"></a>Setup
+</h2><p>
+Install <b>sysMon_DSP_Profiler_V2.apk</b> file from <code>&lt;SDK_DIR&gt;/tools/utils/sysmon/</code> SDK directory on the device connected to the host machine by running following ADB command.
+</p><div class="indent"><pre>adb install sysMon_DSP_Profiler_V2.apk
+</pre></div><h2>
+<a name="sysMon%20DSP%20Profiler%20V2%20Latest%20Updates"></a>sysMon DSP Profiler V2 Latest Updates
+</h2><p>
+Following screenshot captures the new UI of <b>sysMon DSP Profiler</b> (V2) application where one can select the desired DSP subsystem tab.
+</p><div class="indent"><left><img src="images/hp_profiler_UI_adsp.png"></left></div><p>
+This sysMon DSP Profiler UI provides user flexibility to choose from different modes of profiling:
+</p><ul type="circle">
+<li>
+<p>
+DCVS Mode option checked
+</p><p>
+DSP DCVS (if supported and enabled) algorithm will be active for the profiling duration which can adjust DSP core and bus clocks dynamically.
+</p>
+</li><li>
+<p>
+DCVS Mode option un-checked
+</p><p>
+DSP DCVS (if supported) will be disabled during profiling in this mode.
+</p>
+</li><li>
+<p>
+Default Mode option checked
+</p><p>
+A fixed set of performance metrics (8 PMU events) will be monitored in this mode. By default, sampling period is either 1 or 50 milli-seconds. Profiler generates a packet at the end of every sampling rate window with the performance metrics captured in the window.
+</p><p>
+User can also provide a desired sampling period in multiples of one milli-second with DCVS mode option unchecked to override sampling period in DSP while the collecting a fixed set of performance metrics (8 PMU events). If DCVS Mode option is checked, a sampling period input of &gt; 0 and &lt; 50 milli-seconds will result in 1 milli-second sampling interval, while for &gt; 50 milli-seconds sampling period input, the sampling interval in DSP will be either 1 or 50 milli-seconds as dictated by DCVS algorithm.
+</p><p>
+<b>NOTE:</b> The sampling period override option in this mode is <b>not</b> available for 8998.
+</p>
+</li><li>
+<p>
+Default Mode option un-checked
+</p><p>
+With Default Mode option un-checked user has choices to select the desired PMU events to be captured. Click on Configuration button after un-checking the Default Mode.
+</p><left><img src="images/hp_profiler_pmu_config_button.png"></left><p>
+Following screenshot lists the supported PMU events.
+</p><div class="indent"><left><img src="images/hp_profiler_pmu_config_1.png"></left><left><img src="images/hp_profiler_pmu_config_2.png"></left></div>
+</li><li>
+<p>
+Configuration Settings button
+</p><p>
+This gets enabled only in user mode and user can select his desired PMU events to be captured. The list of PMU events (depends on the Q6 version of the DSP subsystem) that are open for selection are:
+</p><ol class="indent" type="1">
+<li>
+<p>
+0x03 &#8594; MPPS
+</p>
+</li><li>
+<p>
+0x03 &#8594; pCPP
+</p>
+</li><li>
+<p>
+0x04 &#8594; DMTV2
+</p>
+</li><li>
+<p>
+0x07 &#8594; DMTV3
+</p>
+</li><li>
+<p>
+0x08 &#8594; SMT
+</p>
+</li><li>
+<p>
+0x2A &#8594; IPP
+</p>
+</li><li>
+<p>
+0x03 0x2A &#8594; MIPS
+</p>
+</li><li>
+<p>
+0x7F &#8594; L2 Fetch Miss
+</p>
+</li><li>
+<p>
+0x11 &#8594; IU Stall
+</p>
+</li><li>
+<p>
+0x11 0xE9 &#8594; Total Stall Cycles(MCPS)
+</p><ol class="indent" type="1">
+<li>
+<p>
+0x41 &#8594; AXI 32-Byte Line Read
+</p>
+</li>
+</ol>
+</li><li>
+<p>
+0x43 &#8594; AXI 32-Byte Line Write
+</p>
+</li><li>
+<p>
+0xCE &#8594; AXI 64-Byte Line Read
+</p>
+</li><li>
+<p>
+0xCF &#8594; AXI 64-Byte Line Write
+</p><ol class="indent" type="1">
+<li>
+<p>
+0x3F &#8594; AXI 128-Byte Line Read (<b>Q6 version &#8805; v66</b>)
+</p>
+</li>
+</ol>
+</li><li>
+<p>
+0x46 &#8594; AXI 128-Byte Line Write(<b>Q6 version &#8805; v66</b>)
+</p>
+</li><li>
+<p>
+0x44 &#8594; AHB Read BW
+</p>
+</li><li>
+<p>
+0x45 &#8594; AHB Write BW
+</p>
+</li><li>
+<p>
+0x3B &#8594; 1-Thread Active(%)
+</p>
+</li><li>
+<p>
+0x3C &#8594; 2-Thread Active(%)
+</p>
+</li><li>
+<p>
+0x3D &#8594; 3-Thread Active(%)
+</p>
+</li><li>
+<p>
+0x3E &#8594; 4-Thread Active(%)
+</p>
+</li><li>
+<p>
+0x25 &#8594; 1-Thread CPP
+</p>
+</li><li>
+<p>
+0x26 &#8594; 2-Thread CPP
+</p>
+</li><li>
+<p>
+0x27 &#8594; 3-Thread CPP
+</p>
+</li><li>
+<p>
+0x2F &#8594; 4-Thread CPP
+</p>
+</li><li>
+<p>
+0xF0 &#8594; HVX Thread MPPS (<b>Q6 version &gt; v60</b>) / 0x118 &#8594; HVX Thread MPPS (<b>Q6 version &gt; v65</b>)
+</p>
+</li><li>
+<p>
+0xFC &#8594; HVX L2 Load Miss / 0x11D &#8594; HVX L2 Load Miss (<b>Q6 version &gt; v65</b>)
+</p>
+</li><li>
+<p>
+0xFC 0xF4 &#8594; HVX Stall Cycles / 0x11D 0x106 &#8594; HVX Stall Cycles (<b>Q6 version &gt; v65</b>)
+</p>
+</li>
+</ol><p>
+Performance metrics captured are post processed and published on UI continuously with a refresh rate of one second.
+</p>
+</li><li>
+<p>
+8 PMU Mode option checkbox
+</p><p>
+8 PMU Mode checkbox gets enabled if Default Mode and DCVS Mode options are un-checked. In Default mode and DCVS modes disabled case, user can select desired PMU events by Configuration Settings. The list of PMU events selected from configuration settings can be profiled in two ways:
+</p><ol class="indent" type="1">
+<li>
+<p>
+4 PMU Mode(Default) - 4 constant default PMU events and user configured PMU events scheduled 4 at a time from list of selected events
+</p>
+</li><li>
+<p>
+8 PMU Mode - All the 8 PMU events are user configured, scheduled 8 at a time from list of selected events
+</p>
+</li>
+</ol>
+</li>
+</ul><h3>
+<a name="Stats%20collection"></a>Stats collection
+</h3><p>
+A binary is generated by profiler for post processing to excel sheet for further analysis. In general, one can pull the binary files from sdcard in the below mentioned path (The app displays saved file path on stopping profiler) for the corresponding subsystems.
+</p><ul type="circle">
+<li>
+<p>
+<b>/sdcard/sysmon.bin</b> for ADSP
+</p>
+</li><li>
+<p>
+<b>/sdcard/sysmon_CDSP.bin</b> for CDSP
+</p>
+</li><li>
+<p>
+<b>/sdcard/sysmon_SDSP.bin</b> for SDSP
+</p>
+</li>
+</ul><p>
+Command to pull the profiler output file from device using ADB:
+</p><div class="indent"><pre>adb pull /sdcard/sysmon&lt;_cdsp/sdsp&gt;.bin &lt;destination directory&gt;\&lt;filename.bin&gt;
+</pre></div><h2>
+<a name="Post-processing"></a>Post-processing
+</h2><p>
+Post processing executable can be found at:
+</p><table><tr><td><p>
+<b>Chipset</b>
+</p></td><td><p>
+<b>Parser location in SDK</b>
+</p></td></tr><tr><td><p>
+8998, SDM660, SDM630
+</p></td><td><p>
+<b>Windows:</b> &lt;SDK_DIR&gt;/tools/utils/sysmon/parser_win/
+</p><p>
+<b>Linux:</b> &lt;SDK_DIR&gt;/tools/utils/sysmon/parser_linux/
+</p></td></tr><tr><td><p>
+SDM845, SDM710 SD6150, SM7150 QCS605, SM8150, SM8250
+</p></td><td><p>
+<b>Windows:</b> &lt;SDK_DIR&gt;/tools/utils/sysmon/parser_win_v2/
+</p><p>
+<b>Linux:</b> &lt;SDK_DIR&gt;/tools/utils/sysmon/parser_linux_v2/
+</p></td></tr></table><p>
+Parser executable usage:
+</p><div class="indent"><pre>Windows: SysmonParser.exe &lt;Input file name&gt;.bin &lt;Output file name&gt; &lt;ModeType&gt;
+LInux: SysmonParser &lt;Input file name&gt;.bin &lt;Output file name&gt; &lt;ModeType&gt;
+</pre></div><table><tr><td><p>
+<b>Parameter</b>
+</p></td><td><p>
+<b>Property</b>
+</p></td><td><p>
+<b>Value</b>
+</p></td><td><p>
+<b>Description</b>
+</p></td></tr><tr><td><p>
+Input file name
+</p></td><td><p>
+Required
+</p></td><td><p>
+Path to the profiler output bin file
+</p><p>
+(including the file name with extension)
+</p><p>
+extracted from the target
+</p></td><td></td></tr><tr><td><p>
+Output file name
+</p></td><td><p>
+Required
+</p></td><td><p>
+Desired output file path including the filename (without extension)
+</p></td><td></td></tr><tr><td rowspan="2"><p>
+ModeType
+</p></td><td rowspan="2"><p>
+Required
+</p></td><td><p>
+default
+</p></td><td><p>
+If Default mode option checked.
+</p></td></tr><tr><td><p>
+user
+</p></td><td><p>
+If Default mode option is un-checked.
+</p></td></tr></table><p>
+<b>Example commands:</b>
+</p><div class="indent"><pre>SysmonParser sysmon.bin SysmonProfStat default
+SysmonParser.exe sysmon.bin SysmonProfStat user
+SysmonParser c:\temp\sysmon.bin c:\temp\SysmonProfStat user
+</pre></div><h3>
+<a name="Post%20processing%20script%20output%20file"></a>Post processing script output file
+</h3><p>
+Output of <b>SysmonParser</b> is an excel sheet saved with the name provided in <code>&lt;Output file name&gt;</code> argument. The excel sheet consists of below worksheets
+</p><h4>
+<a name="Summary%20sheet"></a>Summary sheet
+</h4><p>
+This work sheet will have the <b>AVG</b>, <b>MAX</b> and <b>MIN</b> of all the metrics captured during profiling. The overall statistics are grouped under core, bus, L1, L2 and HVX metrics. This is named as <b>Overall summary</b>.
+</p><p>
+Apart from publishing <b>Overall summary</b> the parser also detects ADSP core power collapse entry and exit and assumes samples between power collapse exit to entry as one test case and displays the summary of each test case.
+</p><p>
+Under <b>Customized Data</b> user can enter the desired start and end row (from <b>PostProcessed</b> sheet) to generate summary for the selected rows.
+</p><div class="indent"><left><img src="images/hp_sample_summary_sheet.png"></left></div><h4>
+<a name="PostProcessed%20sheet"></a>PostProcessed sheet
+</h4><p>
+This work sheet will have the post processed data of each PMU event at sampling period configured by user. Apart from the post processed PMU events, this sheet also captures NPA clock votes, ADSPPM static votes, DCVS votes for ADSP core and bus clocks in each profiling window. Also captured are heap statistics of 'GuestOS' and 'UserPDs'.
+</p><div class="indent"><left><img src="images/hp_sample_postprocessed_sheet.png"></left></div><h3>
+<a name="Analyzing%20profiling%20data"></a>Analyzing profiling data
+</h3><h4>
+<a name="_Summary%20sheet"></a>Summary sheet
+</h4><p>
+Overall summary section and individual test sections of this sheet helps in understanding the use case performance using the published metrics like MPPS, pCPP, AXI read and write bandwidths, clock votes etc.
+</p><p>
+<b>MPPS (Million packets per second):</b>
+</p><p>
+This metric captures the work done by the core for the given use case. Average MPPS of real time use case is constant independent of core clock. Increase in MPPS for non-real time use case for a given clock indicates effective utilization of L1 and L2 cache.
+</p><p>
+<b>HVX Thread MPPS (Million packets per second):</b>
+</p><p>
+This metric publishes the packets executed by HVX co-processor in ADSP. MPPS metrics captures both scalar core and HVX core packets. The MPPS executed on the scalar Q6 core can be calculated using:
+</p><div class="indent"><pre>Q6 scalar MPPS = (MPPS - HVX Thread MPPS)
+</pre></div><p>
+<b>Effective Q6 frequency (MHz):</b>
+</p><p>
+This metric captures the actual load on the processor for the given work. Ratio of effective Q6 frequency and NPA core clock frequency can be used to get Q6 usage.
+</p><div class="indent"><pre>Q6 usage percentage = (Effective Q6 frequency / NPA core clock) * 100
+</pre></div><p>
+The Q6 usage percentage approaching 100 indicates need for ADSP core to run at higher frequency to avoid any glitches or frame drops. MPPS and pCPP metrics together can be used to decide if the ADSP core clock vote or bus clock vote has to be adjusted in this case.
+</p><p>
+<b>pCPP (Processor cycles per packet):</b>
+</p><p>
+pCPP metric captures the average processor cycles taken per packet. Lower the pCPP factor, more is the work done in ADSP for a given core clock frequency. Core stalls due to bus accesses can result in a higher pCPP factor. Increasing the bus clock vote or prefetching data memory prior to actual usage can help in lowering this factor and hence increasing the work done for a given core clock frequency.
+</p><p>
+<b>IU stall frequency (MHz):</b>
+</p><p>
+IU stall frequency is derived from measured cycles that the core has stalled on instruction unit cache accesses due to demand misses. Higher the IU stall frequency, higher can be the pCPP factor.
+</p><p>
+<b>DU stall frequency (MHz):</b>
+</p><p>
+DU stall frequency is derived from measured cycles that the core has stalled on accessing L1 Data cache lines due to demand misses. Higher the DU stall frequency, higher can be the pCPP factor. DMT (Dynamic Multi Threading) uses DU stalls of stalled thread and schedules other threads for efficient utilization of core clock. DU stall frequency will not fully convey stall of entire processor.
+</p><p>
+<b>AXI cached read/write bandwidth (MBps):</b>
+</p><p>
+This metric publishes the AXI bus bandwidth (DDR accesses) generated by read/write access from the core due to a cache line miss in L2. This includes both demand and prefetch misses in L2 cache.
+</p><p>
+<b>L2 fetch bandwidth (MBps):</b>
+</p><p>
+Bus bandwidth generated by L2fetch instruction to prefetch data into L2 cache.
+</p><p>
+<b>Clock votes (MHz):</b>
+</p><p>
+Core clock captures core clock frequency that ADSP Q6 is running at. Bus clock vote captures overall ADSP vote for bus clock in MHz. The final bus clock frequency (done outside of ADSP) will be based on votes from other subsystems (Application processor, Modem etc.) as well.
+</p><p>
+<b>Static clock votes (MHz):</b>
+</p><p>
+Aggregated static votes from all clients for core and bus clocks.
+</p><p>
+<b>DCVS clock votes (MHz):</b>
+</p><p>
+DCVS vote for core and bus clocks.
+</p><h4>
+<a name="Post%20processed%20sheet"></a>Post processed sheet
+</h4><p>
+This sheet captures PMU metrics along with clock votes and heap statistics per profiling window. Data collected in each sample is extrapolated to per second data and published here. This sheet is especially useful in understanding the instantaneous load on ADSP and also work load distribution in a time frame.
+</p><p>
+Example plot of <b>Effective Q6 frequency</b> metric over time from <b>PostProcessed</b> sheet:
+</p><div class="indent"><left><img src="images/hp_effec_q6_plot.png"></left></div><p>
+Example of <b>Q6 load</b> plotted along with <b>core clock frequency</b> and <b>pCPP</b> over time:
+</p><div class="indent"><left><img src="images/hp_q6load_plot.png"></left></div><p>
+Example plot of <b>AXI bandwidth</b> over time:
+</p><div class="indent"><left><img src="images/hp_axi_plot.png"></left></div><p>
+Example plot of <b>MPPS</b> and <b>pCPP</b> over time:
+</p><div class="indent"><left><img src="images/hp_mpps_cpp_plot.png"></left></div><h2>
+<a name="New%20post-processing%20tool"></a>New post-processing tool
+</h2><p>
+SysmonParser executable has some limitations related to the high processing time for big input raw binaries, maximum entries possible in an excel format and missing capabilities to process profiling data corresponding to NPU subsystem. A new parser is developed to address these limitations, where in the output format is html with a much improved processing time over the legacy one. This enhanced version of the parser (sysmon_parser) can be picked from the following locations with in Hexagon SDK:
+</p><table><tr><td><p>
+<b>Chipset</b>
+</p></td><td><p>
+<b>Parser location in SDK</b>
+</p></td></tr><tr><td><p>
+SDM845, SDM710 SD6150, SM7150 QCS605, SM8150, SM8250 and the latest
+</p></td><td><p>
+<b>Windows:</b> &lt;SDK_DIR&gt;/tools/utils/sysmon/parser_win_v2/HTML_Parser
+</p><p>
+<b>Linux:</b> &lt;SDK_DIR&gt;/tools/utils/sysmon/parser_linux_v2/HTML_Parser
+</p></td></tr></table><h3>
+<a name="Usage"></a>Usage
+</h3><div class="indent"><pre>Windows: sysmon_parser.exe &lt;input sysmon binary file&gt;
+Linux: sysmon_parser &lt;input sysmon binary file&gt;
+</pre></div><h4>
+<a name="Optional%20arguments"></a>Optional arguments
+</h4><p>
+The <b>&#8212;outdir</b> option can be used to redirect generated files to a new folder with the current directory being the default.
+</p><div class="indent"><pre>--outdir &lt;output folder&gt;
+</pre></div><p>
+Example:
+</p><div class="indent"><pre>sysmon_parser.exe sysmon_cdsp_nngraph.bin --outdir nngraph
+</pre></div><p>
+The <b>&#8212;summary</b> option can be used to generate summary alone while skipping the generation of all other .csv files.
+</p><p>
+Example:
+</p><div class="indent"><pre>sysmon_parser.exe sysmon_cdsp_nngraph.bin --outdir nngraph --summary
+</pre></div><h3>
+<a name="Files%20generated"></a>Files generated
+</h3><table><tr><td><p>
+sysmon_report.html
+</p></td><td><p>
+Detailed summary report with plots, per invoke HVX analysis (CDSP) and pie charts (if applicable)
+</p></td></tr><tr><td><p>
+post_processed_metrics.csv
+</p></td><td><p>
+It contains all metrics computed for all the samples read from the input sysmon raw binary file. It is useful to plot metrics against time and correlate with other logs.
+</p></td></tr><tr><td><p>
+raw_pmu.csv
+</p></td><td><p>
+It contains all PMU raw values for given events for all samples in bin file. It is useful to recompute any specific metric or look for raw PMU and generate new metrics.
+</p></td></tr><tr><td><p>
+pmuStats.csv
+</p></td><td><p>
+It contains all PMUs accumulated for entire duration and interpolated to match accumulation time across all PMUs
+</p></td></tr></table><h2>
+<a name="Command%20Line%20Execution"></a>Command Line Execution
+</h2><p>
+sysMon DSP Profiler can be invoked from command line using the below commands.
+</p><p>
+The below command will open the sysMon DSP Profiler app with Profiler UI displayed on the screen.
+</p><div class="indent"><p>
+<code>adb shell am start -n com.qualcomm.qti.sysmonappExternal/com.qualcomm.qti.sysmonappExternal.AdspProfiler -e q6 2</code>
+</p></div><p>
+-e q6 &lt;DSPproc_value&gt; - Input the required DSP on which you need to run the Profiler. It is a mandatory parameter. Default is ADSP(0).
+</p><ol class="indent" type="1">
+<li>
+<p>
+ADSP - 0
+</p>
+</li><li>
+<p>
+SDSP - 2
+</p>
+</li><li>
+<p>
+CDSP - 3
+</p>
+</li>
+</ol><p>
+<b>To Start Profiler:</b>
+</p><div class="indent"><p>
+<code>adb shell am broadcast -a com.qualcomm.qti.sysmonapp.RUN_EXT_FROM_ADB -e startProfiler 1 -e q6 2 -e defaultMode 1 -e samplingPeriod 10 -e dcvsMode 0 -n com.qualcomm.qti.sysmonappExternal/com.qualcomm.qti.sysmonappExternal.BootCompleteReceiverExternal</code>
+</p></div><p>
+-e q6 &lt;DSPproc_value&gt; - Input the same DSP value with which you opened the Profiler app (0 - ADSP, 2 - SDSP, 3 - CDSP). -e defaultMode &lt;0/1&gt; - Input 1 if Profiler has to be run in Default Mode or 0 for User Mode(when Default Mode is disabled). By default, Default Mode is enabled. -e samplingPeriod &lt;time_in_msec&gt; - Input the desired samplingPeriod in milli-seconds. By default, it is 1 milli-second in User Mode and combination of 1 and 50 milli-seconds in Default Mode. -e dcvsMode &lt;0/1&gt; - Input 1 to enable DCVS during profiling or 0 to disable. By default, DCVS Mode is enabled when Default Mode is selected and disabled under User Mode. -e pmuMode &lt;0/1&gt; - Input 1 to run profiler in 8 PMU mode. By default, this is 0 and it runs in 4 PMU mode.
+</p><div class="indent"><p>
+This input becomes valid only when profiler is run in user mode and D
+</p></div><p>
+<b>To Stop Profiler:</b>
+</p><div class="indent"><p>
+<code>adb shell am broadcast -a com.qualcomm.qti.sysmonapp.RUN_EXT_FROM_ADB -e stopProfiler 1 -e q6 2 -n com.qualcomm.qti.sysmonappExternal/com.qualcomm.qti.sysmonappExternal.BootCompleteReceiverExternal</code>
+</p></div><p>
+-e q6 &lt;DSPproc_value&gt; - Input the same DSP value on which you started the Profiler.
+</p><p>
+The pair of start and stop commands for Profiler can be run any number of times on the given DSP once the sysMon DSP Profiler app is opened.
+</p><p>
+The below command is to close the sysMon DSP Profiler app finally.
+</p><div class="indent"><p>
+<code>adb shell am force-stop com.qualcomm.qti.sysmonappExternal</code>
+</p></div><p>
+To run Profiler on different DSP, one has to close the app and re-open it with different DSP value and run start and stop commands with the corresponding DSP value.
+</p><h2>
+<a name="CDSP%20Benchmarking%20Overview"></a>CDSP Benchmarking Overview
+</h2><p>
+CDSP Benchmarking is a feature in sysMon DSP Profiler for studying the performance of common image processing APIs on DSP for the given duration and their performance metrics are captured.
+</p><h3>
+<a name="_Supported%20chipsets"></a>Supported chipsets
+</h3><p>
+All HVX based CDSP subsystems from SDM660.
+</p><p>
+SDM660, SDM845, SDM710, QCS605, SM8150
+</p><h3>
+<a name="_Usage"></a>Usage
+</h3><p>
+Following screenshot captures the UI of <b>CDSP Benchmark</b>. The chipset is auto-detected and <b>CDSP Benchmark</b> tab appears under the appropriate Q6 tab.
+</p><div class="indent"><left><img src="images/hp_cdspbenchmark_UI.png"></left></div><p>
+The user has choices to select
+</p><ol class="indent" type="1">
+<li>
+<p>
+desired API
+</p>
+</li><li>
+<p>
+screen resolution
+</p>
+</li><li>
+<p>
+duration of execution
+</p>
+</li><li>
+<p>
+FPS
+</p>
+</li><li>
+<p>
+Power Level
+</p>
+</li><li>
+<p>
+DCVS Mode
+</p>
+</li><li>
+<p>
+Fix Power Level
+</p>
+</li><li>
+<p>
+HVX Units
+</p>
+</li><li>
+<p>
+Profiler
+</p>
+</li>
+</ol><p>
+<b>Functions:</b>
+</p><table><tr><td><p>
+<b>Function Test</b>
+</p></td><td><p>
+<b>Description</b>
+</p></td></tr><tr><td><p>
+conv3x3
+</p></td><td><p>
+3x3 Convolution of image
+</p></td></tr><tr><td><p>
+dilate3x3
+</p></td><td><p>
+3x3 Dilation filter of image
+</p></td></tr><tr><td><p>
+dilate5x5
+</p></td><td><p>
+5x5 Dilation filter of image
+</p></td></tr><tr><td><p>
+gaussian7x7
+</p></td><td><p>
+7x7 Gaussian filter of image
+</p></td></tr><tr><td><p>
+integrate
+</p></td><td><p>
+Performs image Integration to increase the light in an image
+</p></td></tr><tr><td><p>
+epsilon
+</p></td><td><p>
+Epsilon filter of image
+</p></td></tr><tr><td><p>
+bilateral
+</p></td><td><p>
+Bilateral filter of image
+</p></td></tr><tr><td><p>
+fast9
+</p></td><td><p>
+Fast 9 version of Fast feature detector of image
+</p></td></tr><tr><td><p>
+bilateral_vtcm
+</p></td><td><p>
+Bilateral filter of image with VTCM and scatter/gather
+</p></td></tr><tr><td><p>
+sobel3x3
+</p></td><td><p>
+3x3 Sobel filter of image
+</p></td></tr><tr><td><p>
+fft1024
+</p></td><td><p>
+2D 1024x1024 FFT (8-bit real input, 32-bit fixed-point Q29.3 complex output; each row is 1024 reals followed by 1024 imaginary)
+</p></td></tr><tr><td><p>
+fft1024_vtcm
+</p></td><td><p>
+2D 1024x1024 FFT using VTCM as scratch buffer(8-bit real input, 32-bit fixed-point Q29.3 complex output; each row is 1024 reals followed by 1024 imaginary)
+</p></td></tr><tr><td><p>
+histogram
+</p></td><td><p>
+Contrast adjustment using the image's histogram
+</p></td></tr><tr><td><p>
+ncc8x8
+</p></td><td><p>
+Normalized cross-correlation of two images. To check degree to which two images are similar.
+</p></td></tr><tr><td><p>
+boxfilter11x11
+</p></td><td><p>
+11x11 box filter over source image.
+</p></td></tr><tr><td><p>
+harriscorner
+</p></td><td><p>
+harris corner detection over source image (stops at 5000 corners)
+</p></td></tr></table><p>
+<b>Note:</b> Functions listed after fast9 in the above table are available only from SDM845/SDM710.
+</p><div class="indent"><left><img src="images/hp_cdspbenchmark_api_list.png"></left></div><p>
+<b>Screen Resolution:</b>
+</p><p>
+The functions can run on an image with the user specified image resolution. The supported resolutions are 1080p, 2160p, 720p, 480p and 16MP. Default is 1080p.
+</p><p>
+<b>FPS:</b>
+</p><p>
+Frame per second can be chosen among 30, 60, 15 and 10. Default is 30 fps. The function is called in the loop on the given image buffer at the rate of given fps.
+</p><p>
+<b>Total Time:</b>
+</p><p>
+User can specify duration of execution in seconds. The function will execute in loop for the specified time duration at the rate of given fps and displays the average of actual execution time on DSP. Default is 10 seconds
+</p><p>
+<b>Power Level:</b>
+</p><p>
+The testcase can run in the user specified power level among Turbo, Nominal Plus, Nominal, SVS Plus, SVS, SVS2 and MINSVS. Default is Turbo.
+</p><p>
+<b>Fix Power Level:</b>
+</p><p>
+This option is applicable only for fullsuite. If it's enabled, all the supported benchmarks run only at the selected power level. Else each benchmark will run in all the listed power levels.
+</p><p>
+<b>Power Mode:</b>
+</p><p>
+The testcase can run either in Perf mode or Power mode. Perf mode will execute the API back to back with no sleep between the successive loop calls whereas Power mode will execute the API at the rate of given fps. Perf mode is irrespective of the input fps.
+</p><p>
+<b>DCVS Mode:</b>
+</p><p>
+DSP DCVS (if enabled) logic can adjust the DSP core and bus clocks dynamically during the execution of the testcase.
+</p><p>
+<b>HVX Units:</b>
+</p><p>
+User can select the number of HVX units to be used for the benchmark to run from min of 1 to max 4. Benchmarks such as integrate, fft1024 and fft1024_vtcm supports max of 2 HVX units. Supported only from SM8150.
+</p><p>
+<b>Profiler:</b>
+</p><p>
+Profiler option (enabled by default) will capture profiling metrics for the benchmark kernel when executed via <b>Execute Command</b>. User can uncheck this option if profiling information is not needed.
+</p><p>
+After selecting the required parameters, Click on <b>Execute Command</b> button to start the test case.
+</p><p>
+<b>Full Suite:</b>
+</p><p>
+Clicking on <b>Full Suite</b> button runs all the APIs on the all the possible power levels for the given fps and screen resolution. Each API will run for the given duration.
+</p><h3>
+<a name="Analyzing%20output%20data"></a>Analyzing output data
+</h3><p>
+Once the testcase is done, the UI displays the result of execution. DSP profiler also runs in default mode in parallel with the testcase and displays the PMU data.
+</p><div class="indent"><left><img src="images/hp_cdspbenchmark_resultscreen_1.png"></left></div><p>
+The screenshot shows the profiler output of the testcase.
+</p><div class="indent"><left><img src="images/hp_cdspbenchmark_resultscreen_2.png"></left></div><p>
+Also, The result of the testcase can be pulled from /sdcard/CDSP_Benchmark.csv for future reference.
+</p><p>
+Following screenshot shows the result of Full Suite run on 1080p with 30fps.
+</p><div class="indent"><left><img src="images/hp_cdspbenchmark_resultcsv.png"></left></div><p>
+<b>DSP Clock(MHz):</b>
+</p><p>
+This captures core clock frequency of DSP Q6 during the testcase.
+</p><p>
+<b>RPC loops:</b>
+</p><p>
+RPC loops is the loop count that decides the number of times the API is executed at the rate of given fps. RPC loops is calculated from user specified total time and FPS.
+</p><div class="indent"><pre>RPC loops = total time / time per frame = 1 sec * 1000 / 33.333 ms ~= 30
+</pre></div><p>
+<b>Total Time:</b>
+</p><p>
+This displays the actual time for the completion of the testcase.
+</p><p>
+<b>DSP time(uSec):</b>
+</p><p>
+This displays the total time for the API to run on DSP excluding the RPC latency.
+</p><p>
+<b>DSP time per iteration(uSec):</b>
+</p><p>
+This displays the average time on DSP per iteration excluding the RPC latency.
+</p><p>
+<b>RPC overhead per call(uSec):</b>
+</p><p>
+This displays the average RPC latency on API call to DSP.
+</p><p>
+<b>Average NCC ROI Search Time(uSec):</b>
+</p><p>
+The time taken to find the region of interest that limits the search area. Applicable only for ncc8x8 benchmark.
+</p><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

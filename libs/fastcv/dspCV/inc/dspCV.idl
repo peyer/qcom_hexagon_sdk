@@ -1,0 +1,270 @@
+#ifndef DSPCV_IDL 
+#define DSPCV_IDL
+
+#include "AEEStdDef.idl"
+
+interface dspCV{
+
+   // Error codes
+   const long SUCCESS = 0;
+   const long ERR_REMOTE_HEAP_FAILED = 5000;
+   const long ERR_HVX_UNSUPPORTED = 5001;
+   const long ERR_HVX_BUSY = 5002;
+   const long ERR_UNSUPPORTED_ATTRIBUTE = 5003;
+   const long ERR_CONSTRUCTOR_FAILED = 5004;
+   const long ERR_WORKER_POOL_FAILED = 5005;
+   const long ERR_CLIENT_CLASS_SETTING_FAILED = 5006;
+   const long ERR_CLOCK_SETTING_FAILED = 5007;
+   const long ERR_BAD_STATE = 5008;
+   
+   
+   // Initialization Attributes:
+   //   The following attributes can optionally be sent in the 
+   //   initQ6_with_attributes function.
+   enum AttributeID
+   {
+       // - MINIMUM_DSP_MHZ indicates the lowest DSP clock to run at. If this
+       //   attribute is not specified, the DSP will be run at its maximum 
+       //   supported clock speed. Providing this attribute may allow the DSP 
+       //   to run at a lower speed (depending on concurrency). This attribute
+       //   is deprecated. DSP_TOTAL_MCPS and DSP_MCPS_PER_THREAD should be used
+       //   instead.
+       MINIMUM_DSP_MHZ,
+
+       // - MINIMUM_BUS_MHZ indicates the lowest bus speed to run at. By default,
+       //   the bus is set to its maximum supported speed. Providing
+       //   this attribute may allow the bus to run at a lower speed. This attribute
+       //   is deprecated. PEAK_BUS_BANDWIDTH_MBPS and BUS_USAGE_PERCENT should be used
+       //   instead.
+       MINIMUM_BUS_MHZ,
+
+       // - LATENCY_TOLERANCE indicates how many microseconds can tolerated per 
+       //   method invocation for bringing the ADSP out of possible low-power 
+       //   states. A small value (e.g. 0) would prevent the ADSP from entering 
+       //   any lower-power state. Higher values would enable progressively deeper 
+       //   low-power states between method invocations. For example, 2000 
+       //   mircroseconds may be sufficient (depending on HW version) for ADSP 
+       //   power collapse to occur after each invocation, but could add up to 
+       //   2000 microseconds of latency per invocation.
+       LATENCY_TOLERANCE,
+
+       // - CLOCK_PRESET_MODE is an alternative to selecting specific values for 
+       //   the clock speeds and latency tolerances. Using a preset will result
+       //   in clocks chosen to achieve the specified objective (e.g. low power)
+       //   on the target HW.
+       CLOCK_PRESET_MODE,
+
+       // - RESERVE_HVX_UNITS allows client process to reserve a specified number of 
+       //   Hexagon Vector Extension (HVX) units for its corresponding DSP process. 
+       //   0 indicates that all HVX units on the target should be reserved. If the 
+       //   target does not support HVX, AEE_ENOSUCH is returned. If the target 
+       //   supports HVX but is unable to reserve specified number of units, 
+       //   AEE_EITEMBUSY is returned. If this attribute is not given, the DSP process
+       //   will not reserve HVX any units. The DSP process may still attempt to use
+       //   HVX, but the units will not be reserved and may be unavailable at any given 
+       //   time.
+       RESERVE_HVX_UNITS, 
+       
+       // - enum that has been removed. Placeholder to keep enum values backward compatible.
+       RESERVED_ENUM_0,
+       
+       // - DISABLE_HVX_USAGE informs this instance of the dspCV service to reject all requests to reserve, 
+       //   lock, or power up HVX. It is useful for modules that have non-HVX versions to 
+       //   fall back to when HVX is unavailable, and it is desired to force that fallback
+       //   to non-HVX operation unconditionally. Attribute value is ignored.
+       DISABLE_HVX_USAGE,
+
+       // - DEFAULT_HVX_MODE chooses the default vector width for HVX operation. The chosen default
+       //   mode will be only used when a dspCV client locks an HVX context without specifying 
+       //   its required mode (some implementations are agnostic to vector width). dspCV clients 
+       //   may override this DEFAULT_HVX_MODE by optionally specifying their required HVX mode
+       //   when locking HVX context. Attribute values specified by enum DefaultHVXMode.
+       DEFAULT_HVX_MODE,
+       
+       // - DSP_TOTAL_MCPS indicates the average total MCPS expected to be consumed across 
+       //   all ADSP threads. This parameter should be used in conjunction with DSP_MCPS_PER_THREAD,
+       //   and together they will help establish and set the lowest required DSP clock rate on the
+       //   given target that can meet the requirements of this client and other concurrencies. 
+       DSP_TOTAL_MCPS,
+       
+       // - DSP_MCPS_PER_THREAD indicates the MCPS required by the most heavily-loaded SW thread
+       //   in the client's processing. This information will directly result in a minimum
+       //   DSP core clock rate being voted for. This attribute should be used in conjunction with
+       //   DSP_TOTAL_MCPS to help the DSP choose the minimum clock rate that can be used while 
+       //   still meeting all concurrencies' requirements.
+       DSP_MCPS_PER_THREAD,
+       
+       // - PEAK_BUS_BANDWIDTH_MBPS indicates the maximum required bus BW (in MB/sec). This attribute
+       //   should be used in conjunction with BUS_USAGE_PERCENT to help the DSP establish the
+       //   minimum bus frequency that can satisfy all concurrent users.
+       PEAK_BUS_BANDWIDTH_MBPS,
+       
+       // - BUS_USAGE_PERCENT indicates the percentage of time during which the BW 
+       //   specified in PEAK_BUS_BANDWIDTH is required. 
+       BUS_USAGE_PERCENT,
+       
+       // - AUDIO_MPPS_EVICTION_THRESHOLD_1_STREAMING_HVX indicates the MPPS threshold for 
+       //   concurrent audio that should trigger eviction of the CV (or other compute) workload, 
+       //   under the condition that camera streaming is also active and streaming on 1 pair of 
+       //   64-byte HVX contexts. The CV application should periodically (recommended at least 
+       //   every 30 msec) query the dspCV_getQ6_concurrency_attributes() API for whether 
+       //   continued processing on the DSP is recommended, based on the running concurrencies. 
+       //   A higher value will result in the CV application aggressively continuing on the DSP 
+       //   and competing with audio for resources, while a lower value would more 
+       //   conservatively advise the CV application to stop attempting DSP processing.
+       AUDIO_MPPS_EVICTION_THRESHOLD_1_STREAMING_HVX,
+
+       // - AUDIO_MPPS_EVICTION_THRESHOLD_2_STREAMING_HVX indicates the MPPS threshold for 
+       //   concurrent audio that should trigger eviction of the CV (or other compute) workload, 
+       //   under the condition that camera streaming is also active and streaming on 2 pairs of 
+       //   64-byte HVX contexts. The CV application should periodically (recommended at least 
+       //   every 30 msec) query the dspCV_getQ6_concurrency_attributes() API for whether 
+       //   continued processing on the DSP is recommended, based on the running concurrencies. 
+       //   A higher value will result in the CV application aggressively continuing on the DSP 
+       //   and competing with audio for resources, while a lower value would more 
+       //   conservatively advise the CV application to stop attempting DSP processing.
+       AUDIO_MPPS_EVICTION_THRESHOLD_2_STREAMING_HVX
+   };
+   
+   struct Attribute
+   {
+       AttributeID ID;
+       long value;
+   };
+   
+   enum ClockPresetMode
+   {
+       POWER_SAVING_MODE,
+       NORMAL_MODE,
+       MAX_PERFORMANCE_MODE,
+       NUM_AVAIL_CLOCK_PRESET_MODES
+   };
+   
+   typedef sequence<Attribute> AttributeList;
+   
+   // Concurrency Attributes:
+   //   The following attributes can be queried to evaluate the level of concurrency 
+   //   currently running on the DSP. This is an instantaneous query, and does not
+   //   guarantee the returned values to remain valid for any duration of time.
+   enum ConcurrencyAttributeID
+   {
+       // - COMPUTE_RECOMMENDATION queries whether or not it is recommended to run
+       //   a compute concurrency at the current time. Factors in the decision may
+       //   include the resources available on the given target, and the amount
+       //   already being consumed by audio, voice, camera HVX streaming, or other 
+       //   use cases. If the response is COMPUTE_RECOMMENDATION_OK, caller may have reasonable 
+       //   confidence that the compute use case can be run without degrading existing
+       //   higher priority use cases (e.g. audio/voice). It does not guarantee any
+       //   quality of service, as compute threads are at a low priority compared to 
+       //   audio, voice, and camera streaming. For more details, other parameters 
+       //   may also be queried.
+       COMPUTE_RECOMMENDATION,
+
+       // - CURRENT_DSP_MHZ_SETTING queries the existing DSP clock rate.
+       CURRENT_DSP_MHZ_SETTING,
+       
+       // - NUM_TOTAL_HVX_UNITS queries the number of 64-byte HVX contexts on the 
+       //   target.
+       NUM_TOTAL_HVX_UNITS,
+       
+       // - NUM_AVAILABLE_HVX_UNITS queries the number of 64-byte HVX contexts not currently
+       //   locked or reserved by existing users.
+       NUM_AVAILABLE_HVX_UNITS,
+
+       // - EXISTING_CONCURRENCIES queries a bitmask of application types currently running
+       //   on the DSP. Available bit masks include VOICE_CONCURRENCY_BITMASK, 
+       //   AUDIO_CONCURRENCY_BITMASK, SINGLE_HVX_CAMERA_STREAMING_CONCURRENCY_BITMASK, 
+       //   DUAL_HVX_CAMERA_STREAMING_CONCURRENCY_BITMASK, and COMPUTE_CONCURRENCY_BITMASK.
+       //   Note that if the returned value is -1 (all bits 1), it indicates the query
+       //   is not supported in the available implementation.
+       EXISTING_CONCURRENCIES
+   };
+   
+   struct ConcurrencyAttribute
+   {
+       ConcurrencyAttributeID ID;
+       long value;
+   };
+   
+   // value returned for any parameter queried that is not supported in the available implementation
+   const long CONCURRENCY_ATTRIBUTE_UNSUPPORTED = -1; 
+   
+   enum ComputeRecommendation
+   {
+       COMPUTE_RECOMMENDATION_OK,       // safe to run compute use case without degrading other use cases
+       COMPUTE_RECOMMENDATION_NOT_OK    // running compute use case might degrade audio and/or camera concurrencies
+   };
+   
+   const long VOICE_CONCURRENCY_BITMASK = 1;
+   const long AUDIO_CONCURRENCY_BITMASK = 2;
+   const long COMPUTE_CONCURRENCY_BITMASK = 4;
+   const long SINGLE_HVX_CAMERA_STREAMING_CONCURRENCY_BITMASK = 8;
+   const long DUAL_HVX_CAMERA_STREAMING_CONCURRENCY_BITMASK = 16;
+      
+   typedef sequence<ConcurrencyAttribute> ConcurrencyAttributeList;
+
+   enum DefaultHVXMode
+   {
+       HVX_MODE_DONT_CARE,              // no preference (default)
+       HVX_MODE_64B,                    // 64-byte mode
+       HVX_MODE_128B                    // 128-byte mode
+   };
+   
+   
+//---------------------------------------------------------------------------
+/// @brief
+///   This function initializes the DSP for subsequent RPC function invocations
+///   from the calling process. This function establishes a DSP thread pool 
+///   for multi-threading, and votes for maximum supported DSP/bus clocks. 
+///   It is recommended to instead use initQ6_with_attributes to allow more 
+///   control options, but this function is kept for backward compatibility.  
+///
+/// @detailed
+///    TBD.
+//---------------------------------------------------------------------------
+   AEEResult initQ6( );
+
+//---------------------------------------------------------------------------
+/// @brief
+///   This function restores the dspCV related state for the calling process
+///   to defaults. For example, it revokes clock votes. It is optional to 
+///   call this function before closing the shared library. Closing the library
+///   cleans up the resources. 
+///
+/// @detailed
+///    TBD.
+//---------------------------------------------------------------------------
+   AEEResult deinitQ6( );
+
+//---------------------------------------------------------------------------
+/// @brief
+///   This function initializes the DSP for subsequent RPC function invocations
+///   from the calling process. This function establishes a DSP thread pool 
+///   for multi-threading, and votes clocks according to the provided
+///   attributes. It may be called multiple times, with the most recent call
+///   overwriting any attributes that were set by an earlier call (from any thread
+///   in the same process).
+///
+/// @detailed
+///    TBD.
+///
+/// @param attrib
+///   This is a list of attributes and their values for initializing the DSP.
+//---------------------------------------------------------------------------
+   AEEResult initQ6_with_attributes(in AttributeList attrib);
+
+//---------------------------------------------------------------------------
+/// @brief
+///   This function queries the DSP for high-level concurrency information.  
+///
+/// @detailed
+///    TBD.
+///
+/// @param attrib
+///   This is a list of requested attribute/value pairs. Caller provides the
+///   attribute ID's, and implementation fills in the measured values.
+//---------------------------------------------------------------------------
+   AEEResult getQ6_concurrency_attributes(inrout ConcurrencyAttributeList attrib);
+};
+
+#endif DSPCV_IDL

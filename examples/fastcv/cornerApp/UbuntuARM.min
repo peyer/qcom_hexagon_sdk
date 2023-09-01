@@ -1,0 +1,46 @@
+ifeq ($(CDSP_FLAG), 1) 
+	LIB_DSPRPC = libcdsprpc
+else ifeq ($(MDSP_FLAG), 1) 
+	LIB_DSPRPC = libmdsprpc
+else ifeq ($(SLPI_FLAG), 1) 
+	LIB_DSPRPC = libsdsprpc
+else
+	LIB_DSPRPC = libadsprpc
+endif
+
+$(info ************  LIB=$(LIB_DSPRPC) ************) 
+
+# stub library
+BUILD_DLLS += libcornerApp
+
+libcornerApp_QAICIDLS += \
+   inc/cornerApp \
+   $(DSPCV_DIR)/inc/dspCV \
+
+libcornerApp_C_SRCS += \
+  $V/cornerApp_stub \
+  $V/dspCV_stub \
+
+libcornerApp_DLLS += $(LIB_DSPRPC)
+
+# stand-alone corner-detection executable
+BUILD_EXES += cornerApp
+
+cornerApp_QAICIDLS += \
+ inc/cornerApp \
+ $(DSPCV_DIR)/inc/dspCV \
+
+cornerApp_C_SRCS += src/cornerApp
+cornerApp_LIBS += rpcmem
+cornerApp_DLLS += libcornerApp \
+                $(LIB_DSPRPC) \
+                
+cornerApp_DEFINES += VERIFY_PRINT_ERROR
+cornerApp_LD_FLAGS += -lpthread
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

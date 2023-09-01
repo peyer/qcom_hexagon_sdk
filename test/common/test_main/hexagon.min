@@ -1,0 +1,14 @@
+
+INCDIRS += \
+   inc \
+   src \
+
+BUILD_LIBS = test_main
+
+test_main_C_SRCS += \
+   src/test_main \
+
+BUILD_COPIES = \
+   inc/test_main.h \
+   $V/test_main$(LIB_EXT) \
+   $(SHIP_DIR)/ ;

@@ -1,0 +1,29 @@
+# builds the static lib
+BUILD_LIBS += libqprintf
+ifeq (1,$(V_dynamic))
+BUILD_DLLS += libqprintf
+endif
+
+ifeq (,$(filter $(V_ARCH),v5 v55))
+CC_FLAGS += $(MHVX_DOUBLE_FLAG)
+ASM_FLAGS += $(MHVX_DOUBLE_FLAG)
+endif
+
+# Required both for:
+# simulator as FARF is limited by the number of arguments it can handle in simulation environment
+# target as current bug prevents some extract instructions to be properly compiled
+_OPT = -O0
+
+INCDIRS += inc
+
+libqprintf_C_SRCS += src/qprintf 
+libqprintf_ASM_SRCS += asm_src/qprintf_asm
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   inc/qprintf.h \
+   inc/qprintf_asm.h \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

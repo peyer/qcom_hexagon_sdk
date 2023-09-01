@@ -1,0 +1,421 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%; 
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; 
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+</style><title>Qaic User's Guide</title>
+</head><body>
+<div class="smarkdoc"><h1>
+<a name="Qaic%20User's%20Guide"></a>Qaic User's Guide
+</h1><div class="toc"><div class="tocLevel"><a href="#Introduction">Introduction</a></div><div class="tocLevel"><a href="#Using%20the%20compiler">Using the compiler</a><div class="tocLevel"><a href="#Command-line%20usage">Command-line usage</a></div><div class="tocLevel"><a href="#Usage%20examples">Usage examples</a></div><div class="tocLevel"><a href="#Using%20other%20preprocessors">Using other preprocessors</a></div><div class="tocLevel"><a href="#Error%20messages">Error messages</a><div class="tocLevel"><a href="#Identifier%20'abc'%20clashes%20with%20an%20introduced%20type">Identifier 'abc' clashes with an introduced type</a></div></div></div><div class="tocLevel"><a href="#Comment%20pass-through">Comment pass-through</a><div class="tocLevel"><a href="#Doxygen%20comments">Doxygen comments</a></div></div><div class="tocLevel"><a href="#Include%20directives%20and%20code%20generation">Include directives and code generation</a><div class="tocLevel"><a href="#Remote%20header%20generation">Remote header generation</a></div></div></div><h2>
+<a name="Introduction"></a>Introduction
+</h2><p>
+<code>qaic</code>, Qaic's Another Idl Compiler, is a command-line executable used to implement <i>remote shared objects</i> for the aDSP Platform. A shared object is called <i>remote</i> if its methods can be invoked from outside the <i>domain</i> it resides in. A domain may be the operating system's kernel, a user process, a mobile device, or a programming language. In each case, the user of a remote object does not need to know <i>where</i> the object is hosted, or what language the object is implemented in. Instead, the user calls methods on a <i>stub</i> object generated by <code>qaic</code>. The stub marshals the input into a shared wire format, and ships the data off to the domain where the object is hosted. The host domain implements a <i>skel</i> object, also generated by <code>qaic</code>, that unmarshals the data, and invokes the requested method on the native object.
+</p><p>
+To generate stubs and skels, <code>qaic</code> requires the interface to an object be strictly defined. The syntax for defining an object interface is called IDL. <code>qaic</code> compiles IDL files into headers, stubs, and skels. The generated header can be used to implement the native object, and for users to call methods on the object. The stub, skel and compiled into a shared object.
+</p><p>
+The first part of this document discusses how to run and use the compiler, including details of the various command-line options. The second part of this document covers the details of how IDL is mapped to the supported implementations.
+</p><h2>
+<a name="Using%20the%20compiler"></a>Using the compiler
+</h2><h3>
+<a name="Command-line%20usage"></a>Command-line usage
+</h3><p>
+The basic command-line syntax of the tool is:
+</p><pre>qaic [options] file1.idl [file2.idl ... fileN.idl]
+</pre><p>
+Each file specified on the command-line will be compiled by the tool according to the options specified. Available options are:
+</p><ul>
+<li>
+<p>
+<code>-mdll or --map-dll</code>
+</p><p>
+Generate DLL mapping
+</p>
+</li><li>
+<p>
+<code>-o=PATH</code>
+</p><p>
+Use path as the output path. All generated files will be output to the specified path. The default is the current directory ('.').
+</p>
+</li><li>
+<p>
+<code>--cpp</code> or <code>-p=CPP</code>
+</p><p>
+Use CPP as the C preprocessor. The value CPP must name an executable program, and cannot contain any arguments. To pass arguments to the preprocessor, use <code>--arg-cpp</code> (<code>-pa</code>).
+</p>
+</li><li>
+<p>
+<code>--arg-cpp=ARG</code> or <code>-pa=ARG</code>
+</p><p>
+Pass additional argument arg to the preprocessor. To specify arguments that are themselves options, use the form <code>-pa=ARG</code> (for example, <code>-pa=-E</code>). Specifying <code>-pa -E</code> will cause the <code>-E</code> to be interpreted as an option to <code>qaic</code> instead of to the preprocessor. Note that for <a href="#Comment%20pass-through">Comment pass-through</a> to work properly, the preprocessor must be set to not strip comments from the source. Typically the flag to do this is <code>-C</code>, making the appropriate argument to <code>qaic -pa=-C</code>.
+</p>
+</li><li>
+<p>
+<code>--include-path=PATH</code> or <code>-I=PATH</code>
+</p><p>
+Include path in the search path for included files. May be used multiple times.
+</p>
+</li><li>
+<p>
+<code>--indent=WIDTH</code> or <code>-i=WIDTH</code>
+</p><p>
+Use an indentation width of width spaces in the generated code.
+</p>
+</li><li>
+<p>
+<code>--warn-undefined</code> or <code>-Wu</code>
+</p><p>
+Issue warning for forward-declared interfaces that are never defined.
+</p>
+</li><li>
+<p>
+<code>--define=SYMBOL</code> or <code>-D=SYMBOL</code>
+</p><p>
+Predefine macro for the preprocessor.
+</p>
+</li><li>
+<p>
+<code>--header-only</code> or <code>-ho</code>
+</p><p>
+Only generate a header. Stub and skeleton code is not generated if this option is specified.
+</p>
+</li><li>
+<p>
+<code>--remoting-only</code> or <code>-ro</code>
+</p><p>
+Only generate stub and skeleton code. The corresponding header is not generated if this option is specified.
+</p>
+</li><li>
+<p>
+<code>--parse-only</code> or <code>-s</code>
+</p><p>
+Parse the IDL and perform semantic checking, but do not generate any output. Note that IDL files accepted without errors by the compiler with <code>-s</code> are not guaranteed to work without errors when code generation is enabled.
+</p>
+</li><li>
+<p>
+<code>-v</code>
+</p><p>
+Print the version of the compiler.
+</p>
+</li><li>
+<p>
+<code>-h</code>
+</p><p>
+Print a brief help message.
+</p>
+</li>
+</ul><h3>
+<a name="Usage%20examples"></a>Usage examples
+</h3><p>
+The examples below illustrate typical usage of the IDL compiler.
+</p><pre>qaic --header-only foo.idl bar.idl
+</pre><p>
+The above command compiles foo.idl to the remote header file foo.h, and bar.idl to the remote header file bar.h. No remoting code is generated.
+</p><pre>qaic foo.idl
+</pre><p>
+The above command compiles foo.idl to a remote header file foo.h, along with the following remoting code:
+</p><table><tr><th><p>
+File Name
+</p></th><th><p>
+Description
+</p></th></tr><tr><td><p>
+foo_stub.c
+</p></td><td><p>
+C stub implementation
+</p></td></tr><tr><td><p>
+foo_skel.c
+</p></td><td><p>
+C skeleton implementation
+</p></td></tr></table><pre>qaic -I../bar -I../far -o out foo.idl 
+</pre><p>
+The above command compiles <code>foo.idl</code>. It uses <code>../bar</code> and <code>../far</code> as the search path for any include files. It uses <code>out</code> as the result directory, and generates <code>out/foo.h</code>, <code>out/foo_stub.c</code> and <code>out/foo_skel.c</code> files.
+</p><h3>
+<a name="Using%20other%20preprocessors"></a>Using other preprocessors
+</h3><p>
+By default, <code>qaic</code> uses an internal preprocessor. It may be desirable to use a different preprocessor instead. The Microsoft <code>C</code> preprocessor can be used by having the compiler invoke <code>cl /E /C</code>, which is done with the following command-line. Note that for this to work, <code>cl</code> must be in the <code>PATH</code>.
+</p><pre>qaic -p=cl -pa=/E -pa=/C file1.idl [file2.idl ... fileN.idl]
+</pre><p>
+The ARM <code>C/C++</code> compiler can also be used to preprocess IDL. Provided <code>armcc</code> is in the <code>PATH</code>, this can be done with the following command-line.
+</p><pre>qaic -p=armcc -pa=-E -pa=-C file1.idl [file2.idl ... fileN.idl]
+</pre><p>
+Note that <code>-pa=-E</code> must be used instead of <code>-pa -E</code>, since in the latter case the <code>-E</code> is interpreted by <code>qaic</code> as being an option to <code>qaic</code>, not to the preprocessor.
+</p><h3>
+<a name="Error%20messages"></a>Error messages
+</h3><p>
+Any output printed by the compiler is due to either an error or a warning. Warnings include the text <code>warning:</code> at the beginning of the message, and do not abort code generation. Any message not preceded by <code>warning:</code> is an error, which causes compilation to abort. Both errors and warnings include a reference to the file, line, and position within that line (starting at 0) where the error or warning occurred. Additional details on select errors are given in the following subsections.
+</p><h4>
+<a name="Identifier%20'abc'%20clashes%20with%20an%20introduced%20type"></a>Identifier 'abc' clashes with an introduced type
+</h4><p>
+The <a href="http://www.omg.org/cgi-bin/doc?formal/08-01-04.pdf">OMG IDL specification</a> includes complex scoping rules based not only on where types are defined, but also on where they are used. Specifically, the first component (identifier) of a qualified type name is introduced into the scope where it is used, preventing the use of any identifier with the same name in that scope. Fully-qualified names, which start with ::, are considered to have an empty first component, and thus result in no type introduction.
+</p><p>
+Consider the following example, which illustrates the basic type introduction rules. For full details, see the &#8220;Names and Scoping&#8221; section of OMG IDL Syntax &amp; Semantics.
+</p><pre><span style="color: blue">struct</span> Name
+{
+    <span style="color: blue">string</span> first, last;
+};
+
+<span style="color: blue">struct</span> Address
+{
+   <span style="color: blue">string</span> street, city, state, country;
+};
+
+<span style="color: blue">module</span> M
+{
+   <span style="color: blue">typedef</span> <span style="color: blue">long</span> Age;
+};
+
+<span style="color: blue">struct</span> Person
+{
+   Name   name;    <span style="color: darkgreen">// invalid IDL: 'name' clashes with 'Name'</span>
+   <span style="color: blue">string</span> address; <span style="color: darkgreen">// OK: 'Address' not introduced in this scope</span>
+   M::Age age;     <span style="color: darkgreen">// OK: only 'M', not 'Age', is introduced</span>
+};
+</pre><p>
+In the Person structure above, the use of the Name type introduces it into the scope of Person, which prevents the member from being called name. The second member, address, is fine because the Address type is not defined within the scope of Person and has not been introduced. The reference to <code>M::Age</code> only causes the first component, M, to be introduced into the scope of Person, thus the age member is also without error.
+</p><p>
+Clashes with introduced types can generally be resolved by changing the qualification to avoid the type introduction. For instance, if in the above example the type of the name member of the Person structure were written ::Name, no type introduction would occur, which would avoid the name clash.
+</p><h2>
+<a name="Comment%20pass-through"></a>Comment pass-through
+</h2><p>
+When <code>qaic</code> identifies code comments as a <a href="#Doxygen%20comments">Doxygen comments</a>, or ordinary comments. Doxygen comments are passed through to generated header files. When documenting interface methods, Doxygen comments are generally preferred.
+</p><h3>
+<a name="Doxygen%20comments"></a>Doxygen comments
+</h3><p>
+When a method is documented with the Doxygen syntax, <code>qaic</code> will attempt to translate the documentation to the target language in any output files.
+</p><h2>
+<a name="Include%20directives%20and%20code%20generation"></a>Include directives and code generation
+</h2><p>
+Many IDL files include other IDL files in order to make use of types and interfaces declared externally. For example, when defining a Component Services <code>interface</code> in IDL, AEEIQI.idl needs to be included for the definition of <code>IQI</code>, from which all CS interfaces must derive. However, one important difference between <code>#include</code> in IDL and <code>#include</code> in <code>C/C++</code> is that in IDL, code is not generated for modules, interfaces, and types included from other IDL files. For example, consider the following IDL:
+</p><pre><span style="color: blue">interface</span> foo { <span style="color: darkgreen">/* definition of foo here */</span> };
+<span style="color: blue">interface</span> bar : foo { <span style="color: darkgreen">/* definition of bar here */</span> };
+</pre><p>
+If this IDL is compiled, the output will contain the appropriate code for both foo and bar. However, suppose the foo definition is moved to foo.idl, and the IDL being compiled is changed as follows:
+</p><pre><span style="color: blue">#include</span> <span style="color: darkred">"foo.idl"</span>
+<span style="color: blue">interface</span> bar : foo { <span style="color: darkgreen">/* definition of bar here */</span> };
+</pre><p>
+In this case, only code for bar will be generated. Although the contents of foo.idl are read by the compiler, no code is generated for foo because it is defined in an external (included) IDL file. Instead of generating code for foo, the compiler will translate the <code>#include</code> in the IDL to a <code>#include</code> in the output, with the extension changed from &#8220;.idl&#8221; to &#8220;.h&#8221;.
+</p><h3>
+<a name="Remote%20header%20generation"></a>Remote header generation
+</h3><p>
+Remote headers are generated to resemble hand-written C headers. For each <code>interface</code> name in IDL, for each <code>function</code> name in IDL functions are generated in C in the following format:
+</p><pre><span style="color: blue">int</span> `interface`_`function`(arg1, arg2, argN);
+</pre></div>
+</body>
+</html>

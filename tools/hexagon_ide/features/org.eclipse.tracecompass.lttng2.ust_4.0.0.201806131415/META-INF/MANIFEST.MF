@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Built-By: genie.tracecompass
+Created-By: Apache Maven 3.5.2
+Build-Jdk: 1.8.0_162
+
+Name: p2.inf
+SHA-256-Digest: UB9BnsCtMfhUHa/kUydv8GcE/vOMxXnI/184T06QGD0=
+
+Name: epl-2.0.html
+SHA-256-Digest: koxKavfpz4JYnlYPmP+7at5zhbWf7Iy07zamu5HPcBg=
+
+Name: feature.xml
+SHA-256-Digest: 5ID2B0/4jXShH1GWaiEEsgF8g8d6KlYrSH3i3BEM80c=
+
+Name: feature.properties
+SHA-256-Digest: 7BLCxVLiIE3jxMI7pfPhEpi/6NdxUokvSk3qvaxhkOo=
+
+Name: license.html
+SHA-256-Digest: Dv5NbrV590iFepPFp4HDAA9w8zkHSynRW5FCE+FLHVM=
+

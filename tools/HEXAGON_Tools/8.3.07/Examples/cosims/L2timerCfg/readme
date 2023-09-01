@@ -1,0 +1,28 @@
+The timers (both RTOS and User timers) have been removed from the simulator 
+library and are now implemented as a cosim model.  
+
+In order to properly simulate RTOS applications, a cosim configuration 
+file must be created which specifies two instances of the timer cosim, 
+parameterized for the platform for which the simulation is to be performed.  
+An example timer cosim configuration file for the Raptor platform is 
+provided.  
+
+Specification of a timer cosim within a cosim config file is as follows:
+
+$(path_to_L2VIC_cosim}/l2vic.so 3 0xab010000
+$(path_to_L2timer_cosim}/L2timer.so 32768 0xab000000 67 0xab010000
+
+ Argument 1 - frequency in Hz.
+ Argument 2 - base address of the timer configuration registers 
+ Argument 3 - interrupt pin number to the L2VIC
+ Argument 4 - base address of the L2VIC configuration registers
+
+Usage:
+>hexagon-sim --cosim_file timer.cfg app.elf
+
+This timer cosim is intended to be used in conjunction with the L2VIC
+cosim (level 2 vectored interrupt controller).  The interrupt pin number
+indicates which interrupt within which L2VIC slice is to be asserted
+when the timer fires.  Each L2VIC "slice" has 32 interrupts, each numbered
+from 0 to 31.  To specify interrupt 3 on slice 2 you should use
+(2 * 32) + 3 = 67 as the 3rd argument for this cosim.

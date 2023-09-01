@@ -1,0 +1,7 @@
+Unsupported_hexagon_VS = \
+  hexagon_ReleaseG_toolv72_v60 \
+  hexagon_ReleaseG_dynamic_toolv72_v60 \
+  hexagon_Debug_toolv72_v60 \
+  hexagon_Debug_dynamic_toolv72_v60 \
+  hexagon_Release_toolv72_v60 \
+  hexagon_Release_dynamic_toolv72_v60

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+unset HL_HEXAGON_SIM_CYCLES
+export LD_LIBRARY_PATH=${HALIDE_ROOT}/lib/host:${HL_HEXAGON_TOOLS}/lib/iss/:.
+export HALIDE_DISTRIB_PATH=${HALIDE_ROOT}
+
+make clean
+mkdir -p ./bin/host
+cp ${HALIDE_ROOT}/support/halide_benchmark.h ./bin/host/
+ITERATIONS=1 HL_TARGET=host-hvx_128 make test
+
+

@@ -1,0 +1,89 @@
+
+# by default don't echo, define this var to nothing to echo
+_@ ?= @
+
+# sort variant options
+null :=
+SPACE := $(null) $(null)
+override V:=$(subst $(SPACE),_,$(strip $(wordlist 1, 2, $(subst _, ,$(V))) $(sort $(wordlist 3,$(words $(subst _, ,$(V))),$(subst _, ,$(V))))))
+
+# ensure variant is supported
+ifeq (,$(filter $V,$(SUPPORTED_VS)))
+# define newline
+define n
+ 
+ 
+endef
+$(error "$V" is not a supported build variant.$nSupported variants:$(foreach v,$(SUPPORTED_VS),$n$(v)))
+endif
+
+# these must be defined before including make.d's defines.min
+MAKE_D_EXT_c_DIR = $(HEXAGON_SDK_ROOT)/build/make.d.ext/c/$(V)
+MAKE_D_EXT_5_DIR = $(HEXAGON_SDK_ROOT)/build/make.d.ext/qaic
+MAKE_D_EXT_1_DIR = $(HEXAGON_SDK_ROOT)/build/make.d.ext/hexagon
+MAKE_D_EXT_2_DIR = $(HEXAGON_SDK_ROOT)/build/make.d.ext/android
+MAKE_D_EXT_qnx_DIR = $(HEXAGON_SDK_ROOT)/build/make.d.ext/qnx
+MAKE_D_EXT_4_DIR = $(HEXAGON_SDK_ROOT)/build/make.d.ext/UbuntuARM
+MAKE_D_EXT_3_DIR = $(HEXAGON_SDK_ROOT)/build/make.d.ext/WinARM
+# include make.d's defines.min only after V has been decided
+include $(HEXAGON_SDK_ROOT)/build/make.d/defines.min
+
+SHIP_DIR := $(join $(dir $(SHIP_DIR)),$V/ship)
+
+QURT_INSTALL = $(HEXAGON_SDK_ROOT)/libs/common/qurt
+
+# add common dependencies
+INCDIRS += = $(HEXAGON_SDK_ROOT)/incs
+INCDIRS += $(HEXAGON_SDK_ROOT)/incs/stddef
+INCDIRS += $(HEXAGON_SDK_ROOT)/incs/qnx
+INCDIRS += $(HEXAGON_SDK_ROOT)/libs/common/remote/ship/$(V)
+INCDIRS += $(HEXAGON_SDK_ROOT)/libs/common/qnx/ship/$(V)
+INCDIRS += $(HEXAGON_SDK_ROOT)/libs/common/rtld/ship/$(V)
+INCDIRS += $(HEXAGON_SDK_ROOT)/libs/common/apps_mem_heap/ship/$(V)
+LIBDIRS += $(HEXAGON_SDK_ROOT)/libs/common/qnx/ship/$(V)
+LIBDIRS += $(HEXAGON_SDK_ROOT)/libs/common/remote/ship/$(V)
+LIBDIRS += $(HEXAGON_SDK_ROOT)/libs/common/rtld/ship/$(V)
+LIBDIRS += $(HEXAGON_SDK_ROOT)/libs/common/apps_mem_heap/ship/$(V)
+
+
+# add user dependencies
+INCDIRS += $(foreach d,$(DEPENDENCIES),$($(d)_DIR)/$(V)/ship)
+LIBDIRS += $(foreach d,$(DEPENDENCIES),$($(d)_DIR)/$(V)/ship)
+
+
+# create rules for user dependencies
+
+DEPENDENCIES_CLEAN = $(foreach d,$(DEPENDENCIES),$(d)_CLEAN)
+$(foreach d,$(DEPENDENCIES),$(eval $(d)_CLEAN_DIR = $($(d)_DIR)))
+
+.PHONY: tree tree_clean $(DEPENDENCIES) $(DEPENDENCIES_CLEAN)
+
+tree: QAIC $(DEPENDENCIES)
+	$(call job,,$(MAKE) V=$(V),making . )
+
+tree_clean: QAIC_CLEAN $(DEPENDENCIES_CLEAN)
+	$(call job,,$(MAKE) V=$(V) clean,making .)
+
+QAIC:
+	$(call job,$(HEXAGON_SDK_ROOT)/tools/qaic,$(MAKE),making $(HEXAGON_SDK_ROOT)/tools/qaic)
+
+QAIC_CLEAN:
+	$(call job,$(HEXAGON_SDK_ROOT)/tools/qaic,$(MAKE) clean,cleaning $(HEXAGON_SDK_ROOT)/tools/qaic)
+
+$(DEPENDENCIES):
+	$(call job,$($(@)_DIR),$(MAKE) V=$(V) tree,making $($(@)_DIR) )
+
+$(DEPENDENCIES_CLEAN):
+	$(call job,$($(@)_DIR),$(MAKE) V=$(V) tree_clean,cleaning $($(@)_DIR))
+
+W := $(findstring ECHO,$(shell echo))# W => Windows environment
+@LOG = $(if $W,$(TEMP)\\)$@-build.log
+
+C = $(if $1,$(if $W,cd /D,cd) $1 && )$2
+job = $(_@)echo $3 && ( $C )> $(@LOG) && $(if $W,del,rm) $(@LOG) || ( echo ERROR $3 && $(if $W,type,cat) $(@LOG) && $(if $W,del,rm) $(@LOG) && exit 1)
+ifdef VERBOSE
+  job = $(_@)echo $3 && $C
+endif
+
+
+

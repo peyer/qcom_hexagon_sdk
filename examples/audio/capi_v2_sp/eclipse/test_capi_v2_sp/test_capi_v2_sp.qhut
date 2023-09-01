@@ -1,0 +1,9 @@
+<Testcases>
+	<Testcase Name="TestCase1">
+		<InputFile>../../data/input_rx.raw</InputFile>
+		<OutputFile>../../data/output__rx.raw</OutputFile>
+		<ConfigFile>../../data/sp_rx.cfg</ConfigFile>
+		<Reference/>
+		<RunStatus>True</RunStatus>
+	</Testcase>
+</Testcases>

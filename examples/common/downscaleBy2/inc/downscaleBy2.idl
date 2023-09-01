@@ -1,0 +1,23 @@
+#ifndef DOWNBY2_APP_IDL
+#define DOWNBY2_APP_IDL
+
+#include "AEEStdDef.idl"
+
+// interface name "downby2" results in generation of downby2.h, downby2_skel.c, downby2_stub.c. 
+// By convention, downby2_imp.c is user-created, and provides the implementations of the functions
+// in the interface.
+interface downscaleBy2{
+
+AEEResult scaleDownBy2(in sequence<uint8> src,              // input buffer of unsigned 8-bit values
+                              in uint32 srcWidth,           // width of region of interest contained in src image
+                              in uint32 srcHeight,          // height of region of interest contained in src image
+                              in uint32 srcStride,          // stride of the src image
+		   					  rout   sequence<uint8> dst,   // output buffer of unsigned 8-bit values
+                              in uint32 dstStride,          // stride of the dst image
+                              rout uint32 profResult        // duration of execution as measured by the DSP (microseconds)
+	);
+};
+
+
+
+#endif DOWNBY2_APP_IDL

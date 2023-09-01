@@ -1,0 +1,66 @@
+#!/bin/bash
+
+declare -a test=(
+    'dma_nv12_rw'
+    'dma_nv12_rw_async'
+    'dma_p010_rw'
+    'dma_p010_rw_async'
+    'dma_raw_blur_rw'
+    'dma_raw_blur_rw_async'
+    'dma_raw_rw'
+    'dma_raw_rw_async'
+    )
+
+basedir=`dirname $0`
+cd $basedir
+. ./setup-env.sh
+declare -i cnt_test=0
+declare -i cnt_pass=0
+declare -i cnt_fail=0
+declare -i cnt_skip=0
+declare -a FAIL=()
+declare -a SKIP=()
+
+UBWCDMA_TESTS_APPS_DIR=$HALIDE_ROOT/Examples/ubwcdma/standalone/device/apps
+echo "Running ${#test[@]} tests:"
+printf '    %s\n' ${test[@]}
+
+topdir=`pwd`
+for t in "${test[@]}"
+do
+    ((cnt_test++))
+    echo "============================================================================="
+    echo -n "$cnt_test/${#test[@]}: "
+    echo "Running $t:"
+    subdir=$UBWCDMA_TESTS_APPS_DIR/$t
+    script=test-$t
+    cd $topdir
+    cd $subdir
+    if [ $? -eq 0 ]; then
+        ./$script
+        if [ $? -gt 0 ]; then
+            echo "FAIL $t"
+            FAIL[cnt_fail++]=$t
+        else
+            echo "PASS $t"
+            ((cnt_pass++))
+        fi
+    else
+        echo "SKIPPED $t"
+        SKIP[cnt_skip++]=$t
+    fi
+done
+
+echo "============================================================================="
+echo "Done testing: $cnt_test tests ($cnt_pass pass, $cnt_fail fail, $cnt_skip skipped)"
+rc=0
+if [ ${#FAIL[*]} -gt 0 ]; then
+    echo "Failing tests:"
+    printf '    %s\n' ${FAIL[@]}
+    rc=1
+fi
+if [ ${#SKIP[*]} -gt 0 ]; then
+    echo "Skipped tests:"
+    printf '    %s\n' ${SKIP[@]}
+fi
+exit $rc

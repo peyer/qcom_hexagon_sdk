@@ -1,0 +1,22 @@
+#ifndef CORNER_APP_IDL
+#define CORNER_APP_IDL
+
+#include "AEEStdDef.idl"
+
+interface cornerApp{
+   AEEResult filterGaussianAndCornerFastQ(in sequence<uint8> src,
+                              in uint32 srcWidth,
+                              in uint32 srcHeight,
+                              rout sequence <uint8> dst,
+                              in int32 blurBorder,
+                              in uint32 srcStride,
+                              in int32 barrier, 
+                              in uint32 border, 
+                              rout sequence <uint32> xy,
+                              in uint32 nCornersMax, 
+                              rout uint32 nCorners,
+                              rout sequence <uint32> renderBuffer);
+                              
+};
+
+#endif CORNER_APP_IDL

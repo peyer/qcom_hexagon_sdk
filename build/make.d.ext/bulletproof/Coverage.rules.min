@@ -1,0 +1,45 @@
+-include $(thisDir)/$(V_TARGET).rules.min
+
+GCDA=$(patsubst %$(OBJ_EXT),%.gcda,$(OBJS))
+$(GCDA):$(OKS) $(QEXES) $(OBJS)
+
+#make all the .bp files part of the all rule depencencies
+$(foreach ff,$(BULLETPROOF.C_SRCS),$(call DEPENDS,all,$V/$(notdir $(ff)).bp))
+
+BPFILES=$(foreach ff,$(BULLETPROOF.C_SRCS),$V/$(notdir $(ff)).bp)
+
+#$1, src file
+#$2, gcda file
+#retval, gcov file for the source file and gcda
+GCOV_OF=$2.gcov_dir/$(notdir $1).gcov
+
+#$1, src file
+#retval, list of gcov files to be generated
+GCOVS_OF=$(foreach dd,$(GCDA),$(call GCOV_OF,$1,$(dd)))
+
+#make each bp file depend on each gcov file and the source file to cover
+#make the src file the first dependency
+$(foreach ff,$(BULLETPROOF.C_SRCS),$(call DEPENDS,$V/$(notdir $(ff)).bp,$(ff) $(call GCOVS_OF,$(ff))))
+
+GCOVFILES=$(foreach ff,$(BULLETPROOF.C_SRCS),$(call GCOVS_OF,$(ff)))
+
+#$1, src file
+#calls depends on each src:gcda
+GCOV_DEP=$(foreach dd,$(GCDA),$(call DEPENDS,$(call GCOV_OF,$1,$(dd)),$(dd)))
+
+#make each gcov file depend on each gcov file depend on each gcda
+$(foreach ff,$(BULLETPROOF.C_SRCS),$(call GCOV_DEP,$(ff)))
+
+cmdAbsPath=$(if $(dirname $1),$(call absPath,$1),$1)
+
+$(GCOVFILES):
+	@$(call mkdir_p,$(@D))
+	$(call exec,cd $(@D) && $(call cmdAbsPath,$(GCOV)) -o$(call absPath,$(patsubst %.gcda,%$(OBJ_EXT),$<)) $(call absPath,.))
+	$(call touch,$@)
+
+#we made the source file the first dep
+$(BPFILES):
+	@$(call mkdir_p,$(@D))
+	$(call exec,$(CCOV) --Cerror -gcov $< $(filter-out $<, $+))
+	@$(call touch,$(@))
+

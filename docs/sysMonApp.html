@@ -1,0 +1,1643 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><title>sysMonApp</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="images/sidebar_top.jpg"></top><script src="scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, false)"><input id="searchButton" onclick="postFunction(false)" type="button" value="Search"></form><p>
+<a href="index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<p>
+<a href="sitemap.html">Sitemap</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="Audio/Applications.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="Voice/Applications.html">Voice</a>
+</p><p>
+<a href="Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="Audio/Examples.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="Examples_Common.html">Common</a>
+</p><p>
+<a href="Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="Tools_Signing.html">Signing</a>
+</p><p>
+<a href="Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="FAQ_Common.html">Common</a>
+</p><p>
+<a href="FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="Support_Contact.html">Contact</a>
+</p><center><img src="images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h1>
+<a name="sysMonApp"></a>sysMonApp
+</h1><div class="toc"><div class="tocLevel"><a href="#Overview">Overview</a></div><div class="tocLevel"><a href="#Setup">Setup</a></div><div class="tocLevel"><a href="#sysMonApp%20Services">sysMonApp Services</a><div class="tocLevel"><a href="#Profiler%20service">Profiler service</a><div class="tocLevel"><a href="#STID%20based%20profiling">STID based profiling</a></div><div class="tocLevel"><a href="#Stats%20collection%20and%20post-processing">Stats collection and post-processing</a></div></div><div class="tocLevel"><a href="#Getstate%20service">Getstate service</a></div><div class="tocLevel"><a href="#DCVS%20service">DCVS service</a></div><div class="tocLevel"><a href="#Clocks%20service">Clocks service</a></div><div class="tocLevel"><a href="#tinfo%20service">tinfo service</a></div><div class="tocLevel"><a href="#Software%20Thread%20Profiler%20service">Software Thread Profiler service</a></div><div class="tocLevel"><a href="#ETM%20Trace%20and%20dll%20output%20service">ETM Trace and dll output service</a></div><div class="tocLevel"><a href="#NPU%20Profiler%20service">NPU Profiler service</a></div><div class="tocLevel"><a href="#DSP%20Power%20Stats%20service">DSP Power Stats service</a></div></div></div><h2>
+<a name="Overview"></a>Overview
+</h2><p>
+sysMonApp is an Android executable which interacts with Q6's on ADSP/CDSP/SLPI subsystems via FastRPC and provides various users functionalities like profiling Q6 work load, get the clock info, set/remove the core and bus clocks, get SW thread info, get the SW thread level profile stats amongst other supported functionalities. This document captures steps to setup sysMonApp and provides information on above mentioned various functionalities supported by sysMonApp and their usage.
+</p><h2>
+<a name="Setup"></a>Setup
+</h2><p>
+<b>sysMonApp for LA and LE Variant Location:</b>
+</p><p>
+sysMonApp is part of the DSP build located at
+</p><pre style="font-size: 82%">on ADSP: &lt;ADSP_BUILD&gt;/adsp_proc/performance/sysmonapp/sysMonApp
+         &lt;ADSP_BUILD&gt;/adsp_proc/performance/sysmonapp/sysMonAppLE
+         64bit variant: &lt;ADSP_BUILD&gt;/adsp_proc/performance/sysmonapp/sysMonApp_64Bit
+         64bit variant: &lt;ADSP_BUILD&gt;/adsp_proc/performance/sysmonapp/sysMonAppLE_64Bit
+</pre><pre style="font-size: 82%">on CDSP: &lt;CDSP_BUILD&gt;/cdsp_proc/performance/sysmonapp/sysMonApp
+         &lt;CDSP_BUILD&gt;/cdsp_proc/performance/sysmonapp/sysMonAppLE
+         64bit variant: &lt;CDSP_BUILD&gt;/cdsp_proc/performance/sysmonapp/sysMonApp_64Bit
+         64bit variant: &lt;CDSP_BUILD&gt;/cdsp_proc/performance/sysmonapp/sysMonAppLE_64Bit
+</pre><pre style="font-size: 82%">on SDSP: &lt;SDSP_BUILD&gt;/slpi_proc/performance/sysmonapp/sysMonApp
+         &lt;SDSP_BUILD&gt;/slpi_proc/performance/sysmonapp/sysMonAppLE
+         64bit variant: &lt;SDSP_BUILD&gt;/slpi_proc/performance/sysmonapp/sysMonApp_64Bit
+         64bit variant: &lt;SDSP_BUILD&gt;/slpi_proc/performance/sysmonapp/sysMonAppLE_64Bit
+</pre><p>
+The presence of these DSP subsystems is dependent on target. One can take any of the sysMonApp from above location, and that will support all the functionalities across DSP subsystems(ADSP/CDSP/SDSP).
+</p><p>
+Alternate Location (Use only if the DSP build is not available, supported on SM8150, SM6150, QCS405, QCS605 and future chipsets):
+</p><pre>From SDK: &lt;Hexagon SDK versio&gt;/tools/utils/sysmon/sysMonApp
+</pre><p>
+<b>Steps to setup sysMonApp:</b>
+</p><p>
+For LA variant:
+</p><div class="indent"><p>
+Push sysMonApp LA variant from DSP build/SDK to target as below.
+</p><p>
+From DSP build:
+</p><pre style="font-size: 68%">adb push &lt;&lt;ADSP/CDSP/SDSP&gt;_BUILD&gt;/&lt;adsp/cdsp/slpi&gt;_proc/performance/sysmonapp/sysMonApp /data/local/tmp/
+</pre><p>
+From SDK:
+</p><pre>adb push &lt;Hexagon SDK version&gt;/tools/utils/sysmon/sysMonApp /data/local/tmp/
+</pre></div><p>
+For 64-bit only LA variant:
+</p><div class="indent"><p>
+Push 64-bit sysMonApp LA variant from DSP build/SDK to target as below.
+</p><p>
+From DSP build:
+</p><pre style="font-size: 60%">adb push &lt;&lt;ADSP/CDSP/SDSP&gt;_BUILD&gt;/&lt;adsp/cdsp/slpi&gt;_proc/performance/sysmonapp/sysMonApp_64Bit /data/local/tmp/sysMonApp
+</pre><p>
+From SDK:
+</p><pre style="font-size: 78%">adb push &lt;Hexagon SDK version&gt;/tools/utils/sysmon/sysMonApp_64Bit /data/local/tmp/sysMonApp
+</pre></div><p>
+For LE variant:
+</p><div class="indent"><p>
+Push sysMonApp LE variant from DSP build/SDK to target as below.
+</p><p>
+From DSP build:
+</p><pre style="font-size: 62%">adb push &lt;&lt;ADSP/CDSP/SDSP&gt;_BUILD&gt;/&lt;adsp/cdsp/slpi&gt;_proc/performance/sysmonapp/sysMonAppLE /data/local/tmp/sysMonApp
+</pre><p>
+From SDK:
+</p><pre style="font-size: 81%">adb push &lt;Hexagon SDK version&gt;/tools/utils/sysmon/sysMonAppLE /data/local/tmp/sysMonApp
+</pre></div><p>
+For 64-bit only LE variant:
+</p><div class="indent"><p>
+Push 64-bit sysMonApp LE variant from DSP build/SDK to target as below.
+</p><p>
+From DSP build:
+</p><pre style="font-size: 59%">adb push &lt;&lt;ADSP/CDSP/SDSP&gt;_BUILD&gt;/&lt;adsp/cdsp/slpi&gt;_proc/performance/sysmonapp/sysMonAppLE_64Bit /data/local/tmp/sysMonApp
+</pre><p>
+From SDK:
+</p><pre style="font-size: 76%">adb push &lt;Hexagon SDK version&gt;/tools/utils/sysmon/sysMonAppLE_64Bit /data/local/tmp/sysMonApp
+</pre></div><p>
+Change permissions of the sysMonApp executable
+</p><pre>adb shell chmod 777 /data/local/tmp/sysMonApp
+</pre><p>
+<b>Prerequisites:</b>
+</p><p>
+Fastrpc daemon &#8220;adsprpcd&#8221; should be running on Android. Path of the daemon on target
+</p><pre>adb shell
+/system/bin/adsprpcd
+</pre><p>
+One can check the running of daemon by using the below cmd:
+</p><pre>adb shell ps | grep adsprpcd
+</pre><left><img src="images/adsprpcddeamonrunning.png"></left><p>
+Output of &#8220;ps&#8221; shows the fastrpc daemon &#8220;adsprpcd&#8221; running.
+</p><p>
+<b>Executing sysMonApp:</b>
+</p><p>
+sysMonApp can be executed from the adb shell cmd shown below.
+</p><pre style="font-size: 88%">adb shell /data/local/tmp/sysMonApp &lt;service&gt; &lt;arguments related to the service&gt;
+</pre><p>
+When sysMonApp is executed without service name, help page will be dispalyed as shown below (for illustration purpose only, actual help page may differ based on updates)
+</p><left><img src="images/sysMonAppHelppage.png"></left><h2>
+<a name="sysMonApp%20Services"></a>sysMonApp Services
+</h2><h3>
+<a name="Profiler%20service"></a><b>Profiler service</b>
+</h3><p>
+This service can be used to profile services running on ADSP to gather information like the clocks voted for, resource usage, load distribution across available hardware threads, load on processor, bus bandwidth metrics and various other profiling metrics useful in measuring performance, debugging performance related issues and in identifying possible optimizations.
+</p><p>
+<b>Executing profiler service:</b>
+</p><p>
+To see profiler help page execute below command:
+</p><div class="indent"><pre>adb shell /data/local/tmp/sysMonApp profiler -help
+</pre></div><p>
+Cmd to execute profiler service:
+</p><div class="indent"><pre>adb shell 
+/data/local/tmp/sysMonApp profiler &lt;arguments&gt;
+</pre></div><p>
+profiler service argument list:
+</p><table><tr><td><div class="indent"><p>
+<b>&lt;Arguments&gt;</b>
+</p></div></td><td><p>
+<b>Property</b>
+</p></td><td><p>
+<b>Value</b>
+</p></td><td><div class="indent"><p>
+<b>Description</b>
+</p></div></td></tr><tr><td><p>
+--samplingPeriod
+</p></td><td><p>
+Optional
+</p><p>
+(Defaults: 0 for --defaultSetEnable 1,
+</p><div class="indent"><p>
+1 for --defaultSetEnable 0 )
+</p></div></td><td><p>
+Integer
+</p><p>
+value &#8805; 1
+</p></td><td><div class="indent"><p>
+Sampling Period in milli seconds. This is the time
+</p><p>
+interval at which values of 8 PMU events will be collected.
+</p></div></td></tr><tr><td rowspan="2"><p>
+--defaultSetEnable
+</p></td><td rowspan="2"><p>
+Optional
+</p><p>
+(Default: Chipset dependent)
+</p></td><td><div class="indent"><p>
+0
+</p></div></td><td><div class="indent"><p>
+User mode logging.
+</p></div></td></tr><tr><td><div class="indent"><p>
+1
+</p></div></td><td><div class="indent"><p>
+Default mode logging.
+</p></div></td></tr><tr><td rowspan="2"><p>
+--dcvsOption
+</p></td><td rowspan="2"><p>
+Optional
+</p><p>
+(Default: 1 for --defaultSetEnable 1,
+</p><div class="indent"><p>
+0 for --defaultSetEnable 0 )
+</p></div></td><td><div class="indent"><p>
+0
+</p></div></td><td><div class="indent"><p>
+Disable the DCVS for the profiling duration.
+</p></div></td></tr><tr><td><div class="indent"><p>
+1
+</p></div></td><td><div class="indent"><p>
+Enable the DCVS for the profiling duration.
+</p></div></td></tr><tr><td rowspan="2"><p>
+--profileFastrpcTimeline
+</p></td><td rowspan="2"><p>
+Optional
+</p><p>
+(Default: 0)
+</p></td><td><div class="indent"><p>
+0
+</p></div></td><td><div class="indent"><p>
+Disable the option of collecting the time spent by
+</p><p>
+fastrpc interface.
+</p></div></td></tr><tr><td><div class="indent"><p>
+1
+</p></div></td><td><div class="indent"><p>
+Enable the option of collecting the time spent by fastrpc interface.
+</p></div></td></tr><tr><td><p>
+--stidArray
+</p></td><td><p>
+Optional
+</p><p>
+(Default: disabled)
+</p><p>
+Note: Valid only from SDM845/SDM670
+</p></td><td><p>
+Comma
+</p><p>
+separated STID values
+</p></td><td><div class="indent"><p>
+User provided list (comma separated) of STID values.
+</p><p>
+Profiling using this option is explained in detail over subsequent sections
+</p></div></td></tr><tr><td rowspan="3"><p>
+--q6
+</p></td><td rowspan="3"><p>
+Optional
+</p><p>
+(Default: adsp)
+</p></td><td><div class="indent"><p>
+adsp
+</p></div></td><td><div class="indent"><p>
+Execute the service in ADSP processor
+</p></div></td></tr><tr><td><div class="indent"><p>
+cdsp
+</p></div></td><td><div class="indent"><p>
+Execute the service in CDSP processor
+</p></div></td></tr><tr><td><div class="indent"><p>
+sdsp
+</p></div></td><td><div class="indent"><p>
+Execute the service in SDSP processor
+</p></div></td></tr></table><p>
+<b>Default Mode: (--defaultSetEnable 1)</b>
+</p><p>
+In default mode fixed set of 8 PMU events (for example: MPPS, AXI Read and Write bandwidth, HVX MPPS etc.,) will be monitored at sampling period configured by Q6 sysMon service. The 8 PMU events chosen in this mode are chipset and subsystem (ADSP/CDSP/SDSP) specific. In this mode user cannot override the PMU events. DCVS will be enabled in this mode by default. In this mode by default the samplingPeriod is taken 0 i.e, the sampling interval may toggle between 1ms and 50ms (dictated by Q6 sysMon service). From SDM660/SDM845, user can overwrite the sampling period if required (<b>--samplingPeriod &lt;in milli-seconds&gt;</b>) by disabling DCVS(<b>--dcvsOption 0</b>).
+</p><p>
+<b>User Mode: (--defaultSetEnable 0)</b>
+</p><p>
+In user mode 4 PMU events are fixed by Q6 sysMon service. Predefined array of PMU events provided by Q6 sysmon service take the place of other 4PMU events. These PMU evets in array are divided into sets of 4 PMU events each and monitored in round robin fashion. After collecting 50 samples of data another set of 4 PMU events will be taken from predefined array. This continues in round robin fashion till the user stops the profiling. In this mode the default SamplingPeriod is 1ms and DCVS option is disabled.
+</p><p>
+Example profiler service commands:
+</p><div class="indent"><p>
+Running the sysMonApp profiler service in user mode.
+</p><pre>adb shell /data/local/tmp/sysMonApp profiler --defaultSetEnable 0
+</pre><left><img src="images/profileruseroption.png"></left><p>
+Running the sysMonApp profiler with default mode type.
+</p><pre>adb shell /data/local/tmp/sysMonApp profiler --defaultSetEnable 1
+</pre><left><img src="images/profilerdefoption.png"></left><p>
+Running sysMonApp profiler capturing the samples at sampling interval of 10ms on CDSP processor with user mode and capture the fastrpc timeline packets.
+</p><pre style="font-size: 58%">adb shell /data/local/tmp/sysMonApp profiler --defaultSetEnable 0 --samplingPeriod 10 --q6 cdsp --profileFastrpcTimeline 1 
+</pre></div><h4>
+<a name="STID%20based%20profiling"></a><b>STID based profiling</b>
+</h4><p>
+From SDM845/SDM670, certain PMU events can be filtered per software thread based on SW Thread ID field of STID register. STID has a 8-bit software thread identifier programmed by QuRT on user request. STID can be used to filter PMU events captured by profiler service. By default, the filtering based on STID is disabled and user can enable the same by using <b>--stidArray</b> option in user mode. Not all PMU events are maskable under STID, in <b>User Mode</b> sysMonApp profiler service selects a set of PMU events maskable under STID.
+</p><p>
+By default, for all software threads the software thread identifier of STID will be 0, which cannot be used as a filter for PMU event counters. QuRT has an API exposed to be able to register a thread for STID allocation in the process of thread creation. Following code snippet shows the changes needed to enable STID generation for a software thread:
+</p><pre>qurt_thread_attr_t attr;
+qurt_thread_attr_init (&amp;attr);
+qurt_thread_attr_set_name(&amp;attr, p_ThreadName);
+qurt_thread_attr_set_stack_addr (&amp;attr, p_StackBase);
+qurt_thread_attr_set_stack_size (&amp;attr, stackSize);
+
+<span style="color: darkgreen">//Code change start</span>
+
+<span style="color: darkgreen">/* Add the following line to enable STID allocation to the software thread being created.
+ * A non-zero software thread identifier in STID register is needed to enable PMU
+ * filtering for the same */</span>
+qurt_thread_attr_enable_stid(&amp;attr, 1);  <span style="color: darkgreen">//QuRT assigns an available STID to the thread during qurt_thread_create</span>
+
+<span style="color: darkgreen">//Code change end</span>
+
+result = qurt_thread_create(&amp;tid, &amp;attr, (<span style="color: blue">void</span>*)entry, NULL);
+</pre><p>
+STID cannot be assigned to an already created thread. The above code change is needed to make use of STID filtering on PMU events. As we have only ~255 (8-bit thread identifier in STID register and a value of 0 is non-maskable) usable STIDs for filtering, not all threads should be assigned a STID.
+</p><p>
+The following command displays a list of software threads and their STIDs created in the selected subsystem:
+</p><div class="indent"><pre>adb shell /data/local/tmp/sysMonApp tinfo --q6 &lt;adsp/cdsp/sdsp&gt;
+</pre><left><img src="images/profilerStidTinfo.png"></left></div><p>
+A value of 0 under STID column for a particular software thread means STID filtering of PMU events cannot be done for that software thread (refer code changes required for allocating a STID via QuRT APIs above).
+</p><p>
+The profiler functionality under sysMonApp has the following option under user mode (defaultSetEnable &#8800; 1) for users to enable STID based filtering on select PMU events
+</p><p>
+Example command:
+</p><div class="indent"><pre style="font-size: 75%">adb shell /data/local/tmp/sysMonApp profiler --defaultSetEnable 0 --stidArray 1,2,3,4 --q6 adsp
+</pre></div><p>
+In above example we are starting the profiler service on ADSP in user mode (The profiler automatically selects a PMU event set maskable with STID). Note that, STID filtering is supported only in <b>User mode</b> profiling. As explained in previous sections, 4 user PMU events are selected per sample in this mode while the other 4 are the defaults set by sysMon and remain constant. STID filtering will only be applied to the 4 user PMU events while the defaults set by sysMon won't be filtered (STID mask will be 0). In a profiling sample captured over provided sampling period, only one STID value is applied as a filter to the 4 user PMU events. In this example STID values of 1, 2, 3 and 4 will be iterated over profiling samples one at a time.
+</p><p>
+Note:
+</p><ol class="indent" type="1">
+<li>
+<p>
+Due to time division multiplexing (iterating over provided STIDs over profiling samples), selecting multiple STIDs as filters may not provide a complete picture for a given STID (missing time slots where other STID is configured). In cases where a continuous (time domain) filtering is needed per STID, only one STID is to be given by user.
+</p>
+</li><li>
+<p>
+The <b>--stidArray</b> list has a limit of 8 STIDs.
+</p>
+</li><li>
+<p>
+STID filtering cannot be enabled in <b>--defaultSetEnable 1</b> mode.
+</p>
+</li>
+</ol><h4>
+<a name="Stats%20collection%20and%20post-processing"></a><b>Stats collection and post-processing</b>
+</h4><p>
+sysMonApp profiler stores raw profiling data (for ADSP) at <code>/sdcard/sysmon.bin</code> or '/data/sysmon.bin' location on device. The output raw profiling data file name for CDSP is sysmon_cdsp.bin and for SDSP is sysmon_sdsp.bin. sysMonApp profiler will also print this output file path with filename in the standard output. Once the user is done profiling, the file can be pulled from the device and post processed using sysmon parser on a host machine (Windows).
+</p><p>
+Command to pull the profiler output file from device using ADB:
+</p><div class="indent"><pre>adb pull /sdcard/sysmon.bin &lt;destination directory&gt;\&lt;filename.bin&gt;
+</pre></div><p>
+Usage of the post processing script (<code>&lt;&lt;ADSP/CDSP/SDSP&gt;_BUILD&gt;/&lt;adsp/cdsp/slpi&gt;_proc/performance/sysmonapp/tools</code>:
+</p><div class="indent"><pre>SysmonParser.exe &lt;Input file name&gt;.bin &lt;Output file name&gt; &lt;ModeType&gt; (Windows)
+</pre></div><table><tr><td><p>
+<b>Parameter</b>
+</p></td><td><p>
+<b>Property</b>
+</p></td><td><p>
+<b>Value</b>
+</p></td><td><p>
+<b>Description</b>
+</p></td></tr><tr><td><p>
+Input file name
+</p></td><td><p>
+Required
+</p></td><td><p>
+Path to the profiler output bin file
+</p><p>
+(including the file name with extension)
+</p><p>
+extracted from the target
+</p></td><td></td></tr><tr><td><p>
+Output file name
+</p></td><td><p>
+Required
+</p></td><td><p>
+Desired output file path including the filename (without extension)
+</p></td><td></td></tr><tr><td rowspan="2"><p>
+ModeType
+</p></td><td rowspan="2"><p>
+Required
+</p></td><td><p>
+default
+</p></td><td><p>
+If DCVS option is checked.
+</p></td></tr><tr><td><p>
+user
+</p></td><td><p>
+If DCVS option is un-checked.
+</p></td></tr></table><p>
+<b>Example commands:</b>
+</p><div class="indent"><pre>SysmonParser sysmon.bin SysmonProfStat default
+SysmonParser.exe sysmon.bin SysmonProfStat user
+SysmonParser c:\temp\sysmon.bin c:\temp\SysmonProfStat user
+</pre></div><p>
+<b>Post processing script output file:</b>
+</p><p>
+User can go through the section &#8220;Post processing script output file&#8221; in the below link provided. Use <a href="sysMon_DSP_Profiler.html">Hexagon Profiler Version 1</a>. Click <a href="sysMon_DSP_Profiler.html">here</a> to know more on this. This will explain how to collect the profiler bin file and postprocess the same.
+</p><p>
+If there are dynamic modules in testcase executed and the argument to profiler service <b>--profileFastrpcTimeline</b> is enabled.
+</p><ul class="indent" type="circle">
+<li>
+<p>
+After post processing the collected bin file. Time spent in fastrpc interface for each dynamic module is shown in &#8220;Summary Sheet&#8221;.
+</p>
+</li><li>
+<p>
+From post processed data one can know how MPPS, AXI rd/wr BW are getting effected when fastrpc communication is executing at that sample.
+</p>
+</li><li>
+<p>
+One can know how many PDs are getting executed and how often there is fastrpc communication(APPS&lt;-&gt;Q6) for each PD.
+</p>
+</li>
+</ul><p>
+If STID filtering is enabled for the profiling, post processor intelligently categorizes PMUs and their post processed data under selected STIDs. The parser also tries to resolves the thread name by using the thread info data captured at the beginning of the profiler instance when STID filtering is enabled. Note: Un-resolved STIDs (No thread name displayed in the post processed output) is not assigned to a software thread by the time profiler is started and its user's responsibility to map to appropriate thread (if the thread is spawned dynamically after profiler start). STID should be uniquely mapped to a software thread, any duplication will result in the warning messages as below when the parser is run and the thread name is displayed as Duplicate thread in post processed data.
+</p><left><img src="images/profilerStidDuplicate.png"></left><p>
+Following are some post-processed output snapshots which capture the STID centric data:
+</p><left><img src="images/profilerStidSummarySheet.png"></left><p>
+Above snapshot captures 'Summary' sheet from post processed output showcasing STID wise summary of metrics captured by the profiler. Resolved thread name is displayed in respective summary headings in <b>STID_&lt;STID number&gt;(ThreadName)</b> format
+</p><left><img src="images/profilerStidPPSheet.png"></left><p>
+The above sheet captures 'PostProcessed' data showcasing <b>STID_&lt;STID number&gt;-&lt;Post processed PMU data&gt;</b> for PMU events with STID filter enabled. This sheet categorizes post processed metrics captured under respective STID filtered threads - 'Summary' sheet can be referred to get the 'ThreadName' for a given &lt;STID number&gt;.
+</p><left><img src="images/profilerStidRawSheet.png"></left><p>
+The above snippet shows 'RawData' sheet with additional STID filtering information in columns K and T. STID0 is applicable to PMU events and values under PMU instances 0 - 3 and STID1 for PMU instances 4 - 7.
+</p><h3>
+<a name="Getstate%20service"></a><b>Getstate service</b>
+</h3><p>
+This service is used to know the current Q6 clock voting information and heap statistics of each static Protection Domain. Following clock info is queried from Q6 at that instance:
+</p><div class="indent"><p>
+Q6 Core Clock
+</p><p>
+SNOC Clock vote from Q6. This is Q6&lt;-&gt;AXI clock vote.
+</p><p>
+BIMC Clock vote from Q6.
+</p></div><p>
+Following heap stats info of each PD is queried from Q6 at that instance:
+</p><div class="indent"><p>
+&lt;PD Name&gt; : Total Heap:&lt;in KB&gt; -&gt; Total heap memory declared.
+</p><p>
+Available Heap : &lt;in KB&gt; -&gt; Total free heap available in PD at that instance.
+</p><p>
+Max.Free Bin : &lt;in KB&gt; -&gt; Max heap bin size in PD at that instance.
+</p></div><p>
+<b>Executing getstate service:</b>
+</p><p>
+Gestate service can be execute using below cmd:
+</p><div class="indent"><pre>adb shell /data/local/tmp/sysMonApp getstate
+</pre><left><img src="images/getstate.png"></left></div><p>
+getstate service argument list:
+</p><table><tr><td><p>
+<b>&lt;Arguments&gt;</b>
+</p></td><td><p>
+<b>Property</b>
+</p></td><td><p>
+<b>Value</b>
+</p></td><td><p>
+<b>Description</b>
+</p></td></tr><tr><td rowspan="3"><p>
+--q6
+</p></td><td rowspan="3"><p>
+Optional
+</p><p>
+(default:ADSP)
+</p></td><td><div class="indent"><p>
+ADSP
+</p></div></td><td><div class="indent"><p>
+Execute the service in ADSP processor
+</p></div></td></tr><tr><td><div class="indent"><p>
+CDSP
+</p></div></td><td><div class="indent"><p>
+Execute the service in CDSP processor
+</p></div></td></tr><tr><td><div class="indent"><p>
+SDSP
+</p></div></td><td><div class="indent"><p>
+Execute the service in SDSP processor
+</p></div></td></tr></table><p>
+<b>Example getstate service commands:</b>
+</p><div class="indent"><p>
+Running the sysMonApp getstate service on CDSP processor.
+</p><pre>adb shell /data/local/tmp/sysMonApp getstate --q6 cdsp
+</pre><left><img src="images/getstateCDSP.png"></left></div><h3>
+<a name="DCVS%20service"></a><b>DCVS service</b>
+</h3><p>
+This service is used to enable or disable the Dynamic Clock Voltage Scaling(DCVS) feature executing in Q6.
+</p><p>
+<b>Executing DCVS service:</b>
+</p><div class="indent"><pre>adb shell /data/local/tmp/sysMonApp dcvs enable
+</pre><left><img src="images/dcvsenable.png"></left></div><p>
+dcvs service argument list:
+</p><table><tr><td><p>
+<b>&lt;Arguments&gt;</b>
+</p></td><td><p>
+<b>Property</b>
+</p></td><td><p>
+<b>Value</b>
+</p></td><td><p>
+<b>Description</b>
+</p></td></tr><tr><td><p>
+enable
+</p></td><td><div class="indent"><p>
+Mandatory
+</p></div></td><td><div class="indent"><p>
+None
+</p></div></td><td><div class="indent"><p>
+This enables the DCVS feature in Q6 processor.
+</p></div></td></tr><tr><td><p>
+disable
+</p></td><td><div class="indent"><p>
+Mandatory
+</p></div></td><td><div class="indent"><p>
+None
+</p></div></td><td><div class="indent"><p>
+This disables the DCVS feature in Q6 processor.
+</p></div></td></tr><tr><td rowspan="3"><p>
+--q6
+</p></td><td rowspan="3"><div class="indent"><p>
+Optional
+</p></div><p>
+(Default:ADSP)
+</p></td><td><div class="indent"><p>
+ADSP
+</p></div></td><td><div class="indent"><p>
+Execute the service in ADSP processor
+</p></div></td></tr><tr><td><div class="indent"><p>
+CDSP
+</p></div></td><td><div class="indent"><p>
+Execute the service in CDSP processor
+</p></div></td></tr><tr><td><div class="indent"><p>
+SDSP
+</p></div></td><td><div class="indent"><p>
+Execute the service in SDSP processor
+</p></div></td></tr></table><p>
+<b>Example DCVS service commands:</b>
+</p><div class="indent"><p>
+Command to enable DCVS service on CDSP processor
+</p><pre>adb shell /data/local/tmp/sysMonApp dcvs enable --q6 cdsp
+</pre><left><img src="images/dcvsenablecdsp.png"></left><p>
+Command to disable DCVS service on ADSP processor which is the default selection.
+</p><pre>adb shell /data/local/tmp/sysMonApp dcvs disable
+</pre><left><img src="images/dcvsdisable.png"></left></div><h3>
+<a name="Clocks%20service"></a><b>Clocks service</b>
+</h3><p>
+This service is used to set the Q6 core clock and bus clocks of desired Q6 processor. Using this service one can remove the votes that were voted using this and restores the clocks that were running initially.
+</p><p>
+One can vote for the below clocks:
+</p><div class="indent"><p>
+Q6 core clock: This is the clock at with Q6 processor runs at.
+</p><p>
+Bus Clock: This is clock at which axi runs at (Q6 &lt;-&gt; AXI).
+</p><p>
+AHB Clock: This is clock internal to Q6 which is interface between Q6 and LPM runs at.
+</p><p>
+HCP Bus Clock: This clock is at which HCP HW runs at. Only for CDSP processor.
+</p><p>
+DMA Bus Clock: This clock is at which DMA HW runs at. Only for CDSP processor.
+</p></div><p>
+Using this service user can set desired sleep latency. Based on the requested latency sleep solver choses appropriate low power modes satisfying the latency requirement.
+</p><p>
+clocks service help page:
+</p><div class="indent"><left><img src="images/clockshelp.png"></left></div><p>
+<b>Executing clocks service set command:</b>
+</p><div class="indent"><pre style="font-size: 54%">adb shell /data/local/tmp/sysMonApp clocks set [--coreClock &lt;MHz&gt;] [--busClock &lt;MHz&gt;] [--ahbClock &lt;MHz&gt;] [--sleepLatency &lt;uSeconds&gt;]
+</pre><left><img src="images/clocksset.png"></left><p>
+Once the clocks are set, one can execute the &#8220;getstate&#8221; service to see if the requested clocks are set.
+</p></div><p>
+clocks service argument list for set:
+</p><table><tr><td><p>
+<b>&lt;Arguments&gt;</b>
+</p></td><td><p>
+<b>Value</b>
+</p></td><td><p>
+<b>Description</b>
+</p></td></tr><tr><td><p>
+--coreClock
+</p></td><td><div class="indent"><p>
+MHz
+</p></div></td><td><div class="indent"><p>
+Desired floor Q6 core clock in MHz. This will
+</p></div><p>
+ensure that Q6 core processor would run at minimum
+</p><p>
+of given core frequency.
+</p></td></tr><tr><td><p>
+--busClock
+</p></td><td><div class="indent"><p>
+MHz
+</p></div></td><td><div class="indent"><p>
+Desired floor Q6&lt;-&gt;AXI clock in MHz. This will
+</p></div><p>
+ensure that bus clock for Q6 would be given at minimum of given bus frequency when Q6 is active.
+</p></td></tr><tr><td><p>
+--ahbClock
+</p></td><td><div class="indent"><p>
+MHz
+</p></div></td><td><div class="indent"><p>
+Desired floor Q6&lt;-&gt;LPM clock in MHz. This will
+</p></div><p>
+ensure that Q6 AHB clock for Q6 would run at minimum of given bus frequency.
+</p></td></tr><tr><td><p>
+--hcpBusClock
+</p></td><td><div class="indent"><p>
+MHz
+</p></div></td><td><div class="indent"><p>
+Desired clock used to vote HCP &lt;-&gt; DDR BW.
+</p></div><p>
+Applicable for CDSP processor.
+</p></td></tr><tr><td><p>
+--dmaBusClock
+</p></td><td><div class="indent"><p>
+MHz
+</p></div></td><td><div class="indent"><p>
+Desired clock used to vote DMA &lt;-&gt; DDR BW.
+</p></div><p>
+Applicable for CDSP processor.
+</p></td></tr><tr><td><p>
+--sleepLatency
+</p></td><td><div class="indent"><p>
+uSec
+</p></div></td><td><div class="indent"><p>
+Desired SleepLatency vote. Use to choose sleep
+</p></div><p>
+LPM mode based on entry and exit latencies.
+</p></td></tr><tr><td rowspan="3"><p>
+--q6
+</p></td><td><p>
+ADSP(Default)
+</p></td><td><div class="indent"><p>
+Execute the service in ADSP processor
+</p></div></td></tr><tr><td><div class="indent"><p>
+CDSP
+</p></div></td><td><div class="indent"><p>
+Execute the service in CDSP processor
+</p></div></td></tr><tr><td><div class="indent"><p>
+SDSP
+</p></div></td><td><div class="indent"><p>
+Execute the service in SDSP processor
+</p></div></td></tr></table><p>
+<b>Executing clocks service remove command:</b>
+</p><div class="indent"><pre>adb shell /data/local/tmp/sysMonApp clocks remove        
+</pre><left><img src="images/clocksremove.png"></left><p>
+Once the clocks are removed, one can execute the &#8220;getstate&#8221; service to see if the clocks are restored to initial values.
+</p></div><p>
+clocks service argument list for remove:
+</p><table><tr><td><p>
+<b>&lt;Arguments&gt;</b>
+</p></td><td><p>
+<b>Value</b>
+</p></td><td><p>
+<b>Description</b>
+</p></td></tr><tr><td rowspan="3"><p>
+--q6
+</p></td><td><p>
+ADSP(Default)
+</p></td><td><div class="indent"><p>
+Execute the service in ADSP processor
+</p></div></td></tr><tr><td><div class="indent"><p>
+CDSP
+</p></div></td><td><div class="indent"><p>
+Execute the service in CDSP processor
+</p></div></td></tr><tr><td><div class="indent"><p>
+SDSP
+</p></div></td><td><div class="indent"><p>
+Execute the service in SDSP processor
+</p></div></td></tr></table><p>
+<b>Example clocks service commands:</b>
+</p><div class="indent"><p>
+Set the Q6 core clock for ADSP processor.
+</p><pre>adb shell /data/local/tmp/sysMonApp clocks set --coreClock 400 --ahbClock 100
+</pre><left><img src="images/ClocksCCAdsp.png"></left><p>
+Set the bus clock for CDSP processor.
+</p><pre style="font-size: 81%">adb shell /data/local/tmp/sysMonApp clocks set --coreClock 500 --busClock 100 --q6 cdsp
+</pre><left><img src="images/ClocksBCCdsp.png"></left><p>
+Remove the clocks that are set using this service for CDSP processor.
+</p><pre>adb shell /data/local/tmp/sysMonApp clocks remove --q6 cdsp
+</pre><left><img src="images/ClocksRemovecdsp.png"></left><p>
+Disable the PowerCollapse using <b>--sleepLatency</b> argument on ADSP processor. This mode is one of Sleep solver modes.
+</p><pre>adb shell /data/local/tmp/sysMonApp clocks --sleepLatency 10
+</pre><left><img src="images/sleepLatencydsp.png"></left></div><h3>
+<a name="tinfo%20service"></a><b>tinfo service</b>
+</h3><p>
+This service is used to know the SW threads created along with priority across all PDs. Also used to know the stack size declared and Max stack size used at that instance across PDs.
+</p><p>
+<b>Executing tinfo service command:</b>
+</p><div class="indent"><p>
+Cmd that displays all the SW threads created, their priority across all PDs.
+</p><pre>adb shell /data/local/tmp/sysMonApp tinfo
+</pre></div><p>
+tinfo service argument list for set:
+</p><table><tr><td><p>
+<b>&lt;Arguments&gt;</b>
+</p></td><td><p>
+<b>Value</b>
+</p></td><td><p>
+<b>Description</b>
+</p></td></tr><tr><td rowspan="4"><p>
+--getstack
+</p></td><td><div class="indent"><p>
+audio
+</p></div></td><td><div class="indent"><p>
+Displays the SW threads created, priority, Stack size declared and Max stack used of each SW thread for the requested PD.
+</p></div></td></tr><tr><td><div class="indent"><p>
+sensors
+</p></div></td><td><div class="indent"><p>
+Displays the SW threads created, priority, Stack size declared and Max stack used of each SW thread for the requested PD.
+</p></div></td></tr><tr><td><div class="indent"><p>
+user
+</p></div></td><td><div class="indent"><p>
+Displays the SW threads created, priority, Stack size declared and Max stack used of each SW thread for the dynamic PD if any.
+</p></div></td></tr><tr><td><div class="indent"><p>
+all
+</p></div></td><td><div class="indent"><p>
+Displays the SW threads created, priority, Stack size declared and Max stack used of each SW thread for all PDs.
+</p></div></td></tr><tr><td rowspan="3"><p>
+--q6
+</p></td><td><p>
+ADSP(Default)
+</p></td><td><div class="indent"><p>
+Execute the service in ADSP processor
+</p></div></td></tr><tr><td><div class="indent"><p>
+CDSP
+</p></div></td><td><div class="indent"><p>
+Execute the service in CDSP processor
+</p></div></td></tr><tr><td><div class="indent"><p>
+SDSP
+</p></div></td><td><div class="indent"><p>
+Execute the service in SDSP processor
+</p></div></td></tr></table><p>
+<b>Example tinfo service commands:</b>
+</p><div class="indent"><p>
+tinfo service command that shows the Audio PD required threads data.
+</p><pre>adb shell /data/local/tmp/sysMonApp tinfo --getstack audio --q6 ADSP
+</pre><left><img src="images/tinfogsaudio.png"></left><p>
+tinfo service command that shows the Dynamic PD required threads data.
+</p><pre>adb shell /data/local/tmp/sysMonApp tinfo --getstack user --q6 cdsp      
+</pre><left><img src="images/tinfogsuser.png"></left></div><h3>
+<a name="Software%20Thread%20Profiler%20service"></a><b>Software Thread Profiler service</b>
+</h3><p>
+Software Thread Profiler(STP) is software thread level profiling feature which measures total cycles spent by a given software thread and its timelines of UserPDs. This feature helps to understand each software thread performance. This feature also measures packets executed by each software thread. This will help to get CPP of each thread and focus on optimizations.
+</p><div class="indent"><p>
+.User can execute both existing sysmon profiler and TLP in one go; to correlate between overall statistics and thread wise data. .User can profile desired threads by providing the SW thread name. .Can profile across Q6 processors (ADSP/SDSP/CDSP) .Configurable sampling period, as low as 1milli-second. .Captures only active SW thread statistics
+</p></div><left><img src="images/stp_flowchart.jpg"></left><p>
+<b>Executing STP service command:</b>
+</p><p>
+Executes the STP with default values. Make sure testcase is running at background.
+</p><div class="indent"><pre>adb shell
+/data/local/tmp/sysMonApp tlp
+</pre></div><p>
+STP service argument list:
+</p><table><tr><td><p>
+<b>&lt;Arguments&gt;</b>
+</p></td><td><p>
+<b>Value</b>
+</p></td><td><p>
+<b>Description</b>
+</p></td></tr><tr><td><p>
+--samplingPeriod
+</p></td><td><p>
+Optional (Default:50)
+</p></td><td><p>
+Sampling Period in milli seconds. This is the time interval at which SW thread profile stats will be collected.
+</p></td></tr><tr><td rowspan="2"><p>
+--profile
+</p></td><td><div class="indent"><p>
+0
+</p></div><p>
+(Default)
+</p></td><td><p>
+Execute only STP.
+</p></td></tr><tr><td><div class="indent"><p>
+1
+</p></div></td><td><div class="indent"><p>
+Execute the sysmon profiler in parallel.
+</p></div></td></tr><tr><td><p>
+--tname
+</p></td><td><p>
+Optional
+</p></td><td><p>
+User can provide desired SW thread names (case sensitive) which will provide the profiling info of those threads alone. The thread names should be separated by Comma. Name should exactly
+</p><p>
+match with the SW thread name created.
+</p></td></tr><tr><td rowspan="3"><p>
+--q6
+</p></td><td><p>
+ADSP(Default)
+</p></td><td><div class="indent"><p>
+Execute the service in ADSP processor
+</p></div></td></tr><tr><td><div class="indent"><p>
+CDSP
+</p></div></td><td><div class="indent"><p>
+Execute the service in CDSP processor
+</p></div></td></tr><tr><td><div class="indent"><p>
+SDSP
+</p></div></td><td><div class="indent"><p>
+Execute the service in SDSP processor
+</p></div></td></tr></table><p>
+<b>Command to pull the output files from device using ADB:</b>
+</p><p>
+If profiled without profiler option:
+</p><div class="indent"><pre style="font-size: 83%">adb pull /sdcard/sysmontlp_sdsp.bin (or) sysmontlp_adsp.bin (or) sysmontlp_cdsp.bin  
+</pre><p>
+.Output file name is appended with selected qdsp6
+</p></div><p>
+If profiled with profiler option(&#8212;profile 1):
+</p><div class="indent"><pre style="font-size: 85%">adb pull /sdcard/sysmontlp_adsp.bin (or) sysmontlp_sdsp.bin (or) sysmontlp_cdsp.bin
+</pre><pre style="font-size: 77%">adb pull /sdcard/sysmon.bin(default name for adsp) (or) sysmon_sdsp.bin (or) sysmon_cdsp.bin
+</pre><p>
+.Output file name is appended with selected qdsp6.
+</p></div><p>
+<b>Post processing the bins collected:</b>
+</p><p>
+If profiled without profiler option:
+</p><div class="indent"><pre>SysmonParser.exe --tlp sysmontlp_sdsp.bin
+</pre><p>
+.It generate sysmontlp_sdsp.xls sheet
+</p></div><p>
+If profiled with profiler option(&#8212;profile 1):
+</p><div class="indent"><pre>SysmonParser.exe sysmon_sdsp.bin  &lt;output file&gt; user --tlp  sysmontlp_sdsp.bin
+</pre><p>
+.It generate &lt;output file&gt;.xls sheet. That has the profiler data and STP data.
+</p></div><p>
+<b>Results:</b>
+</p><p>
+Summary sheet:
+</p><div class="indent"><left><img src="images/tlp_Summary.png"></left></div><p>
+Post processed sheet :
+</p><div class="indent"><left><img src="images/tlpPostProcessed.png"></left></div><h3>
+<a name="ETM%20Trace%20and%20dll%20output%20service"></a><b>ETM Trace and dll output service</b>
+</h3><p>
+This service is used to enable the ETM to trace the Text and Data memory. Also provides the info about the dynamic/dll modules loaded.
+</p><p>
+<b>dll/dynamic modules Output:</b>
+</p><p>
+This service provides the info of the dynamic modules loaded. Below is the information dispalyed for each dynamic module
+</p><div class="indent"><p>
+.ELF_NAME: Name of the dyanamic module loaded. .LOAD_ADDRESS: Physical Address where the dyanmci module is loaded. .LOAD_TIMESTAMP: TimeStamp when the dynamic modules is loaded. .UNLOAD_TIMESTAMP: TimeStamp when the dynamic module is unloaded.
+</p></div><p>
+<b>Executing dll/dynamic modules output command:</b>
+</p><div class="indent"><pre>adb shell
+/data/local/tmp/sysMonApp etmTrace --command dll
+</pre></div><p>
+<b>etm Output:</b>
+</p><p>
+This service is used to enable the ETM and trace the text and data memory. Using this user can trace text memory(PC), data memory and both. There are two modes cycle accurate and cycle coarse modes which can be selected while tracing the text and data memory. Cycle accurate mode is selected if user wants to know the number of Q6 cycles consumed for each packet. Cycle coarse mode is selected if user is more interested to know the code flow. Below are the various combinations that user can select if the the &#8212;command is etm.
+</p><p>
+<b>Executing etm output command:</b>
+</p><div class="indent"><pre>adb shell
+/data/local/tmp/sysMonApp etmTrace --command etm
+</pre></div><p>
+etm service argument list:
+</p><table><tr><td><p>
+<b>&lt;Arguments&gt;</b>
+</p></td><td><p>
+<b>Value</b>
+</p></td><td><p>
+<b>Description</b>
+</p></td></tr><tr><td rowspan="10"><p>
+--etmType
+</p></td><td><p>
+Optional (Default:
+</p><p>
+pc_mem)
+</p></td><td><p>
+Trace Text memory and Data Memory.
+</p></td></tr><tr><td><p>
+pc
+</p></td><td><p>
+Trace only Text Memory.
+</p></td></tr><tr><td><p>
+mem
+</p></td><td><p>
+Trace only Data Memory.
+</p></td></tr><tr><td><p>
+pc_mem
+</p></td><td><p>
+Trace Text memory and Data Memory.
+</p></td></tr><tr><td><p>
+cc_pc
+</p></td><td><p>
+Trace only Text Memory with Cycle Coarse Mode.
+</p></td></tr><tr><td><p>
+cc_mem
+</p></td><td><p>
+Trace only Data Memory with Cycle Coarse Mode.
+</p></td></tr><tr><td><p>
+cc_pc_mem
+</p></td><td><p>
+Trace Text and Data memory with Cycle Coarse Mode.
+</p></td></tr><tr><td><p>
+ca_pc
+</p></td><td><p>
+Trace only Text Memory with Cycle Accurate Mode.
+</p></td></tr><tr><td><p>
+ca_mem
+</p></td><td><p>
+Trace only Data Memory with Cycle Accurate Mode.
+</p></td></tr><tr><td><p>
+ca_pc_mem
+</p></td><td><p>
+Trace Text and Data memory with Cycle Accurate Mode.
+</p></td></tr></table><div class="indent"><pre>adb shell
+/data/local/tmp/sysMonApp etmTrace --command etm --etmType pc
+/data/local/tmp/sysMonApp etmTrace --command etm --etmType ca_pc_mem
+</pre></div><h3>
+<a name="NPU%20Profiler%20service"></a><b>NPU Profiler service</b>
+</h3><p>
+This service can be used to profile services running on NPU to gather information like the clocks voted for, DDR read and write BW, NPU Activity Stats like NPU active time, Measured and max inferences per second, number of layesr and bus bandwidth metrics. These profiling metrics useful in measuring performance, debugging performance related issues and in identifying possible optimizations.
+</p><p>
+Cmd to execute profiler service:
+</p><div class="indent"><pre>adb shell 
+/data/local/tmp/sysMonApp profiler --q6 npu
+</pre></div><p>
+npu profiler service argument list:
+</p><table><tr><td><p>
+<b>&lt;Arguments&gt;</b>
+</p></td><td><p>
+<b>Value</b>
+</p></td><td><p>
+<b>Description</b>
+</p></td></tr><tr><td><p>
+--cdsp
+</p></td><td><div class="indent"><p>
+1
+</p></div></td><td><p>
+Profiles the CDSP also in parallel. If the user executes testcase in CDSP and NPU, one can profile CDSP in parallel with NPU providing this option.
+</p></td></tr></table><p>
+<b>npu Profiler output files:</b>
+</p><p>
+sysMonApp npu profiler stores raw profiling data, .bin files at <code>/sdcard/</code> or '/data/'
+</p><div class="indent"><p>
+sysmon_npu.bin file is generated when NPU alone is profiled.
+</p><p>
+sysmon_cdsp_npu.bin file is generated when NPU and CDSP are profiled.
+</p></div><p>
+<b>Parsing bin files:</b>
+</p><p>
+NPU profiler bin files can be parsed using the parser. This parser is placed at &lt;SDK_Version&gt;/ tools/utils/sysmon/parser_win_v2/HTMLParser(Windows variant) and &lt;SDK_Version&gt;/tools/utils/ sysmon/parser_linux_v2/HTMLParser(Linux variant). The profiler report is generated in an HTML file.
+</p><div class="indent"><p>
+sysmon_parser.exe &lt;input_file&gt; - This will generatw the HTML file and postprocessed csv file
+</p><div class="indent"><p>
+in a folder, with data and time as name of the folder.
+</p></div><p>
+sysmon_parser.exe &lt;input_file&gt; &#8212;outdir &lt;folder_name&gt; - This will generatw the HTML file
+</p><div class="indent"><p>
+and postprocessed csv file in folder provider by user.
+</p></div></div><p>
+<b>Results:</b>
+</p><p>
+Summary sheet:
+</p><div class="indent"><left><img src="images/NpuSummary.png"></left></div><p>
+Graphical Representation :
+</p><div class="indent"><left><img src="images/NPUGraph.png"></left></div><h3>
+<a name="DSP%20Power%20Stats%20service"></a><b>DSP Power Stats service</b>
+</h3><p>
+This service provides active time information for every core clock level of DSP from device boot up time along with Low Power Island mode and power collapse mode time information. This feature is supported on ADSP, CDSP and SDSP. There is reset option also in this feature by which user can clear the stats collected so far and fresh logging will start.
+</p><p>
+<b>Executing DSP Power Stats service:</b>
+</p><p>
+DSP Power Stats service can be executed using below cmd:
+</p><div class="indent"><pre>adb shell /data/local/tmp/sysMonApp getPowerStats --q6 adsp
+</pre><left><img src="images/adsp_PowerStats.PNG"></left></div><p>
+To clear the stats collected so far and start fresh logging, below cmd can be used:
+</p><div class="indent"><pre>adb shell /data/local/tmp/sysMonApp getPowerStats --clear 1 --q6 adsp
+</pre><left><img src="images/adsp_clear_PowerStats.PNG"></left></div><p>
+DSP Power Stats service argument list:
+</p><table><tr><td><p>
+<b>&lt;Arguments&gt;</b>
+</p></td><td><p>
+<b>Property</b>
+</p></td><td><p>
+<b>Value</b>
+</p></td><td><p>
+<b>Description</b>
+</p></td></tr><tr><td rowspan="3"><p>
+--q6
+</p></td><td rowspan="3"><p>
+Optional
+</p><p>
+(default:ADSP)
+</p></td><td><div class="indent"><p>
+ADSP
+</p></div></td><td><div class="indent"><p>
+Execute the service in ADSP processor
+</p></div></td></tr><tr><td><div class="indent"><p>
+CDSP
+</p></div></td><td><div class="indent"><p>
+Execute the service in CDSP processor
+</p></div></td></tr><tr><td><div class="indent"><p>
+SDSP
+</p></div></td><td><div class="indent"><p>
+Execute the service in SDSP processor
+</p></div></td></tr><tr><td><p>
+--clear
+</p></td><td><p>
+Optional
+</p><p>
+(default:0)
+</p></td><td><div class="indent"><p>
+1
+</p></div></td><td><div class="indent"><p>
+Clear the stats collected so far and start fresh logging
+</p></div></td></tr></table><p>
+<b>Example DSP Power Stats service commands:</b>
+</p><p>
+Running the sysMonApp getPowerStats service on CDSP processor:
+</p><div class="indent"><pre>adb shell /data/local/tmp/sysMonApp getPowerStats --q6 cdsp
+</pre><left><img src="images/cdsp_PowerStats.PNG"></left></div><p>
+Running the sysMonApp getPowerStats service on SDSP processor:
+</p><div class="indent"><pre>adb shell /data/local/tmp/sysMonApp getPowerStats --q6 sdsp
+</pre><left><img src="images/sdsp_PowerStats.PNG"></left></div><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

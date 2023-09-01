@@ -1,0 +1,923 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><title>Building APK using Android SDK</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="images/sidebar_top.jpg"></top><script src="scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, false)"><input id="searchButton" onclick="postFunction(false)" type="button" value="Search"></form><p>
+<a href="index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<p>
+<a href="sitemap.html">Sitemap</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="Audio/Applications.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="Voice/Applications.html">Voice</a>
+</p><p>
+<a href="Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="Audio/Examples.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="Examples_Common.html">Common</a>
+</p><p>
+<a href="Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="Tools_Signing.html">Signing</a>
+</p><p>
+<a href="Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="FAQ_Common.html">Common</a>
+</p><p>
+<a href="FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="Support_Contact.html">Contact</a>
+</p><center><img src="images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h1>
+<a name="Building%20APK%20using%20Android%20SDK"></a>Building APK using Android SDK
+</h1><div class="toc"><div class="tocLevel"><a href="#Overview">Overview</a><div class="tocLevel"><a href="#Install%20APK">Install APK</a></div><div class="tocLevel"><a href="#Compile%20DSP%20Shared%20Object">Compile DSP Shared Object</a></div></div><div class="tocLevel"><a href="#Customize%20the%20app">Customize the app</a><div class="tocLevel"><a href="#Step%201%20-%20Download%20Android%20SDK">Step 1 - Download Android SDK</a></div><div class="tocLevel"><a href="#Step%202%20-%20Create%20a%20new%20Android%20project">Step 2 - Create a new Android project</a></div><div class="tocLevel"><a href="#Step%203%20-%20Include%20IDL">Step 3 - Include IDL</a></div><div class="tocLevel"><a href="#Step%204:%20Changes%20to%20the%20existing%20files">Step 4: Changes to the existing files</a></div><div class="tocLevel"><a href="#Step%205:%20Changes%20to%20the%20build%20file">Step 5: Changes to the build file</a></div><div class="tocLevel"><a href="#Step%206:%20Changes%20to%20the%20Make%20file">Step 6: Changes to the Make file</a></div></div></div><h2>
+<a name="Overview"></a>Overview
+</h2><p>
+This chapter will guide you to use an android app to link c++ libraries dynamically. In Android P due to treble limitations, the binaries present in /vendor do not have access to the libc++_shared.so library located in /system. Since it is not supported to link libc++.so dynamically using android NDK on android-P builds, it is required to create an APK to use basic C++ in android application layer.
+</p><h3>
+<a name="Install%20APK"></a>Install APK
+</h3><p>
+Refer to the source code of the calculator app from <code>&lt;HEXAGON_SDK_ROOT&gt;/examples/common/calculator_c++_app</code>. To run the apk on your device, install the apk and push the hexagon shared object onto your device. The prebuilt APK is not supported on Android Q devices currently.
+</p><pre>adb install calculator_c++_app.apk 
+</pre><h3>
+<a name="Compile%20DSP%20Shared%20Object"></a>Compile DSP Shared Object
+</h3><p>
+On the Hexagon SDK side, use the <a href="calculator_android.html#Building">documentation</a> to compile <code>libcalculator_skel.so</code>.
+</p><pre>cd &lt;calculator_c++_app folder&gt;
+make tree V=&lt;build_variant&gt;
+</pre><p>
+Sign the compiled shared object using elfsigner. The signed shared obejct can be retrieved from <code>&lt;HEXAGON_SDK_ROOT&gt;\tools\elfsigner\output</code>.
+</p><pre>cd &lt;HEXAGON_SDK_ROOT&gt;\tools\elfsigner
+python elfsigner.py -i &lt;Location_of_compiled_shared_object&gt;
+</pre><p>
+When the signed shared object is ready, push it to the android device in the location <code>/data/nativetest(64)</code> depending on if the shared object is 32 bit or 64 bit. This location is set using <code>ADSP_LIBRARY_PATH</code> in the java activity <code>MainCalculator</code>. Use the following command to push it to the device:
+</p><pre>adb root
+adb remount
+adb push &lt;Location_of_signed_shared_object&gt; /data/nativetest(64)
+</pre><h2>
+<a name="Customize%20the%20app"></a>Customize the app
+</h2><p>
+To offload to Hexagon using Android SDK, follow the steps mentioned below to create and customize an APK using Android SDK:
+</p><h3>
+<a name="Step%201%20-%20Download%20Android%20SDK"></a>Step 1 - Download Android SDK
+</h3><p>
+You can use this <a href="https://developer.android.com/studio/">link</a> to download.
+</p><h3>
+<a name="Step%202%20-%20Create%20a%20new%20Android%20project"></a>Step 2 - Create a new Android project
+</h3><p>
+Create a new Android project with C/C++ compatibility. You can refer to the steps given in the <a href="https://developer.android.com/training/basics/firstapp/creating-project">link</a> for more information.
+</p><ul type="circle">
+<li>
+<p>
+Create Android Project tab:
+</p><ul class="indent" type="circle">
+<li>
+<p>
+Write Application name as &lt;calculator_c++_app&gt;.
+</p>
+</li><li>
+<p>
+Write Company domain as &lt;qualcomm.example.com&gt;
+</p>
+</li><li>
+<p>
+Edit Package name as &lt;com.example.qualcomm.calculator&gt;
+</p>
+</li><li>
+<p>
+Choose &#8220;Include C++ Support&#8221; in Create Android Project tab. This is required to enable native development which will enable the application interface to make a call to stub and offload to hexagon.
+</p>
+</li><li>
+<p>
+Click Next.
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Target Android Devices tab:
+</p><ul class="indent" type="circle">
+<li>
+<p>
+Click Next.
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Add an Activity to Mobile tab:
+</p><ul class="indent" type="circle">
+<li>
+<p>
+Choose Empty Activity.
+</p>
+</li><li>
+<p>
+Click Next.
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Configure Activity tab:
+</p><ul class="indent" type="circle">
+<li>
+<p>
+Write Activity Name as &lt;MainCalculator&gt;.
+</p>
+</li><li>
+<p>
+Click Next.
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Customize C++ Support tab:
+</p><ul class="indent" type="circle">
+<li>
+<p>
+Click Finish.
+</p>
+</li>
+</ul>
+</li>
+</ul><p>
+Please note that if you are facing gradle sync issues after building a new app, use the documentation provided in the <a href="https://developer.android.com/studio/intro/update">link</a> to update your IDE and SDK tools.
+</p><h3>
+<a name="Step%203%20-%20Include%20IDL"></a>Step 3 - Include IDL
+</h3><p>
+In the directory calculator_c++_app/app/, make a new directory called <code>inc</code> to add the IDL file &lt;calculator.idl&gt;.
+</p><h3>
+<a name="Step%204:%20Changes%20to%20the%20existing%20files"></a>Step 4: Changes to the existing files
+</h3><ul type="circle">
+<li>
+<p>
+Make changes to the activity file <code>MainCalculator</code> in <code>app/src/main/java</code>. This is the main activity file of the app which should call the functions <code>init</code> and <code>sum</code> in <code>calculator-jni.cpp</code>.
+</p>
+</li><li>
+<p>
+Create a new blank activity <code>DisplayResult</code> in <code>app/src/main/java</code> to display the result.
+</p>
+</li><li>
+<p>
+In the directory <code>app/src/main/res/layout</code>, make changes to the layout files <code>activity_calculator.xml</code> and <code>activity_display_result.xml</code>. Next, make changes to <code>strings.xml</code> in the directory <code>app/src/main/res/values</code> similar to the files shared in the example.
+</p>
+</li><li>
+<p>
+Rename the file <code>native-lib.cpp</code> to <code>calculator-jni.cpp</code> and modify it according to the same file present in <code>app/src/main/cpp</code>. This jni file contains the definitions of the functions <code>init</code> and <code>sum</code>, which are used to initialize the <code>ADSP_LIBRARY_PATH</code> environment variable and make a call to the <code>calculator_sum</code> function in stub file, respectively.
+</p>
+</li>
+</ul><p>
+Note that the variable <code>ADSP_LIBRARY_PATH</code> is needed to set the location of DSP shared object. It is required to push the shared object to this location for the app to work. For Android Q onwards, push the shared object to <code>/data/nativetest(64)</code> and not <code>/data/app</code>.
+</p><h3>
+<a name="Step%205:%20Changes%20to%20the%20build%20file"></a>Step 5: Changes to the build file
+</h3><p>
+Make the following changes to the build file Build.gradle:
+</p><ul type="circle">
+<li>
+<p>
+Add the following to dynamically link libc++_shared.so to the app:
+</p>
+</li>
+</ul><pre>externalNativeBuild {
+        cmake {
+                cppFlags ""
+                arguments "-DANDROID_STL=c++_shared"
+        }
+}
+</pre><ul type="circle">
+<li>
+<p>
+Since different Android handsets use different CPUs, it is required to specify an Android Binary Interface(ABI) for each CPU architecture an application works with. To specify the supported ABI, use the following:
+</p>
+</li>
+</ul><pre>ndk {
+        moduleName "calculator"
+        abiFilter "armeabi-v7a"
+        ldLibs "log"
+}
+</pre><h3>
+<a name="Step%206:%20Changes%20to%20the%20Make%20file"></a>Step 6: Changes to the Make file
+</h3><p>
+Make the following changes to the make file <code>CMakeLists.txt</code>.
+</p><ul type="circle">
+<li>
+<p>
+Include helper file <code>hexagon_helper.cmake</code>:
+</p>
+</li>
+</ul><p>
+Use the file <code>hexagon_helper.cmake</code> as helper to CMakeLists.txt. It contains the definition of functions <code>buildIDL</code> and <code>prepare_hexagon_helper_libraries</code>.
+</p><pre>include(${CMAKE_CURRENT_SOURCE_DIR}/hexagon_helper.cmake)
+</pre><p>
+The <code>HEXAGON_SDK_ROOT</code> and Build variant are also set in <code>hexagon_helper.cmake</code>. Edit this file if the <code>HEXAGON_SDK_ROOT</code> is not the same.
+</p><pre>set(HEXAGON_SDK_ROOT "C:/Qualcomm/Hexagon_SDK/3.4.1")
+set(V "android_Debug")
+</pre><ul type="circle">
+<li>
+<p>
+Build IDL:
+</p>
+</li>
+</ul><p>
+This function will set up a custom_target to build &lt;idlFile&gt; using qaic IDL compiler. For foo.idl, it wll generate foo.h, foo_stub.c and foo_skel.c into ${CMAKE_CURRENT_BINARY_DIR} diretory. This function will also add the custom_target created as the dependency of &lt;currentTarget&gt;
+</p><pre>buildIDL(inc/calculator.idl calculator)
+</pre><ul type="circle">
+<li>
+<p>
+Build and link static library rpcmem.a and dynamic library libcdsprpc.so:
+</p>
+</li>
+</ul><pre style="font-size: 75%">prepare_hexagon_helper_libraries(hexagonTargets_1 hexagonIncs_1 hexagonLibs_1 rpcmem.a cdsprpc)
+include_directories(${hexagonIncs_1} ${incs})
+add_dependencies(calculator ${hexagonTargets_1})
+target_link_libraries(calculator ${hexagonLibs_1})
+</pre><ul type="circle">
+<li>
+<p>
+Add library libcalculator.so:
+</p>
+</li>
+</ul><pre style="font-size: 87%">add_library(  calculator
+                      SHARED
+                      ${CMAKE_CURRENT_SOURCE_DIR}/src/main/cpp/calculator-jni.cpp
+                      ${CMAKE_CURRENT_BINARY_DIR}/calculator_stub.c
+                      ${CMAKE_CURRENT_BINARY_DIR}/calculator.h
+                      )
+</pre><ul type="circle">
+<li>
+<p>
+Specify the target link libraries:
+</p>
+</li>
+</ul><p>
+This is used to link NDK library <code>log-lib</code> with the library <code>libcalculator.so</code>.
+</p><pre>find_library(log-lib log)
+target_link_libraries(calculator ${log-lib})
+</pre><p>
+This completes the app development on the Android side. Now, there is a need to build <code>libcalculator_skel.so</code> using Hexagon SDK and push it to the Android device for the app to work. Once the DSP shared object has been pushed to the desired location, build your application in Android SDK and install the app on the device. The APK is ready to use.
+</p><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

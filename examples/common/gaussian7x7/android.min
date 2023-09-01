@@ -1,0 +1,30 @@
+ifeq ($(CDSP_FLAG), 1) 
+	LIB_DSPRPC = libcdsprpc
+else ifeq ($(MDSP_FLAG), 1) 
+	LIB_DSPRPC = libmdsprpc
+else ifeq ($(SLPI_FLAG), 1) 
+	LIB_DSPRPC = libsdsprpc
+else
+	LIB_DSPRPC = libadsprpc
+endif
+
+$(info ************  LIB=$(LIB_DSPRPC) ************) 
+
+# stand-alone gaussian7x7 executable
+BUILD_EXES+=gaussian7x7
+gaussian7x7_QAICIDLS += inc/gaussian7x7 \
+                        $(DSPCV_DIR)/inc/dspCV
+gaussian7x7_C_SRCS += src/gaussian7x7 \
+                       $V/gaussian7x7_stub \
+                       $V/dspCV_stub
+gaussian7x7_DLLS += $(LIB_DSPRPC)
+gaussian7x7_LIBS += rpcmem
+gaussian7x7_LD_FLAGS += -llog
+gaussian7x7_DEFINES += VERIFY_PRINT_ERROR
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

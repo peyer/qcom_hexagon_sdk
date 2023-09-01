@@ -1,0 +1,17 @@
+/**=============================================================================
+Copyright (c) 2017 QUALCOMM Technologies Incorporated.
+All Rights Reserved Qualcomm Proprietary
+=============================================================================**/
+#ifndef QMATH_SAMPLE_IDL
+#define QMATH_SAMPLE_IDL
+
+#include "AEEStdDef.idl"
+#include "remote.idl"
+
+interface qmath_sample : remote_handle64{
+
+AEEResult quadratic(
+	);
+};
+
+#endif //QMATH_SAMPLE_IDL

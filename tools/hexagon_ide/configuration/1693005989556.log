@@ -1,0 +1,10 @@
+!SESSION 2023-08-26 07:26:29.480 -----------------------------------------------
+eclipse.buildId=4.8.0.I20180611-0500
+java.version=1.8.0_51
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.cpp.product -application org.eclipse.equinox.p2.director -uninstallIU com.qualcomm.feature.ide.hexagon.feature.group
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.cpp.product -application org.eclipse.equinox.p2.director -uninstallIU com.qualcomm.feature.ide.hexagon.feature.group
+
+!ENTRY org.eclipse.equinox.p2.director.app 4 0 2023-08-26 07:26:30.825
+!MESSAGE The installable unit com.qualcomm.feature.ide.hexagon.feature.group has not been found.

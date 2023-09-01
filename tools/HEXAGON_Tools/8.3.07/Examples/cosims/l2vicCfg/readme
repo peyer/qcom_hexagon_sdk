@@ -1,0 +1,40 @@
+Beginning with HexagonV4, multiple SIRC's has been replaced with a single
+Level-2 Vector Interrupt Controller (L2VIC).
+
+The L2VIC contains up to 32 "slices" of 32 interrupts each, creating a pool
+of up to 1024 interrupt numbers (0 to 1023).
+
+In order to use the L2VIC cosim, a cosim configuration file must be created
+which specifies L2VIC parameters for the platform for which the simulation
+is to be peformed.
+
+Here is an example of a cosim config file that specifies an L2VIC:
+
+  Windows:
+  --------
+    l2vic.dll 4 0x7b010000
+
+  Linux:
+  ------
+    l2vic.so 4 0x7b010000
+
+  Note that an optional explicit path may be added to the front of the shared
+  object.
+
+
+
+L2VIC Cosim Syntax:
+-------------------
+  Linux:   [path/]l2vic.so  <slices> <l2vic_base_addr>
+  Windows: [path\]l2vic.dll <slices> <l2vic_base_addr>
+
+Required Parameters:
+  <slices>          - Specifies the number of 'slices' supported by the L2VIC
+                      cosim.
+  <l2vic_base_addr> - Specifies the base address of the L2VIC registers.
+
+
+
+Usage:
+------
+>hexagon-sim --cosim_file l2vic.cfg <app.elf>

@@ -1,0 +1,30 @@
+BUILD_TARGETS=$(BUILD_DLLS) $(BUILD_EXES) $(BUILD_QEXES) $(BUILD_LIBS)
+
+#todo depreciate _DLLIDLS
+DLLIDLS_OF=$($(1)_DLLIDLS) $($(1)_QAICIDLS)
+IDLOUTS_OF=$V/$(notdir $(1)).h $V/$(notdir $(1))_stub.c $V/$(notdir $(1))_skel.c
+DLLIDLOUTS_OF=$(call uniq,$(foreach idl,$(DLLIDLS_OF),$(call IDLOUTS_OF,$(idl))))
+DLLIDLHEADERS_OF=$(call uniq,$(foreach idl,$(DLLIDLS_OF),$V/$(notdir $(idl)).h))
+
+SRCS_OF=$(call CXX_SRCS_OF,$1) $(call C_SRCS_OF,$1) $(call ASM_SRCS_OF,$1)
+
+$(foreach tt,$(BUILD_TARGETS),$(call DEPENDS,$(call SRCS_OF,$(tt)),$(call DLLIDLHEADERS_OF,$(tt))))
+
+DLLIDLS=$(call uniq,$(foreach tt,$(BUILD_TARGETS),$(call DLLIDLS_OF,$(tt))))
+$(foreach idl,$(DLLIDLS),$(call DEPENDS,$(call IDLOUTS_OF,$(idl)),$(idl).idl $Q))
+
+OLDDLLIDLS_OF=$($(1)_DLLIDLS)
+OLDDLLIDLS=$(strip $(call uniq,$(foreach tt,$(BUILD_TARGETS),$(call OLDDLLIDLS_OF,$(tt)))))
+
+IDLSKELDEP_OF=$(call DEPENDS,$V/$(notdir $(1))_stub.c,$V/$(notdir $(1)).h)
+IDLSTUBDEP_OF=$(call DEPENDS,$V/$(notdir $(1))_skel.c,$V/$(notdir $(1))_stub.c)
+$(foreach idl,$(DLLIDLS),$(call IDLSTUBDEP_OF,$(idl)))
+$(foreach idl,$(DLLIDLS),$(call IDLSKELDEP_OF,$(idl)))
+
+BUILD_IDLHEADERS=$(call uniq,$(foreach idl,$(DLLIDLS),$V/$(notdir $(idl)).h))
+
+$(BUILD_IDLHEADERS):
+	@$(call mkdir_p,$(@D))
+	$(if $(OLDDLLIDLS),@$(call echo,_:0: warning: _DLLIDLS is deprecated - please use _QAICIDLS instead for $(OLDDLLIDLS)))
+	$(call exec,$Q) $(QAIC_FLAGS)  -mdll -o $(@D) $(call IDL_INCDIRS_OF,$(@)) $<
+

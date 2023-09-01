@@ -1,0 +1,75 @@
+######## Configuration flags ########
+V_ARCH_EXTN=CPP
+TARGET_DIR = $(HEXAGON_LIB_DIR)/$(V_ARCH)/G0/pic
+INCDIRS+=inc
+
+CXX_FLAGS += -fexceptions
+CXX_FLAGS += -std=c++14
+
+######## Build Libraries ########
+BUILD_LIBS += libcalculator_plus_skel
+ifeq (1,$(V_dynamic))
+  BUILD_DLLS += libcalculator_plus_skel
+  BUILD_DLLS += calculator_q
+endif
+
+######## Compile calculator skel ########
+libcalculator_plus_skel_CXX_FLAGS += -fexceptions
+libcalculator_plus_skel_QAICIDLS = inc/calculator
+libcalculator_plus_skel_C_SRCS += $V/calculator_plus_skel
+libcalculator_plus_skel_CPP_SRCS += src/calculator_dsp
+libcalculator_plus_skel_CPP_SRCS += src/thread_local
+#Link c++ libraries into shared object
+ifeq (1, $(V_dynamic))
+  #Dynamic linking of libc++
+  libcalculator_plus_skel_DLLS += $(TARGET_DIR)/libc++
+  libcalculator_plus_skel_DLLS += $(TARGET_DIR)/libc++abi
+else
+  #Statically linking of libc++
+#  libcalculator_plus_skel_LIBS += $(TARGET_DIR)/libc++.a
+#  libcalculator_plus_skel_LIBS += $(TARGET_DIR)/libc++abi.a
+endif 
+
+######## Compile Calculator test ########
+# Simulator testing recommendation for C++14 projects
+# v65 or later: static library testing is recommended
+# prior to v65: shared object library testing recommended
+
+BUILD_QEXES += calculator_q
+calculator_q_OSTYPE = QURT
+calculator_q_QAICIDLS = inc/calculator
+calculator_q_C_SRCS = src/calculator_test_main src/calculator_test
+calculator_q_DLLS += rpcmem 
+ifneq ($(V_ARCH),v60)
+ifneq ($(V_ARCH),v62)
+   DEFINES += CALCULATOR_STATICLIB_TEST
+   calculator_q_CPP_SRCS = src/calculator_dsp src/thread_local
+   # Link the c++ libs statically into each .so
+   # calculator_q_LIBS += $(TARGET_DIR)/libc++
+   # calculator_q_LIBS += $(TARGET_DIR)/libc++abi
+   # calculator_q_LIBS += $(TARGET_DIR)/libc_eh
+endif
+endif
+# Link against the c++ libs dynamically
+ifeq (1, $(V_dynamic))
+  calculator_q_DLLS += $(TARGET_DIR)/libc++
+  calculator_q_DLLS += $(TARGET_DIR)/libc++abi
+endif
+
+$(V)/libcalculator_plus_skel.so: $(V)/libc++.so.1 $(V)/libc++abi.so.1
+
+$(V)/libc++.so.1:
+	$(call cp_af,$(TARGET_DIR)/libc++.so.1 $(V))
+	$(call cp_af,$(TARGET_DIR)/libc++.so.1.0 $(V))
+
+$(V)/libc++abi.so.1:
+	$(call cp_af,$(TARGET_DIR)/libc++abi.so.1 $(V))
+	$(call cp_af,$(TARGET_DIR)/libc++abi.so.1.0 $(V))
+
+## copy final build products to the ship directory
+BUILD_COPIES = \
+   calculator.input \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

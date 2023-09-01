@@ -1,0 +1,53 @@
+CC_FLAGS += -DENABLE_COMMAND_LINE_PARAMS
+
+INCDIRS += \
+   			inc \
+   			src \
+   			$(HEXAGON_SDK_ROOT)/incs/audio \
+			$(HEXAGON_SDK_ROOT)/incs/a1std
+
+LIBDIRS +=  $(HEXAGON_SDK_ROOT)/libs/common/a1std/ship/$(V) \
+    		$(HEXAGON_SDK_ROOT)/libs/audio/voice_imc_utils/ship/$(V) \
+    		$(HEXAGON_SDK_ROOT)/test/audio/test_capi_v2_voice/$(V) \
+
+
+# only build the shared object if dynamic option specified in V
+ifeq (1,$(V_dynamic))
+BUILD_DLLS = capi_v2_gain_32ch
+endif
+
+# module lib
+BUILD_LIBS = capi_v2_gain_32ch
+capi_v2_gain_32ch_C_SRCS += src/capi_v2_gain_32ch
+capi_v2_gain_32ch_LIBS += capi_v2_utils_props
+
+# unit test
+BUILD_EXES += capi_v2_gain_32ch_test
+capi_v2_gain_32ch_test_C_SRCS = 	src/capi_v2_gain_32ch_test
+capi_v2_gain_32ch_test_LIBS = 	a1std                   \
+								rtld      				\
+								atomic					\
+								test_main 				\
+								test_profile			\
+								test_util 				\
+								test_capi_v2_voice		\
+								voice_imc_utils			\
+								capi_v2_utils_props 	\
+								capi_v2_gain_32ch 			
+							 		
+ifeq (1,$(V_toolv83))
+capi_v2_gain_32ch_test_LIBS += $(HEXAGON_LIB_DIR)/$(V_ARCH)/G0/libstdc++.a
+endif							 
+
+# if building shared object must also list it as a dependency to the qtest
+ifeq (1,$(V_dynamic))
+$V/capi_v2_gain_32ch_test.ok: $V/capi_v2_gain_32ch_test $V/capi_v2_gain_32ch$(DLL_EXT)
+endif
+
+# specify final build products, in this case the module's header file and
+# its associated libraries (and shared objects)
+BUILD_COPIES = \
+   inc/capi_v2_gain_32ch.h \
+   $(DLLS) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

@@ -1,0 +1,30 @@
+ifeq ($(CDSP_FLAG), 1) 
+	LIB_DSPRPC = libcdsprpc
+else ifeq ($(MDSP_FLAG), 1) 
+	LIB_DSPRPC = libmdsprpc
+else ifeq ($(SLPI_FLAG), 1) 
+	LIB_DSPRPC = libsdsprpc
+else
+	LIB_DSPRPC = libadsprpc
+endif
+
+$(info ************  LIB=$(LIB_DSPRPC) ************) 
+
+# stand-alone epsilon_v60 executable
+BUILD_EXES+=epsilon_v60
+epsilon_v60_QAICIDLS += inc/epsilon_v60 \
+                        $(DSPCV_DIR)/inc/dspCV
+epsilon_v60_C_SRCS += src/epsilon_v60 \
+                       $V/epsilon_v60_stub \
+                       $V/dspCV_stub
+epsilon_v60_DLLS += $(LIB_DSPRPC)
+epsilon_v60_LIBS += rpcmem
+epsilon_v60_LD_FLAGS += -llog
+epsilon_v60_DEFINES += VERIFY_PRINT_ERROR
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

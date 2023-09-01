@@ -1,0 +1,919 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><style type="text/css">
+.html2d { position: relative; }
+.html2d div { position: absolute; border-width: 0; border-style: solid; }
+.html2d div div { position: absolute; border-width: 0; border-style: solid; }
+
+</style><title>Voice overview</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="../images/sidebar_top.jpg"></top><script src="../scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, true)"><input id="searchButton" onclick="postFunction(true)" type="button" value="Search"></form><p>
+<a href="../index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="../feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="../hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="../images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="../hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="../images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="../images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="../Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="../Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="../Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="../Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="../Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="../Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="../HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="../Audio/Applications.html">Audio</a>
+</p><p>
+<a href="../Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="../Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="../FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="../Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="../Voice/Applications.html">Voice</a>
+</p><p>
+<a href="../Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="../APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="../APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="../APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="../APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="../Audio/Examples.html">Audio</a>
+</p><p>
+<a href="../Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="../Examples_Common.html">Common</a>
+</p><p>
+<a href="../Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="../Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="../Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="../Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="../CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="../Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="../Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="../Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="../Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="../Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="../Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="../Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="../Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="../Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="../Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="../Tools_Signing.html">Signing</a>
+</p><p>
+<a href="../Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="../Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="../FAQ_Common.html">Common</a>
+</p><p>
+<a href="../FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="../FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="../FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="../Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="../Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="../Support_Contact.html">Contact</a>
+</p><center><img src="../images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h1>
+<a name="Voice%20overview"></a>Voice overview
+</h1><div class="toc"><div class="tocLevel"><a href="#Overview">Overview</a></div><div class="tocLevel"><a href="#Goals">Goals</a></div><div class="tocLevel"><a href="#Elite%20voice%20framework">Elite voice framework</a><div class="tocLevel"><a href="#_Overview">Overview</a></div><div class="tocLevel"><a href="#Pre/Post%20processing%20topologies">Pre/Post processing topologies</a></div><div class="tocLevel"><a href="#Voice%20customization">Voice customization</a><div class="tocLevel"><a href="#__Overview">Overview</a></div><div class="tocLevel"><a href="#Rx%20reference%20data%20to%20Tx%20path">Rx reference data to Tx path</a></div></div><div class="tocLevel"><a href="#Common%20Audio%20Processor%20Interface%20v2%20(CAPI%20v2)">Common Audio Processor Interface v2 (CAPI v2)</a><div class="tocLevel"><a href="#Introduction">Introduction</a></div><div class="tocLevel"><a href="#Creating%20and%20customizing">Creating and customizing</a></div></div></div><div class="tocLevel"><a href="#Moving%20ahead">Moving ahead</a><div class="tocLevel"><a href="#Creation%20of%20new%20voice%20modules">Creation of new voice modules</a></div><div class="tocLevel"><a href="#Unit%20testing">Unit testing</a></div><div class="tocLevel"><a href="#On%20target%20testing%20of%20voice%20modules">On target testing of voice modules</a></div></div></div><h2>
+<a name="Overview"></a>Overview
+</h2><p>
+Qualcomm's Hexagon SDK allows customers to customize and extend the usage of the Hexagon aDSP.
+</p><p>
+Voice processing path is customizable now with algorithms wrapped in CAPI_V2 interface. It allows the customers to define a topology with dynamic modules for Tx and Rx processing chain.
+</p><p>
+<a href="VoiceExamples.html">Voice examples</a> are provided with walkthrough steps. Follow <a href="capi_v2_gain_walkthrough.html">capi_v2_gain walkthrough</a> to try an example.
+</p><h2>
+<a name="Goals"></a>Goals
+</h2><ul type="circle">
+<li>
+<p>
+Enable easy creation of new voice processing modules
+</p>
+</li><li>
+<p>
+Provide a unit test framework that allows off-target testing of audio modules
+</p>
+</li><li>
+<p>
+On Target testing of dynamic library.
+</p>
+</li>
+</ul><h2>
+<a name="Elite%20voice%20framework"></a>Elite voice framework
+</h2><p>
+This SDK enables the customization of Voice Processing (VPM Tx/Rx) path of the Elite Voice Framework.
+</p><h3>
+<a name="_Overview"></a>Overview
+</h3><p>
+The Elite Voice Framework provides I/O paths to and from audio hardware ports. The following diagram illustrates the structure of voice paths
+</p><div class=diagram>
+<div class="html2d art" style="width:640px;height:281px;line-height:15.61px;font-size:12.17px;white-space:nowrap">
+<div class="rect round" style="border-width:3px;left:80px;top:6px;right:322px;bottom:6px"></div>
+<div class="rect round" style="border-width:3px;left:564px;top:162px;right:2px;bottom:84px"></div>
+<div class="rect round" style="border-width:3px;left:88px;top:162px;right:330px;bottom:38px"></div>
+<div class="rect round" style="border-width:3px;left:2px;top:6px;right:580px;bottom:6px"></div>
+<div class="rect round" style="border-width:3px;left:112px;top:194px;right:354px;bottom:53px"></div>
+<div class="rect round" style="border-width:3px;left:338px;top:6px;right:96px;bottom:6px"></div>
+<div class="rect round" style="border-width:3px;left:447px;top:162px;right:119px;bottom:84px"></div>
+<div class="rect round" style="border-width:3px;left:447px;top:225px;right:119px;bottom:22px"></div>
+<div class="rect round" style="border-width:3px;left:447px;top:100px;right:119px;bottom:147px"></div>
+<div class="rect round" style="border-width:3px;left:447px;top:38px;right:119px;bottom:209px"></div>
+<div class="rect round" style="border-width:3px;left:361px;top:38px;right:213px;bottom:22px"></div>
+<div class="rect round" style="border-width:3px;left:88px;top:53px;right:330px;bottom:147px"></div>
+<div class="rect round" style="border-width:3px;left:112px;top:84px;right:354px;bottom:162px"></div>
+<div class="rect round" style="border-width:3px;left:564px;top:100px;right:2px;bottom:147px"></div>
+<div style="border-top: 4px solid transparent;border-right-width: 10.5px;border-bottom: 4px solid transparent;left:523px;top:175.5px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:526px;top:179px;right:77px;bottom:100px;line-height:0"></div>
+<div style="border-top: 4px solid transparent;border-left-width: 10.5px;border-bottom: 4px solid transparent;left:551.5px;top:113px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:522px;top:116px;right:81px;bottom:163px;line-height:0"></div>
+<div style="border-top: 4px solid transparent;border-left-width: 10.5px;border-bottom: 4px solid transparent;left:99px;top:97.5px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:61px;top:100px;right:534px;bottom:179px;line-height:0"></div>
+<div style="border-top: 4px solid transparent;border-right-width: 10px;border-bottom: 4px solid transparent;left:289px;top:206.5px;line-height:0"></div>
+<div class=line style="border-left-width:2px;border-top-width:2px;left:393px;top:179px;right:194px;bottom:69px"></div>
+<div class=line style="border-top-width:2px;left:292px;top:210px;right:245px;bottom:69px;line-height:0"></div>
+<div style="border-top: 4px solid transparent;border-left-width: 10.5px;border-bottom: 4px solid transparent;left:434.5px;top:113px;line-height:0"></div>
+<div class=line style="border-right-width:2px;border-top-width:2px;left:288px;top:100px;right:253px;bottom:163px"></div>
+<div class=line style="border-top-width:2px;left:385px;top:116px;right:198px;bottom:163px;line-height:0"></div>
+<div style="border-top: 4px solid transparent;border-right-width: 10.5px;border-bottom: 4px solid transparent;left:62.5px;top:206.5px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:65px;top:210px;right:530px;bottom:69px;line-height:0"></div>
+<div style="text-align:center;left:16px;top:16px;right:593px;bottom:250px">HLOS</div>
+<div style="text-align:center;left:144px;top:16px;right:386px;bottom:250px">Stream Manager</div>
+<div style="text-align:center;left:371px;top:16px;right:129px;bottom:250px">Processing Manager</div>
+<div style="text-align:center;left:375px;top:47px;right:226px;bottom:219px">Mixer</div>
+<div style="text-align:center;left:457px;top:47px;right:129px;bottom:219px">VPM Rx1</div>
+<div style="text-align:center;left:176px;top:62px;right:418px;bottom:203px">Stream</div>
+<div style="left:125px;top:94px;right:390px;bottom:172px">Voice Rx Streams</div>
+<div style="text-align:center;left:457px;top:109px;right:129px;bottom:156px">VPM Rx2</div>
+<div style="text-align:center;left:578px;top:109px;right:16px;bottom:156px">Device</div>
+<div style="text-align:center;left:176px;top:172px;right:418px;bottom:94px">Stream</div>
+<div style="text-align:center;left:457px;top:172px;right:129px;bottom:94px">VPM Tx1</div>
+<div style="text-align:center;left:578px;top:172px;right:16px;bottom:94px">Device</div>
+<div style="left:125px;top:203px;right:390px;bottom:62px">Voice Tx Streams</div>
+<div style="text-align:center;left:457px;top:234px;right:129px;bottom:31px">VPM Tx2</div>
+</div>
+</div>
+<h3>
+<a name="Pre/Post%20processing%20topologies"></a>Pre/Post processing topologies
+</h3><p>
+The Elite framework defines a pre/post topology as an ordered chain of one or more pp modules that are applied to the voice samples in sequential order. Topologies are identified by a numeric ID and are chosen at runtime for each voice path via HLOS initiated APR messages that contain the desired topology ID. Once the stream or device is created the topology cannot be changed.
+</p><p>
+The Elite Framework includes a collection of built-in static topology definitions, static audio/voice modules and extendable with dynamic topologies and modules.
+</p><h3>
+<a name="Voice%20customization"></a>Voice customization
+</h3><h4>
+<a name="__Overview"></a>Overview
+</h4><p>
+Voice framework supports dynamic topologies for Voice Processing Tx and Rx paths. It enables HAP customers to define the voice processing chain with custom algorithms. Steps to define dynamic topology with custom algorithms are explained in detailed at <a href="VoiceExamples.html">voice_examples</a>.
+</p><div class=diagram>
+<div class="html2d art" style="width:624px;height:192px;line-height:16px;font-size:12.48px;white-space:nowrap">
+<div class="rect round" style="border-width:3px;left:3px;top:7px;right:2px;bottom:6px"></div>
+<div class="rect round" style="border-width:3px;left:43px;top:39px;right:58px;bottom:118px"></div>
+<div class="rect round" style="border-width:3px;left:299px;top:119px;right:154px;bottom:38px"></div>
+<div class="rect round" style="border-width:3px;left:83px;top:119px;right:370px;bottom:38px"></div>
+<div style="border-top-width: 10.5px;border-right: 4px solid transparent;border-left: 4px solid transparent;left:288px;top:101.5px;line-height:0"></div>
+<div class=line style="border-left-width:2px;left:291px;top:79px;right:331px;bottom:83px"></div>
+<div style="text-align:center;left:140px;top:48px;right:156px;bottom:128px">Elite Voice Framework (ADSP static image)</div>
+<div style="text-align:center;left:96px;top:128px;right:384px;bottom:48px">capi_v2_module1.so</div>
+<div style="text-align:center;left:264px;top:128px;right:336px;bottom:48px">...</div>
+<div style="text-align:center;left:312px;top:128px;right:168px;bottom:48px">capi_v2_moduleN.so</div>
+</div>
+</div>
+<p>
+Elite framework loads the custom shared objects either at boot time or on demand basis and initializes the dynamic modules at start of a voice call. All modules must be wrapped with CAPI_V2 interface to place in dynamic topologies.
+</p><p>
+HAP customers creates capi_v2_modulesN.so by wrapping algorithms with CAPI_V2 interface and place them in dynamic topologies.
+</p><p>
+ADSP static image already provided the dynamic topologies based on the number of mics. HAP customers can define these topologies only with custom dynamic modules.
+</p><pre>VPM_TX_SINGLE_MIC_DYNAMIC_TOPOLOGY (0x00010F83)
+VPM_TX_DUAL_MIC_DYNAMIC_TOPOLOGY (0x00010F84)
+VPM_TX_QUAD_MIC_DYNAMIC_TOPOLOGY (0x00010F85)
+VPM_RX_DYNAMIC_TOPOLOGY (0x00010F82)
+</pre><h4>
+<a name="Rx%20reference%20data%20to%20Tx%20path"></a>Rx reference data to Tx path
+</h4><p>
+Voice CAPI_V2 modules in Tx path can receive Rx path data for echo/noise cancellation by using a framework extension. Module can raise an event with id CAPI_V2_FRAMEWORK_EXTENSIONS_NEED_FAR_END_DATA(0x000000AA) for reference signal. Refer capi_v2_gain.h file in capi_v2_gain example. Module receives PCM input data at port 0 and reference data in port 1.
+</p><h3>
+<a name="Common%20Audio%20Processor%20Interface%20v2%20(CAPI%20v2)"></a>Common Audio Processor Interface v2 (CAPI v2)
+</h3><h4>
+<a name="Introduction"></a>Introduction
+</h4><p>
+CAPIv2 interface is used in the aDSP framework for the Voice subsystem. For more information about CAPIv2, please refer <a href="../CAPIv2/CAPIv2_Introduction.html">CAPIv2 Introduction</a>
+</p><h4>
+<a name="Creating%20and%20customizing"></a>Creating and customizing
+</h4><p>
+The simplest way to create a new pp module is to copy, rename, and modify capi_v2_passthru or capi_v2_gain. Please follow the instructions <a href="../Examples_GeneralOverview.html#Cloning%20an%20Example">here</a> to clone a project from existing project files
+</p><p>
+The following provides an overview of the process of creating a custom audio pp module.
+</p><ul type="circle">
+<li>
+<p>
+Voice algorithms are wrapped with the CAPI v2.
+</p>
+</li><li>
+<p>
+CAPI v2 modules have unique IDs
+</p><ul type="circle">
+<li>
+<p>
+Create a unique module ID
+</p>
+</li><li>
+<p>
+Create unique get/set parameter IDs.
+</p><pre><span style="color: blue">#define</span> PPID_MODULE 0xFFFFFFF0
+<span style="color: blue">#define</span> PARAM_ID_CTRL1 0x10000001
+<span style="color: blue">#define</span> PARAM_ID_CTRL2 0x10000002
+</pre>
+</li>
+</ul>
+</li><li>
+<p>
+Implement the core signal processing algorithm in the process function
+</p><ul type="circle">
+<li>
+<p>
+Implements the supporting functions to make the module CAPI v2 compliant.
+</p>
+</li>
+</ul>
+</li>
+</ul><div class=diagram>
+<div class="html2d art" style="width:440px;height:256px;line-height:16px;font-size:12.48px;white-space:nowrap">
+<div class="rect round" style="border-width:3px;left:3px;top:7px;right:2px;bottom:6px"></div>
+<div class="rect round" style="border-width:3px;left:43px;top:103px;right:282px;bottom:118px"></div>
+<div class="rect round" style="border-width:3px;left:227px;top:199px;right:42px;bottom:22px"></div>
+<div class="rect round" style="border-width:3px;left:179px;top:55px;right:162px;bottom:166px"></div>
+<div class="rect round" style="border-width:3px;left:43px;top:199px;right:242px;bottom:22px"></div>
+<div class="rect round" style="border-width:3px;left:299px;top:151px;right:42px;bottom:70px"></div>
+<div class="rect round" style="border-width:3px;left:171px;top:151px;right:154px;bottom:70px"></div>
+<div class="rect round" style="border-width:3px;left:171px;top:103px;right:42px;bottom:118px"></div>
+<div class="rect round" style="border-width:3px;left:43px;top:151px;right:282px;bottom:70px"></div>
+<div class=line style="border-top-width:2px;left:3px;top:39px;right:3px;bottom:215px;line-height:0"></div>
+<div style="text-align:center;left:184px;top:16px;right:144px;bottom:224px">CAPI v2 Module</div>
+<div style="text-align:center;left:192px;top:64px;right:176px;bottom:176px">process()</div>
+<div style="left:56px;top:112px;right:336px;bottom:128px">init()</div>
+<div style="left:184px;top:112px;right:72px;bottom:128px">get_static_properties()</div>
+<div style="text-align:center;left:56px;top:160px;right:296px;bottom:80px">get_param()</div>
+<div style="text-align:center;left:184px;top:160px;right:168px;bottom:80px">set_param()</div>
+<div style="left:312px;top:160px;right:88px;bottom:80px">end()</div>
+<div style="text-align:center;left:56px;top:208px;right:256px;bottom:32px">set_properties()</div>
+<div style="left:240px;top:208px;right:72px;bottom:32px">get_properties()</div>
+</div>
+</div>
+<div class="indent"><pre>get_static_properties        Returns the list of <span style="color: blue">static</span> properties by the library to framework.
+init                         Initializes the CAPI v2 and the library.
+process                      Processes an input buffer and generates an output buffer.
+                                 This calls the core signal processing algorithm in the library.
+set_param                    Used to set module calibration parameters.
+get_param                    Used to get module calibration parameters.
+set_properties               Used to set properties of CAPI v2 modules.
+get_properties               Used to get properties of CAPI v2 modules.
+end                          Destroys the CAPI v2 library.
+</pre></div><h2>
+<a name="Moving%20ahead"></a>Moving ahead
+</h2><h3>
+<a name="Creation%20of%20new%20voice%20modules"></a>Creation of new voice modules
+</h3><ul type="circle">
+<li>
+<p>
+See <a href="VoiceExamples.html">Voice examples</a>
+</p>
+</li>
+</ul><h3>
+<a name="Unit%20testing"></a>Unit testing
+</h3><ul type="circle">
+<li>
+<p>
+See <a href="TestingVoiceUnitTests.html">Voice unit testing</a>
+</p>
+</li>
+</ul><h3>
+<a name="On%20target%20testing%20of%20voice%20modules"></a>On target testing of voice modules
+</h3><ul type="circle">
+<li>
+<p>
+See <a href="TestingVoiceOnTarget.html">Voice module target testing</a>
+</p>
+</li>
+</ul><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

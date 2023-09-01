@@ -1,0 +1,203 @@
+#============================================================================
+#  Name:
+#    defines_qnx.min
+#
+#  Assumes:
+#    ANDROID_TOOLS_DIR points to a copy of CodeSourcery ARM gcc OR the directory
+#      containing "arm-non-eabi-gcc" is in your path.
+#
+#  Description:
+#    This file specifies the items necessary to build libraries using the
+#    CodeSourcery gcc toolchain for ARM (EABI-NONE config).  
+#
+# Copyright 2009-2011 by QUALCOMM, Incorporated.  All Rights Reserved.
+#----------------------------------------------------------------------------
+#arm-none-linux-gnueabi-gcc
+
+ifeq (1,$(V_aarch64))
+   QNX_LIB_DIR=$(QNX_TARGET_DIR)/aarch64le/lib
+   QNXQCC_PREFIX=$(QNX_TOOLS_DIR)/usr/bin/
+   CC_PREFIX=$(QNXQCC_PREFIX)#
+
+   CC=$(CC_PREFIX)/qcc -Vgcc_ntoaarch64 -mcpu=cortex-a57 -mtune=cortex-a57 -EL#
+   QNXCC=$(CC_PREFIX)/qcc -Vgcc_ntoaarch64 -mcpu=cortex-a57 -mtune=cortex-a57 -EL# 
+   CXX=$(CC_PREFIX)/ntoaarch64-g++#
+   QNXCXX=$(CC_PREFIX)/ntoaarch64-g++#
+
+   LD=$(CXX)
+   AR=$(CC_PREFIX)/ntoaarch64-ar#
+   AR_FLAGS=-rsc#
+
+   CPP=$(CC_PREFIX)/ntoaarch64-cpp#
+else
+   
+QNX_LIB_DIR=$(QNX_TARGET_DIR)/armle-v7/lib
+   QNXQCC_PREFIX=$(QNX_TOOLS_DIR)/usr/bin/
+   CC_PREFIX=$(QNXQCC_PREFIX)#
+
+   CC=$(CC_PREFIX)/qcc  -Vgcc_ntoarmv7le -march=armv7#
+   QNXCC=$(CC_PREFIX)/qcc -Vgcc_ntoarmv7le -march=armv7#
+   CXX=$(CC_PREFIX)/ntoarmv7-g++#
+   QNXCXX=$(CC_PREFIX)/ntoarmv7-g++#
+
+   LD=$(CXX)
+   AR=$(CC_PREFIX)/ntoarmv7-ar#
+   AR_FLAGS=-rsc#
+
+   CPP=$(CC_PREFIX)/ntoarmv7-cpp#
+endif
+
+
+FEZ=$(ARMGCC_PREFIX)size
+
+ifeq (1,$(V_notpie))
+else
+__CXX_FLAGS+=-fpie -fpic -fPIE -fPIC -pie
+LD_FLAGS+=-fpie -fpic -fPIE -fPIC -pie
+endif
+
+__CXX_FLAGS+=-Wall -Wno-missing-braces#
+ifneq (1,$(V_clang))
+ifneq (1,$(V_aarch64))
+   __CXX_FLAGS+=-mword-relocations -mthumb-interwork#
+endif
+endif
+
+ifeq (1,$(V_aarch64))
+__CXX_FLAGS+=-fpic
+else
+__CXX_FLAGS+=-Werror
+endif
+
+CC_NO_WARN_UNUSED_FUNCTIONS=-Wno-unused-function#
+CC_NO_WARN_UNINITIALIZED=-Wno-uninitialized#
+
+#ifneq ($(V_FLAVOR),Release)
+#__CXX_FLAGS+=-g
+#endif
+
+ifneq ($(V_FLAVOR),	)
+ifneq ($(V_FLAVOR),Coverage)
+__CXX_FLAGS+=-O2 -fno-strict-aliasing#
+endif
+endif
+LD_FLAG=-Wl,#
+
+ifeq (1,$(V_aarch64))
+LD_FLAGS+=$(LD_FLAG)-Map=$(basename $(@)).map -fPIE -pie $(LD_FLAG)-dynamic-linker,/system/bin/linker64 $(LD_FLAG)-z,nocopyreloc $(LD_FLAG)-unresolved-symbols=ignore-in-shared-libs $(LD_FLAG)-rpath-link=$(QNX_LIB_DIR)#
+else
+LD_FLAGS+=$(LD_FLAG)-Map=$(basename $(@)).map -march=armv7-a $(LD_FLAG)-unresolved-symbols=ignore-in-shared-libs#
+endif
+
+ifeq ($(V_FLAVOR),Coverage)
+__CXX_FLAGS+=-fprofile-arcs -ftest-coverage#
+LD_FLAGS+=-fprofile-arcs -ftest-coverage#
+endif
+
+QNX_SYSTEM_INCS=usr/include
+__CXX_FLAGS+=$(addprefix -isystem $(QNX_TARGET_DIR)/,$(QNX_SYSTEM_INCS))
+__CXX_FLAGS+=-DVARIANT_le_ -DBUILDENV_qss
+#CXXSTL_FLAGS=-isystem $(ANDROID_GLIBSTDC_DIR)/include
+ifeq (1,$(V_aarch64))
+#CXXSTL_FLAGS+=-isystem $(ANDROID_GLIBSTDC_DIR)/libs/arm64-v8a/include
+else
+#CXXSTL_FLAGS+=-isystem $(ANDROID_GLIBSTDC_DIR)/libs/armeabi-v7a/include
+endif
+
+DEFINES+=__FILENAME__=\"$(notdir $(<))\"
+
+CXX_FLAGS=-c $(__CXX_FLAGS) $(CXXSTL_FLAGS) -std=c++11#
+CXX_MIX_FLAGS=-S $(__CXX_FLAGS) $(CXXSTL_FLAGS) -std=c++11#
+
+CC_FLAGS=-c $(__CXX_FLAGS) -std=gnu99#
+CC_MIX_FLAGS=-S $(__CXX_FLAGS) -std=gnu99#
+
+CC_INC=#
+
+CC_INCFLAG=-I#
+CC_DEFINEFLAG=-D#
+CC_UNDEFINEFLAG=-U#
+CC_OUTPUTFLAG=-o#
+CC_MIX_OUTPUTFLAG=-o#
+
+CPP_FLAGS=-C#
+
+AR_OUTPUTFLAG=#
+
+LD_LIBDIRFLAG=#-L
+LD_OUTPUTFLAG=-o #
+
+LD_LIBS=-L$(QNX_LIB_DIR) -lm -lc
+
+#ifneq (1,$(V_aarch64))
+#LD_LIBS+=-lqcc#
+#endif
+
+ifeq ($(V_FLAVOR),Coverage)
+LD_LIBS+=-lgcov#
+endif
+
+ld_inputs = $(strip \
+  $(foreach L,$1,\
+    $(if $(filter lib%$(DLL_EXT),$(notdir $L)),\
+        -L$(dir $L) -l$(patsubst lib%$(DLL_EXT),%,$(notdir $L)),\
+      $L)))
+
+
+LD_INPUTS+=$(LD_FLAG)--start-group $(call ld_inputs,$(1)) $(LD_FLAG)--end-group $(LD_LIBS)#
+
+DEFS_OF=$(foreach def,$(addsuffix .lst,$(call uniq,$($(call NAME_OF,$(1))_DEFS)\
+           $(foreach comp,$(call COMPONENTS_OF,$(1)),$(COMPONENT_$(comp)_DEFS)))),\
+            $(LD_FLAG)--version-script=$(def))
+
+EXE_LD_FLAGS+=$(LD_FLAGS) -nostdlib -Bdynamic $(QNX_LIB_DIR)/crt1.o#
+QEXE_LD_FLAGS=-static --sysroot=$(QNX_TARGET_DIR) -lm -lstdc++ -lc
+
+DLL_LD_FLAGS+=$(LD_FLAGS) $(LD_FLAG)-soname=$(notdir $(@)) -nostartfiles -nostdlib -shared -Bsymbolc $(call DEFS_OF,$(@))#
+
+IMAR_OUTPUTFLAG=-o #
+
+define IMPLIB_AR_CMD
+	$(call exec,$(LD)) $(IMPLIB_LD_FLAGS) $(LD_OUTPUTFLAG)$(2) $(call LD_INPUTS,$(1))
+endef
+
+ASM=$(CC)#
+ASM_INCFLAG=$(CC_INCFLAG)#
+ASM_DEFINEFLAG=$(CC_DEFINEFLAG)#
+ASM_UNDEFINEFLAG=$(CC_UNDEFINEFLAG)#
+ASM_OUTPUTFLAG=$(CC_OUTPUTFLAG)#
+ASM_MIX_OUTPUTFLAG=$(CC_MIX_OUTPUTFLAG)#
+ASM_FLAGS=$(CC_FLAGS) -DRUN_ON_NEON -DHAVE_NEON=1 -mfpu=neon#
+
+#APP_FLAGS=-E -P - #
+#APP=$(CC)#
+
+#-----------------------------------------------------------------------------
+# QEXE exec
+#-----------------------------------------------------------------------------
+ifeq (1,$(V_aarch64))
+QEMU=qemu-aarch64
+else
+QEMU=qemu-arm
+endif
+ifeq (yes,$(CMD_MODE))
+HAVE_QEMU=$(shell $(QEMU) -version 2>nul)
+else
+HAVE_QEMU=$(shell $(QEMU) -version 2>/dev/null)
+endif
+ifneq (,$(findstring version,$(HAVE_QEMU)))
+QEXE_EXEC=$(call exec,$(QEMU)) $(1) $(2)
+endif
+
+#-----------------------------------------------------------------------------
+# extensions
+#-----------------------------------------------------------------------------
+EXE_EXT=#
+LIB_EXT=.a#
+DLL_EXT=.so#
+DLL_LIB_EXT=.so#
+# TODO image not building!
+IMG_EXT=.elf#
+
+# pull extensions
+$(call INCLUDE_MAKE_D_EXTS,defines_qnx.min)

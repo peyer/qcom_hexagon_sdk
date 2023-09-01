@@ -1,0 +1,227 @@
+#============================================================================
+#  Name:
+#    defines_vs8.min
+#
+#  Description:
+#    This file specifies the items necessary to build using Microsoft's 
+#       compilers, under a Visual Studio 8-style installation.
+#
+#        Copyright  2005 - 2010 QUALCOMM Incorporated.
+#               All Rights Reserved.
+#            QUALCOMM Confidential and Proprietary
+#----------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------
+# The following environment variable may be overridden...
+#----------------------------------------------------------------------------
+VS8_DIR?=$(subst \,/,$(VSINSTALLDIR))
+VC8_DIR?=$(subst \,/,$(VCINSTALLDIR))
+
+
+#-----------------------------------------------------------------------------
+# compiler flags
+#-----------------------------------------------------------------------------
+
+ifeq ($(V_FLAVOR),Debug)
+CC_STATIC_CRT=-MTd#             # for projects that want to use static runtime
+CC_DYNAMIC_CRT=-MDd#            # for projects that want to use dynamic runtime
+CC_OPTIMIZE=-Od -Ob1#           # disable optimization except inline
+else #ifeq ($(V_FLAVOR),Debug)
+CC_STATIC_CRT=-MT#              # for projects that want to use static runtime
+CC_DYNAMIC_CRT=-MD#             # for projects that want to use dynamic runtime
+CC_OPTIMIZE=-O2#                # higher optimization is buggy
+endif #ifeq ($(V_FLAVOR),Debug)
+
+ifneq ($(V_FLAVOR),Release)
+CC_CODEGEN+=-Z7#                # include symbols in ReleaseG and Debug
+endif
+
+CC_WARNING_LEVEL=-W3 -WX#       # high, but not too high, warnings as errors
+CC_CODEGEN+=-EHsc -GS -Zl#      # synchronous exception handling
+                                #  stack security check
+                                #  suppress defaultlib in .o
+CC_CRT=$(CC_STATIC_CRT)#        # default to the static runtime
+
+ifeq ($(V_TARGET),WinCE)
+ifeq ($(V_ARCH),arm9)
+CC_CODEGEN+=-QRarch5T# # ARM architecture code gen
+else
+CC_CODEGEN+=-QRarch4T# # ARM architecture code gen
+endif
+CC_CODEGEN+=-QRinterwork-return#  # ARM architecture code gen
+CC_DEFINES+=-D"_WIN32_WCE=0x501" -D"ARM" -D"UNDER_CE" -D"_SECURITY_LIBS_DISABLED" -DUNICODE
+CC_INC=-I"$(VS8_DIR)/SmartDevices/SDK/Smartphone2003/Include" -I"$(VC8_DIR)/include"#
+CC="$(VC8_DIR)/ce/bin/x86_arm/cl.exe"#
+else
+CC_DEFINES+=-D_WIN32_WINNT=0x0400#
+CC_INC=-I"$(VC8_DIR)/Include" -I"$(VC8_DIR)/PlatformSDK/Include"#
+ifeq ($(V_FLAVOR),Debug)
+CC_CODEGEN+=-RTC1#
+endif
+CC="$(VC8_DIR)/bin/cl.exe"#
+endif
+
+CXX=$(CC)
+
+CC_FLAGS=-nologo $(CC_DEFINES) $(CC_CRT) $(CC_CODEGEN) $(CC_OPTIMIZE) $(CC_WARNING_LEVEL) -c#
+CC_MIX_FLAGS=$(CC_FLAGS) -FAsc#
+
+CC_FLAGS+=-D__FILENAME__=\"$(notdir $(<))\"#
+
+CXX_FLAGS=$(CC_FLAGS)
+CXX_MIX_FLAGS=$(CC_MIX_FLAGS)
+
+
+CC_INCFLAG=-I#
+CC_DEFINEFLAG=-D#
+CC_UNDEFINEFLAG=-U#
+CC_OUTPUTFLAG=-Fo#
+CC_MIX_OUTPUTFLAG=-Fo$(OBJ_DIR)/ -Fa#
+
+# makefiles can do DEFINES+= of this variable to be able to use deprecated stuff
+DEFINES_DEPRECATED_CRT=_CRT_SECURE_NO_DEPRECATE _CRT_NONSTDC_NO_DEPRECATE
+
+CPP=$(CC)#
+CPP_FLAGS=-nologo -E -C#
+
+#-----------------------------------------------------------------------------
+# assembler
+#-----------------------------------------------------------------------------
+ASM="$(VC8_DIR)/bin/ml.exe"
+
+ASM_OUTPUTFLAG = -Fo#                    # option to specify output filename
+
+ASM_FLAGS = -nologo -c
+
+
+#-----------------------------------------------------------------------------
+# fez (DUMPBIN is a freebie)
+#-----------------------------------------------------------------------------
+
+DUMPBIN="$(VC8_DIR)/bin/dumpbin.exe"#
+
+FEZ=$(DUMPBIN) -headers#
+
+#-----------------------------------------------------------------------------
+# librarian flags
+#-----------------------------------------------------------------------------
+ifeq ($(V_TARGET),WinCE)
+  AR="$(VC8_DIR)/ce/bin/x86_arm/link.exe"#
+else
+  AR="$(VC8_DIR)/bin/lib.exe"#
+endif
+
+AR_FLAGS=-nologo -NODEFAULTLIB#
+AR_OUTPUTFLAG=-out:#
+
+#-----------------------------------------------------------------------------
+# linker flags
+#-----------------------------------------------------------------------------
+
+ifneq ($(V_FLAVOR),Release)
+  LD_DEBUGFLAG=-DEBUG#
+endif #ifneq ($(FLAVOR),Release)
+
+ifneq ($(V_FLAVOR),Debug)
+  LD_DEBUGFLAG+=-OPT:REF,ICF#
+endif #ifneq ($(FLAVOR),Debug)
+
+ifeq ($(V_TARGET),WinCE)
+  LD="$(VC8_DIR)/ce/bin/x86_arm/link.exe"#
+else
+  LD="$(VC8_DIR)/bin/link.exe"#
+endif
+
+LD_OUTPUTFLAG=-out:#
+
+LD_FLAGS=-NOLOGO -INCREMENTAL:NO $(LD_DEBUGFLAG)
+
+# ability to incorporate multiple definitions
+LD_FORCE_MULTIPLE=-force:multiple
+
+ifeq ($(V_TARGET),WinCE)
+
+  LD_LIBPATH=-LIBPATH:"$(VS8_DIR)/SmartDevices/SDK/Smartphone2003/Lib/armv4" -LIBPATH:"$(VC8_DIR)/ce/lib/armv4i" -LIBPATH:"$(VC8_DIR)/PlatformSDK/Lib" -LIBPATH:"$(VC8_DIR)/Lib" corelibc.lib secchk.lib
+
+  LD_FLAGS+=-SUBSYSTEM:windowsce,5.01 -MACHINE:THUMB#
+
+else
+
+  LD_LIBPATH=-LIBPATH:"$(VC8_DIR)/PlatformSDK/Lib" -LIBPATH:"$(VC8_DIR)/Lib"#
+
+  LD_FLAGS+=-MACHINE:X86 -FIXED:NO
+
+endif
+
+EXE_LD_FLAGS=$(LD_FLAGS) $(LD_LIBPATH)#
+
+ifeq ($(V_TARGET),WinCE)
+
+  EXE_LD_FLAGS+=-ENTRY:mainACRTStartup#
+
+endif
+
+STATIC_CRT_LIBS=libcmt libcpmt
+STATIC_CRTD_LIBS=libcmtd libcpmtd
+DYNAMIC_CRT_LIBS=msvcrt msvcprt
+DYNAMIC_CRTD_LIBS=msvcrtd msvcprtd
+
+ifeq ($(CC_CRT),$(CC_STATIC_CRT))
+  LD_FLAGS+=$(addprefix -NODEFAULTLIB:,$(DYNAMIC_CRT_LIBS) $(DYNAMIC_CRTD_LIBS)) -IGNORE:4217
+  ifeq ($(V_FLAVOR),Debug)
+    LD_FLAGS+=$(addprefix -DEFAULTLIB:,$(STATIC_CRTD_LIBS))
+  else
+    LD_FLAGS+=$(addprefix -DEFAULTLIB:,$(STATIC_CRT_LIBS))
+  endif
+  LD_NO_CRT_INIT=-ENTRY:DllMain@12 -INCLUDE:__DllMainCRTStartup@12#	
+else
+  LD_FLAGS+=$(addprefix -NODEFAULTLIB:,$(STATIC_CRT_LIBS) $(STATIC_CRTD_LIBS))
+  ifeq ($(V_FLAVOR),Debug)
+    LD_FLAGS+=$(addprefix -DEFAULTLIB:,$(DYNAMIC_CRTD_LIBS))
+  else
+    LD_FLAGS+=$(addprefix -DEFAULTLIB:,$(DYNAMIC_CRT_LIBS))
+  endif
+endif
+
+LD_FLAGS+=-DEFAULTLIB:uuid -DEFAULTLIB:oldnames # put these back during link, 
+                                                # they're stripped with -Zl
+
+DEFS_OF=$(addprefix -DEF:,$(call uniq,\
+           $(call XS_OF,$(1),DEFS,.def)))
+
+
+DLL_LD_FLAGS=$(LD_FLAGS) -DLL $(LD_LIBPATH) $(call DEFS_OF,$(@))
+
+MOD_LD_FLAGS=$(DLL_LD_FLAGS) $(LD_NO_CRT_INIT) -IMPLIB:$(@:$(MOD_EXT)=.implib)
+
+#-----------------------------------------------------------------------------
+# resource compiler flags
+#-----------------------------------------------------------------------------
+
+RC="$(VC8_DIR)/bin/rc.exe"#
+RC_INC=$(CC_INC)
+RC_INCFLAG=-I#
+RC_DEFINEFLAG=-D#
+RC_OUTPUTFLAG=-Fo#
+
+#-----------------------------------------------------------------------------
+# QEXE exec
+#-----------------------------------------------------------------------------
+ifeq ($(V_TARGET),Win32)
+QEXE_EXEC=$(call exec,$(1)) $(2)
+endif
+
+#-----------------------------------------------------------------------------
+# extensions
+#-----------------------------------------------------------------------------
+
+MOD_EXT=.dll1#
+EXE_EXT=.exe#
+DLL_EXT=.dll#
+DLL_LIB_EXT=.lib#
+ifneq ($(V_FLAVOR),Release) 
+PDB_EXT=.pdb#    # causes rules.min to expect a PDB file in ReleaseG and Debug
+endif
+
+# pull extensions
+$(call INCLUDE_MAKE_D_EXTS,defines_vs8.min)

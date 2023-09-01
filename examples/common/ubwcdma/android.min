@@ -1,0 +1,18 @@
+# stand-alone dma_apps_test executable
+BUILD_EXES += dma_apps_test
+dma_apps_test_QAICIDLS += inc/dma_apps
+dma_apps_test_QAICIDLS += $(DSPCV_DIR)/inc/dspCV
+dma_apps_test_C_SRCS += $V/dma_apps_stub
+dma_apps_test_C_SRCS += $V/dspCV_stub
+dma_apps_test_C_SRCS += src/dma_apps_test
+dma_apps_test_LIBS += rpcmem
+dma_apps_test_DLLS += libcdsprpc
+dma_apps_test_LD_FLAGS += -llog
+dma_apps_test_DEFINES += VERIFY_PRINT_ERROR
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

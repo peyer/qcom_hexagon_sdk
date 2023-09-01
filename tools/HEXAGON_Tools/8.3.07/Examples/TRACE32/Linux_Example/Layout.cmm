@@ -1,0 +1,26 @@
+// t32 Mon Apr 16 21:12:23 2012
+
+ B::
+ 
+ TOOLBAR ON
+ STATUSBAR ON
+ FRAMEPOS 152.88 6.5714 134. 61.
+ WINPAGE.RESET
+ 
+ WINCLEAR
+ WINPOS 0.75 42.0 65. 14. 0. 0. W000
+ area
+ 
+ WINPOS 71.125 42.429 57. 12. 5. 0. W002
+ var.frame /locals /caller
+ 
+ WINPOS 0.25 0.0 74. 36. 13. 1. W001
+ WINTABS 16. 10. 25. 62.
+ data.list
+ 
+ WINPOS 79.75 0.0 49. 37. 0. 0. W003
+ register /spotlight
+ 
+ WINPAGE.SELECT P000     
+ 
+ ENDDO

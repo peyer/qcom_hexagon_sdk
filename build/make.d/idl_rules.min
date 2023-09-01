@@ -1,0 +1,86 @@
+#============================================================================
+#  Name:
+#    idl_rules.min
+#
+#  Description:
+#    This file contains make rules for IDL.  The following constructs are
+#    implemented here and in idl_functions.min:
+#
+#    <build>_HEADER_IDLS: Specifies the IDLs that should be compiled into
+#                         C/C++ headers prior to building objects for <build>.
+#                         Note that headers will not be built for IDL files
+#                         that already have corresponding headers (same name)
+#                         in the same directory.
+#    <build>_IMPL_IDLS:   Specifies the IDLs for which the stubs and skels
+#                         should be generated and included in <build>.
+#    <build>_CIF_IDLS:    Specifies the IDLs for which CIFs (with Interface
+#                         declarations) should be generated and included in
+#                         <build>.
+#    <build>_IDLS:        Specifies the IDLs for which <build> hosts the
+#                         stub/skel.  Implies HEADER_IDLS, IMPL_IDLS, and
+#                         CIF_IDLS; the separate versions are for cases where
+#                         only the header or only the implementation is
+#                         needed.
+#    BUILD_HEADERS_FROM_IDL: Builds C/C++ headers from the specified IDL for
+#                            all builds in the Makefile.
+#
+#                 Copyright (c) 2007 QUALCOMM Incorporated.  
+#                            All Rights Reserved.
+#                   QUALCOMM Proprietary and Confidential
+#============================================================================
+
+# All stub/skel objs naturally depend on the corresponding source file.  This
+# will happen automatically due to $(IMPL_SRCS) being part of $(C_SRCS) in
+# rules.min, but we need to ensure that the source file is the first
+# dependency of the obj, so we still need to create this dependency here.
+$(foreach src,$(IMPL_SRCS),\
+   $(call DEPENDS,$(call OBJ_OF,$(src)),$(src)))
+
+# All headers we're building depend on the corresponding IDL
+$(foreach idl,$(HEADER_IDLS),\
+   $(call DEPENDS,$(call IDL_HEADER_OF,$(idl)),$(idl)))
+
+# Stub and skel sources depend on the IDL they're built from and any dependent
+# IDLs
+$(foreach build,$(BUILDS),\
+   $(call MULTIDEP,DEPENDS,\
+      $(call IDL_IMPL_SRC_OF,$(build)),\
+      $(call ALL_IMPL_IDLS_OF,$(build))))
+
+# Stub and skel cifs depend on the IDL they're built from 
+$(foreach build,$(BUILDS),\
+   $(call MULTIDEP,DEPENDS,\
+      $(call IDL_CIF_OF,$(build)),\
+      $(call CIF_IDLS_OF,$(build))))
+
+# Rebuild everything if the compiler is updated
+$(call MULTIDEP,DEPENDS,\
+   $(IDL_HEADERS) \
+   $(IDL_IMPL_SRCS) \
+   $(IDL_CIFS), \
+   $(QIDLC))
+
+
+$(IDL_IMPL_SRCS):
+	@$(call mkdir_p,$(@D))
+	$(call exec,$(QIDLC)) $(QIDLC_FLAGS) -b $(@F:_stub_skel.c=) --remoting-only -o $(@D) $(call IDL_INCDIRS_OF,$(@)) $(call IMPL_IDLS_OF,$(@F:_stub_skel.c=))
+
+$(IDL_IMPL_OBJS):CC_FLAGS+=$(CC_NO_WARN_UNUSED_FUNCTIONS) $(CC_NO_WARN_UNINITIALIZED) $(CC_NO_WARN_MIXED_ENUM)#
+
+__IDL_MCIF_FLAGS=$(if $(filter %qidlc$(EXEC_EXT),$(QIDLC)),-b $(@F:.cif=) -mebim -mcxx --cif-only,-b $(@F:_stub_skel.cif=) -mcif)
+
+$(IDL_CIFS):
+	@$(call mkdir_p,$(@D))
+	$(call exec,$(QIDLC)) $(QIDLC_FLAGS) $(__IDL_MCIF_FLAGS) -o $(@D) $(call IDL_INCDIRS_OF,$(@)) $(call CIF_IDLS_OF,$(@F:_stub_skel.cif=))
+
+$(IDL_HEADERS):
+	@$(call mkdir_p,$(@D))
+	@$(call exec,$(CDEP)) $(call CDEP_INCDIRS_OF,$(<)) -o $(@) $(<) > $(@).dep
+	$(call exec,$(QIDLC)) $(QIDLC_FLAGS)  --header-only -o $(@D) $(call IDL_INCDIRS_OF,$(<)) $(<)
+
+all: $(call MAP,IDL_FIND,$(addsuffix .idl,$(BUILD_HEADERS_FROM_IDL))) $(IDL_HEADERS) $(IDL_IMPL_SRCS) $(IDL_CIFS)
+
+# Include generated dependencies 
+IDLDEPS := $(strip $(IDL_HEADERS))
+-include $(addsuffix .dep,$(IDLDEPS))
+

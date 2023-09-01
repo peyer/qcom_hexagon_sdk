@@ -1,0 +1,505 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%; 
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; 
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+</style><title>QAIC Release Notes</title>
+</head><body>
+<div class="smarkdoc"><h1>
+<a name="QAIC%20Release%20Notes"></a>QAIC Release Notes
+</h1><h2>
+<a name=".toc%201.0.38.x"></a>.toc 1.0.38.x
+</h2><ul>
+<li>
+<p>
+add support for passing handles using the new dmahandle type
+</p>
+</li>
+</ul><h2>
+<a name="1.0.37.x"></a>1.0.37.x
+</h2><ul>
+<li>
+<p>
+use remote_handle64 for multi domain modules
+</p>
+</li>
+</ul><h2>
+<a name="1.0.36.x"></a>1.0.36.x
+</h2><ul>
+<li>
+<p>
+update docs
+</p>
+</li>
+</ul><h2>
+<a name="1.0.35.x"></a>1.0.35.x
+</h2><ul>
+<li>
+<p>
+fixed bug in derived interfaces missing strlen and wstrlen definitions
+</p>
+</li>
+</ul><h2>
+<a name="1.0.34.x"></a>1.0.34.x
+</h2><ul>
+<li>
+<p>
+fixed bug in skels modifying input strings
+</p>
+</li>
+</ul><h2>
+<a name="1.0.33.x"></a>1.0.33.x
+</h2><ul>
+<li>
+<p>
+remove whitespace from end of lines
+</p>
+</li><li>
+<p>
+propagate top level comments to all generated files
+</p>
+</li><li>
+<p>
+fixed aarch64 bug in sequences of complex structures
+</p>
+</li>
+</ul><h2>
+<a name="1.0.32.x"></a>1.0.32.x
+</h2><ul>
+<li>
+<p>
+fixed bugs in aarch64 marshaing of complex sequences and structures
+</p>
+</li>
+</ul><h2>
+<a name="1.0.31.x"></a>1.0.31.x
+</h2><ul>
+<li>
+<p>
+fixed unused function warnings
+</p>
+</li>
+</ul><h2>
+<a name="1.0.30.x"></a>1.0.30.x
+</h2><ul>
+<li>
+<p>
+fixed inrout buffer marshalling bugs
+</p>
+</li>
+</ul><h2>
+<a name="1.0.29.x"></a>1.0.29.x
+</h2><ul>
+<li>
+<p>
+fixed memmove compiler errors
+</p>
+</li>
+</ul><h2>
+<a name="1.0.28.x"></a>1.0.28.x
+</h2><ul>
+<li>
+<p>
+llvm pragmas warning
+</p>
+</li>
+</ul><h2>
+<a name="1.0.27.x"></a>1.0.27.x
+</h2><ul>
+<li>
+<p>
+initial support for non complex inrout types
+</p>
+</li><li>
+<p>
+cleanuped generated headers
+</p>
+</li>
+</ul><h2>
+<a name="1.0.26.x"></a>1.0.26.x
+</h2><ul>
+<li>
+<p>
+fixed aarch64 warnings
+</p>
+</li>
+</ul><h2>
+<a name="1.0.25.x"></a>1.0.25.x
+</h2><ul>
+<li>
+<p>
+Support for aarch64
+</p>
+</li>
+</ul><h2>
+<a name="1.0.24.x"></a>1.0.24.x
+</h2><ul>
+<li>
+<p>
+Fixed warnings in generated code.
+</p>
+</li>
+</ul><h2>
+<a name="1.0.23.x"></a>1.0.23.x
+</h2><ul>
+<li>
+<p>
+Fixed compiler error for hexagon targets.
+</p>
+</li>
+</ul><h2>
+<a name="1.0.22.x"></a>1.0.22.x
+</h2><ul>
+<li>
+<p>
+Fixed align macro.
+</p>
+</li><li>
+<p>
+Support HAP_pls and adsp_pls in generated stubs for hexagon targets.
+</p>
+</li>
+</ul><h2>
+<a name="1.0.21.x"></a>1.0.21.x
+</h2><ul>
+<li>
+<p>
+Fixed syntax check IQI error.
+</p>
+</li>
+</ul><h2>
+<a name="1.0.20.x"></a>1.0.20.x
+</h2><ul>
+<li>
+<p>
+Fixed InterlockedCompareExchange call for win32 compilers.
+</p>
+</li>
+</ul><h2>
+<a name="1.0.19.x"></a>1.0.19.x
+</h2><ul>
+<li>
+<p>
+enum typedefs appear after the enum to make some c++ compilers happy.
+</p>
+</li>
+</ul><h2>
+<a name="1.0.18.x"></a>1.0.18.x
+</h2><ul>
+<li>
+<p>
+Fixed bug in marshalling of rout sequences of complex structures containing scalars and sequences.
+</p>
+</li>
+</ul><h2>
+<a name="1.0.17.x"></a>1.0.17.x
+</h2><ul>
+<li>
+<p>
+added support for __hexagon__
+</p>
+</li><li>
+<p>
+warnings in generated code
+</p>
+</li>
+</ul><h2>
+<a name="1.0.16.x"></a>1.0.16.x
+</h2><ul>
+<li>
+<p>
+doc fixes
+</p>
+</li><li>
+<p>
+warnings in generated code
+</p>
+</li>
+</ul><h2>
+<a name="1.0.15.x"></a>1.0.15.x
+</h2><ul>
+<li>
+<p>
+docs fixes
+</p>
+</li><li>
+<p>
+fixed definition of local _atomic_ComareAndExchange function in stub to be static to avoid linker conflicts
+</p>
+</li>
+</ul><h2>
+<a name="1.0.14.x"></a>1.0.14.x
+</h2><ul>
+<li>
+<p>
+fixed signed/unsigned comparison warnings in generated code
+</p>
+</li><li>
+<p>
+fixed bug in how forward slashes are treated in windows paths
+</p>
+</li><li>
+<p>
+constructors for stubs that do not depend on static initlaizers
+</p>
+</li><li>
+<p>
+fixed header preprocessor guard to use only valid characters
+</p>
+</li>
+</ul><h2>
+<a name="1.0.13.x"></a>1.0.13.x
+</h2><ul>
+<li>
+<p>
+fixed bug in C code generator for in and rout complex structures containing sequences of sequences
+</p>
+</li>
+</ul><h2>
+<a name="1.0.12.x"></a>1.0.12.x
+</h2><ul>
+<li>
+<p>
+fixed bug in C code generator for rout complex structures
+</p>
+</li>
+</ul><h2>
+<a name="1.0.11.x"></a>1.0.11.x
+</h2><ul>
+<li>
+<p>
+added ifdef cplusplus
+</p>
+</li><li>
+<p>
+made stubs and skels self contained apart from remote.h, AEEStdDef.h and AEEStdErr.h
+</p>
+</li>
+</ul><h2>
+<a name="1.0.10.x"></a>1.0.10.x
+</h2><ul>
+<li>
+<p>
+stubs that can be loaded on the dsp to support reverse invoke
+</p>
+</li>
+</ul></div>
+</body>
+</html>

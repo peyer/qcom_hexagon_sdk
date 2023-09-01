@@ -1,0 +1,19 @@
+
+# This builds the skel library
+BUILD_LIBS += libcalculator_skel
+
+# only build the shared object if dynamic option specified in the variant
+ifeq (1,$(V_dynamic))
+BUILD_DLLS = libcalculator_skel
+endif
+
+libcalculator_skel_QAICIDLS = app/inc/calculator
+libcalculator_skel_C_SRCS += $V/calculator_skel
+libcalculator_skel.C_SRCS = dsp/src/calculator_imp.c
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

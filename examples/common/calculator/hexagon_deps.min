@@ -1,0 +1,22 @@
+
+# must list all variants supported by this project
+SUPPORTED_VS = $(default_VS)
+SUPPORTED_VS += hexagon_Debug_dynamic_toolv83_v55
+# must list all the dependencies of this project
+DEPENDENCIES = \
+  ATOMIC \
+  RPCMEM \
+  TEST_MAIN \
+  TEST_UTIL
+
+# each dependency needs a directory definition
+#  the form is <DEPENDENCY NAME>_DIR
+#  for example:
+#    DEPENDENCIES = FOO
+#    FOO_DIR = $(HEXAGON_SDK_ROOT)/examples/common/foo
+#
+ATOMIC_DIR = $(HEXAGON_SDK_ROOT)/libs/common/atomic
+RPCMEM_DIR = $(HEXAGON_SDK_ROOT)/libs/common/rpcmem
+TEST_MAIN_DIR = $(HEXAGON_SDK_ROOT)/test/common/test_main
+TEST_UTIL_DIR = $(HEXAGON_SDK_ROOT)/test/common/test_util
+

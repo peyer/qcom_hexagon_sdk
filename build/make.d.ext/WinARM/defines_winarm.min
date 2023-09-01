@@ -1,0 +1,154 @@
+#============================================================================
+#  Name:
+#    defines_winarm.min
+#
+#  Description:
+#    This file specifies the items necessary to build using Microsoft's 
+#       Visual C++ family of compilers for ARM.
+#
+#        Copyright  2012 QUALCOMM Incorporated.
+#               All Rights Reserved.
+#            QUALCOMM Confidential and Proprietary
+#----------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------
+# error out if I won't find the executable
+#----------------------------------------------------------------------------
+__WPK_DIR_CHECK=$(if $(WDK_ROOT),$(1),$(error Please set WDK_ROOT))
+
+#----------------------------------------------------------------------------
+# Software tool and environment definitions
+#----------------------------------------------------------------------------
+WDK_DIR=$(addsuffix /Windows Kits/8.1,$(WDK_ROOT))#
+WPK_DIR=$(addsuffix /Windows Phone Kits/8.1,$(WDK_ROOT))#
+
+#-----------------------------------------------------------------------------
+# compiler flags
+#-----------------------------------------------------------------------------
+
+ifeq ($(V_FLAVOR),Debug)
+CC_OPTIMIZE=/Od /Oi /Oy- /GL#
+else #ifeq ($(V_FLAVOR),Debug)
+CC_OPTIMIZE=-O2# 
+endif #ifeq ($(V_FLAVOR),Debug)
+
+ifneq ($(V_FLAVOR),Release)
+CC_CODEGEN+=#
+endif
+
+CC_WARNING_LEVEL=/W4 /WX-#
+CC_CODEGEN+=/GF /Gm- /GS /Gy /fp:precise /GR-#
+
+CC_DEFINES+=/D _ARM_ /D ARM /D _ARM_WORKAROUND_ /D _USE_DECLSPECS_FOR_SAL=1 /D STD_CALL /D DEPRECATE_DDK_FUNCTIONS=1 /D MSC_NOOPT /D WIN32_LEAN_AND_MEAN=1 /D __FILENAME__=__FILE__ /D _WIN32_WINNT=0x0602 /D WINVER=0x0602 /D WINNT=1 /D NTDDI_VERSION=0x06020000 /D DBG=1 /D KMDF_VERSION_MAJOR=1 /D KMDF_VERSION_MINOR=11 /D_ARM_WINAPI_PARTITION_DESKTOP_SDK_AVAILABLE=1 /D_CRT_USE_WINAPI_PARTITION_APP#
+ifeq ($(V_FLAVOR),Debug)
+CC_DEFINES+=/D DBG=1
+endif
+CC_INC+=/I"$(WDK_DIR)/Include/um" /I"$(WPK_DIR)/Include/um" /I"$(WPK_DIR)/Include/um/minwin" /I"$(WPK_DIR)/Include/shared" /I"$(WPK_DIR)/Tools/WPE/CRT/inc"# 
+CC=$(call __WPK_DIR_CHECK,"$(WPK_DIR)/Tools/WPE/bin/x86_arm/cl.exe")#
+
+CXX=$(CC)
+
+CC_FLAGS=/c /Zi /nologo $(CC_WARNING_LEVEL) $(CC_OPTIMIZE) $(CC_DEFINES) $(CC_CODEGEN) /FI"$(WPK_DIR)\Include\um\warning.h" /wd4127
+CC_MIX_FLAGS=$(CC_FLAGS) -FAsc#
+
+CXX_FLAGS=$(CC_FLAGS)
+CXX_MIX_FLAGS=$(CC_MIX_FLAGS)
+
+CC_INCFLAG=/I#
+CC_DEFINEFLAG=/D#
+CC_UNDEFINEFLAG=/U#
+CC_OUTPUTFLAG=/Fo#
+CC_MIX_OUTPUTFLAG=/Fo$(OBJ_DIR)/ /Fa#
+
+# makefiles can do DEFINES+= of this variable to be able to use deprecated stuff
+DEFINES_DEPRECATED_CRT=_CRT_SECURE_NO_DEPRECATE _CRT_NONSTDC_NO_DEPRECATE
+
+CPP=$(CC)#
+CPP_FLAGS=-nologo -E -C#
+
+#-----------------------------------------------------------------------------
+# assembler
+#-----------------------------------------------------------------------------
+ASM="$(WPK_DIR)/Tools/WPE/bin/x86_arm/armasm.exe"
+
+ASM_INCFLAG = -I #
+ASM_DEFINEFLAG = -I #
+ASM_OUTPUTFLAG = -o #                    # option to specify output filename
+
+ASM_FLAGS = -coff_thumb2_only
+ASM_INC =#
+
+#-----------------------------------------------------------------------------
+# fez (DUMPBIN is a freebie)
+#-----------------------------------------------------------------------------
+
+DUMPBIN="$(WPK_DIR)/Tools/WPE/bin/x86_arm/dumpbin.exe"#
+
+FEZ=$(DUMPBIN) -headers#
+
+#-----------------------------------------------------------------------------
+# librarian flags
+#-----------------------------------------------------------------------------
+AR="$(WPK_DIR)/Tools/WPE/bin/x86_arm/lib.exe"#
+
+AR_FLAGS=-nologo -NODEFAULTLIB /LTCG#
+AR_OUTPUTFLAG=-out:#
+
+#-----------------------------------------------------------------------------
+# linker flags
+#-----------------------------------------------------------------------------
+
+ifneq ($(V_FLAVOR),Release)
+  LD_DEBUGFLAG=-DEBUG#
+endif
+
+ifneq ($(V_FLAVOR),Debug)
+  LD_DEBUGFLAG+=-OPT:REF,ICF#
+endif
+
+LD="$(WPK_DIR)/Tools/WPE/bin/x86_arm/link.exe"#
+
+LD_OUTPUTFLAG=-out:#
+
+LD_FLAGS=/NOLOGO /INCREMENTAL:NO $(LD_DEBUGFLAG) /LTCG
+
+# ability to incorporate multiple definitions
+LD_FORCE_MULTIPLE=-force:multiple
+
+LD_LIBPATH+=$(call strQuote,-LIBPATH:"$(WPK_DIR)/Lib/winv6.3/um/arm") $(call strQuote,-LIBPATH:"$(WPK_DIR)/Tools/WPE/CRT/lib/arm")#
+
+LD_FLAGS+=MinCore.lib oleaut32.lib msvcrt.lib
+LD_FLAGS+=/NODEFAULTLIB /NODEFAULTLIB:oldnames.lib /MACHINE:ARM
+
+EXE_LD_FLAGS=$(LD_FLAGS) $(LD_LIBPATH)#
+
+MOD_LD_FLAGS=/NOLOGO /INCREMENTAL:NO $(LD_DEBUGFLAG) /LTCG /NODEFAULTLIB /NODEFAULTLIB:oldnames.lib /MACHINE:ARM /LIBPATH:"$(WDK_DIR)\Lib\winv6.3\um\arm" /LIBPATH:"$(WPK_DIR)\Lib\winv6.3\um\arm" armrt.lib /LIBPATH:"$(WDK_DIR)\Lib\winv6.3\km\arm" /LIBPATH:"$(WPK_DIR)\Lib\winv6.3\km\arm" ntoskrnl.lib hal.lib /LIBPATH:"$(WDK_DIR)\Lib\wdf\kmdf\arm\1.11" wdfdriverentry.lib wdfldr.lib /LIBPATH:"$(WDK_ROOT)\misc" bufferoverflowk.lib /ENTRY:"FxDriverEntry" /Driver /kernel /SUBSYSTEM:NATIVE,"6.02"
+
+DEFS_OF=$(addprefix -DEF:,$(call uniq,\
+           $(call XS_OF,$(1),DEFS,.def)))
+
+DLL_LD_FLAGS=$(LD_FLAGS) -DLL $(LD_LIBPATH) $(call DEFS_OF,$(@))
+
+define MOD_LD_CMD
+	$(call exec,$(LD)) $(MOD_LD_FLAGS) $(call LD_FLAGS_OF,$(2)) $(LD_OUTPUTFLAG)$(2:$(MOD_EXT)=.sys) $(call LD_INPUTS,$(1))
+endef
+
+#-----------------------------------------------------------------------------
+# QEXE exec
+#-----------------------------------------------------------------------------
+#ifeq ($(filter Win%,$(V_TARGET)),$(V_TARGET))
+#QEXE_EXEC=$(call exec,$(1)) $(2)
+#endif
+
+#-----------------------------------------------------------------------------
+# extensions
+#-----------------------------------------------------------------------------
+
+SYS_EXT=.sys#
+EXE_EXT=.exe#
+DLL_EXT=.dll#
+DLL_LIB_EXT=.lib#
+ifneq ($(V_FLAVOR),Release) 
+PDB_EXT=.pdb#    # causes rules.min to expect a PDB file in ReleaseG and Debug
+endif
+

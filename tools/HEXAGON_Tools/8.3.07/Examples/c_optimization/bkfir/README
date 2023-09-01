@@ -1,0 +1,52 @@
+##################################################################
+# Copyright (c) $Date$ QUALCOMM INCORPORATED.
+# All Rights Reserved.
+# Modified by QUALCOMM INCORPORATED on $Date$
+##################################################################
+This example is a case study that examines a reference version of a
+standard FIR filter.  The example begins with the original code, and
+then makes incremental changes that optimize the function.  There are
+several important points about this case study.
+
+First, the code uses an automatic correctness verification framework.
+Each time the routine is invoked, the return values are examined for
+correctness.  This allows a programmer to make incremental
+optimization changes to a program without introducing any bugs.
+
+Next, the code uses an automatic performance evaluation framework.
+Every call to the routine is surrounded by calls to the Hexagon
+simulator cycle timers.  The start time and end time is recorded,
+allowing a calculation of how long the procedure took.  This step is
+very important, becuase it allows the programmer to track performance
+changes that arise from the incremental code changes.  In the example,
+this framework is very helpful to see how much each step affects
+performance.
+
+The optimization steps are generally ordered such that the easiest
+transformations are applied first.  This follows the philosophy that
+programs should only be tuned until the desired performance is
+achieved; there is no point in wasting time and effort beyond the 
+point where performance is deemed to be sufficient.  Thus, the 
+easiest changes should be applied first in an effort to reduce the 
+total amount of work needed to achieve the performance goal.  If 
+the easy transformations do not improve performance enough, then the 
+more complex transformations should be applied.
+
+As an added benefit of this ordering, the easy changes generally
+modify the code from its original form less than the more complex
+changes.  So, by focusing on the simple transformations first, the
+code is more likely to remain close to the original form.  This
+usually results in the best tradeoff of achieving high performance
+without sacraficing on code readability and maintainability.
+
+The bkfir.c file contains the example FIR filter.  Each version of the
+filter is a separate function, and the optimization step is described
+in the surrounding comments.  Run the test program to view the
+performance impact at each step.
+
+Running Example:
+
+1) make
+
+Default compiler and options can be modified on the make command line
+using the CC and CFLAGS make variables, respectively.

@@ -1,0 +1,31 @@
+=============================================================================
+Halide for HVX
+
+Halide is a programming language that greatly simplifies the development of
+vision applications for Hexagon Vector Extensions. For more information on
+the Halide language, please refer to https://halide-lang.org.
+
+=============================================================================
+
+Top level directory description:
+
+
+docs - contains the Halide user's guide and training documents
+
+Examples - tests for building applications for simulation and on device
+
+lib - contains the Halide runtime libraries for simulation and on device
+
+include - various header files for compilation
+
+tools - contains GenGen.cpp
+
+bin - tool to asist in simulating Hexagon offload mode
+
+support - header file for benchmark timing
+
+
+Please see Examples/README for instructions on running example Halide programs for HVX.
+
+Please refer to RELEASE_NOTES for changes since previous release.
+

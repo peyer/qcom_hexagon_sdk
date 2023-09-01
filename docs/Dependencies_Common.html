@@ -1,0 +1,897 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><title>SDK Dependencies</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="images/sidebar_top.jpg"></top><script src="scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, false)"><input id="searchButton" onclick="postFunction(false)" type="button" value="Search"></form><p>
+<a href="index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<p>
+<a href="sitemap.html">Sitemap</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="Audio/Applications.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="Voice/Applications.html">Voice</a>
+</p><p>
+<a href="Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="Audio/Examples.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="Examples_Common.html">Common</a>
+</p><p>
+<a href="Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="Tools_Signing.html">Signing</a>
+</p><p>
+<a href="Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="FAQ_Common.html">Common</a>
+</p><p>
+<a href="FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="Support_Contact.html">Contact</a>
+</p><center><img src="images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h1>
+<a name="SDK%20Dependencies"></a>SDK Dependencies
+</h1><div class="toc"><div class="tocLevel"><a href="#Overview">Overview</a></div><div class="tocLevel"><a href="#Required%20packages">Required packages</a><div class="tocLevel"><a href="#Hexagon%20tools">Hexagon tools</a></div><div class="tocLevel"><a href="#Gnu%20On%20Windows">Gnu On Windows</a></div><div class="tocLevel"><a href="#Devcon">Devcon</a></div><div class="tocLevel"><a href="#Eclipse">Eclipse</a></div><div class="tocLevel"><a href="#Hexagon%20IDE%20plugins">Hexagon IDE plugins</a></div><div class="tocLevel"><a href="#Python">Python</a></div><div class="tocLevel"><a href="#Android%20NDK">Android NDK</a></div><div class="tocLevel"><a href="#ADB/Fastboot%20on%20Linux">ADB/Fastboot on Linux</a></div></div><div class="tocLevel"><a href="#Installing%20SDK%20on%20a%20machine%20with%20no%20internet%20access">Installing SDK on a machine with no internet access</a><div class="tocLevel"><a href="#Steps%20to%20configure%20the%20installer%20to%20pick%20the%20dependencies%20locally">Steps to configure the installer to pick the dependencies locally</a></div></div></div><h2>
+<a name="Overview"></a>Overview
+</h2><p>
+The Hexagon SDK's installer will download all the dependencies required.
+</p><p>
+Below is a list of the dependencies the Hexagon SDK installer downloads. If you have trouble with the installation, please refer to this page to set up the Hexagon SDK dependencies manually or you can use <a href="Tools_Scripts.html#install_dependencies.py">install_dependencies.py</a>.
+</p><p>
+Python 2.7 is needed to execute <a href="Tools_Scripts.html#install_dependencies.py">install_dependencies.py</a> script. If python 2.7 is not installed or it is not the default version in your system, please refer <a href="#Python">Python</a> section.
+</p><p>
+Using the Hexagon SDK requires that the local environment be set up. To do this see <a href="readme.html">Setup Instructions</a>
+</p><h2>
+<a name="Required%20packages"></a>Required packages
+</h2><h3>
+<a name="Hexagon%20tools"></a>Hexagon tools
+</h3><p>
+Hexagon Tools version 7.2 or later is required to build Hexagon variants of the examples.
+</p><p>
+Hexagon tools are available from Qualcomm. Please <a href="Support_Contact.html">contact</a> Qualcomm to obtain them.
+</p><p>
+The Hexagon SDK prefers that the tools be installed at the default location:
+</p><pre>%HEXAGON_SDK_ROOT%\tools\HEXAGON_tools\&lt;Version&gt;              For Windows
+${HEXAGON_SDK_ROOT}/tools/HEXAGON_tools/&lt;Version&gt;             For Linux
+</pre><p>
+If the tools are installed anywhere but the default location, then set the environment variable <code>HEXAGON_TOOLS_ROOT</code> to point to the installed tools.
+</p><p>
+For example, if the tools were installed in their default location, then set <code>HEXAGON_TOOLS_ROOT</code> to:
+</p><pre style="font-size: 88%">set HEXAGON_TOOLS_ROOT=C:\Qualcomm\HEXAGON_Tools\&lt;Version&gt;            On Windows
+export HEXAGON_TOOLS_ROOT=&lt;HOME&gt;/Qualcomm/HEXAGON_Tools/&lt;Version&gt;     On Linux
+</pre><h3>
+<a name="Gnu%20On%20Windows"></a>Gnu On Windows
+</h3><p>
+Gnu On Windows (GOW) provides the basic linux-like tools required by the Hexagon SDK's command line build system.
+</p><ul type="circle">
+<li>
+<p>
+More information on GOW can be found at: <a href="https://github.com/bmatzelle/gow/wiki">https://github.com/bmatzelle/gow/wiki</a>
+</p>
+</li><li>
+<p>
+Instructions on how to install GOW can be found at: <a href="https://github.com/bmatzelle/gow/releases">https://github.com/bmatzelle/gow/releases</a>
+</p>
+</li>
+</ul><p>
+GOW must be installed in the Hexagon SDK's tools directory at:
+</p><pre>tools/utils/gow-0.8.0
+</pre><p>
+Once installed the following steps must be performed:
+</p><ul type="circle">
+<li>
+<p>
+Copy tools\gow-0.8.0\bin\gfind.exe to tools\gow-0.8.0\bin\find.exe
+</p>
+</li><li>
+<p>
+Create empty directory tools\gow-0.8.0/etc
+</p>
+</li>
+</ul><h3>
+<a name="Devcon"></a>Devcon
+</h3><p>
+Devcon is a command-line tool that displays detailed information about devices on computer.
+</p><p>
+Devcon must be installed in the Hexagon SDK's tools directory at:
+</p><pre>tools/debug/devcon
+</pre><p>
+You can obtain it from here :
+</p><p>
+<a href="https://www.intrinsyc.com/hexagonsdk/windows/devcon.exe">https://www.intrinsyc.com/hexagonsdk/windows/devcon.exe</a>
+</p><h3>
+<a name="Eclipse"></a>Eclipse
+</h3><p>
+Eclipse must be installed in the Hexagon SDK's tools directory at:
+</p><pre>\tools\hexagon_ide            In Windows
+/tools/hexagon_ide            In Linux
+</pre><p>
+You can obtain it from here:
+</p><p>
+<a href="http://www.intrinsyc.com/hexagonsdk/windows/eclipse-cpp-juno-SR2-win32-x86_64.zip">http://www.intrinsyc.com/hexagonsdk/windows/eclipse-cpp-juno-SR2-win32-x86_64.zip</a> For Windows <a href="https://www.intrinsyc.com/hexagonsdk/linux/eclipse-cpp-juno-SR1-linux-gtk-x86_64.tar.gz">https://www.intrinsyc.com/hexagonsdk/linux/eclipse-cpp-juno-SR1-linux-gtk-x86_64.tar.gz</a> For Linux
+</p><h3>
+<a name="Hexagon%20IDE%20plugins"></a>Hexagon IDE plugins
+</h3><p>
+The Hexagon IDE plugins come with the Hexagon SDK and can be found at:
+</p><pre>\tools\hexagon_ide\ide_plugins                In Windows
+/tools/hexagon_ide/ide_plugins                In Linux
+</pre><p>
+Once Eclipse and the JRE are installed you must install the plugins to Eclipse by running the following script:
+</p><pre>python tools/scripts/manage_plugins.py -E tools/hexagon_ide 
+-Z {HEXAGON_SDK_ROOT}/tools/hexagon_ide/ide_plugins/juno/IDE.zip 
+-V {HEXAGON_SDK_ROOT}/tools/hexagon_ide/jre/bin
+</pre><p>
+If you want to install Hexagon plug-ins to an eclipse other than the default Hexagon SDK eclipse:
+</p><p>
+If you want to install into juno (or below) version:
+</p><pre>python tools/scripts/manage_plugins.py -E &lt;path_to_eclipse_folder&gt; 
+-Z {HEXAGON_SDK_ROOT}/tools/hexagon_ide/ide_plugins/juno/IDE.zip 
+-V {HEXAGON_SDK_ROOT}/tools/hexagon_ide/jre/bin
+</pre><p>
+Otherwise:
+</p><pre>python tools/scripts/manage_plugins.py -E &lt;path_to_eclipse_folder&gt; 
+-Z {HEXAGON_SDK_ROOT}/tools/hexagon_ide/ide_plugins/kepler/IDE.zip 
+-V {HEXAGON_SDK_ROOT}/tools/hexagon_ide/jre/bin
+</pre><p>
+Note: the path to IDE.zip must be an absolute path.
+</p><p>
+Hexagon IDE plugins can be uninstalled by running the following script:
+</p><pre>python /tools/scripts/manage_plugins.py -E /tools/hexagon_ide -U
+</pre><h3>
+<a name="Python"></a>Python
+</h3><p>
+For Windows:
+</p><p>
+The 64 bit version can be obtained from:
+</p><p>
+<a href="http://www.intrinsyc.com/hexagonsdk/windows/python-2.7.2.msi">http://www.intrinsyc.com/hexagonsdk/windows/python-2.7.2.msi</a>
+</p><p>
+For Linux:
+</p><p>
+On Ubuntu 14.04 and 16.04, python is available by default. SDK needs python 2.7, if python 2.7 is not installed, install it by using below command:
+</p><pre>$ apt-get install python2.7
+</pre><p>
+If you have multiple python versions installed, use virtualenv to set python2 as default by following steps:
+</p><pre>$ pip install virtualenv
+$ virtualenv -p python2 env2
+$ source env2/bin/activate
+</pre><p>
+If you do not have 'pip' installed, you can install it with <code>$ apt-get install python-pip</code>
+</p><p>
+Above commands will create a new virtual environment for python2 only for the install session.
+</p><h3>
+<a name="Android%20NDK"></a>Android NDK
+</h3><p>
+The Android NDK is required to build FastRPC modules. Contrary to what some of the Android documentation says, the Android SDK is not required in order to use the Android NDK.
+</p><p>
+Download the Android NDK version r19c and unzip into the Hexagon SDK's tools/android-ndk-r19c
+</p><pre>/tools/android-ndk-r19c
+</pre><p>
+Android NDK can be obtained from:
+</p><p>
+<a href="https://www.intrinsyc.com/hexagonsdk/windows/android-ndk-r19c-windows-x86_64.zip">https://www.intrinsyc.com/hexagonsdk/windows/android-ndk-r19c-windows-x86_64.zip</a> For Windows <a href="https://www.intrinsyc.com/hexagonsdk/linux/android-ndk-r19c-linux-x86_64.zip">https://www.intrinsyc.com/hexagonsdk/linux/android-ndk-r19c-linux-x86_64.zip</a> For Linux
+</p><p>
+If you choose to install the NDK to another location you must set the following environment variables:
+</p><ul type="circle">
+<li>
+<p>
+ANDROID_ROOT_DIR=&lt;path to android ndk&gt;
+</p>
+</li>
+</ul><p>
+For example extract android NDK to <code>D:\android-ndk-r19c</code> in Windows and to <code>/local/mnt/workspace/android-ndk-r19c</code> in Linux
+</p><pre style="font-size: 59%">set ANDROID_ROOT_DIR=D:\android-ndk-r19c                                                                      For Windows
+export ANDROID_ROOT_DIR=/local/mnt/workspace/android-ndk-r19c                         For Linux
+</pre><p>
+After following above steps, you will be able to build your example with make tree V=android_Debug.
+</p><h3>
+<a name="ADB/Fastboot%20on%20Linux"></a>ADB/Fastboot on Linux
+</h3><p>
+Install adb/fastboot by sudo apt-get update sudo apt-get install adb sudo apt-get install fastboot
+</p><h2>
+<a name="Installing%20SDK%20on%20a%20machine%20with%20no%20internet%20access"></a>Installing SDK on a machine with no internet access
+</h2><p>
+Installer needs internet access to download its dependencies. If you want to install SDK on a machine with no internet acceces, you need to configure the installer to pick the dependencies locally. The procedure of specifying dependencies locally is explained using the following steps.
+</p><h3>
+<a name="Steps%20to%20configure%20the%20installer%20to%20pick%20the%20dependencies%20locally"></a>Steps to configure the installer to pick the dependencies locally
+</h3><ol type="1">
+<li>
+<p>
+Copy the installer.exe(installer.bin for Linux) and hexagon_sdk_local.properties(hex_sdk_lnx_local.properties for Linux) to your local machine
+</p>
+</li><li>
+<p>
+Rename hexagon_sdk_local.properties to installer.properties
+</p>
+</li><li>
+<p>
+Change the dependencies paths in installer.properties to the location on your local machine where the dependencies are downloaded to.
+</p><p>
+You can download the dependencies from the following locations
+</p><div class="indent"><p>
+unzip=<a href="https://www.intrinsyc.com/hexagonsdk/windows/7z1900.msi">https://www.intrinsyc.com/hexagonsdk/windows/7z1900.msi</a>
+</p><p>
+gow=<a href="http://www.intrinsyc.com/hexagonsdk/windows/gow-0.8.0.zip">http://www.intrinsyc.com/hexagonsdk/windows/gow-0.8.0.zip</a>
+</p><p>
+eclipse=<a href="https://www.intrinsyc.com/hexagonsdk/windows/eclipse-cpp-photon-R-win32-x86_64.zip">https://www.intrinsyc.com/hexagonsdk/windows/eclipse-cpp-photon-R-win32-x86_64.zip</a> For Windows eclipse=<a href="https://www.intrinsyc.com/hexagonsdk/linux/eclipse-cpp-photon-R-linux-gtk-x86_64.tar.gz">https://www.intrinsyc.com/hexagonsdk/linux/eclipse-cpp-photon-R-linux-gtk-x86_64.tar.gz</a> For Linux
+</p><p>
+python=<a href="http://www.intrinsyc.com/hexagonsdk/windows/python-2.7.2.msi">http://www.intrinsyc.com/hexagonsdk/windows/python-2.7.2.msi</a>
+</p><p>
+androidndk=<a href="https://www.intrinsyc.com/hexagonsdk/windows/android-ndk-r19c-windows-x86_64.zip">https://www.intrinsyc.com/hexagonsdk/windows/android-ndk-r19c-windows-x86_64.zip</a> For Windows androidndk=<a href="https://www.intrinsyc.com/hexagonsdk/linux/android-ndk-r19c-linux-x86_64.zip">https://www.intrinsyc.com/hexagonsdk/linux/android-ndk-r19c-linux-x86_64.zip</a> For Linux
+</p><p>
+devcon=<a href="http://www.intrinsyc.com/hexagonsdk/windows/devcon.exe">http://www.intrinsyc.com/hexagonsdk/windows/devcon.exe</a>
+</p><p>
+libusb=<a href="http://www.intrinsyc.com/hexagonsdk/linux/libusb-1.0.so">http://www.intrinsyc.com/hexagonsdk/linux/libusb-1.0.so</a>
+</p></div>
+</li><li>
+<p>
+Make sure that the installer and installer.properties are in the same folder and run the Installer
+</p>
+</li><li>
+<p>
+Hexagon tools will need to be installed manually because it requires the gnu tools to be downloaded
+</p>
+</li>
+</ol><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

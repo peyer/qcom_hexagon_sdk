@@ -1,0 +1,19 @@
+#============================================================================
+#  Name:
+#    V_Linux.min
+#
+#  Description:
+#    This file specifies the items necessary to build Linux flavors.
+#
+#        Copyright 2005 - 2010 QUALCOMM Incorporated.
+#               All Rights Reserved.
+#            QUALCOMM Confidential and Proprietary
+#----------------------------------------------------------------------------
+
+V_ARCH=x86_64
+
+ifeq (1,$(V_x86))
+V_ARCH=x86
+endif
+
+include $(MAKE_D_DIR)/defines_gcc.min

@@ -1,0 +1,20 @@
+src/test_utils.c:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_mem.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_debug.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_perf.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_power.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_pls.h:
+src/pls.h:
+src/HAP_debug_printf.c:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/stddef/AEEStdDef.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/stddef/AEEStdErr.h:
+hexagon_Debug_dynamic_toolv83_v66/test_utils.o: src/test_utils.c
+hexagon_Debug_dynamic_toolv83_v66/test_utils.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_mem.h
+hexagon_Debug_dynamic_toolv83_v66/test_utils.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_debug.h
+hexagon_Debug_dynamic_toolv83_v66/test_utils.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_perf.h
+hexagon_Debug_dynamic_toolv83_v66/test_utils.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_power.h
+hexagon_Debug_dynamic_toolv83_v66/test_utils.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_pls.h
+hexagon_Debug_dynamic_toolv83_v66/test_utils.o: src/pls.h
+hexagon_Debug_dynamic_toolv83_v66/test_utils.o: src/HAP_debug_printf.c
+hexagon_Debug_dynamic_toolv83_v66/test_utils.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/stddef/AEEStdDef.h
+hexagon_Debug_dynamic_toolv83_v66/test_utils.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/stddef/AEEStdErr.h

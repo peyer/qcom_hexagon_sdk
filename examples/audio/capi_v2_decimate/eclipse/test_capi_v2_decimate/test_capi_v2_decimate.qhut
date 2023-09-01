@@ -1,0 +1,9 @@
+<Testcases>
+	<Testcase Name="TestCase1">
+		<ConfigFile>../../data/decimate_enable.cfg</ConfigFile>
+		<InputFile>../../data/input.raw</InputFile>
+		<OutputFile>../../data/output_.raw</OutputFile>
+		<Reference/>
+		<RunStatus>True</RunStatus>
+	</Testcase>
+</Testcases>

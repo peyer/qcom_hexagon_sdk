@@ -1,0 +1,30 @@
+ifeq ($(CDSP_FLAG), 1) 
+	LIB_DSPRPC = libcdsprpc
+else ifeq ($(MDSP_FLAG), 1) 
+	LIB_DSPRPC = libmdsprpc
+else ifeq ($(SLPI_FLAG), 1) 
+	LIB_DSPRPC = libsdsprpc
+else
+	LIB_DSPRPC = libadsprpc
+endif
+
+$(info ************  LIB=$(LIB_DSPRPC) ************) 
+
+# stand-alone fast9 executable
+BUILD_EXES+=fast9
+fast9_QAICIDLS += inc/fast9 \
+                        $(DSPCV_DIR)/inc/dspCV
+fast9_C_SRCS += src/fast9 \
+                       $V/fast9_stub \
+                       $V/dspCV_stub
+fast9_DLLS += $(LIB_DSPRPC)
+fast9_LIBS += rpcmem
+fast9_DEFINES += VERIFY_PRINT_ERROR
+fast9_LD_FLAGS += -lpthread
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

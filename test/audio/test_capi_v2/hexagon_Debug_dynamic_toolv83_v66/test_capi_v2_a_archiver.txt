@@ -1,0 +1,6 @@
+-rsc
+hexagon_Debug_dynamic_toolv83_v66/test_capi_v2.a
+hexagon_Debug_dynamic_toolv83_v66/test_capi_v2.o
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_test.o
+hexagon_Debug_dynamic_toolv83_v66/feedback_fwk.o
+hexagon_Debug_dynamic_toolv83_v66/feedback_module.o

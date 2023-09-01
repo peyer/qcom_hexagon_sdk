@@ -1,0 +1,36 @@
+src/capi_v2_gain_test.c:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/rtld/ship/hexagon_Debug_dynamic_toolv83_v66/dlfcn.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/test/common/test_main/hexagon_Debug_dynamic_toolv83_v66/ship/test_main.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/test/audio/test_capi_v2/hexagon_Debug_dynamic_toolv83_v66/ship/test_capi_v2.h:
+inc/capi_v2_gain.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/audio/capi_v2_utils_props/hexagon_Debug_dynamic_toolv83_v66/ship/capi_v2_utils_props.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/adsp_media_fmt.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_farf.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/audio_gain_calib.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/mmdefs.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/stddef/AEEStdDef.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_debug.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2_types.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2_events.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2_properties.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/adsp_begin_pack.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/adsp_end_pack.h:
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain_test.o: src/capi_v2_gain_test.c
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain_test.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/rtld/ship/hexagon_Debug_dynamic_toolv83_v66/dlfcn.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain_test.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/test/common/test_main/hexagon_Debug_dynamic_toolv83_v66/ship/test_main.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain_test.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/test/audio/test_capi_v2/hexagon_Debug_dynamic_toolv83_v66/ship/test_capi_v2.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain_test.o: inc/capi_v2_gain.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain_test.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/audio/capi_v2_utils_props/hexagon_Debug_dynamic_toolv83_v66/ship/capi_v2_utils_props.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain_test.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/adsp_media_fmt.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain_test.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_farf.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain_test.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain_test.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/audio_gain_calib.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain_test.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/mmdefs.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain_test.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/stddef/AEEStdDef.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain_test.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_debug.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain_test.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2_types.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain_test.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2_events.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain_test.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2_properties.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain_test.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/adsp_begin_pack.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain_test.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/adsp_end_pack.h

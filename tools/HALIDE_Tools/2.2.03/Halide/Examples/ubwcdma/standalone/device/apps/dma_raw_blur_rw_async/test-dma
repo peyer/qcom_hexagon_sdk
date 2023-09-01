@@ -1,0 +1,76 @@
+#!/bin/bash
+basedir=`dirname $0`
+cd $basedir
+rm -rf bin *.txt *.h *.o
+declare -i result=0
+set -x
+
+export V_ARCH=v66
+export V_ARCH_REV=hexagon_Release_dynamic_toolv82_v66
+export QURT_PATH=$HEXAGON_SDK_ROOT/libs/common/qurt/compute$V_ARCH
+DEVICE_INCS="-I$HEXAGON_SDK_ROOT/incs -I$HEXAGON_SDK_ROOT/incs/stddef -I bin/src -I ../../../../include -I ../../utils -I ../utils/bin/src -I$HEXAGON_SDK_ROOT/libs/common/remote/ship/android_Release -I ../../utils/ion -I ../../utils/dsp/include -I ../../utils/host/include"
+HVX_INC="-I $HEXAGON_SDK_ROOT/tools/HEXAGON_Tools/$HEXAGON_TOOLS_VER/Examples/HVX/common/include"
+QURT_INC="-I $QURT_PATH/include -I$QURT_PATH/include/qurt -I$QURT_PATH/include/posix"
+DMA_INC="-I$HEXAGON_SDK_ROOT/incs/ubwcdma/$V_ARCH -I$HEXAGON_SDK_ROOT/libs/fastcv/dspCV/$V_ARCH_REV/ship -I$HEXAGON_SDK_ROOT/test/common/test_util/$V_ARCH_REV/ship -I$HEXAGON_SDK_ROOT/libs/common/atomic/$V_ARCH_REV/ship -I$HEXAGON_SDK_ROOT/libs/common/rpcmem/$V_ARCH_REV/ship -I$HEXAGON_SDK_ROOT/libs/common/remote/ship/$V_ARCH_REV"
+HALIDE_INC="-I $HALIDE_ROOT/include"
+DMA_LIBS="$HEXAGON_SDK_ROOT/libs/ubwcdma/fw/$V_ARCH_REV"
+QURT_LIBS="$QURT_PATH"
+HL_HEXAGON_TARGET="$HEXAGON_SDK_ROOT/tools/HEXAGON_Tools/$HEXAGON_TOOLS_VER/Tools/target/hexagon/lib/$V_ARCH/G0"
+ANDROID_NDK_ROOT=$HEXAGON_SDK_ROOT/tools/android-ndk-r14b
+ANDROID_ARM64_TOOLCHAIN=$ANDROID_NDK_ROOT/install/android-21/arch-arm64
+ANDROID_SYSROOT="$ANDROID_NDK_ROOT/platforms/android-21/arch-arm64"
+
+mkdir -p bin/src
+
+$HEXAGON_SDK_ROOT/tools/qaic/Ubuntu14/qaic -I$HEXAGON_SDK_ROOT/incs/stddef rpc/dma_raw_blur_rw_async.idl -o bin/src
+
+mkdir -p bin
+g++ --std=c++11 -fno-rtti -DLOG2VLEN=7 -DRUN=1 -I $HALIDE_ROOT/include halide/dma_raw_blur_rw_async_generator.cpp $HALIDE_ROOT/tools/GenGen.cpp -L$HALIDE_ROOT/lib -lHalide -lpthread -ldl -lz -g -o bin/dma_halide 
+
+mkdir -p bin
+export LD_LIBRARY_PATH=$HALIDE_ROOT/lib
+./bin/dma_halide -g dma_raw_blur_rw_async_halide -o bin -e h,o,html -f dma_raw_blur_rw_async_halide target=hexagon-32-qurt-hexagon_dma-hvx_128-debug
+
+mkdir -p bin
+
+$HEXAGON_SDK_ROOT/tools/HEXAGON_Tools/$HEXAGON_TOOLS_VER/Tools/bin/hexagon-clang -mv66  -mhvx -mhvx-length=128B $DEVICE_INCS $QURT_INC -G0 -O2 -fPIC -c bin/src/dma_raw_blur_rw_async_skel.c -o bin/dma_raw_blur_rw_async_skel.o
+
+mkdir -p bin
+
+$HEXAGON_SDK_ROOT/tools/HEXAGON_Tools/$HEXAGON_TOOLS_VER/Tools/bin/hexagon-clang++ -mv66  -mhvx -mhvx-length=128B --std=c++11 -v -G0 -O2 -fPIC -g -I bin $DEVICE_INCS $QURT_INC $HALIDE_INC $HVX_INC $DMA_INC -c dsp/dma_raw_blur_rw_async_run.cpp -o bin/dma_raw_blur_rw_async_run.o
+
+mkdir -p bin
+
+$HEXAGON_SDK_ROOT/tools/HEXAGON_Tools/$HEXAGON_TOOLS_VER/Tools/bin/hexagon-clang++ --std=c++11 -mv66  -mhvx -mhvx-length=128B -fPIC -O2 -g $DEVICE_INCS $QURT_INC $HALIDE_INC $HVX_INC $DMA_INC -c dsp/print.cpp -o bin/print.o 
+
+mkdir -p bin/remote
+
+$HEXAGON_SDK_ROOT/tools/HEXAGON_Tools/$HEXAGON_TOOLS_VER/Tools/bin/hexagon-clang -mv66 -mG0lib -G0 -v -fPIC -shared -lc -Wl,--start-group bin/dma_raw_blur_rw_async_skel.o bin/dma_raw_blur_rw_async_halide.o bin/dma_raw_blur_rw_async_run.o bin/print.o -Wl,--end-group $HEXAGON_SDK_ROOT/libs/ubwcdma/fw/$V_ARCH_REV/ubwcdma_dynlib.so -o bin/remote/libdma_raw_blur_rw_async_skel.so;
+
+mkdir -p bin
+
+$ANDROID_ARM64_TOOLCHAIN/bin/aarch64-linux-android-c++ host/main.cpp --std=c++11 --sysroot $ANDROID_SYSROOT -I$HEXAGON_SDK_ROOT/libs/common/rpcmem/inc $DEVICE_INCS -fsigned-char -c -o bin/main-dma.o
+
+mkdir -p bin/host
+
+$ANDROID_ARM64_TOOLCHAIN/bin/aarch64-linux-android-gcc --sysroot $ANDROID_SYSROOT $DEVICE_INCS -I$HEXAGON_SDK_ROOT/libs/common/rpcmem/inc -fsigned-char bin/src/dma_raw_blur_rw_async_stub.c -llog -fPIE -pie -lcdsprpc -L$HEXAGON_SDK_ROOT/libs/common/remote/ship/android_Release_aarch64 -Wl,-soname,libdma_raw_blur_rw_async_stub.so -shared -o bin/host/libdma_raw_blur_rw_async_stub.so 
+
+mkdir -p bin
+
+$ANDROID_ARM64_TOOLCHAIN/bin/aarch64-linux-android-c++ --sysroot $ANDROID_SYSROOT $DEVICE_INCS -I$HEXAGON_SDK_ROOT/libs/common/rpcmem/inc -fsigned-char -O3 -c ../../utils/ion/ion_allocation.cpp -o bin/ion_allocation.o 
+
+ar q bin/libion_allocation.a bin/ion_allocation.o 
+
+mkdir -p bin
+
+$ANDROID_ARM64_TOOLCHAIN/bin/aarch64-linux-android-c++ --sysroot $ANDROID_SYSROOT $DEVICE_INCS -I$HEXAGON_SDK_ROOT/libs/common/rpcmem/inc -fsigned-char bin/main-dma.o -llog -fPIE -pie -lcdsprpc -Lbin -lion_allocation -L$HEXAGON_SDK_ROOT/libs/common/remote/ship/android_Release_aarch64 -L../utils -ldma_raw_blur_rw_async_stub -Lbin/host -o bin/main_raw_blur_rw-dma.out
+
+adb -s $RUN_DEVICE_ID  push ../../Images/adb_raw.bin /data
+adb -s $RUN_DEVICE_ID  push bin/main_raw_blur_rw-dma.out /data/
+adb -s $RUN_DEVICE_ID  shell chmod 777 /data/adb_ubwc_hana.bin
+adb -s $RUN_DEVICE_ID  push bin/host/libdma_raw_blur_rw_async_stub.so /system/lib64
+adb -s $RUN_DEVICE_ID  push bin/remote/libdma_raw_blur_rw_async_skel.so /system/lib/rfsa/adsp
+adb -s $RUN_DEVICE_ID  push bin/remote/libdma_raw_blur_rw_async_skel.so /data/
+adb -s $RUN_DEVICE_ID  shell cp /system/lib/rfsa/adsp/testsig*.so /data/
+adb -s $RUN_DEVICE_ID  shell cp /system/lib/rfsa/adsp/libhalide_hexagon_remote_skel.so /data/
+adb -s $RUN_DEVICE_ID  shell ADSP_LIBRARY_PATH=/data/ /data/main_raw_blur_rw-dma.out 512 512 512 0 0 "/data/adb_raw.bin" "/data/adb_raw.bin"

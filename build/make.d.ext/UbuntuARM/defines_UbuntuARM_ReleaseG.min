@@ -1,0 +1,19 @@
+# The Linaro tools path is located by the sdk using the environment 
+# variables UBUNTUARM_DIR, UBUNTUARM_TOOLS_DIR.
+#If this variable is not defined then a default value is used.
+
+ifndef SOFT_FLOAT
+   HARD_FLOAT=1
+endif
+
+ifndef UBUNTUARM_DIR
+   ifeq (1, $(OPENWRT))
+      UBUNTUARM_DIR = $(HEXAGON_SDK_ROOT)/tools/OpenWRT
+   else
+      UBUNTUARM_DIR = $(HEXAGON_SDK_ROOT)/tools/linaro
+   endif
+endif 
+
+ifndef UBUNTUARM_TOOLS_DIR
+   UBUNTUARM_TOOLS_DIR=$(UBUNTUARM_DIR)
+endif

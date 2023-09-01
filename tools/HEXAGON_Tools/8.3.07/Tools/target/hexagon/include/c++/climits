@@ -1,0 +1,12 @@
+// climits standard header
+#ifndef _CLIMITS_
+#define _CLIMITS_
+#include <yvals.h>
+
+#include <limits.h>
+#endif /* _CLIMITS_ */
+
+/*
+ * Copyright (c) 1992-2006 by P.J. Plauger.  ALL RIGHTS RESERVED.
+ * Consult your license regarding permissions and restrictions.
+V5.01:1566 */

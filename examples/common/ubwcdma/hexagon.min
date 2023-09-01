@@ -1,0 +1,74 @@
+##################################################################
+# Copyright (c) 2016-2017 Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+##################################################################
+
+# builds the dynamic skel
+BUILD_DLLS += libdma_apps_skel
+BUILD_DLLS += dma_apps_test_q
+BUILD_QEXES += dma_apps_test_q
+
+# FW specific compile and run options (must be included before qurt_libs.min)
+include $(HEXAGON_SDK_ROOT)/libs/ubwcdma/ubwcdma.min
+
+# QURT specific compile and run options
+#include $(QURT_INSTALL)/qurt_libs.min
+
+# Disable the next 2 lines to show all warnings as errors
+CC_FLAGS += -Wno-error
+CXX_FLAGS += -Wno-error
+# Indicate that compilation should be done for the 128
+# byte HVX mode.
+CC_FLAGS += $(MHVX_DOUBLE_FLAG)
+CXX_FLAGS += $(MHVX_DOUBLE_FLAG)
+
+libdma_apps_skel_QAICIDLS = inc/dma_apps
+libdma_apps_skel_C_SRCS += $V/dma_apps_skel
+libdma_apps_skel_C_SRCS += src/dma_apps_memcpy_imp
+libdma_apps_skel_C_SRCS += src/dma_apps_blend_imp
+libdma_apps_skel_C_SRCS += src/dma_apps_sum_hvx_imp
+libdma_apps_skel_C_SRCS += src/dma_memcpy
+libdma_apps_skel_C_SRCS += src/dma_blend
+libdma_apps_skel_C_SRCS += src/dma_sum_hvx
+libdma_apps_skel_DLLS += $(UBWCDMA_FW_LIBS) libdspCV_skel
+
+# Also build a stand-alone simulation environment executable unit test (only for static lib build)
+
+DEFINES += EXEC_NAME=\"$(BUILD_QEXES)\"
+ifeq (1,$(UBWCDMA_LEGACY_DRIVER))
+DEFINES += UBWCDMA_LEGACY_DRIVER
+endif
+
+dma_apps_test_q_OSTYPE = QURT
+
+# Qurt specific libraries
+dma_apps_test_q_LD_FLAGS = $(QURT_LD_FLAGS)
+dma_apps_test_q_LIBS += rpcmem
+dma_apps_test_q_DLLS += $(UBWCDMA_FW_SIM_LIBS)
+
+dma_apps_test_q_C_SRCS += src/dma_apps_test
+dma_apps_test_q_C_SRCS += src/dma_apps_memcpy_imp
+dma_apps_test_q_C_SRCS += src/dma_apps_blend_imp
+dma_apps_test_q_C_SRCS += src/dma_apps_sum_hvx_imp
+dma_apps_test_q_C_SRCS += src/dma_memcpy
+dma_apps_test_q_C_SRCS += src/dma_blend
+dma_apps_test_q_C_SRCS += src/dma_sum_hvx
+
+# After successful compilation run the memcpy application for linear NV12
+# as sanity
+#QEXE_CMD_OPTIONS += memcpy 32 256 0 0
+
+all:$(V)/sim_cmd.txt
+$(V)/sim_cmd.txt: FORCE
+	@echo $(QURT_QEXE_EXEC) $(BUILD_QEXES).so > $@
+
+FORCE:
+	
+
+# copy final build products to the ship directory
+BUILD_COPIES += \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

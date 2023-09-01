@@ -1,0 +1,30 @@
+ifeq ($(CDSP_FLAG), 1) 
+	LIB_DSPRPC = libcdsprpc
+else ifeq ($(MDSP_FLAG), 1) 
+	LIB_DSPRPC = libmdsprpc
+else ifeq ($(SLPI_FLAG), 1) 
+	LIB_DSPRPC = libsdsprpc
+else
+	LIB_DSPRPC = libadsprpc
+endif
+
+$(info ************  LIB=$(LIB_DSPRPC) ************) 
+
+# stand-alone dilate5x5_v60 executable
+BUILD_EXES+=dilate5x5_v60
+dilate5x5_v60_QAICIDLS += inc/dilate5x5_v60 \
+                        $(DSPCV_DIR)/inc/dspCV
+dilate5x5_v60_C_SRCS += src/dilate5x5_v60 \
+                       $V/dilate5x5_v60_stub \
+                       $V/dspCV_stub
+dilate5x5_v60_DLLS += $(LIB_DSPRPC)
+dilate5x5_v60_LIBS += rpcmem
+dilate5x5_v60_DEFINES += VERIFY_PRINT_ERROR
+dilate5x5_v60_LD_FLAGS += -lpthread
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

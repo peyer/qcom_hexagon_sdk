@@ -1,0 +1,12 @@
+/*==============================================================================
+  Copyright (c) 2016 Qualcomm Technologies, Inc.
+  All rights reserved. Qualcomm Proprietary and Confidential.
+==============================================================================*/
+
+#include "AEEStdDef.idl"
+#include "remote.idl"
+
+interface run_main_on_hexagon : remote_handle64 {
+   long doit(in unsigned long stack_size, in string name, rout long result);
+};
+

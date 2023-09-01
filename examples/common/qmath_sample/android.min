@@ -1,0 +1,17 @@
+# stand-alone qmath_sample executable
+BUILD_EXES+=qmath_sample
+qmath_sample_QAICIDLS += inc/qmath_sample \
+
+qmath_sample_C_SRCS += src/qmath_sample \
+                       $V/qmath_sample_stub \
+
+qmath_sample_DLLS += libadsprpc
+qmath_sample_LIBS += rpcmem
+qmath_sample_DEFINES += VERIFY_PRINT_ERROR
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

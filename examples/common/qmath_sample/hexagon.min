@@ -1,0 +1,47 @@
+# builds the static/dynamic skel
+ifeq (1,$(V_dynamic))
+BUILD_DLLS = libqmath_sample_skel
+else
+BUILD_LIBS += libqmath_sample_skel
+endif
+
+include $(QURT_IMAGE_DIR)/qurt_libs.min
+
+CC_FLAGS += $(MHVX_DOUBLE_FLAG) -mllvm -hexagon-eif=0
+
+# Use -O0 temporarily when trying to debug C code.
+#_OPT = -O0
+
+INCDIRS += inc
+
+libqmath_sample_skel_QAICIDLS = inc/qmath_sample 
+
+libqmath_sample_skel_C_SRCS += $V/qmath_sample_skel \
+                                src/qmath_sample_imp 
+
+libqmath_sample_skel_DLLS += libdspCV_skel \
+
+libqmath_sample_skel_LIBS += libqmath \
+
+# Also build a stand-alone simulation environment executable unit test (only for static lib build)
+ifneq (1,$(V_dynamic))
+
+BUILD_QEXES += qmath_sample_q
+qmath_sample_q_OSTYPE = QURT
+# The following is needed to pull QuRT support into the executable for simulation
+
+qmath_sample_q_LIBS+= libdspCV_skel libqmath 
+
+qmath_sample_q_C_SRCS+= src/qmath_sample \
+                    src/qmath_sample_imp \
+                    $V/qmath_sample_skel \
+
+QEXE_EXEC+=--dsp_clock 800
+endif #//ifneq (1,$(V_dynamic))
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

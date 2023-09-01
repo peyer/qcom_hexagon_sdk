@@ -1,0 +1,57 @@
+CC_FLAGS += $(MHVX_DOUBLE_FLAG)
+ASM_FLAGS += $(MHVX_DOUBLE_FLAG)
+
+#QURT includes
+include $(QURT_INSTALL)/qurt_libs.min
+#INCDIRS += $(QURT_IMAGE_DIR)/ADSP$(V_ARCH)MP/include
+
+ifeq ($(V_ARCH),$(filter $(V_ARCH),v65 v66))
+ifeq (1,$(sm6125))
+BUILD_DLLS += libadsp_hvx_add_constant
+SRCDIRS := ./src/v65_v66/sm6125
+INCDIRS += inc/v65_v66/sm6125
+INCDIRS += $(CAMERA_STREAMING_FRAMEWORK_DIR)/sm6125
+libadsp_hvx_add_constant_DLLS += libadsp_hvx_skel
+libadsp_hvx_add_constant.C_SRCS += $(SRCDIRS)/hvx_app_add_constant.c
+libadsp_hvx_add_constant.ASM_SRCS += asm_src/add_constant.S
+SKELLIB := $(CAMERA_STREAMING_FRAMEWORK_DIR)/libadsp_hvx_skel.so
+else
+ifeq (1,$(sm8250)$(sm7250))
+BUILD_DLLS += libdsp_streamer_add_constant
+INCDIRS += $(HEXAGON_SDK_ROOT)/libs/common/remote/ship/$(V)
+SRCDIRS := ./src/v67_v68
+INCDIRS += inc/v67_v68
+INCDIRS += $(CAMERA_STREAMING_FRAMEWORK_DIR)/sm8250_sm7250
+libdsp_streamer_add_constant_DLLS += libdsp_streamer_skel
+libdsp_streamer_add_constant.C_SRCS += $(SRCDIRS)/hvx_app_add_constant.c
+libdsp_streamer_add_constant.ASM_SRCS += asm_src/add_constant.S
+SKELLIB := $(CAMERA_STREAMING_FRAMEWORK_DIR)/libdsp_streamer_skel.so
+else
+BUILD_DLLS += libdsp_streamer_add_constant
+INCDIRS += $(HEXAGON_SDK_ROOT)/libs/common/remote/ship/$(V)
+SRCDIRS := ./src/v65_v66
+INCDIRS += inc/v65_v66
+INCDIRS += $(CAMERA_STREAMING_FRAMEWORK_DIR)/sdmxxx
+libdsp_streamer_add_constant_DLLS += libdsp_streamer_skel
+libdsp_streamer_add_constant.C_SRCS += $(SRCDIRS)/hvx_app_add_constant.c
+libdsp_streamer_add_constant.ASM_SRCS += asm_src/add_constant.S
+SKELLIB := $(CAMERA_STREAMING_FRAMEWORK_DIR)/libdsp_streamer_skel.so
+endif
+endif
+else
+BUILD_DLLS += libadsp_hvx_add_constant
+INCDIRS += inc/v60_v62
+SRCDIRS := ./src/v60_v62
+libadsp_hvx_add_constant_DLLS += libadsp_hvx_skel
+libadsp_hvx_add_constant.C_SRCS += $(SRCDIRS)/hvx_app_add_constant.c
+libadsp_hvx_add_constant.ASM_SRCS += asm_src/add_constant.S
+SKELLIB := $(CAMERA_STREAMING_FRAMEWORK_DIR)/libadsp_hvx_skel.so
+endif
+#   $(CAMERA_STREAMING_FRAMEWORK_DIR)/$(SKELLIB) \
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SKELLIB) \
+   $(SHIP_DIR)/ ;

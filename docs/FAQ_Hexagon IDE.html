@@ -1,0 +1,861 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><title>WinNT_Debug/ship/WinNT/FAQ_Hexagon IDE.html</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="images/sidebar_top.jpg"></top><script src="scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, false)"><input id="searchButton" onclick="postFunction(false)" type="button" value="Search"></form><p>
+<a href="index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<p>
+<a href="sitemap.html">Sitemap</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="Audio/Applications.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="Voice/Applications.html">Voice</a>
+</p><p>
+<a href="Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="Audio/Examples.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="Examples_Common.html">Common</a>
+</p><p>
+<a href="Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="Tools_Signing.html">Signing</a>
+</p><p>
+<a href="Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="FAQ_Common.html">Common</a>
+</p><p>
+<a href="FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="Support_Contact.html">Contact</a>
+</p><center><img src="images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h2>
+<a name="Eclipse%20IDE%20FAQ"></a>Eclipse IDE FAQ
+</h2><div class="toc"><div class="tocLevel"><div class="tocLevel"><a href="#While%20specifying%20the%20plug-in%20archive%20location%20during%20installation,%20why%20does%20the%20error%20“duplicate%20repository”%20appear%3f">While specifying the plug-in archive location during installation, why does the error &#8220;duplicate repository&#8221; appear?</a></div><div class="tocLevel"><a href="#Why%20can't%20Eclipse%20detect%20plug-in%20dependencies%20while%20installing%20plug-ins%20from%20the%20archive%3f">Why can't Eclipse detect plug-in dependencies while installing plug-ins from the archive?</a></div><div class="tocLevel"><a href="#After%20installing%20the%20Hexagon%20Eclipse%20plug-ins,%20why%20does%20“Hexagon%20Project”%20not%20appear%20as%20an%20option%20under%20the%20File%20-%3e%20New%20menu%20command%3f">After installing the Hexagon Eclipse plug-ins, why does &#8220;Hexagon Project&#8221; not appear as an option under the File -&gt; New menu command?</a></div><div class="tocLevel"><a href="#Why%20do%20errors%20appear%20in%20the%20C/C++%20editor%20even%20though%20the%20code%20looks%20OK%3f">Why do errors appear in the C/C++ editor even though the code looks OK?</a></div><div class="tocLevel"><a href="#Why%20does%20the%20build%20log%20state%20“No%20such%20file%20or%20directory”%20even%20though%20the%20file%20is%20available%20and%20accessible%20to%20a%20newly-created%20template%20project%3f">Why does the build log state &#8220;No such file or directory&#8221; even though the file is available and accessible to a newly-created template project?</a></div><div class="tocLevel"><a href="#Why%20does%20the%20menu%20item%20“Build%20Project”%20appear%20grayed%20out%20when%20I%20right-click%20on%20a%20project%3f">Why does the menu item &#8220;Build Project&#8221; appear grayed out when I right-click on a project?</a></div><div class="tocLevel"><a href="#Why%20do%20I%20get%20build%20errors%20in%20a%20project%20after%20integrating%20a%20library%3f">Why do I get build errors in a project after integrating a library?</a></div><div class="tocLevel"><a href="#Why%20do%20warnings%20in%20makefile%20are%20displayed%20as%20build%20errors%20in%20IDE%20%3f">Why do warnings in makefile are displayed as build errors in IDE ?</a></div><div class="tocLevel"><a href="#Why%20do%20I%20get%20an%20error%20while%20launching%20the%20Hexagon%20GDB%20debugger%3f">Why do I get an error while launching the Hexagon GDB debugger?</a></div><div class="tocLevel"><a href="#While%20debugging%20or%20running%20a%20project,%20why%20aren't%20certain%20views%20visible%20(Console,%20Registers,%20Memory,%20Disassembly)%3f">While debugging or running a project, why aren't certain views visible (Console, Registers, Memory, Disassembly)?</a></div><div class="tocLevel"><a href="#When%20right-clicking%20on%20an%20Elite%20project%20or%20Unit%20Test%20Executable%20project,%20why%20is%20the%20menu%20option%20Integrate%20Library%20not%20visible%3f">When right-clicking on an Elite project or Unit Test Executable project, why is the menu option Integrate Library not visible?</a></div><div class="tocLevel"><a href="#When%20using%20the%20Integrate%20Library%20wizard,%20why%20are%20some%20projects%20not%20listed%20even%20though%20they%20are%20in%20the%20workspace%3f">When using the Integrate Library wizard, why are some projects not listed even though they are in the workspace?</a></div><div class="tocLevel"><a href="#When%20trying%20to%20start%20the%20debugger,%20why%20do%20I%20get%20the%20error%20“IDE%20taking%20too%20long%20to%20connect”%3f">When trying to start the debugger, why do I get the error &#8220;IDE taking too long to connect&#8221;?</a></div><div class="tocLevel"><a href="#Why%20does%20the%20debugger%20not%20break%20immediately%20after%20the%20required%20“Debugger”%20line%20in%20a%20script%3f">Why does the debugger not break immediately after the required &#8220;Debugger&#8221; line in a script?</a></div><div class="tocLevel"><a href="#Why%20does%20an%20Elite%20application%20stop%20with%20the%20error%20“Unhandled%20error:attempt%20to%20concatenate%20a%20nil%20value”%3f">Why does an Elite application stop with the error &#8220;Unhandled error:attempt to concatenate a nil value&#8221;?</a></div><div class="tocLevel"><a href="#Why%20does%20Hexagon%20tools%20fails%20to%20execute%20or%20launch%20in%20IDE%3f">Why does Hexagon tools fails to execute or launch in IDE?</a></div><div class="tocLevel"><a href="#Why%20launching(run/debug)%20RTOS%20project%20fails%3f">Why launching(run/debug) RTOS project fails?</a></div><div class="tocLevel"><a href="#How%20to%20refresh%20debug%20view's,%20(ex:%20Registers%20view,%20Disassembly%20view),%20if%20it%20is%20not%20refreshing%20automatically%3f">How to refresh debug view's, (ex: Registers view, Disassembly view), if it is not refreshing automatically?</a></div><div class="tocLevel"><a href="#Why%20does%20running%20Android%20NDK%20project%20say:%20Error:%20Program%20“arm-linux-androideabi-gcc”%20not%20found%20in%20PATH%3f">Why does running Android NDK project say: Error: Program &#8220;arm-linux-androideabi-gcc&#8221; not found in PATH?</a></div><div class="tocLevel"><a href="#Build%20happened%20successfully%20but%20why%20is%20the%20executable%20not%20seen%20under%20the%20project%20in%20project%20explorer%3f">Build happened successfully but why is the executable not seen under the project in project explorer?</a></div><div class="tocLevel"><a href="#Why%20does%20importing%20a%20Hexagon%20project%20fail%20with%20the%20error%20Invalid%20Project%20Description%3f">Why does importing a Hexagon project fail with the error Invalid Project Description?</a></div></div><div class="tocLevel"><a href="#Audio">Audio</a><div class="tocLevel"><a href="#Unable%20to%20launch%20Generic%20view,%20no%20data%20for%20this%20module%20with%20selected%20indices">Unable to launch Generic view, no data for this module with selected indices</a></div></div></div><h3>
+<a name="While%20specifying%20the%20plug-in%20archive%20location%20during%20installation,%20why%20does%20the%20error%20“duplicate%20repository”%20appear%3f"></a>While specifying the plug-in archive location during installation, why does the error &#8220;duplicate repository&#8221; appear?
+</h3><p>
+In the <code>Install Software</code> dialog box, navigate to <code>Available Software Sites</code> and remove the previously-specified repositories which point to the same archive location. Then re-perform the steps for installing the plug-in archive.
+</p><h3>
+<a name="Why%20can't%20Eclipse%20detect%20plug-in%20dependencies%20while%20installing%20plug-ins%20from%20the%20archive%3f"></a>Why can't Eclipse detect plug-in dependencies while installing plug-ins from the archive?
+</h3><p>
+There are three possible reasons for this:
+</p><ul type="circle">
+<li>
+<p>
+The system does not have a working internet connection to contact the relevant software sites.
+</p>
+</li><li>
+<p>
+The Eclipse Indigo repository checkbox is not selected in <code>Available Software Sites</code> for installation. If this is the case, select the checkbox for this repository and retry the installation.
+</p>
+</li><li>
+<p>
+The <code>Contact all update sites during install to find required software</code> checkbox is not selected. If this is the case, select the checkbox and retry the installation.
+</p>
+</li>
+</ul><h3>
+<a name="After%20installing%20the%20Hexagon%20Eclipse%20plug-ins,%20why%20does%20“Hexagon%20Project”%20not%20appear%20as%20an%20option%20under%20the%20File%20-%3e%20New%20menu%20command%3f"></a>After installing the Hexagon Eclipse plug-ins, why does &#8220;Hexagon Project&#8221; not appear as an option under the <code>File -&gt; New menu</code> command?
+</h3><p>
+Choose <code>Open Perspective</code> from the <code>Window</code> command and select <code>Hexagon C/C++ Perspective</code>, then try the command <code>File -&gt; New</code> again to see if the Hexagon project option now appears.
+</p><p>
+The File menu will now contain the <code>Hexagon Project</code> option.
+</p><h3>
+<a name="Why%20do%20errors%20appear%20in%20the%20C/C++%20editor%20even%20though%20the%20code%20looks%20OK%3f"></a>Why do errors appear in the C/C++ editor even though the code looks OK?
+</h3><p>
+There are three possible reasons for this:
+</p><ul type="circle">
+<li>
+<p>
+The text strings for the project name, workspace name, or SDK root may contain space characters. Remove any spaces that appear in these strings and try again.
+</p>
+</li><li>
+<p>
+Indexing of the project may not have occurred properly. To fix this, right-click on the project and choose <code>Index -&gt; Rebuild</code>.
+</p>
+</li><li>
+<p>
+The Hexagon-specific compiler intrinsics (e.g., <code>__builtin_Q6A2_swiz</code>) are not recognized by the C/C++ editor, and thus flagged with errors. Such errors will not appear in future releases of the Hexagon IDE - please ignore them for now.
+</p>
+</li>
+</ul><h3>
+<a name="Why%20does%20the%20build%20log%20state%20“No%20such%20file%20or%20directory”%20even%20though%20the%20file%20is%20available%20and%20accessible%20to%20a%20newly-created%20template%20project%3f"></a>Why does the build log state &#8220;No such file or directory&#8221; even though the file is available and accessible to a newly-created template project?
+</h3><p>
+A possible reason for this error could be the presence of space characters in the text strings specifying the project path or Hexagon SDK Root location. Remove any spaces that appear in these strings and try again.
+</p><h3>
+<a name="Why%20does%20the%20menu%20item%20“Build%20Project”%20appear%20grayed%20out%20when%20I%20right-click%20on%20a%20project%3f"></a>Why does the menu item &#8220;Build Project&#8221; appear grayed out when I right-click on a project?
+</h3><p>
+This is a problem with Eclipse. To enable the menu item, press the F5 key to refresh the project.
+</p><h3>
+<a name="Why%20do%20I%20get%20build%20errors%20in%20a%20project%20after%20integrating%20a%20library%3f"></a>Why do I get build errors in a project after integrating a library?
+</h3><p>
+This can happen if the pathname of the integrated library is incorrect:
+</p><ul type="circle">
+<li>
+<p>
+Check if you integrated the library using the same configuration it was built with. For example, if a library is built using the Release configuration, you cannot integrate the library using the Debug configuration.
+</p>
+</li><li>
+<p>
+Check the linker settings for the executable project to see if the library that was integrated is actually present.
+</p>
+</li>
+</ul><h3>
+<a name="Why%20do%20warnings%20in%20makefile%20are%20displayed%20as%20build%20errors%20in%20IDE%20%3f"></a>Why do warnings in makefile are displayed as build errors in IDE ?
+</h3><p>
+You need to add your warnings in makefile as $(Warning WARNING) instead of $(Warning). This is because Eclipse error parsing patterns are not capable of parsing $(Warning) as warning, so we need to add additional keyword WARNING. You can also use $(info) if you want to print any information
+</p><h3>
+<a name="Why%20do%20I%20get%20an%20error%20while%20launching%20the%20Hexagon%20GDB%20debugger%3f"></a>Why do I get an error while launching the Hexagon GDB debugger?
+</h3><p>
+If the system path does not include the location of the Hexagon tools, you may experience problems launching <code>hexagon-gdb</code> from the IDE.
+</p><p>
+If this happens, restart the IDE using the command <code>All Programs -&gt; Hexagon SDK -&gt; Launch IDE</code>, then try launching <code>hexagon-gdb</code> again.
+</p><h3>
+<a name="While%20debugging%20or%20running%20a%20project,%20why%20aren't%20certain%20views%20visible%20(Console,%20Registers,%20Memory,%20Disassembly)%3f"></a>While debugging or running a project, why aren't certain views visible (Console, Registers, Memory, Disassembly)?
+</h3><p>
+Choose <code>Show View</code> from the <code>Window</code> menu and select the required view. If the view you want is not listed, select Other and then choose it from there.
+</p><h3>
+<a name="When%20right-clicking%20on%20an%20Elite%20project%20or%20Unit%20Test%20Executable%20project,%20why%20is%20the%20menu%20option%20Integrate%20Library%20not%20visible%3f"></a>When right-clicking on an Elite project or Unit Test Executable project, why is the menu option Integrate Library not visible?
+</h3><p>
+This happens when any &#8220;invalid&#8221; projects exist in the workspace. Projects can sometimes enter an invalid state after an unsuccessful project deletion or when any of the project files get corrupted. To overcome this issue, open the workspace in the file explorer (because invalid projects may not appear in Project Explorer) and then remove any invalid projects from the workspace.
+</p><h3>
+<a name="When%20using%20the%20Integrate%20Library%20wizard,%20why%20are%20some%20projects%20not%20listed%20even%20though%20they%20are%20in%20the%20workspace%3f"></a>When using the Integrate Library wizard, why are some projects not listed even though they are in the workspace?
+</h3><p>
+The Integrate Library feature can only integrate static libraries into an Elite project or unit test executable project. Thus only static library projects are visible in the wizard.
+</p><h3>
+<a name="When%20trying%20to%20start%20the%20debugger,%20why%20do%20I%20get%20the%20error%20“IDE%20taking%20too%20long%20to%20connect”%3f"></a>When trying to start the debugger, why do I get the error &#8220;IDE taking too long to connect&#8221;?
+</h3><p>
+This happens when the application cannot attach to the debugger because the debug port is already being used.
+</p><p>
+This can be resolved by changing the port number. Make sure that the ports in the application code match what is specified in the IDE configuration.
+</p><h3>
+<a name="Why%20does%20the%20debugger%20not%20break%20immediately%20after%20the%20required%20“Debugger”%20line%20in%20a%20script%3f"></a>Why does the debugger not break immediately after the required &#8220;Debugger&#8221; line in a script?
+</h3><p>
+Switch to the Debug perspective and then try starting the debug session again.
+</p><h3>
+<a name="Why%20does%20an%20Elite%20application%20stop%20with%20the%20error%20“Unhandled%20error:attempt%20to%20concatenate%20a%20nil%20value”%3f"></a>Why does an Elite application stop with the error &#8220;Unhandled error:attempt to concatenate a nil value&#8221;?
+</h3><p>
+An Elite application may stop after generating the following error output:
+</p><pre>Unhandled error: llua_vminit.lua:12: attempt to concatenate a nil value
+stack traceback:
+llua_vminit.lua:12: in main chunk
+(tail call): ?
+[C]: in function 'xpcall'
+[string <span style="color: darkred">"_preamble"</span>]:9: in main chunk
+[C]: ?
+</pre><p>
+If this occurs, set the environment variable <code>HEXAGON_SDK_ROOT</code> by running the command file <code>setup_sdk_env.cmd</code>.
+</p><h3>
+<a name="Why%20does%20Hexagon%20tools%20fails%20to%20execute%20or%20launch%20in%20IDE%3f"></a>Why does Hexagon tools fails to execute or launch in IDE?
+</h3><p>
+If the System <code>PATH</code> variable is not proper, then hexagon tools fails to execute or launch.
+</p><p>
+Eg.,If <code>PATH</code> variable has two or more semi-colons, as a de-limiter to the paths.
+</p><h3>
+<a name="Why%20launching(run/debug)%20RTOS%20project%20fails%3f"></a>Why launching(run/debug) RTOS project fails?
+</h3><p>
+If the project was created with default tools path and the environmental variable <code>PATH</code> has both 7.* and 5.* tools path, then while launching QuRT will pick dll which it finds first, (maybe 7.*) and hence it may fail.
+</p><h3>
+<a name="How%20to%20refresh%20debug%20view's,%20(ex:%20Registers%20view,%20Disassembly%20view),%20if%20it%20is%20not%20refreshing%20automatically%3f"></a>How to refresh debug view's, (ex: Registers view, Disassembly view), if it is not refreshing automatically?
+</h3><p>
+Refresh button for the debug views can be enabled as follows: <code>Window (menu) -&gt; Customize Perspective -&gt; Command Groups Availability (tab) -&gt; Select Debug Update Modes (check box) -&gt; Click on OK button</code> A new refresh icon will appear in all the debug views (ex: Registers view, Disassembly view, Memory view etc) and this button can be used to refresh the view.
+</p><p>
+Note: You will have to restart eclipse for the change to take place.
+</p><h3>
+<a name="Why%20does%20running%20Android%20NDK%20project%20say:%20Error:%20Program%20“arm-linux-androideabi-gcc”%20not%20found%20in%20PATH%3f"></a>Why does running Android NDK project say: Error: Program &#8220;arm-linux-androideabi-gcc&#8221; not found in PATH?
+</h3><p>
+The android tools root might not be present at the path specified during the creation of project. One of the reason for this can be updating the Hexagon-SDK.
+</p><ul type="circle">
+<li>
+<p>
+Right click on the project -&gt; Properties
+</p>
+</li><li>
+<p>
+A new window <code>Properties for &lt;project_name&gt;</code> opens, select <code>C/C++ Build</code> -&gt; <code>Environment</code>
+</p>
+</li><li>
+<p>
+Under the table <code>Environment variables to set</code>, <code>Select ANDRIOD_TOOLS_ROOT</code> -&gt; <code>Click Edit</code> and verify if the above path exists
+</p>
+</li><li>
+<p>
+If the path does not exist, provide the new android-ndk path, which is present at <code>&lt;HEXAGON_SDK_ROOT&gt;/tools/android-ndk-&lt;version&gt;</code>
+</p>
+</li>
+</ul><h3>
+<a name="Build%20happened%20successfully%20but%20why%20is%20the%20executable%20not%20seen%20under%20the%20project%20in%20project%20explorer%3f"></a>Build happened successfully but why is the executable not seen under the project in project explorer?
+</h3><p>
+A possible reason for this is that the newly generated executable was not read properly by the project. Try refreshing the project by Right click on Project -&gt; Click Refresh.
+</p><h3>
+<a name="Why%20does%20importing%20a%20Hexagon%20project%20fail%20with%20the%20error%20Invalid%20Project%20Description%3f"></a>Why does importing a Hexagon project fail with the error <code>Invalid Project Description</code>?
+</h3><p>
+The project files might be corrupted and hence this error might occur. Another reason could be that the workspace location (Ex: C:\Users\Dummy\calculator) might be same as the project location (Ex: C:\Users\Dummy\calculator), the workspace location and project location must be different.
+</p><h2>
+<a name="Audio"></a>Audio
+</h2><h3>
+<a name="Unable%20to%20launch%20Generic%20view,%20no%20data%20for%20this%20module%20with%20selected%20indices"></a>Unable to launch Generic view, no data for this module with selected indices
+</h3><p>
+While doing real time calibration of an audio module which is a part of COPP topology, if an error is encountered as shown in the attachment, it's because of a spurious topology created in COPP chain. This is an extra topology created along with normal topology which can be used for real time audio calibration. To do RTAC of custom module, in the topology RTC view, go to audio use case running and click on the drop down tab to select the second topology when the audio playback session is in progress. After that, RTC of custom module should be possible.
+</p><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

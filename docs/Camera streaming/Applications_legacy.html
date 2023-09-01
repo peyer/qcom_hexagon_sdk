@@ -1,0 +1,1316 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><title>Camera streaming</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="../images/sidebar_top.jpg"></top><script src="../scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, true)"><input id="searchButton" onclick="postFunction(true)" type="button" value="Search"></form><p>
+<a href="../index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="../feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="../hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="../images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="../hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="../images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="../images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="../Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="../Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="../Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="../Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="../Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="../Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="../HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="../Audio/Applications.html">Audio</a>
+</p><p>
+<a href="../Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="../Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="../FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="../Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="../Voice/Applications.html">Voice</a>
+</p><p>
+<a href="../Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="../APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="../APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="../APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="../APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="../Audio/Examples.html">Audio</a>
+</p><p>
+<a href="../Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="../Examples_Common.html">Common</a>
+</p><p>
+<a href="../Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="../Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="../Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="../Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="../CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="../Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="../Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="../Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="../Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="../Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="../Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="../Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="../Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="../Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="../Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="../Tools_Signing.html">Signing</a>
+</p><p>
+<a href="../Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="../Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="../FAQ_Common.html">Common</a>
+</p><p>
+<a href="../FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="../FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="../FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="../Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="../Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="../Support_Contact.html">Contact</a>
+</p><center><img src="../images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h1>
+<a name="Camera%20streaming"></a>Camera streaming
+</h1><div class="toc"><div class="tocLevel"><a href="#Introduction">Introduction</a></div><div class="tocLevel"><a href="#Camera%20streaming%20overview">Camera streaming overview</a><div class="tocLevel"><a href="#HVX%20streaming%20module">HVX streaming module</a></div><div class="tocLevel"><a href="#HVX%20streaming%20data%20flow">HVX streaming data flow</a></div><div class="tocLevel"><a href="#HVX%20streaming%20data%20format">HVX streaming data format</a></div><div class="tocLevel"><a href="#HVX%20streaming%20data%20padding/stripping%20support">HVX streaming data padding/stripping support</a></div><div class="tocLevel"><a href="#HVX%20streaming%20frame%20format">HVX streaming frame format</a></div></div><div class="tocLevel"><a href="#Camera%20streaming%20framework%20and%20APIs">Camera streaming framework and APIs</a><div class="tocLevel"><a href="#OEM%20plugin%20API">OEM plugin API</a></div><div class="tocLevel"><a href="#QDSP6%20lib%20API">QDSP6 lib API</a></div></div><div class="tocLevel"><a href="#Communication%20and%20buffers">Communication and buffers</a><div class="tocLevel"><a href="#Receiving%20buffer%20(RX)">Receiving buffer (RX)</a></div><div class="tocLevel"><a href="#Transmission%20buffer%20(TX)">Transmission buffer (TX)</a></div><div class="tocLevel"><a href="#Communication%20buffer%20(CX)">Communication buffer (CX)</a></div></div></div><h2>
+<a name="Introduction"></a>Introduction
+</h2><p>
+Camera streaming enables powerful and efficient on-the-fly pixel manipulation of camera sensor data. The streaming module is designed to process pixel data in Bayer domain. It is ideal for camera ISP pre-processing or handling camera sensors with non-conventional Bayer format.
+</p><p>
+Camera streaming application consists of HVX streaming hardware as well as the software stack that controls it. HVX streaming hardware is integrated as part of Snapdragon SOC on selected chip-sets. The software stack is provided by both Qualcomm camera driver and application developers.
+</p><p>
+Please see the <a href="Examples.html">Dependencies</a> page for details about requirement.
+</p><h2>
+<a name="Camera%20streaming%20overview"></a>Camera streaming overview
+</h2><h3>
+<a name="HVX%20streaming%20module"></a>HVX streaming module
+</h3><p>
+The HVX streaming module is a piece of hardware located between ISP interface and the pixel interface of the first module of ISP, as illustrated below.
+</p><left><img src="images/hvx_streaming_module.png"></left><p>
+This streaming module consists of two parts, one is the data mover part, which interfaces with camera ISP through a dedicated private AXI bus. The data mover part is controlled by a programmable register interface.
+</p><p>
+The second part is tightly integrated QDSP6. It receives and transmits data to and from QDSP6's L2 cache so QDSP6 can access, change and compute on these pixel values from camera sensor. This is controlled by program written in C/C++ with QDSP6 instructions.
+</p><h3>
+<a name="HVX%20streaming%20data%20flow"></a>HVX streaming data flow
+</h3><p>
+Typical HVX streaming data flow can be illustrated in the following diagram.
+</p><left><img src="images/hvx_streaming_data_flow.png"></left><p>
+During the hvx streaming process, there is no system bus activity or memory read/write access for pixel data. Pixel data from camera sensor will be first fetched from ISP interface and saved to receiver buffer in QDSP6's L2 cache. From there, QDSP6 can perform operations on these data.
+</p><p>
+The computed pixel data are put into transmission buffer, which is also located in QDSP6's L2 cache. They are fetched and sent to ISP's first module's pixel interface simultaneously, with some delay.
+</p><p>
+Transmission and receiving run at the same speed. This requires QDSP6 to process the pixel data faster than the rate of transmitting and receiving data to/from VFE.
+</p><p>
+QDSP6 can also output some of its computing results to system memory through system bus. This takes complete different data path as streaming, and does not impact each other.
+</p><h3>
+<a name="HVX%20streaming%20data%20format"></a>HVX streaming data format
+</h3><p>
+The HVX streaming module takes Bayer raw data patterns: RGGB, BGGR, GRBG, GBRG, as well as other Bayer-like pixel data format. It supports 8, 10, 12, 14 bits data.
+</p><p>
+HVX streaming module will unpack Bayer raw data, and put each pixel/component in a 16 bits word, and make it LSB aligned. Like this,
+</p><left><img src="images/hvx_streaming_pixel_data_format.png"></left><p>
+The unpacked 16bit data is what a programmer will see in QDSP6's L2 cache.
+</p><h3>
+<a name="HVX%20streaming%20data%20padding/stripping%20support"></a>HVX streaming data padding/stripping support
+</h3><p>
+Input padding is supported by streamer hardware. When a line is received, eight extra pixels may be added to the beginning and end of the line. The added pixels may be zeros or a replication of recent pixels.
+</p><left><img src="images/padding.PNG"></left><p>
+Output stripping is also supported by streamer hardware. Once enabled, streamer will transmit data offset from location 0 by 8 pixels.
+</p><h3>
+<a name="HVX%20streaming%20frame%20format"></a>HVX streaming frame format
+</h3><p>
+A frame sent from camera sensor contains both valid pixels and invalid pixel data. It also includes control strobes such as start-of-frame (SOF), end-of-frame (EOF), start-of-line (SOL), end-of-line (EOL) etc The pixel data between any EOL and following SOL control strobe and the lines between EOF and following SOF control strobes is referred to as invalid pixel data. The Streamer Hardware strips the invalid pixel data along with the control strobes and stores only the active pixel data in the L2$ which will be processed by the DSP. The stripped control strobes will be re-generated at end of QDSP6 process, where pixel data is sent back to ISP's pixel interface.
+</p><left><img src="images/hvx_streaming_frame_format.png"></left><h2>
+<a name="Camera%20streaming%20framework%20and%20APIs"></a>Camera streaming framework and APIs
+</h2><p>
+Camera streaming framework is deeply integrated with Qualcomm camera driver in order to provide accurate timing required by streaming. This framework enables ARM/DSP interaction, HVX and ISP synchronization, as well as integration of QDSP6 lib and OEM plugin. This diagram gives better understanding of how camera streaming framework works.
+</p><left><img src="images/camera_streaming_framework.png"></left><p>
+The blue blocks are libraries to be implemented by user. They are OEM plugin and QDSP6 lib respectively.
+</p><ul type="circle">
+<li>
+<p>
+The OEM plugin runs in Android's user-space driver. This lib provides important information that controls the operations on streaming pixel data by HVX, including sensor configurations, threading control, algorithm coefficients, as well as parameters to be updated at runtime. Application developers are expected to implement this lib using APIs provided by Qualcomm.
+</p>
+</li><li>
+<p>
+QDSP6 lib is the core library where developer's own optimized algorithm will run.
+</p>
+</li>
+</ul><h3>
+<a name="OEM%20plugin%20API"></a>OEM plugin API
+</h3><p>
+OEM plugin API and implementation could be updated in Android build release. Please always refer to Android build for latest version. Place to check in Android build:
+</p><pre>&lt;platform&gt;/vendor/qcom/proprietary/mm-camerasdk/hvx
+</pre><p>
+OEM plugin is responsible for configuring the mode, size, and many other important parameters for camera streaming case. It is also responsible to send QDSP6 per-frame updates on the fly. Algorithm specific information can only be determined by the algorithm developer themselves.
+</p><p>
+In order to achieve that, user lib need to be implemented conforming to following API:
+</p><pre>      <span style="color: blue">typedef</span> <span style="color: blue">struct</span> _hvx_lib_sensor_info_t {
+        hvx_sensor_filter_arrangement bayer_format;
+        <span style="color: blue">unsigned</span> <span style="color: blue">int</span>                  bits_per_pixel;
+      } hvx_lib_sensor_info_t;
+      ...
+      <span style="color: blue">typedef</span> <span style="color: blue">struct</span> _hvx_lib_isp_info_t {
+        <span style="color: blue">unsigned</span> <span style="color: blue">int</span> camif_width;
+        <span style="color: blue">unsigned</span> <span style="color: blue">int</span> camif_height;
+        <span style="color: blue">unsigned</span> <span style="color: blue">int</span> sensor_offset;
+      } hvx_lib_isp_info_t;
+      ...
+      <span style="color: blue">typedef</span> <span style="color: blue">struct</span> _hvx_lib_single_isp_info_t {
+        hvx_lib_isp_info_t isp_info;
+      } hvx_lib_single_isp_info_t;
+      ...
+      <span style="color: blue">typedef</span> <span style="color: blue">struct</span> _hvx_lib_dual_isp_info_t {
+        hvx_lib_isp_info_t isp_info[MAX_ISP];
+      } hvx_lib_dual_isp_info_t;
+      ...
+      <span style="color: blue">typedef</span> <span style="color: blue">struct</span> _hvx_lib_config_t {
+       hvx_lib_sensor_info_t       sensor_info;
+       <span style="color: blue">union</span> {
+         hvx_lib_single_isp_info_t single_isp_info;
+         hvx_lib_dual_isp_info_t   dual_isp_info;
+       } u;
+        hvx_lib_isp_type_t         isp_type;
+  <span style="color: blue">char</span>                       config_setting_name[64];
+      } hvx_lib_config_t;
+      <span style="color: blue">typedef</span> <span style="color: blue">struct</span> _hvx_lib_adsp_config_t hvx_lib_adsp_config_t;
+      ...
+      <span style="color: blue">typedef</span> <span style="color: blue">struct</span> _hvx_lib_adsp_config_t {
+        hvx_ret_type_t (*adsp_config_call)(<span style="color: blue">void</span> *adsp_data,
+          <span style="color: blue">unsigned</span> <span style="color: blue">int</span> adsp_data_size, <span style="color: blue">void</span> *caller_data);
+      } hvx_lib_adsp_config_t;
+      ...
+      <span style="color: blue">typedef</span> <span style="color: blue">struct</span> _hvx_lib_stats_t {
+        <span style="color: blue">void</span>         *stats_left;
+        <span style="color: blue">unsigned</span> <span style="color: blue">int</span>  stats_left_size;
+        <span style="color: blue">void</span>         *stats_right;
+        <span style="color: blue">unsigned</span> <span style="color: blue">int</span>  stats_right_size;
+      } hvx_lib_stats_t;
+      ...
+<span style="color: darkgreen">/** hvx_lib_get_hvx_info_t:
+  *
+  *  @sensor_width: [INPUT] sensor output width
+  *  @sensor_height: [INPUT] sensor output height
+  *  @available_hvx_units: [INPUT] currently available hvx units
+  *                      on DSP side (1 / 2 / 3 / 4)
+  *  @available_vector_mode: [INPUT] currently available hvx
+  *                        vector mode
+  *  @hvx_enable: [OUTPUT] enable / disable HVX for current
+  *             configuration
+  *  @algo_name: [OUTPUT] algorithm name to run on ADSP
+  *  @hvx_out_width: [OUTPUT] HVX output width
+  *  @hvx_out_height: [OUTPUT] HVX output height
+  *  @request_hvx_units: [OUTPUT] hvx units to be used for this
+  *                    sensor
+  *  @request_hvx_vector_mode: [OUTPUT] HVX vector mode to be
+  *                          used for this sensor
+  *  @is_pix_intf_needed: [OUTPUT] set 1 if output of HVX should
+  *                     be connected to PIXEL interface
+  *                     (Linearization / rolloff etc)
+  *  @is_stats_needed: [OUTPUT] enable / disable stats output
+  *                  from HVX
+  *  @stats_data_size: [OUTPUT] size of each stats data buffer
+  *
+  **/</span>
+      <span style="color: blue">typedef</span> <span style="color: blue">struct</span> _hvx_lib_get_hvx_info_t {
+        <span style="color: blue">unsigned</span> <span style="color: blue">int</span>          sensor_width;
+        <span style="color: blue">unsigned</span> <span style="color: blue">int</span>          sensor_height;
+        <span style="color: blue">unsigned</span> <span style="color: blue">int</span>          available_hvx_units;
+        hvx_lib_vector_mode_t available_hvx_vector_mode;
+        <span style="color: blue">unsigned</span> <span style="color: blue">int</span>          hvx_enable;
+        <span style="color: blue">char</span>                  algo_name[32];
+        <span style="color: blue">unsigned</span> <span style="color: blue">int</span>          hvx_out_width;
+        <span style="color: blue">unsigned</span> <span style="color: blue">int</span>          hvx_out_height;
+        <span style="color: blue">unsigned</span> <span style="color: blue">int</span>          request_hvx_units;
+        hvx_lib_vector_mode_t request_hvx_vector_mode;
+        <span style="color: blue">unsigned</span> <span style="color: blue">int</span>          is_pix_intf_needed;
+        <span style="color: blue">unsigned</span> <span style="color: blue">int</span>          is_stats_needed;
+        <span style="color: blue">unsigned</span> <span style="color: blue">int</span>          stats_data_size;
+      } hvx_lib_get_hvx_info_t;
+      ...
+<span style="color: darkgreen">/** hvx_lib_sof_params_t:
+  *
+  *  @frame_id : current frame id
+  *  @real_gain: global real gain
+  *  @exposure_time: exposure time in ns
+  *  @short_real_gain: short real gain during HDR
+  *  @short_exposure_time: short exposure time in ns
+  *  @target_luma: targed luma to be achieved to settle AEC
+  *  @cur_luma: current luma value
+  *  @avg_luma: average luma value
+  *  @lux_idx: lux index
+  *  @aec_settled: boolean flag to indicate whether AEC
+  *              settled
+  *  @r_gain: AWB r gain
+  *  @g_gain: AWB g gain
+  *  @b_gain: AWB b gain
+  *  @color_temp: color temperature
+  **/</span>
+<span style="color: blue">typedef</span> <span style="color: blue">struct</span> _hvx_lib_sof_params_t {
+  <span style="color: blue">unsigned</span> <span style="color: blue">int</span> frame_id;
+  <span style="color: darkgreen">/* AEC params */</span>
+  <span style="color: blue">float</span>        real_gain;
+  <span style="color: blue">long</span>         exposure_time;
+  <span style="color: blue">float</span>        short_real_gain;
+  <span style="color: blue">long</span>         short_exposure_time;
+  <span style="color: blue">unsigned</span> <span style="color: blue">int</span> target_luma;
+  <span style="color: blue">unsigned</span> <span style="color: blue">int</span> cur_luma;
+  <span style="color: blue">unsigned</span> <span style="color: blue">int</span> avg_luma;
+  <span style="color: blue">float</span>        lux_idx;
+  <span style="color: blue">int</span>          aec_settled;
+  <span style="color: darkgreen">/* AWB params */</span>
+  <span style="color: blue">float</span>        r_gain;
+  <span style="color: blue">float</span>        g_gain;
+  <span style="color: blue">float</span>        b_gain;
+  <span style="color: blue">unsigned</span> <span style="color: blue">int</span> color_temp;
+} hvx_lib_sof_params_t;
+...
+      <span style="color: blue">typedef</span> <span style="color: blue">struct</span> _hvx_lib_function_table_t {
+  <span style="color: darkgreen">// hvx_lib_open will be called only once before stream on. </span>
+  <span style="color: darkgreen">// user could allocate memory that will be used in OEM plugin scope. Android</span>
+  <span style="color: darkgreen">// will hold this memory by pointer oem_data. this pointer will be passed </span>
+  <span style="color: darkgreen">// into all subsequent calls, thus the memory can be used across the lib.</span>
+        hvx_ret_type_t (*hvx_lib_open)(<span style="color: blue">void</span> **oem_data);
+      ...
+  <span style="color: darkgreen">// hvx_lib_get_hvx_info will be called once before stream on.</span>
+  <span style="color: darkgreen">// taking input parameter from hvx_info structure, user would set HVX</span>
+  <span style="color: darkgreen">// configuration by filling output entries in hvx_info</span>
+        hvx_ret_type_t (*hvx_lib_get_hvx_info)(<span style="color: blue">void</span> *oem_data,
+          hvx_lib_get_hvx_info_t *hvx_info);
+      ...
+  <span style="color: darkgreen">// hvx_lib_set_config will be called once before stream on.</span>
+  <span style="color: darkgreen">// user could send initial dynamic structure to ADSP </span>
+        hvx_ret_type_t (*hvx_lib_set_config)(<span style="color: blue">void</span> *oem_data,
+  <span style="color: blue">const</span> hvx_lib_config_t *lib_config,
+  <span style="color: blue">const</span> hvx_lib_adsp_config_t *adsp_config,
+  <span style="color: blue">void</span> *caller_data);
+      ...
+  <span style="color: darkgreen">// hvx_lib_consume_stats will be called whenever a filled buffer returns</span>
+  <span style="color: darkgreen">// from HVX. </span>
+  <span style="color: darkgreen">// user can read values from this buffer for analysis</span>
+        hvx_ret_type_t (*hvx_lib_consume_stats)(<span style="color: blue">void</span> *oem_data,
+          <span style="color: blue">unsigned</span> <span style="color: blue">int</span> frame_id, hvx_lib_stats_t *stats_data,
+          <span style="color: blue">const</span> hvx_lib_adsp_config_t *adsp_config, <span style="color: blue">void</span> *caller_data);
+       ...
+  <span style="color: darkgreen">// hvx_lib_sof will be called upon arrival of each SOF</span>
+  <span style="color: darkgreen">// user can send dynamic data through this call</span>
+        hvx_ret_type_t (*hvx_lib_sof)(<span style="color: blue">void</span> *oem_data,
+  <span style="color: blue">const</span> hvx_lib_sof_params_t *sof_params,
+  <span style="color: blue">const</span> hvx_lib_adsp_config_t *adsp_config,
+  <span style="color: blue">void</span> *caller_data);
+      ...
+  <span style="color: darkgreen">// hvx_lib_close will be called when stream off</span>
+  <span style="color: darkgreen">// user need to free the memory allocated in hvx_lib_open</span>
+        hvx_ret_type_t (*hvx_lib_close)(<span style="color: blue">void</span> *oem_data);
+      } hvx_lib_function_table_t;
+      ...
+      hvx_ret_type_t hvx_lib_fill_function_table(
+        hvx_lib_function_table_t *func_table);
+</pre><h3>
+<a name="QDSP6%20lib%20API"></a>QDSP6 lib API
+</h3><p>
+QDSP6 lib is the main software module that does the pixel processing during camera streaming. User needs to implement two functions in this library: configuration and processing.
+</p><p>
+Configuration function will talk to camera streaming framework and configure algorithm specific parameters including input/output buffer size, padding, etc. This is one-time call before streaming starts.
+</p><p>
+Processing function contains the bulks of algorithm details and is usually computationally intensive. Once the function is invoked, the QDSP6 lib will be in a infinite loop, waiting to process pixel data. All start/stop and update commands will be sent through a special communication buffer, which will be discussed in later sections.
+</p><p>
+QDSP6 lib's processing has to stick to very specific timing to be in-sync with ISP's timing. To facilitate that, a set of utility functions are provided by camera streaming framework.
+</p><pre><span style="color: darkgreen">/**
+ * @brief get framework version
+ *
+ * This function will return the HVX camera streaming framework 
+ * verison number as a string. 
+ *
+ * @param v output string of version number 
+ * @return None 
+ */</span>
+<span style="color: blue">void</span> get_framework_version(<span style="color: blue">char</span>* v);
+
+<span style="color: darkgreen">/**
+ * @brief check if vfe id is in range [0, 1]
+ *
+ * @param vfe_id: vfe id of current processing thread
+ *
+ * @return int: 0 valid, -1 invalid
+ */</span>
+<span style="color: blue">int</span> process_util_vfe_id_validation(<span style="color: blue">unsigned</span> <span style="color: blue">int</span> vfe_id);
+
+<span style="color: darkgreen">/**
+ * @brief check raw status of streamer[vfe_id]
+ *
+ * @param vfe_id: vfe_id of current processing thread
+ *
+ * @return unsigned int: RAW_STATUS register value
+ */</span>
+<span style="color: blue">unsigned</span> <span style="color: blue">int</span> process_util_get_streamer_raw_status(<span style="color: blue">unsigned</span> <span style="color: blue">int</span> vfe_id);
+
+<span style="color: darkgreen">/**
+ * @brief get rx buffer starting address based on specific vfe 
+ *        id
+ *
+ * @param vfe_id: vfe_id of current processing thread
+ *
+ * @return void*: rx starting address
+ */</span>
+<span style="color: blue">void</span>* process_util_get_rx_addr(<span style="color: blue">unsigned</span> <span style="color: blue">int</span> vfe_id);
+
+<span style="color: darkgreen">/**
+  * Function: process_util_get_tx_addr()
+  *
+  * Arguments:
+  *     @arg vfe_id: vfe id of current processing thread
+  *
+  * Description:
+  *     get tx buffer starting address based on specific vfe id
+  *
+  * Return Value:
+  *     tx address
+  **/</span>
+<span style="color: blue">void</span>* process_util_get_tx_addr(<span style="color: blue">unsigned</span> <span style="color: blue">int</span> vfe_id);
+
+<span style="color: darkgreen">/**
+  * Function: process_util_get_static_config_buf()
+  *
+  * Arguments:
+  *     @arg vfe_id: vfe id of current processing thread
+  *
+  * Description:
+  *     get static config buffer starting address based
+  *     on specific vfe id
+  *
+  * Return Value:
+  *     buffer address
+  **/</span>
+<span style="color: blue">void</span>* process_util_get_static_config_buf(<span style="color: blue">unsigned</span> <span style="color: blue">int</span> vfe_id);
+
+<span style="color: darkgreen">/**
+  * Function: process_util_get_dynamic_config_buf()
+  *
+  * Arguments:
+  *     @arg vfe_id: vfe id of current processing thread
+  *
+  * Description:
+  *     get dynamic config buffer starting address based on
+  *     specific vfe id
+  *
+  * Return Value:
+  *     buffer address
+  **/</span>
+<span style="color: blue">void</span>* process_util_get_dynamic_config_buf(<span style="color: blue">unsigned</span> <span style="color: blue">int</span> vfe_id);
+
+<span style="color: darkgreen">/**
+  * Function: process_util_get_cache()
+  *
+  * Arguments:
+  *     @arg vfe_id: vfe id of current processing thread
+  *     @arg p_addr: return starting address of availabel L2
+  *          cache
+  *     @arg p_size: return size of available L2 cache
+  *
+  * Description:
+  *     get available L2 cache section for processing thread use
+  *
+  * Return Value:
+  *     None
+  **/</span>
+<span style="color: blue">void</span> process_util_get_cache(<span style="color: blue">unsigned</span> <span style="color: blue">int</span> vfe_id, <span style="color: blue">unsigned</span> <span style="color: blue">char</span>** p_addr, <span style="color: blue">int</span>* p_size);
+
+<span style="color: darkgreen">/**
+  * Function: process_util_check_reg_update()
+  *
+  * Arguments:
+  *     @arg vfe_id: vfe id of current processing thread
+  *
+  * Description:
+  *     check if REG_UPDATE bit is set
+  *
+  * Return Value:
+  *     0: bit not set
+  *     1: bit set
+  **/</span>
+<span style="color: blue">int</span> process_util_check_reg_update(<span style="color: blue">unsigned</span> <span style="color: blue">int</span> vfe_id);
+
+<span style="color: darkgreen">/**
+  * Function: process_util_update_metabuf()
+  *
+  * Arguments:
+  *     @arg vfe_id: vfe id of current processing thread
+  *
+  * Description:
+  *     copy shadow CX content to CX
+  *
+  * Return Value:
+  *     None
+  **/</span>
+<span style="color: blue">void</span> process_util_update_metabuf(<span style="color: blue">unsigned</span> <span style="color: blue">int</span> vfe_id);
+
+<span style="color: darkgreen">/**
+  * Function: process_util_get_start_flag()
+  *
+  * Arguments:
+  *     @arg vfe_id: vfe id of current processing thread
+  *
+  * Description:
+  *     return start flag set by control thread
+  *
+  * Return Value:
+  *     0: do not start
+  *     1: OK to start
+  **/</span>
+<span style="color: blue">unsigned</span> <span style="color: blue">int</span> process_util_get_start_flag(<span style="color: blue">unsigned</span> <span style="color: blue">int</span> vfe_id);
+
+<span style="color: darkgreen">/**
+  * Function: process_util_get_force_exit_flag()
+  *
+  * Arguments:
+  *     @arg vfe_id: vfe id of current processing thread
+  *
+  * Description:
+  *     return force exit flag set by control thread
+  *
+  * Return Value:
+  *     1: exit
+  *     0: do not exit
+  **/</span>
+<span style="color: blue">unsigned</span> <span style="color: blue">int</span> process_util_get_force_exit_flag(<span style="color: blue">unsigned</span> <span style="color: blue">int</span> vfe_id);
+
+<span style="color: darkgreen">/**
+  * Function: process_util_check_rx_sof()
+  *
+  * Arguments:
+  *     @arg vfe_id: vfe id of current processing thread
+  *
+  * Description:
+  *     check if SOF bit got updated in STATUS register
+  *
+  * Return Value:
+  *     1: SOF bit set
+  *     0: SOF bit not set
+  **/</span>
+<span style="color: blue">unsigned</span> <span style="color: blue">int</span> process_util_check_rx_sof(<span style="color: blue">unsigned</span> <span style="color: blue">int</span> vfe_id);
+
+<span style="color: darkgreen">/**
+  * Function: process_util_reset_rx_sof()
+  *
+  * Arguments:
+  *     @arg vfe_id: vfe id of current processing thread
+  *
+  * Description:
+  *     reset SOF bit to 0 in STATUS register
+  *
+  * Return Value:
+  *     None
+  **/</span>
+<span style="color: blue">void</span> process_util_reset_rx_sof(<span style="color: blue">unsigned</span> <span style="color: blue">int</span> vfe_id);
+
+<span style="color: darkgreen">/**
+  * Function: process_util_rx_wait_for_line()
+  *
+  * Arguments:
+  *     @arg vfe_id: vfe id of current processing thread
+  *
+  * Description:
+  *     wait until rx get linecount+1 lines(EOLs)
+  *     say, wait until RX_LINE_COUNT register reach linecount+1
+  *
+  * Return Value:
+  *     linecount+1
+  **/</span>
+<span style="color: blue">unsigned</span> <span style="color: blue">int</span> process_util_rx_wait_for_line(<span style="color: blue">unsigned</span> <span style="color: blue">int</span> vfe_id, <span style="color: blue">unsigned</span> <span style="color: blue">int</span> linecount);
+
+<span style="color: darkgreen">/**
+  * Function: process_util_rx_done()
+  *
+  * Arguments:
+  *     @arg vfe_id: vfe id of current processing thread
+  *     @arg offset: offset of consumed data in rx
+  *
+  * Description:
+  *     update RX_INDEX_CONSUMED register to offset
+  *
+  * Return Value:
+  *     None
+  **/</span>
+<span style="color: blue">void</span> process_util_rx_done(<span style="color: blue">unsigned</span> <span style="color: blue">int</span> vfe_id, <span style="color: blue">unsigned</span> <span style="color: blue">int</span> offset);
+
+<span style="color: darkgreen">/**
+  * Function: process_util_rx_done()
+  *
+  * Arguments:
+  *     @arg vfe_id: vfe id of current processing thread
+  *     @arg offset: offset of transmit data in tx
+  *
+  * Description:
+  *     update TX_INDEX_AVAIL register to offset
+  *
+  * Return Value:
+  *     None
+  **/</span>
+<span style="color: blue">void</span> process_util_tx_done(<span style="color: blue">unsigned</span> <span style="color: blue">int</span> vfe_id, <span style="color: blue">unsigned</span> <span style="color: blue">int</span> offset);
+
+<span style="color: darkgreen">/**
+  * Function: process_util_tx_wait_for_eof()
+  *
+  * Arguments:
+  *     @arg vfe_id: vfe id of current processing thread
+  *
+  * Description:
+  *     wait until EOF bit got set in STATUS register
+  *
+  * Return Value:
+  *     None
+  **/</span>
+<span style="color: blue">void</span> process_util_tx_wait_for_eof(<span style="color: blue">unsigned</span> <span style="color: blue">int</span> vfe_id);
+
+<span style="color: darkgreen">/**
+  * Function: process_util_tx_clear_eof()
+  *
+  * Arguments:
+  *     @arg vfe_id: vfe id of current processing thread
+  *
+  * Description:
+  *     reset EOF bit to 0 in STATUS register
+  *
+  * Return Value:
+  *     None
+  **/</span>
+<span style="color: blue">void</span> process_util_tx_clear_eof(<span style="color: blue">unsigned</span> <span style="color: blue">int</span> vfe_id);
+
+<span style="color: darkgreen">/**
+  * Function: process_util_wrap_idx()
+  *
+  * Arguments:
+  *     @arg idx: next idx in TX/RX buffer
+  *     @arg bufsize: TX/RX size
+  *
+  * Description:
+  *     if idx hit buffer end, rotate to buffer head
+  *
+  * Return Value:
+  *    incremented idx
+  **/</span>
+<span style="color: blue">unsigned</span> <span style="color: blue">int</span> process_util_wrap_idx(<span style="color: blue">unsigned</span> <span style="color: blue">int</span> idx, <span style="color: blue">unsigned</span> <span style="color: blue">int</span> bufsize);
+
+<span style="color: darkgreen">/**
+  * Function: process_util_get_dump_flag()
+  *
+  * Arguments:
+  *     @arg vfe_id: vfe id of current processing thread
+  *
+  * Description:
+  *     check if frame dump is needed
+  *
+  * Return Value:
+  *    flag value
+  **/</span>
+<span style="color: blue">unsigned</span> <span style="color: blue">int</span> process_util_get_dump_flag(<span style="color: blue">unsigned</span> <span style="color: blue">int</span> vfe_id);
+
+<span style="color: blue">unsigned</span> <span style="color: blue">int</span> process_util_get_stats_flag(<span style="color: blue">unsigned</span> <span style="color: blue">int</span> vfe_id);
+
+<span style="color: darkgreen">/**
+  * Function: process_util_get_dump_addr()
+  *
+  * Arguments:
+  *     @arg vfe_id: vfe id of current processing thread
+  *
+  * Description:
+  *     get the buffer addr to be dumped to
+  *
+  * Return Value:
+  *    buffer address
+  **/</span>
+<span style="color: blue">void</span>* process_util_get_dump_addr(<span style="color: blue">unsigned</span> <span style="color: blue">int</span> vfe_id);
+
+<span style="color: darkgreen">/**
+  * Function: process_util_get_dump_label()
+  *
+  * Arguments:
+  *     @arg vfe_id: vfe id of current processing thread
+  *
+  * Description:
+  *     get the buffer label to be dumped to
+  *
+  * Return Value:
+  *     buffer label
+  **/</span>
+<span style="color: blue">unsigned</span> <span style="color: blue">char</span> process_util_get_dump_label(<span style="color: blue">unsigned</span> <span style="color: blue">int</span> vfe_id);
+
+<span style="color: darkgreen">/**
+  * Function: process_util_clear_dump_flag()
+  *
+  * Arguments:
+  *     @arg vfe_id: vfe id of current processing thread
+  *
+  * Description:
+  *     clear the dump flag once caught in SOF event
+  *
+  * Return Value:
+  *     none
+  **/</span>
+<span style="color: blue">void</span> process_util_clear_dump_flag(<span style="color: blue">unsigned</span> <span style="color: blue">int</span> vfe_id);
+
+<span style="color: darkgreen">/**
+  * Function: process_util_reset_streamer()
+  *
+  * Arguments:
+  *     @arg vfe_id: vfe id of current processing thread
+  *
+  * Description:
+  *     in case of overflow happens, call this function which
+  *     will do:
+  *       stop streamer
+  *       reset streamer
+  *       reprogram streamer with previous values
+  *       start streamer
+  *
+  * Return Value:
+  *     none
+  **/</span>
+</pre><p>
+void process_util_recover_streamer(unsigned int vfe_id);
+</p><p>
+This API could be out-of-date. Please refer to this file in latest SDK release: . &lt;hexagonSDK root&gt;\3.x\lib\camera\streaming_framework\ship\hexagon_ReleaseG_dynamic_toolv80_v60
+</p><p>
+To see the usage of OEM plugin API, please refer to these examples:
+</p><pre>&lt;hexagonSDK root&gt;\3.x\examples\camera_streaming\hvx_add_constant_stub
+</pre><p>
+To see the usage of QDSP6 lib API, please refer to these examples:
+</p><pre>&lt;hexagonSDK root&gt;\3.x\examples\camera_streaming\hvx_add_constant
+</pre><h2>
+<a name="Communication%20and%20buffers"></a>Communication and buffers
+</h2><p>
+For camera streaming use case, there is no system memory buffer used, with the exception that QDSP6 output some meta data directly to system memory. All operations are done in QDSP6's L2 cache to cope with camera streaming's high requirement on duty cycle. For this purpose, camera streaming framework provides mechanism to lock 256K byte of QDSP6's L2 cache. Once locked, this portion of cache will not be visible to any other process on QDSP6.
+</p><p>
+The locked QDSP6's L2 cache is mainly partitioned to three types of buffers: Receiving buffer (RX); Transmission buffer (TX) and Communication buffer (CX).
+</p><h3>
+<a name="Receiving%20buffer%20(RX)"></a>Receiving buffer (RX)
+</h3><p>
+Receiving buffer is used to receive input pixel data from ISP's pixel interface. This latency buffer has only limited size, so that RX overflow would occur if the speed of QDSP6's fetching from RX is slower than speed of streaming, which is fatal.
+</p><h3>
+<a name="Transmission%20buffer%20(TX)"></a>Transmission buffer (TX)
+</h3><p>
+Transmission buffer is used to store QDSP6 processed data before they are sent back to ISP's pixel interface. If QDSP6 produces data slower than HVX streaming module's read speed, a TX underflow will be reported as warning.
+</p><h3>
+<a name="Communication%20buffer%20(CX)"></a>Communication buffer (CX)
+</h3><p>
+Communication buffer is used to store flags and parameter updates between user lib and QDSP6 lib to avoid the function call overhead, which might slow down QDSP6's processing speed and lead to buffer over-run or under-run. These flags and updates make camera streaming start/stop or change behavior. The CX buffer is shadowed, meaning any update to this buffer will take effect on the next frame.
+</p><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

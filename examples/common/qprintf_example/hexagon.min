@@ -1,0 +1,54 @@
+# builds the static/dynamic skel
+ifeq (1,$(V_dynamic))
+BUILD_DLLS = libqprintf_example_skel
+else
+BUILD_LIBS += libqprintf_example_skel
+endif
+
+include $(QURT_IMAGE_DIR)/qurt_libs.min
+
+ifeq (,$(filter $(V_ARCH),v5 v55))
+CC_FLAGS += $(MHVX_DOUBLE_FLAG)
+ASM_FLAGS += $(MHVX_DOUBLE_FLAG)
+endif
+
+# Use -O0 temporarily when trying to debug C code.
+#_OPT = -O0
+
+INCDIRS += inc
+
+libqprintf_example_skel_QAICIDLS = inc/qprintf_example 
+
+libqprintf_example_skel_C_SRCS += $V/qprintf_example_skel \
+                                src/qprintf_example_imp 
+
+libqprintf_example_skel_ASM_SRCS += asm_src/qprintf_example_asm
+
+libqprintf_example_skel_DLLS += libdspCV_skel 
+
+libqprintf_example_skel_LIBS += libqprintf 
+
+# Also build a stand-alone simulation environment executable unit test (only for static lib build)
+ifneq (1,$(V_dynamic))
+
+BUILD_QEXES += qprintf_example_q
+qprintf_example_q_OSTYPE = QURT
+# The following is needed to pull QuRT support into the executable for simulation
+
+qprintf_example_q_LIBS+= libdspCV_skel libqprintf 
+
+qprintf_example_q_C_SRCS+= src/qprintf_example \
+                    src/qprintf_example_imp \
+                    $V/qprintf_example_skel 
+
+qprintf_example_q_ASM_SRCS += asm_src/qprintf_example_asm
+
+QEXE_EXEC+=--dsp_clock 800
+endif #//ifneq (1,$(V_dynamic))
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

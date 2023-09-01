@@ -1,0 +1,49 @@
+#!/bin/bash
+basedir=`dirname $0`
+cd $basedir
+EXAMPLES_ROOT_DIR=../../../../../
+source $EXAMPLES_ROOT_DIR/setup-env.sh
+set -x
+if [ "z$BIN" == "z" ]; then
+    BIN=bin
+fi
+
+if [ "z$CXX" == "z" ]; then
+    CXX=g++
+fi
+mkdir -p $BIN
+
+export HL_HEXAGON_TOOLS=$HEXAGON_SDK_ROOT/tools/HEXAGON_Tools/$HEXAGON_TOOLS_VER/Tools
+export DMA_LIBS=$HEXAGON_SDK_ROOT/libs/ubwcdma
+export V_ARCH=v66
+export QURT_LIBS=$HEXAGON_SDK_ROOT/libs/common/qurt/compute$V_ARCH
+export HL_HEXAGON_TARGET=$HL_HEXAGON_TOOLS/target/hexagon/lib/$V_ARCH/G0
+export V_ARCH_REV=hexagon_Release_dynamic_toolv82_$V_ARCH
+
+INCLUDE_LIBS="$HL_HEXAGON_TARGET/init.o $QURT_LIBS/lib/crt1.o $QURT_LIBS/lib/libqurt.a $HL_HEXAGON_TARGET/libc.a $HL_HEXAGON_TARGET/libqcc.a $HL_HEXAGON_TARGET/libhexagon.a $QURT_LIBS/lib/libqurtcfs.a $QURT_LIBS/lib/libtimer.a $QURT_LIBS/lib/libposix.a $HL_HEXAGON_TARGET/fini.o $HEXAGON_SDK_ROOT/libs/common/atomic/$V_ARCH_REV/ship/atomic.a $HEXAGON_SDK_ROOT/test/common/test_util/$V_ARCH_REV/ship/test_util.a $HL_HEXAGON_TARGET/libc.a $HL_HEXAGON_TARGET/libstdc++.a $HL_HEXAGON_TARGET/libgcc.a"
+
+INCLUDE_INCS="-I$QURT_LIBS/include -I$QURT_LIBS/include/qurt -I$QURT_LIBS/include/posix -I $HEXAGON_SDK_ROOT/tools/HEXAGON_Tools/$HL_HEXAGON_TOOLS_REV/Examples/HVX/common/include -I$HEXAGON_SDK_ROOT/incs/ubwcdma -I$HEXAGON_SDK_ROOT/incs -I$HEXAGON_SDK_ROOT/incs/stddef -I$HEXAGON_SDK_ROOT/incs/ubwcdma/$V_ARCH -I$HEXAGON_SDK_ROOT/libs/fastcv/dspCV/$V_ARCH_REV/ship -I$HEXAGON_SDK_ROOT/test/common/test_util/$V_ARCH_REV/ship -I$HEXAGON_SDK_ROOT/libs/common/atomic/$V_ARCH_REV/ship -I$HEXAGON_SDK_ROOT/libs/common/remote/ship/$V_ARCH_REV -I$HEXAGON_SDK_ROOT/libs/common/rpcmem/$V_ARCH_REV/ship -I ../../include"
+
+# create The config Files
+echo "$HL_HEXAGON_TOOLS/lib/iss/qtimer.so --csr_base=0xFC900000 --irq_p=1 --freq=19200000 --cnttid=1" >> $BIN/q6ss.cfg
+echo "$HL_HEXAGON_TOOLS/lib/iss/l2vic.so 32 0xFC910000" >>  $BIN/q6ss.cfg
+echo "$HEXAGON_SDK_ROOT/libs/ubwcdma/cosim/Linux/$V_ARCH/Ubwcdma_cosim.so 4.78 20 120 120 1" >> $BIN/q6ss.cfg
+echo "l2vic.so 2 0x7b010000" >> $BIN/q6ss.cfg
+echo "$HEXAGON_SDK_ROOT/libs/common/qurt/compute$V_ARCH/debugger/lnx64/qurt_model.so" >> $BIN/osam.cfg
+
+${CXX} --std=c++11 -DLOG2VLEN=7 -DRUN=1 -DASSEMBLY=1 -DBITCODE=1 -I $HALIDE_ROOT/include -fno-rtti -O0 -g dmatest_generator.cpp $HALIDE_ROOT/tools/GenGen.cpp -L$HALIDE_ROOT/lib  -lHalide -o $BIN/dmatest -ldl -lpthread -lz
+
+export LD_LIBRARY_PATH=$HALIDE_ROOT/lib:;
+$BIN/dmatest -g dmatest -o $BIN -e o,h,assembly,html -f dmatest_i target=hexagon-32-qurt-hexagon_dma-hvx_128
+ 
+$HEXAGON_SDK_ROOT/tools/HEXAGON_Tools/$HEXAGON_TOOLS_VER/Tools/bin/hexagon-clang++ --std=c++11 -mv66 -c -v -G0 -O2 -Wall -Werror -Wno-cast-align -Wpointer-arith -Wno-missing-braces -Wno-strict-aliasing  -fno-exceptions -fno-strict-aliasing -fno-zero-initialized-in-bss -fdata-sections -Wno-error -D__FILENAME__=\"dmatest_run.cpp\" -DDMA_FW_OP_STANDALONE=1 -DUBWCDMA_DEBUG=0 -DCOSIM_PLATFORM -DCOSIM_PLATFORM_QURT -I$HALIDE_ROOT/include -I$BIN $INCLUDE_INCS -I$HEXAGON_SDK_ROOT/incs/ubwcdma -o $BIN/dmatest.o dmatest_run.cpp
+
+$HEXAGON_SDK_ROOT/tools/HEXAGON_Tools/$HEXAGON_TOOLS_VER/Tools/bin/hexagon-clang -mv66 -g -nodefaultlibs -nostdlib -Wl,--section-start -Wl,.interp=0x23000000 -Wl,--dynamic-linker= -Wl,--force-dynamic -Wl,-E -Wl,-z -Wl,muldefs -Wl,--whole-archive  -o $BIN/dmatest -Wl,--start-group  $BIN/dmatest.o $INCLUDE_LIBS $DMA_LIBS/fw/$V_ARCH_REV/ubwcdma_dynlib.a $BIN/dmatest_i.o -Wl,--end-group
+ 
+$HEXAGON_SDK_ROOT/tools/HEXAGON_Tools/$HEXAGON_TOOLS_VER/Tools/bin/hexagon-sim -mv66 --simulated_returnval --usefs bin --pmu_statsfile $BIN/pmu_stats.txt  --cosim_file $BIN/q6ss.cfg --l2tcm_base 0xd800 --rtos $BIN/osam.cfg $QURT_LIBS/sdksim_bin/runelf.pbn -- $BIN/dmatest 1>$BIN/run.stdout 2>$BIN/run.stderr
+result=$?
+
+echo "Name:dmatest" >> $BIN/result
+echo "Features:$FEATURES" >> $BIN/result
+
+exit $result

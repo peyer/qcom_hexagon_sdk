@@ -1,0 +1,6 @@
+src/HAP_debug_printf.c:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_debug.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/stddef/AEEStdDef.h:
+hexagon_Debug_dynamic_toolv83_v66/HAP_debug_printf.o: src/HAP_debug_printf.c
+hexagon_Debug_dynamic_toolv83_v66/HAP_debug_printf.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_debug.h
+hexagon_Debug_dynamic_toolv83_v66/HAP_debug_printf.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/stddef/AEEStdDef.h

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Follow the syntax same as specified in this example audio calibration xml file -->
+<!-- "name" is used for user selection in GUI -->
+<!-- "id" and "<value>" are used to send the calibration keyValues to audio calibration driver -->
+
+<!-- <param> -->
+<!-- <value>d1,d2,d3</value> : Each data (d1/d2/..) are represented by 32 bits -->
+<!-- User must pack the data in 32 bits and place values seperated by commas -->
+
+
+<audio_calibration_db>
+	<!-- Device configuration -->
+	<device name="AUDIO_DEVICE_OUT_SPEAKER" id="2"></device>
+	<device name="AUDIO_DEVICE_OUT_WIRED_HEADSET" id="4"></device>
+	<device name="AUDIO_DEVICE_OUT_EARPIECE" id="1"></device>
+
+	<samplerate>48000</samplerate>
+	<samplerate>16000</samplerate>
+	<samplerate>8000</samplerate>
+
+	<apptype name="AUDIO_PLAYBACK" id="69936"></apptype>
+	<apptype name="AUDIO_RECORDING" id="69938"></apptype>
+
+	<caltype name="AUDIO_COPP" id="0"></caltype>
+	<caltype name="AUDIO_POPP" id="1"></caltype>
+
+	<!-- Modules data -->
+	<module name="codec_gain_ctrl" id="0x00010C37">
+		<param name="rx_codec_gain" id="0x00010C38">
+			<value>0x4000</value>
+		</param>
+	</module>
+	<module name="fir_filter" id="0x00000001">
+		<param name="fir_enable" id="0x12D03">
+			<value>0x1</value>
+		</param>
+		<param name="fir_disable" id="0x12D03">
+			<value>0x0</value>
+		</param>
+		<param name="fir_highpass_coeff" id="0x12D05">
+			<value>0x0000000D,0xF838F9A3,0xF5D2F6EC,0xF474F4FB,0xF4747501,0xF5D2F4FB,0xF838F6EC,0xFB1AF9A3</value>
+		</param>
+		<param name="fir_lowpass_coeff" id="0x12D05">
+			<value>0x0000000D,0x001DFFF3,0x016BFB99,0x0C08FA71,0x0C08309A,0x016BFA71,0x001DFB99,0x0000FFF3</value>
+		</param>
+	</module>
+ 
+
+	<!-- Topologies data -->
+	<topology name="speaker_copp_mono_audio" id="0x00010313">
+		<module name="codec_gain_ctrl" id="0x00010C37" />
+	</topology>
+
+	<topology name="custom_topology" id="0x100000FD">
+		<module name="fir_filter" id="0x00000001" />
+	</topology>
+
+</audio_calibration_db>

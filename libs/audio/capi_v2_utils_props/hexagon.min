@@ -1,0 +1,17 @@
+INCDIRS += \
+   inc \
+   src \
+   $(HEXAGON_SDK_ROOT)/incs/audio \
+
+BUILD_LIBS = capi_v2_utils_props
+
+capi_v2_utils_props_C_SRCS += \
+   src/capi_v2_utils_props \
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   inc/capi_v2_utils_props.h \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

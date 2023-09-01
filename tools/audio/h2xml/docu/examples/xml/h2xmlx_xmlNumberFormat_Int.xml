@@ -1,0 +1,31 @@
+<DSP type="WDSP" versionMajor="2" versionMinor="8" versionBranch="16" versionSubBranch="32">
+  <MODULE_LIST>
+    <MODULE name="MODULE_1" id="286331153">
+      <MODULE_INFO pidFwk="131074">
+        <META_DATA/>
+        <PIN_INFO type="STATIC">
+          <INPUT_PINS max="2" pinIdSize="2">
+            <PIN name="In1" id="1"/>
+            <PIN name="In2" id="2"/>
+          </INPUT_PINS>
+          <OUTPUT_PINS max="2" pinIdSize="2">
+            <PIN name="Out1" id="3"/>
+            <PIN name="Out2" id="4"/>
+          </OUTPUT_PINS>
+        </PIN_INFO>
+      </MODULE_INFO>
+      <PARAMETER_LIST>
+        <PARAMETER name="Parameter1" pid="286331153" maxSize="12">
+          <TOOL_POLICIES>
+            <POLICY name="RTC"/>
+            <POLICY name="CALIBRATION"/>
+          </TOOL_POLICIES>
+          <DEFAULT_DEPENDENCIES/>
+          <CONFIG_ELEMENT name="a" type="long" byteSize="4" byteOffset="0" min="-2147483648" max="2147483647" default="0"/>
+          <CONFIG_ELEMENT name="b" type="int" byteSize="4" byteOffset="4" min="-2147483648" max="2147483647" default="-10"/>
+          <CONFIG_ELEMENT name="c" type="unsigned short" typeUnSigned="true" byteSize="2" byteOffset="8" min="0" max="65535" default="10"/>
+        </PARAMETER>
+      </PARAMETER_LIST>
+    </MODULE>
+  </MODULE_LIST>
+</DSP>

@@ -1,0 +1,51 @@
+# builds the static/dynamic skel
+
+#### By default, build all tutorials. User may provide GRAPH in make command to build a subset. 
+ifeq ($(GRAPH),)
+    GRAPH = 001-nop 002-add 003-quantized-add 004-xor-graph
+endif
+
+ifdef NEW_QURT_SIMULATION
+BUILD_QEXES+=$(GRAPH)
+$(foreach graph,$(GRAPH),\
+        $(eval $(graph)_OSTYPE = QURT) \
+            $(eval $(graph)_QAICIDLS += $(HEXAGON_NN)/interface/hexagon_nn) \
+            $(eval $(graph)_C_SRCS += $(graph)) \
+            $(eval $(graph)_LIBS += rpcmem libhexagon_nn_skel) \
+)
+else
+include $(QURT_IMAGE_DIR)/qurt_libs.min
+ifneq (1,$(V_dynamic))
+
+BUILD_QEXES+=$(GRAPH)
+$(foreach graph,$(GRAPH),\
+            $(eval $(graph)_QAICIDLS += $(HEXAGON_NN)/interface/hexagon_nn) \
+            $(eval $(graph)_C_SRCS += $(graph)) \
+            $(eval $(graph)_LIBS += $(QURT_INIT_LIBS) $(QURT_LINK_LIBS)) \
+            $(eval $(graph)_LIBS += rpcmem test_util atomic libhexagon_nn_skel) \
+            $(eval $(graph)_LIBS += $(QURT_FINI_LIBS)) \
+)
+
+endif # ifneq (1,$(V_dynamic))
+
+endif # ifdef NEW_QURT_SIMULATION
+
+
+#Two new options are added for simulation run:
+#QEXE_SIM_OPTIONS is used for simulator options,
+#QEXE_CMD_OPTIONS is used for command line options for test executable
+#
+#Be noted that QEXE variable can ONLY add to the end of whole command
+#line, which is NOW interpreted as user PD command line option. So if it
+#was used as simulator options, please change it to use QEXE_SIM_OPTIONS
+#
+# defining ahb address is a temporary workaround for 8.1.04 tools, to be fixed in 8.1.05. See HEXSUPPORT 1854.
+QEXE_SIM_OPTIONS +=--dsp_clock 1000 --ahb:lowaddr 0xc0000000 --ahb:highaddr 0xc0ffffff
+QEXE_CMD_OPTIONS +=
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

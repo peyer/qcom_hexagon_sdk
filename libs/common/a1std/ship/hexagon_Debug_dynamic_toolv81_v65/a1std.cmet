@@ -1,0 +1,19 @@
+#csv bytes,cpath,fez,file,group,ibytes,icount,ilines,iploc,lines,name,ploc,ram,roData,rom,rwData,ziData
+5630,src/bufbound.c,hexagon_Debug_dynamic_toolv81_v65/BufBound.fez,src/BufBound.c,a1std,118211,4,4408,435,204,BufBound.c,123,0,0,1616,0,0
+740,src/aeebase.c,hexagon_Debug_dynamic_toolv81_v65/AEEBase.fez,src/AEEBase.c,a1std,46414,4,1960,265,32,AEEBase.c,13,0,0,284,0,0
+3496,src/std_path.c,hexagon_Debug_dynamic_toolv81_v65/std_path.fez,src/std_path.c,a1std,118211,4,4408,435,142,std_path.c,85,18,0,1362,18,0
+627,src/std_swapl.c,hexagon_Debug_dynamic_toolv81_v65/std_swapl.fez,src/std_swapl.c,a1std,0,0,0,0,19,std_swapl.c,5,0,0,64,0,0
+3287,src/std_rand.c,hexagon_Debug_dynamic_toolv81_v65/std_rand.fez,src/std_rand.c,a1std,105520,3,3862,394,110,std_rand.c,45,0,0,464,0,0
+7784,src/std_scanul.c,hexagon_Debug_dynamic_toolv81_v65/std_scanul.fez,src/std_scanul.c,a1std,105520,3,3862,394,277,std_scanul.c,137,0,0,1724,0,0
+21388,src/std_strlprintf.c,hexagon_Debug_dynamic_toolv81_v65/std_strlprintf.fez,src/std_strlprintf.c,a1std,143516,7,4880,675,740,std_strlprintf.c,463,88,0,6252,88,0
+4206,src/std_swapbytes.c,hexagon_Debug_dynamic_toolv81_v65/std_SwapBytes.fez,src/std_SwapBytes.c,a1std,106043,4,3874,397,170,std_SwapBytes.c,119,0,0,1464,0,0
+4502,src/std_qsort.c,hexagon_Debug_dynamic_toolv81_v65/std_qsort.fez,src/std_qsort.c,a1std,109115,4,4007,500,139,std_qsort.c,107,0,0,4236,0,0
+12453,src/std.c,hexagon_Debug_dynamic_toolv81_v65/std.fez,src/std.c,a1std,108173,4,3963,413,584,std.c,413,105,0,6077,105,0
+9535,src/stdtime.c,hexagon_Debug_dynamic_toolv81_v65/stdtime.fez,src/stdtime.c,a1std,131994,6,4427,594,289,stdtime.c,96,0,0,1384,0,0
+951,src/std_merge.c,hexagon_Debug_dynamic_toolv81_v65/std_merge.fez,src/std_merge.c,a1std,105520,3,3862,394,38,std_merge.c,34,0,0,608,0,0
+630,src/std_uniq.c,hexagon_Debug_dynamic_toolv81_v65/std_uniq.fez,src/std_uniq.c,a1std,105520,3,3862,394,24,std_uniq.c,19,0,0,260,0,0
+742,src/std_bisect.c,hexagon_Debug_dynamic_toolv81_v65/std_bisect.fez,src/std_bisect.c,a1std,105520,3,3862,394,26,std_bisect.c,23,0,0,408,0,0
+556,src/smath.c,hexagon_Debug_dynamic_toolv81_v65/smath.fez,src/smath.c,a1std,22232,2,1133,165,30,smath.c,20,0,0,296,0,0
+13331,src/std_dtoa.c,hexagon_Debug_dynamic_toolv81_v65/std_dtoa.fez,src/std_dtoa.c,a1std,130302,5,4322,631,479,std_dtoa.c,316,193,0,3913,193,0
+14235,src/std_scand.c,hexagon_Debug_dynamic_toolv81_v65/std_scand.fez,src/std_scand.c,a1std,110150,4,3975,462,461,std_scand.c,289,17,0,3085,17,0
+1311,src/std_mem.c,hexagon_Debug_dynamic_toolv81_v65/std_mem.fez,src/std_mem.c,a1std,105520,3,3862,394,51,std_mem.c,32,0,0,596,0,0

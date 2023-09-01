@@ -1,0 +1,23 @@
+INCDIRS += \
+   $(HEXAGON_SDK_ROOT)/incs/audio \
+   $(HEXAGON_SDK_ROOT)/incs/a1std \
+   inc \
+   src \
+
+
+BUILD_LIBS += test_capi_v2_voice
+BUILD_LIBS += test_capi_v2_cpp
+
+test_capi_v2_voice_C_SRCS += \
+   src/test_capi_v2 \
+   src/capi_v2_test \
+   
+test_capi_v2_cpp_C_SRCS += \
+   src/test_capi_v2_cpp \
+   src/capi_v2_test_cpp \
+
+BUILD_COPIES = \
+   inc/test_capi_v2.h \
+   $V/test_capi_v2_voice$(LIB_EXT) \
+   $V/test_capi_v2_cpp$(LIB_EXT) \
+   $(SHIP_DIR)/ ;

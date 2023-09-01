@@ -1,0 +1,14 @@
+
+ifeq (1,$(V_dynamic))
+BUILD_COPIES += $V/libfarf_runtime_test_skel$(DLL_EXT)
+BUILD_DLLS+=libfarf_runtime_test_skel
+endif
+
+libfarf_runtime_test_skel_C_SRCS = src/farf_runtime_test_adsp $V/farf_runtime_test_skel
+libfarf_runtime_test_skel_QAICIDLS=inc/farf_runtime_test
+
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

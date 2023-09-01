@@ -1,0 +1,6 @@
+src/atomic_q.c:
+inc/AEEatomic.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/stddef/AEEStdDef.h:
+hexagon_Debug_dynamic_toolv83_v66/atomic_q.o: src/atomic_q.c
+hexagon_Debug_dynamic_toolv83_v66/atomic_q.o: inc/AEEatomic.h
+hexagon_Debug_dynamic_toolv83_v66/atomic_q.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/stddef/AEEStdDef.h

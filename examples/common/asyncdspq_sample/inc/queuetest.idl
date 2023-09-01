@@ -1,0 +1,77 @@
+/**=============================================================================
+Copyright (c) 2017 QUALCOMM Technologies Incorporated.
+All Rights Reserved Qualcomm Proprietary
+=============================================================================**/
+#ifndef QUEUETEST_IDL
+#define QUEUETEST_IDL
+
+#include "AEEStdDef.idl"
+
+interface queuetest {
+
+    AEEResult asyncdspq_test_reads(
+        in uint32 attach_handle,
+        in uint32 nummsgs,
+        rout uint32 lastmsg
+        );
+
+    AEEResult asyncdspq_test_writes(
+        in uint32 attach_handle,
+        in uint32 nummsgs,
+        in uint32 firstmsg
+        );
+
+    AEEResult asyncdspq_adder_spin(
+        in uint32 req_queue_attach_handle,
+        in uint32 resp_queue_attach_handle
+        );
+
+    AEEResult asyncdspq_adder_message_callbacks_start(
+        in uint32 req_queue_attach_handle,
+        in uint32 resp_queue_attach_handle
+        );
+
+    AEEResult asyncdspq_adder_message_callbacks_stop(
+        );
+
+    AEEResult asyncdspq_space_callback_start(
+        in uint32 attach_handle,
+        in uint32 nummsgs
+        );
+
+    AEEResult asyncdspq_space_callback_stop(
+        );
+
+    AEEResult asyncdspq_multiadder_message_callbacks_start(
+        in uint32 req_queue_attach_handle,
+        in uint32 resp_queue_attach_handle
+        );
+
+    AEEResult asyncdspq_multiadder_message_callbacks_stop(
+        );
+
+    AEEResult asyncdspq_multiadder_threads_start(
+        in uint32 req_queue_attach_handle,
+        in uint32 resp_queue_attach_handle,
+        in uint32 num_threads
+        );
+
+    AEEResult asyncdspq_multiadder_threads_stop(
+        );
+
+    AEEResult enable_logging(
+        );
+
+    AEEResult asyncdspq_test_cancel_read(
+        in uint32 attach_handle
+        );
+
+    AEEResult asyncdspq_test_cancel_write(
+        in uint32 attach_handle
+        );
+
+    AEEResult set_clocks(
+        );
+};
+
+#endif //QUEUETEST_IDL

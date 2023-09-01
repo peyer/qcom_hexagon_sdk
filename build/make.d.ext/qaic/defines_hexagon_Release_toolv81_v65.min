@@ -1,0 +1,17 @@
+#  min file
+
+QAIC_DIR = $(HEXAGON_SDK_ROOT)/tools/qaic/bin
+
+# adjust paths to be relative to current working dir
+_pkg_deps = QAIC_DIR
+__pkg_dir := $(filter-out ./,$(dir $(lastword $(MAKEFILE_LIST))))
+
+
+# assign these variables only for the top-level makefile
+ifeq ($(origin __pkg_root),undefined)
+  __pkg_root    := $(__pkg_dir).
+  __pkg_result  := $(__pkg_root)$(filter-out /.,/.)
+  __pkg_deps    := $(_pkg_deps)
+endif
+__pkg_version ?= 1242031
+

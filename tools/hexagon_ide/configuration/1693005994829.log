@@ -1,0 +1,26 @@
+!SESSION 2023-08-26 07:26:34.750 -----------------------------------------------
+eclipse.buildId=4.8.0.I20180611-0500
+java.version=1.8.0_51
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.cpp.product -application org.eclipse.equinox.p2.director -repository jar:file:/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/tools/hexagon_ide/ide_plugins/juno/IDE.zip!/ -installIU com.qualcomm.feature.ide.feature.group,com.qualcomm.feature.ide.hexagon.feature.group,com.qualcomm.feature.ide.hexagon.hlos.interface.feature.group,com.qualcomm.feature.ide.hexagon.opendsp.feature.group
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.cpp.product -application org.eclipse.equinox.p2.director -repository jar:file:/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/tools/hexagon_ide/ide_plugins/juno/IDE.zip!/ -installIU com.qualcomm.feature.ide.feature.group,com.qualcomm.feature.ide.hexagon.feature.group,com.qualcomm.feature.ide.hexagon.hlos.interface.feature.group,com.qualcomm.feature.ide.hexagon.opendsp.feature.group
+
+!ENTRY org.eclipse.equinox.p2.director 4 10053 2023-08-26 07:26:37.137
+!MESSAGE Cannot complete the install because one or more required items could not be found.
+!SUBENTRY 1 org.eclipse.equinox.p2.director 4 0 2023-08-26 07:26:37.137
+!MESSAGE Software being installed: Hexagon OpenDSP 2.0.0.201909251453 (com.qualcomm.feature.ide.hexagon.opendsp.feature.group 2.0.0.201909251453)
+!SUBENTRY 1 org.eclipse.equinox.p2.director 4 0 2023-08-26 07:26:37.137
+!MESSAGE Missing requirement: Hexagon Launcher 2.0.0.201909251453 (com.qualcomm.hexagon.launch 2.0.0.201909251453) requires 'java.package; org.eclipse.cdt.debug.core.cdi 0.0.0' but it could not be found
+!SUBENTRY 1 org.eclipse.equinox.p2.director 4 1 2023-08-26 07:26:37.137
+!MESSAGE Cannot satisfy dependency:
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 0 2023-08-26 07:26:37.137
+!MESSAGE From: Hexagon Base Components 2.0.0.201909251453 (com.qualcomm.feature.ide.hexagon.feature.group 2.0.0.201909251453)
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 0 2023-08-26 07:26:37.137
+!MESSAGE To: org.eclipse.equinox.p2.iu; com.qualcomm.hexagon.launch 0.0.0
+!SUBENTRY 1 org.eclipse.equinox.p2.director 4 1 2023-08-26 07:26:37.137
+!MESSAGE Cannot satisfy dependency:
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 0 2023-08-26 07:26:37.137
+!MESSAGE From: Hexagon OpenDSP 2.0.0.201909251453 (com.qualcomm.feature.ide.hexagon.opendsp.feature.group 2.0.0.201909251453)
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 0 2023-08-26 07:26:37.137
+!MESSAGE To: org.eclipse.equinox.p2.iu; com.qualcomm.feature.ide.hexagon.feature.group 0.0.0

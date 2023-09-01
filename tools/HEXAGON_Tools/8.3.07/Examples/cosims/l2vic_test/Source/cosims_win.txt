@@ -1,0 +1,2 @@
+./Bin/l2vic_test_cosim.dll
+l2vic.dll 2 0x7b010000

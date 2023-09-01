@@ -1,0 +1,59 @@
+# This builds the libdspCV_skel. 
+
+INCDIRS += \
+  inc \
+  src \
+  $(QURT_IMAGE_DIR)/ADSP$(V_ARCH)MP/include \
+  $(QURT_IMAGE_DIR)/ADSP$(V_ARCH)MP/include/qurt \
+  $(QURT_IMAGE_DIR)/compute$(V_ARCH)/include \
+  $(QURT_IMAGE_DIR)/compute$(V_ARCH)/include/qurt 
+
+LIBNAME := libdspCV_skel
+
+BUILD_LIBS += $(LIBNAME)
+ifeq (1,$(V_dynamic))
+BUILD_DLLS += $(LIBNAME)
+endif
+
+ifeq (1,$(V_dynamic))
+CXX_FLAGS+= -DBUILDING_SO -ffunction-sections -fvisibility=hidden
+CXX_FLAGS+= "-D__QAIC_HEADER_EXPORT=__attribute__((__visibility__(\"default\")))" 
+CXX_FLAGS+= "-D__QAIC_SKEL_EXPORT=__attribute__((__visibility__(\"default\")))" 
+LD_FLAGS+=-Wl,--gc-sections,--print-gc-sections
+endif
+
+# IDL files needed to generate skels and/or headers visible to the shared lib
+$(LIBNAME)_QAICIDLS = inc/dspCV
+
+# .c files to build into the shared lib
+$(LIBNAME)_C_SRCS += \
+  $V/dspCV_skel \
+  src/dspCV_hvx \
+  src/dspCV_concurrency \
+  src/dspCV_imp
+
+# .cpp files to build into the shared lib
+$(LIBNAME)_CPP_SRCS = \
+  src/dspCV_worker 
+
+# .S files to build into the shared lib
+$(LIBNAME).ASM_SRCS += \
+  asm_src/dspCV_sync.S
+
+
+
+
+# copy final build products to the ship directory
+ifeq (1,$(V_dynamic))
+BUILD_COPIES = $(DLLS)
+else
+BUILD_COPIES += $(LIBS)
+endif
+BUILD_COPIES += \
+   inc/dspCV_worker.h \
+   inc/dspCV_hvx.h \
+   inc/dspCV_concurrency.h \
+   inc/dspCV.idl \
+   $(V)/dspCV.h \
+   $(EXES) \
+   $(SHIP_DIR)/ ;

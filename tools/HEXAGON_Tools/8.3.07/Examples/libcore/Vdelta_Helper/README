@@ -1,0 +1,26 @@
+########################################################################
+# Copyright (c) Date: June 17 2015 QUALCOMM INCORPORATED
+# All Rights Reserved
+# Modified by QUALCOMM INCORPORATED on June 17 2015
+########################################################################
+ This folder contains the support program to generate the control inputs for
+ the vrdelta and vdelta instructions in HVX.  The src/_d.c file contains the
+ log of the size of the data transformation, n = 64, 128 logn = 6,7 respectively.
+ It also contains the pattern required, if a value is dont care place an X
+ in the location.
+
+ The makefile builds and simulates the example.  Just type make
+
+ If it is a simple data transform it will attempt to use a simple delta network
+ and use only the vrdelta instruction.
+
+ - X - don't cares make this more likely to succeed, simple things like rotates
+ work.  If the transform is too complex it will try to implement a benes network,
+ if this fails then there are duplicated outputs in the pattern, benes requires
+ a permute pattern. This can be fixed by pre or post duplicating the data then
+ creating a permute.
+
+ Open the General_permute_network.html web page with a browser to get further
+ details on the use of this algorithm. The General_permute_network_files folder
+ contains the .png images and java script used by the html file.  Please do not
+ change the name of this folder as the html file will not work correctly if you do.

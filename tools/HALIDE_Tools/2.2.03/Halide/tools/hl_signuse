@@ -1,0 +1,44 @@
+#!/bin/bash
+#
+# Note: Do not call this script directly.  The Halide compiler will call
+# this script if the HL_HEXAGON_CODE_SIGNER environment variable is set.
+#
+# Usage: hl_signuse 'unsigned_lib' 'signed_lib'
+#
+#   Script to use externally signed Halide shared objects
+#   located in $SIGNDIR
+#
+#   Libraries will be used in order by ID and removed after
+#   they are used so the next time script is run, the next
+#   library is selected.
+#
+# To use, before compiling, set the following env var:
+#
+#   export HL_HEXAGON_CODE_SIGNER=~/halide/scripts/hl_signuse
+#
+# Don't call this script directly.  The Halide compiler will call this
+# script if the HL_HEXAGON_CODE_SIGNER environment variable is set.
+#
+SIGNDIR=/tmp/hl_sign_$USER
+if [[ ! -d $SIGNDIR ]]; then
+   echo "Error: hl_signuse: could not find directory $SIGNDIR"
+   exit
+fi
+DONEDIR=/tmp/hl_sign_$USER/done
+mkdir -p $DONEDIR
+if [[ ! -d $DONEDIR ]]; then
+   echo "Error: hl_signuse: could not create directory $DONEDIR"
+   exit
+fi
+num=`ls $SIGNDIR/*.so | wc -l`
+if [[ $num -eq 0 ]]; then
+   echo "Error: hl_signuse: no files found in $SIGNDIR"
+   exit
+fi
+
+LIB=`ls $SIGNDIR/*.so | head -1`
+echo "hl_signuse: copying $LIB to $2"
+
+cp $LIB $2     # use externally signed library
+/bin/mv -f $LIB $DONEDIR  # move library away for next compilation
+

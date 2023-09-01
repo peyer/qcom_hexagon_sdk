@@ -1,0 +1,75 @@
+<DSP type="WDSP" versionMajor="0x2" versionMinor="0x8" versionBranch="0x10" versionSubBranch="0x20">
+  <MODULE_LIST>
+    <MODULE name="MODULE_1" id="0x11111111">
+      <MODULE_INFO pidFwk="0x20002">
+        <META_DATA/>
+        <PIN_INFO type="STATIC">
+          <INPUT_PINS/>
+          <OUTPUT_PINS/>
+        </PIN_INFO>
+      </MODULE_INFO>
+      <PARAMETER_LIST>
+        <PARAMETER name="Parameter1" pid="0x2" maxSize="0x14">
+          <TOOL_POLICIES>
+            <POLICY name="RTC"/>
+            <POLICY name="CALIBRATION"/>
+          </TOOL_POLICIES>
+          <DEFAULT_DEPENDENCIES/>
+          <CONFIG_ELEMENT name="a" type="unsigned short" typeUnSigned="true" byteSize="0x2" byteOffset="0x0" min="0x0" max="0xffff" default="0x0">
+            <RANGE_LIST>
+              <RANGE name="value1" value="0x0"/>
+              <RANGE name="value2" value="0x1"/>
+              <RANGE name="value3" value="0x3"/>
+            </RANGE_LIST>
+          </CONFIG_ELEMENT>
+          <CONFIG_ELEMENT name="b" type="int" byteSize="0x4" byteOffset="0x4" min="0x80000000" max="0x7fffffff" default="0x0">
+            <RANGE_LIST>
+              <RANGE name="test1" value="0x0"/>
+              <RANGE name="test2" value="0x1"/>
+            </RANGE_LIST>
+          </CONFIG_ELEMENT>
+          <CONFIG_ELEMENT name="c" type="char" byteSize="0x1" byteOffset="0x8" min="0x80" max="0x7f" default="0xff">
+            <RANGE_LIST>
+              <RANGE name="a" value="0xff"/>
+              <RANGE name="b" value="0x20"/>
+            </RANGE_LIST>
+          </CONFIG_ELEMENT>
+          <CONFIG_ELEMENT name="d_1" type="int" byteSize="0x4" byteOffset="0xc" min="0x80000000" max="0x7fffffff" default="0x0">
+            <RANGE_LIST>
+              <RANGE name="DISABLE" value="0x0"/>
+              <RANGE name="ENABLE" value="0x1"/>
+            </RANGE_LIST>
+          </CONFIG_ELEMENT>
+          <CONFIG_ELEMENT name="d_2" type="int" byteSize="0x4" byteOffset="0x10" min="0x80000000" max="0x7fffffff" default="0x0">
+            <RANGE_LIST>
+              <RANGE name="DISABLE" value="0x0"/>
+              <RANGE name="ENABLE" value="0x1"/>
+            </RANGE_LIST>
+          </CONFIG_ELEMENT>
+        </PARAMETER>
+        <PARAMETER name="Parameter2" pid="0x22222299" maxSize="0x8">
+          <TOOL_POLICIES>
+            <POLICY name="RTC"/>
+            <POLICY name="CALIBRATION"/>
+          </TOOL_POLICIES>
+          <DEFAULT_DEPENDENCIES/>
+          <CONFIG_ELEMENT name="a" type="char" byteSize="0x1" byteOffset="0x0" min="0x80" max="0x7f" default="0x37">
+            <RANGE_LIST>
+              <RANGE name="enable1" value="0x4"/>
+              <RANGE name="enable2" value="0x1"/>
+              <RANGE name="enable3" value="0x3"/>
+              <RANGE name="enable4" value="0x37"/>
+            </RANGE_LIST>
+          </CONFIG_ELEMENT>
+          <CONFIG_ELEMENT name="b" type="long" byteSize="0x4" byteOffset="0x4" min="0x80000000" max="0x7fffffff" default="0x0">
+            <RANGE_LIST>
+              <RANGE name="a" value="0xffffffff"/>
+              <RANGE name="b" value="0x20"/>
+              <RANGE name="c" value="0x0"/>
+            </RANGE_LIST>
+          </CONFIG_ELEMENT>
+        </PARAMETER>
+      </PARAMETER_LIST>
+    </MODULE>
+  </MODULE_LIST>
+</DSP>

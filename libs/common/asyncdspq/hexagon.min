@@ -1,0 +1,32 @@
+# builds the static/dynamic skel
+ifeq (1,$(V_dynamic))
+BUILD_DLLS =  libasyncdspq_skel
+else
+BUILD_LIBS += libasyncdspq_skel
+endif
+
+include $(QURT_INSTALL)/qurt_libs.min
+
+CC_FLAGS += $(MHVX_DOUBLE_FLAG)
+ASM_FLAGS += $(MHVX_SINGLE_FLAG)
+
+INCDIRS += inc
+
+# Use -O0 temporarily when trying to debug C code.
+#_OPT = -O0
+
+
+# asyncdspq library and RPC skeleton
+libasyncdspq_skel_QAICIDLS = inc/asyncdspq_rpc
+libasyncdspq_skel_C_SRCS += $V/asyncdspq_skel \
+                           src/asyncdspq \
+                           src/asyncdspq_rpc_imp
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   inc/asyncdspq_rpc.idl \
+   inc/asyncdspq.h \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

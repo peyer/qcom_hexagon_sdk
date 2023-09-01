@@ -1,0 +1,15 @@
+#what we ship
+BUILD_COPIES+=inc/rpcmem.h
+
+INCDIRS += \
+  $(HEXAGON_SDK_ROOT)/incs/qlist \
+  $(HEXAGON_SDK_ROOT)/incs/a1std \
+  inc \
+  src \
+
+BUILD_COPIES += $V/rpcmem$(LIB_EXT)
+
+BUILD_LIBS += rpcmem
+rpcmem_C_SRCS = src/rpcmem_android
+
+BUILD_COPIES += $(SHIP_DIR)/ ;

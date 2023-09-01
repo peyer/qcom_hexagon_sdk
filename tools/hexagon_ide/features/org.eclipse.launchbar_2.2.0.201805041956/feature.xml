@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.launchbar"
+      label="%featureName"
+      version="2.2.0.201805041956"
+      provider-name="%providerName">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <plugin
+         id="org.eclipse.launchbar.core"
+         download-size="76"
+         install-size="162"
+         version="2.2.0.201805041956"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.launchbar.ui"
+         download-size="80"
+         install-size="171"
+         version="2.2.0.201805041956"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.launchbar.ui.controls"
+         download-size="139"
+         install-size="253"
+         version="1.0.1.201805041956"
+         unpack="false"/>
+
+</feature>

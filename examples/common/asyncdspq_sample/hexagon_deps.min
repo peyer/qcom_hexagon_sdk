@@ -1,0 +1,28 @@
+
+# must list all variants supported by this project
+include hexagon_unsupport.min
+SUPPORTED_VS = $(filter-out $(Unsupported_hexagon_VS),$(default_VS))               
+# must list all the dependencies of this project
+DEPENDENCIES = \
+  ATOMIC \
+  RPCMEM \
+  ASYNCDSPQ \
+  DSPCV     \
+  TEST_MAIN \
+  TEST_UTIL
+
+INCDIRS += $(HEXAGON_SDK_ROOT)/libs/fastcv/fastcv/hexagon_Debug_dynamic_toolv83_v65
+LIBDIRS += $(HEXAGON_SDK_ROOT)/libs/fastcv/fastcv/hexagon_Debug_dynamic_toolv83_v65
+
+# each dependency needs a directory definition
+#  the form is <DEPENDENCY NAME>_DIR
+#  for example:
+#    DEPENDENCIES = FOO
+#    FOO_DIR = $(HEXAGON_SDK_ROOT)/examples/common/foo
+#
+ATOMIC_DIR = $(HEXAGON_SDK_ROOT)/libs/common/atomic
+RPCMEM_DIR = $(HEXAGON_SDK_ROOT)/libs/common/rpcmem
+TEST_MAIN_DIR = $(HEXAGON_SDK_ROOT)/test/common/test_main
+TEST_UTIL_DIR = $(HEXAGON_SDK_ROOT)/test/common/test_util
+ASYNCDSPQ_DIR = $(HEXAGON_SDK_ROOT)/libs/common/asyncdspq
+DSPCV_DIR = $(HEXAGON_SDK_ROOT)/libs/fastcv/dspCV

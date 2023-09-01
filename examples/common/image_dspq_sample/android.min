@@ -1,0 +1,24 @@
+# stand-alone image_dspq_test executable
+BUILD_EXES+=image_dspq_test
+
+image_dspq_test_QAICIDLS += inc/image_dspq_test \
+                      $(IMAGE_DSPQ_DIR)/inc/image_dspq \
+                      $(ASYNCDSPQ_DIR)/inc/asyncdspq_rpc \
+                      $(DSPCV_DIR)/inc/dspCV
+image_dspq_test_C_SRCS += src/image_dspq_test \
+                    $V/image_dspq_test_stub \
+                    $V/image_dspq_stub \
+                    $V/asyncdspq_stub
+image_dspq_test_DLLS += libcdsprpc
+image_dspq_test_LIBS += rpcmem asyncdspq image_dspq
+image_dspq_test_LD_FLAGS += -llog
+image_dspq_test_DEFINES += VERIFY_PRINT_ERROR
+
+INCDIRS += inc
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

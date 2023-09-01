@@ -1,0 +1,44 @@
+# builds the static/dynamic skel
+ifeq (1,$(V_dynamic))
+BUILD_DLLS =  libqueuetest_skel libfcvqueue_dsp_skel libfcvqueuetest_skel
+else
+BUILD_LIBS += libqueuetest_skel libfcvqueue_dsp_skel libfcvqueuetest_skel
+endif
+
+QURT_INSTALL = $(HEXAGON_SDK_ROOT)/libs/common/qurt
+include $(QURT_INSTALL)/qurt_libs.min
+
+CC_FLAGS += $(MHVX_DOUBLE_FLAG)
+ASM_FLAGS += $(MHVX_SINGLE_FLAG)
+
+INCDIRS += inc
+
+# Use -O0 temporarily when trying to debug C code.
+#_OPT = -O0
+
+
+# Queue test skeleton
+libqueuetest_skel_QAICIDLS = inc/queuetest
+libqueuetest_skel_C_SRCS += $V/queuetest_skel \
+                                src/queuetest_imp
+libqueuetest_skel_DLLS+=libdspCV_skel libasyncdspq_skel
+
+# fcvqueue test/example
+libfcvqueue_dsp_skel_QAICIDLS = inc/fcvqueue_dsp
+libfcvqueue_dsp_skel_C_SRCS += $V/fcvqueue_dsp_skel \
+                               src/fcvqueue_dsp_imp
+libfcvqueue_dsp_skel_DLLS += libdspCV_skel libasyncdspq_skel libfastcvadsp
+
+# fcvqueue test
+libfcvqueuetest_skel_QAICIDLS = inc/fcvqueuetest
+libfcvqueuetest_skel_C_SRCS += $V/fcvqueuetest_skel \
+                               src/fcvqueuetest_imp
+libfcvqueuetest_skel_DLLS += libfastcvadsp
+
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

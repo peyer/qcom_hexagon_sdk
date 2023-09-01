@@ -1,0 +1,52 @@
+# stand-alone queuetest executable
+BUILD_EXES+=queuetest
+queuetest_QAICIDLS += inc/queuetest \
+                      $(ASYNCDSPQ_DIR)/inc/asyncdspq_rpc \
+                      $(DSPCV_DIR)/inc/dspCV
+queuetest_C_SRCS += src/queuetest \
+                    $V/queuetest_stub \
+                    $V/dspCV_stub\
+                    $V/asyncdspq_stub
+queuetest_DLLS += libcdsprpc
+queuetest_LIBS += rpcmem asyncdspq
+queuetest_LD_FLAGS += -llog
+queuetest_DEFINES += VERIFY_PRINT_ERROR
+
+# fcvqueue test/example
+BUILD_EXES+=fcvqueuetest
+fcvqueuetest_QAICIDLS += inc/fcvqueuetest \
+                         inc/fcvqueue_dsp \
+                         $(DSPCV_DIR)/inc/dspCV
+fcvqueuetest_C_SRCS += src/fcvqueuetest \
+                       $V/fcvqueuetest_stub \
+                       src/fcvqueue \
+                       $V/fcvqueue_dsp_stub \
+                       $V/dspCV_stub \
+                       $V/asyncdspq_stub
+fcvqueuetest_DLLS += libcdsprpc
+fcvqueuetest_LIBS += rpcmem asyncdspq
+fcvqueuetest_LD_FLAGS += -llog
+fcvqueuetest_DEFINES += VERIFY_PRINT_ERROR
+
+# stand-alone queueperf executable
+BUILD_EXES+=queueperf
+queueperf_QAICIDLS += inc/queuetest \
+                      $(ASYNCDSPQ_DIR)/inc/asyncdspq_rpc \
+                      $(DSPCV_DIR)/inc/dspCV
+queueperf_C_SRCS += src/queueperf \
+                    $V/queuetest_stub \
+                    $V/dspCV_stub \
+                    $V/asyncdspq_stub
+queueperf_DLLS += libcdsprpc
+queueperf_LIBS += rpcmem asyncdspq
+queueperf_LD_FLAGS += -llog
+queueperf_DEFINES += VERIFY_PRINT_ERROR
+
+INCDIRS += inc
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

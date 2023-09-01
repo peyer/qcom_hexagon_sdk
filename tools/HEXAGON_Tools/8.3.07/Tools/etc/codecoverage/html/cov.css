@@ -1,0 +1,42 @@
+p.source {line-height:10px;}
+body.source {background-color:#DDFFFF;}
+body.toc {background-color:#EEEEEE;}
+div.expanded_src {display: inline;}
+h1 {text-align: center;}
+div.toc_content table th {text-align: left;}
+.toc_entry a {overflow:hidden;color:#0000FF;text-decoration:none;}
+.toc_index{display:none;}
+.toc_entry_type{display:none;}
+.toc_src_file_weight {text-align: right;}
+table#toc_table tr {height: 26px;}
+table#toc_table td {padding-bottom: 3px; padding-top: 3px;}
+
+#src_summary_text {text-align: center; font-size: larger;}
+#src_summary_percent_text{text-align: center; font-size: larger;background-color:#DDFFFF;}
+#src_summary_percent_text span {font-size: larger;background-color:#DDFFFF;}
+.source_line pre {margin:0px;padding:0px;}
+.color_class_blue {background-color:rgba(0,0,255,0.4);}
+.color_class_green {background-color:rgba(0,255,0,0.4);}
+.color_class_yellow {background-color:rgba(255, 255, 0, 0.4);}
+.color_class_red {background-color:rgba(255,0,0,0.4);}
+
+.src_content .color_class_blue {background-color:rgba(0,0,255,0.1);}
+.src_content .color_class_green {background-color:rgba(0,255,0,0.1);}
+.src_content .color_class_yellow {background-color:rgba(255, 255, 0, 0.1);}
+.src_content .color_class_red {background-color:rgba(255,0,0,0.1);}
+
+.src_selected {outline:solid #0000FF;}
+
+#src_summary_percent_text .color_class_blue {color:rgba(0,0,255,1.0);}
+#src_summary_percent_text .color_class_green {color:rgba(0,180,0,1.0);}
+#src_summary_percent_text .color_class_yellow {color:rgba(180, 180, 23, 1.0);}
+#src_summary_percent_text .color_class_red {color:rgba(255,0,0,1.0);}
+
+.function_name {}
+.addr_range {}
+.packet_table {border:0px;border-spacing:0px;table-layout:fixed;width:100%;margins:0px;}
+.note_col {overflow:hidden; width: 20px;text-align:right;}
+.instr_cnt_col {overflow:hidden; width: 100px;text-align:right;}
+.spacer_col {overflow:hidden; width: 10px;text-align:right;}
+.instr_col {overflow:hidden;table-layout:fixed;}
+.cycles_label_col {overflow:hidden; width: 100px;}

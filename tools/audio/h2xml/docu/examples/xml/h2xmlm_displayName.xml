@@ -1,0 +1,24 @@
+<DSP type="WDSP" versionMajor="0x2" versionMinor="0x8" versionBranch="0x10" versionSubBranch="0x20">
+  <MODULE_LIST>
+    <MODULE name="MODULE_1_LONG_NAME" id="0x11111111" displayName="Module 1">
+      <MODULE_INFO pidFwk="0x20002">
+        <META_DATA/>
+        <PIN_INFO type="STATIC">
+          <INPUT_PINS/>
+          <OUTPUT_PINS/>
+        </PIN_INFO>
+      </MODULE_INFO>
+      <PARAMETER_LIST/>
+    </MODULE>
+    <MODULE name="MODULE_2_LONG_NAME" id="0x22222222" displayName="Module 2">
+      <MODULE_INFO pidFwk="0x20002">
+        <META_DATA/>
+        <PIN_INFO type="STATIC">
+          <INPUT_PINS/>
+          <OUTPUT_PINS/>
+        </PIN_INFO>
+      </MODULE_INFO>
+      <PARAMETER_LIST/>
+    </MODULE>
+  </MODULE_LIST>
+</DSP>

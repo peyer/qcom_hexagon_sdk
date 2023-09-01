@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.cdt.arduino"
+      label="%featureName"
+      version="9.5.0.201806170908"
+      provider-name="%providerName"
+      plugin="org.eclipse.cdt.arduino.ui">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <requires>
+      <import feature="org.eclipse.launchbar" version="1.0.0"/>
+      <import feature="org.eclipse.remote.serial" version="1.0.0"/>
+      <import feature="org.eclipse.remote" version="2.0.0"/>
+      <import feature="org.eclipse.remote.console" version="2.0.0"/>
+      <import feature="org.eclipse.cdt" version="9.5.0"/>
+      <import feature="org.eclipse.launchbar.remote" version="1.0.0"/>
+   </requires>
+
+   <plugin
+         id="org.eclipse.cdt.arduino.core"
+         download-size="93"
+         install-size="204"
+         version="2.1.0.201806170908"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.cdt.arduino.ui"
+         download-size="125"
+         install-size="243"
+         version="2.1.0.201806170908"
+         unpack="false"/>
+
+</feature>

@@ -1,0 +1,53 @@
+SYM_FILE = $(HEXAGON_SDK_ROOT)/incs/dynsymbols.lst
+
+INCDIRS += \
+   $(HEXAGON_SDK_ROOT)/incs/audio \
+   inc \
+   src \
+
+LIBDIRS += $(HEXAGON_SDK_ROOT)/libs/common/a1std/ship/$(V)
+
+# only build the shared object if dynamic option specified in V
+ifeq (1,$(V_dynamic))
+BUILD_DLLS = capi_v2_voicewakeup
+endif
+
+BUILD_LIBS = capi_v2_voicewakeup
+
+capi_v2_voicewakeup_C_SRCS += \
+   src/capi_v2_voicewakeup \
+   src/detect_keyword \
+
+capi_v2_voicewakeup_CPP_SRCS += \
+   src/capi_v2_voicewakeup_utils
+   
+# quality test
+BUILD_QEXES += capi_v2_voicewakeup_q
+
+ifeq (1,$(V_toolv83))
+capi_v2_voicewakeup_q_LD_FLAGS +=--extern-list=$(SYM_FILE)
+endif
+
+capi_v2_voicewakeup_q_CPP_SRCS = src/capi_v2_voicewakeup_test
+capi_v2_voicewakeup_q_LIBS = 	rtld \
+								a1std \
+								test_main \
+								test_util \
+								test_capi_v2_cpp \
+								capi_v2_utils_props \
+								capi_v2_voicewakeup \
+								test_profile atomic \
+
+# if building shared object must also list it as a dependency to the qtest
+ifeq (1,$(V_dynamic))
+$V/capi_v2_voicewakeup_q.ok: $V/capi_v2_voicewakeup_q $V/capi_v2_voicewakeup$(DLL_EXT)
+endif
+
+# specify final build products, in this case the module's header file and
+# its associated libraries (and shared objects)
+BUILD_COPIES = \
+   inc/capi_v2_voicewakeup.h \
+   $(DLLS) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;
+

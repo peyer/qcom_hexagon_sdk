@@ -1,0 +1,117 @@
+// cctype standard header
+#ifndef _CCTYPE_
+#define _CCTYPE_
+#include <yvals.h>
+
+
+ #if _IS_EMBEDDED
+  #define _Isspace	isspace
+ #endif /* _IS_EMBEDDED */
+
+#ifdef _STD_USING
+ #undef _STD_USING
+  #include <ctype.h>
+ #define _STD_USING
+
+#else /* _STD_USING */
+ #include <ctype.h>
+
+ #if defined(__APPLE__) && __GNUC__ < 3	/* compiler test */
+_C_STD_BEGIN
+_C_LIB_DECL
+inline int (isalnum)(int _Ch)
+	{	// test isalnum
+	return (isalnum(_Ch));
+	}
+
+inline int (isalpha)(int _Ch)
+	{	// test isalpha
+	return (isalpha(_Ch));
+	}
+
+inline int (iscntrl)(int _Ch)
+	{	// test iscntrl
+	return (iscntrl(_Ch));
+	}
+
+inline int (isdigit)(int _Ch)
+	{	// test isdigit
+	return (isdigit(_Ch));
+	}
+
+inline int (isgraph)(int _Ch)
+	{	// test isgraph
+	return (isgraph(_Ch));
+	}
+
+inline int (islower)(int _Ch)
+	{	// test islower
+	return (islower(_Ch));
+	}
+
+inline int (isprint)(int _Ch)
+	{	// test isprint
+	return (isprint(_Ch));
+	}
+
+inline int (ispunct)(int _Ch)
+	{	// test ispunct
+	return (ispunct(_Ch));
+	}
+
+inline int (isspace)(int _Ch)
+	{	// test isspace
+	return (isspace(_Ch));
+	}
+
+inline int (isupper)(int _Ch)
+	{	// test isupper
+	return (isupper(_Ch));
+	}
+
+inline int (isxdigit)(int _Ch)
+	{	// test isxdigit
+	return (isxdigit(_Ch));
+	}
+_END_C_LIB_DECL
+_C_STD_END
+ #endif /* !defined(__APPLE__) && __GNUC__ < 3 */
+
+#endif /* _STD_USING */
+
+ #ifdef _GLOBAL_USING
+_STD_BEGIN
+using _CSTD isalnum; using _CSTD isalpha; using _CSTD iscntrl;
+using _CSTD isdigit; using _CSTD isgraph; using _CSTD islower;
+using _CSTD isprint; using _CSTD ispunct; using _CSTD isspace;
+using _CSTD isupper; using _CSTD isxdigit; using _CSTD tolower;
+using _CSTD toupper;
+
+ #if _HAS_C9X
+using _CSTD isblank;
+ #endif /* _HAS_C9X */
+
+_STD_END
+ #endif /* _GLOBAL_USING */
+
+	/* remove any (improper) macro overrides */
+#undef isalnum
+#undef isalpha
+#undef isblank
+#undef iscntrl
+#undef isdigit
+#undef isgraph
+#undef islower
+#undef isprint
+#undef ispunct
+#undef isspace
+#undef isupper
+#undef isxdigit
+#undef tolower
+#undef toupper
+#endif /* _CCTYPE_ */
+
+/*
+ * Copyright (c) 1992-2006 by P.J. Plauger.  ALL RIGHTS RESERVED.
+ * Consult your license regarding permissions and restrictions.
+V5.01:1566 */

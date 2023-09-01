@@ -1,0 +1,11 @@
+BUILD_DLLS += libmmcamera_hvx_add_constant
+
+libmmcamera_hvx_add_constant.C_SRCS += src/hvx_add_constant.c
+libmmcamera_hvx_add_constant_LD_FLAGS += -llog -ldl
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

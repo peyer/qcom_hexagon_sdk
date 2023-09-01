@@ -1,0 +1,52 @@
+##################################################################
+# Copyright (c) $Date$ QUALCOMM INCORPORATED.
+# All Rights Reserved.
+# Modified by QUALCOMM INCORPORATED on $Date$
+##################################################################
+This example emphasizes a very important concept for VLIW (very long
+instruction word) architectures like Hexagon: eliminate control flow.
+An important feature of VLIW architectures is that they are able to
+schedule and issue several instructions in a single cycle, or packet.
+Hexagon can schedule up to 4 operations in a single packet, allowing the
+hardware to issue and execute them in parallel.  The hardware relies
+on the compiler to identify and exploit this ILP (instruction level
+parallelism).  A major obstacle for exploiting ILP is control flow, or
+branches, because they prevent operations on either side of the branch
+to be scheduled in the same packet.  In C code, control flow results
+from things like if-blocks, switch-statements, and for-loops.  If the
+programmer can determine that a program could be rewritten to
+eliminate some control flow, it may be result in better performance.
+This may hold true even if it appears that the program will do "extra
+work", becuase this extra work may be able to be scheduled into empty
+slots in already-existing packets.
+
+This example illustrates two common ways for eliminating control flow:
+the MUX intrinsic and the ternary operator.
+
+The ternary operator is builtin to C, and has the following syntax:
+
+    z = (p ? x : y)
+
+After this statement, z will contain x if p is true and it will
+contain y if p is false.  In general, this piece of code is translated
+into a compare and branch to one of two assignment statements.
+However, Hexagon has an instruction that will implement this behavior in
+a single cycle: mux.  The MUX intrinsic picks one of two values,
+depending on the predicate:
+
+    Word32 Q6_R_mux_pRR(Byte Pu, Word32 Rs, Word32 Rt)
+
+If the mux operation is emitted in the final assembly file, then the
+control flow will be simplier and the schedule will likely be better,
+resulting in improved performance.  Thus, the programmer may use the
+ternary operator or the mux intrinsic to eliminate unnecessary control
+flow.
+
+The file findmin.c contains the findmin example; run the test_findmin
+program to see the performance impact of control flow.
+
+Running Example:
+1) make
+
+Default compiler and options can be modified on the make command line
+using the CC and CFLAGS make variables, respectively.

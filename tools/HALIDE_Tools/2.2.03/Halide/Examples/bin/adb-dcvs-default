@@ -1,0 +1,59 @@
+#!/bin/bash
+#
+# adb-dcvsmode - Android settings to enable DCVS mode
+#
+# Notes:
+#   - Enables dynamic clock and voltage scaling
+#   - Values used are thsoe seen before running adb-perfmode
+#   - Settings will be reset to their defaults on reboot
+#
+device=""
+while [ $# -gt 0 ]; do          # check arguments
+   case "$1" in
+      -s)
+         shift
+         device="-s $1" ;;
+      *)
+         echo "Usage: $0 [-s device]" >& 2
+         exit 1 ;;
+   esac
+   shift
+done
+
+adb $device wait-for-devices
+adb $device root
+adb $device wait-for-devices
+adb $device remount
+adb $device wait-for-devices
+
+# Enable Thermal Engine and KTM
+adb $device shell start thermal-engine
+
+# Get available CPUs
+cpus=`adb $device shell 'ls -d /sys/devices/system/cpu/cpu[0-9]* | cat' | tr '\r\n' ' '`
+
+# Bring up all cores just in case
+for cpu in $cpus; do
+    echo $cpu
+    adb $device shell "echo 1 > $cpu/online"
+done
+
+# Enable CPU DCVS
+for cpu in $cpus; do
+    adb $device shell "echo interactive > $cpu/cpufreq/scaling_governor"
+done
+
+# Enable Bus DCVS
+adb $device shell "echo 18446744073709551615 > /sys/kernel/debug/msm-bus-dbg/shell-client/mas"
+adb $device shell "echo 18446744073709551615 > /sys/kernel/debug/msm-bus-dbg/shell-client/slv"
+adb $device shell "echo cpufreq > /sys/class/devfreq/soc:qcom,m4m/governor" > /dev/null
+adb $device shell "echo bw_hwmon > /sys/class/devfreq/soc:qcom,cpubw/governor"
+
+adb $device shell "echo 0 > /sys/kernel/debug/msm-bus-dbg/shell-client/ab"
+adb $device shell "echo 0 > /sys/kernel/debug/msm-bus-dbg/shell-client/ib"
+adb $device shell "echo 0 > /sys/kernel/debug/msm-bus-dbg/shell-client/update_request"
+adb $device shell "echo 307200000 > /d/clk/cbf_clk/rate" > /dev/null
+
+# Enable Low Power Modes, PC, SPC, Retention and L2 Retension
+adb $device shell "echo N > /sys/module/lpm_levels/parameters/sleep_disabled"
+

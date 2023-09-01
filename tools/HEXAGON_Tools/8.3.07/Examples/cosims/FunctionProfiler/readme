@@ -1,0 +1,81 @@
+Function Profiling cosimulation module
+-------------------
+
+Function Profiling cosim module
+
+This cosim model is for profiling functions of a Hexagon application.
+The cosim will, on entry to the specified function, set a breakpoint
+on the return address and continue execution.  When the breakpoint is
+hit, the number of elapsed cycles is calculated and the temporary
+breakpoint is removed.
+
+You specify the address as a parameter to the cosim as follows:
+
+FunctionProfiler.so <FuncAddress>
+
+The address can be of the form of a hexadecimal constant (e.g.
+0x5f43) or a public symbol exported by the application (e.g.,
+main).
+
+This cosim will count the number of times the program executed the
+function and report the number of cycles for each iteration into a
+file as well as printing a summary to stdout of the form:
+
+For function _Unlockfilelock at address 0x6870:
+        267 iterations
+        avg = 93.51 cycles
+        max = 210 cycles for iteration 1 starting at cycle 46037
+        min = 90 cycles for iteration 3 starting at cycle 49391
+
+The cosim will not properly handle recursion.  This is left as an
+exercise for the reader.
+
+The file will be named <func>.dat where <func> is the supplied
+function name or address.
+
+This cosim illustrates how to get control when an instruction at a
+given PC value is executed (effectively a "breakpoint") as well as how
+to read global and thread registers.
+
+
+To build:
+
+From the src directory, run the following commands in a shell:
+> make clean
+> make
+
+This will build the cosim and launch a simulation with the
+cosim attached. The makefile will run a hello world app on
+the simulator with the cosim attached.
+
+Windows:
+
+Note that building on Windows requires MSVC 2005 and Cygwin.
+Prior to building the cosim, run vsvars32.bat from the following
+directory to make sure all the proper MSVC variables are
+set up:
+
+C:\Program Files\Microsoft Visual Studio 8\Common7\Tools
+
+Linux:
+
+Building on Linux requires a version of GCC compatible with
+4.1.2 to be installed in your system path.
+
+The path and name of the cosim is listed in a file which
+is passed to the simulator via the --cosim_file option:
+
+${COSIM_PATH}/${COSIM_LIB}
+
+Where:
+
+${COSIM_LIB} = FunctionProfiler.so  on linux32/64
+${COSIM_LIB} = FunctionProfiler.dll on cygwin
+
+Refer to the Hexagon Simulator System API User Guide
+(80-N2040-18) for more details on creating cosimulation
+models. The most recent version of the User Guide can
+be found here:
+http://aglcrpprdapp.qualcomm.com/AgileDocument/AgileDocument.jsp?itemno=80-VB419-20
+
+

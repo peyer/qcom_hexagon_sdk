@@ -1,0 +1,48 @@
+
+INCDIRS += \
+   inc \
+   src \
+
+# only build the shared object if dynamic option specified in V
+ifeq (1,$(V_dynamic))
+BUILD_DLLS += FFTsfc
+ifneq ($(V_ARCH),v4)
+#only supported for v5 and newer architectures
+BUIlD_DLLS += FFTsfc_asm
+endif 
+endif
+
+BUILD_LIBS += FFTsfc
+BUILD_QEXES += FFTsfc_q
+ifneq ($(V_ARCH),v4)
+BUILD_LIBS += FFTsfc_asm
+BUILD_QEXES += FFTsfc_asm_q
+endif
+
+FFTsfc_C_SRCS += \
+   src/fft \
+
+FFTsfc_asm.ASM_SRCS += \
+   src/fft_asm.S \
+
+FFTsfc_q_C_SRCS = test/test_fft test/genFFTtwiddle
+FFTsfc_q_LIBS = FFTsfc
+
+FFTsfc_asm_q_C_SRCS =  test/test_fft test/genFFTtwiddle
+FFTsfc_asm_q_LIBS = FFTsfc_asm
+
+# if building shared object must also list it as a dependency to the qtest
+ifeq (1,$(V_dynamic))
+$V/FFTsfc_q.ok: $V/FFTsfc_q $V/FFTsfc$(DLL_EXT)
+ifneq ($(V_ARCH),v4)
+$V/FFTsfc_asm_q.ok: $V/FFTsfc_q $V/FFTsfc$(DLL_EXT)
+endif
+endif
+
+# specify final build products, in this case the module's header file and
+# its associated libraries (and shared objects)
+BUILD_COPIES = \
+   inc/FFTsfc.h \
+   $(DLLS) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

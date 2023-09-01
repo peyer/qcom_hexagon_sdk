@@ -1,0 +1,50 @@
+ifeq (1,$(V_dynamic))
+
+include $(QURT_INSTALL)/qurt_libs_priv.min
+include $(QURT_INSTALL)/qurt_libs.min
+
+INCDIRS += inc \
+           $(HEXAGON_SDK_ROOT)/incs/a1std
+
+LIBDIRS += $(HEXAGON_SDK_ROOT)/libs/common/a1std/ship/$(V)
+
+BUILD_DLLS += librun_main_on_hexagon_skel
+librun_main_on_hexagon_skel_QAICIDLS = inc/run_main_on_hexagon
+librun_main_on_hexagon_skel_C_SRCS += $V/run_main_on_hexagon_skel src/run_main_on_hexagon_dsp
+
+BUILD_DLLS += test_main
+test_main_C_SRCS += src/test_main
+
+BUILD_QEXES += run_main_on_hexagon_sim
+run_main_on_hexagon_sim_QAICIDLS = inc/run_main_on_hexagon
+run_main_on_hexagon_sim_C_SRCS = src/run_main_on_hexagon_sim src/run_main_on_hexagon_dsp
+run_main_on_hexagon_sim_PRELIBS += $(QURT_INIT_LIBS)
+run_main_on_hexagon_sim_LIBS += $(QURT_LINK_LIBS)
+run_main_on_hexagon_sim_LIBS += $(TARGET_DIR)/libc_eh # needed to run c++ user modules
+run_main_on_hexagon_sim_LIBS += rtld test_util atomic a1std
+run_main_on_hexagon_sim_POSTLIBS += $(QURT_FINI_LIBS)
+
+# run_main_on_hexagon includes test utils and the implementations of the __wrap functions that
+# the user .so's will bind to.  If we wrapped here we would create an infinance loop of calling
+# __wrap functions
+LD_FLAGS_WRAP =#
+
+QEXE_EXEC = $(SIM) -m$(SIM_V_ARCH) --simulated_returnval#
+QEXE_EXEC += --usefs $(V)#
+QEXE_EXEC += --pmu_statsfile $(V)/pmu_stats.txt
+QEXE_EXEC += --cosim_file $(V)/q6ss.cfg
+QEXE_EXEC += --l2tcm_base 0xd800
+QEXE_EXEC += --rtos $(V)/osam.cfg 
+QEXE_EXEC += $(RTOS_DIR)/sdksim_bin/runelf.pbn -- 
+QEXE_EXEC += $(V)/run_main_on_hexagon_sim -- test_main.so 1 foo 2 bar
+
+#$(V)/run_main_on_hexagon_sim: $(V)/test_main.so
+
+# copy final build products to the ship directory
+
+BUILD_COPIES = \
+   $(QEXES) \
+   $(DLLS) \
+   $(SHIP_DIR)/ ;
+
+endif

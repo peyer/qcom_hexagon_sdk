@@ -1,0 +1,48 @@
+##################################################################
+# Copyright (c) $Date$ QUALCOMM INCORPORATED.
+# All Rights Reserved.
+# Modified by QUALCOMM INCORPORATED on $Date$
+##################################################################
+The Hexagon architecture contains many specialized instructions that can
+dramatically improve performance if they are leveraged.  As an
+alternative to programming in assembly, the Hexagon toolchain provides a
+set of C intrinsics that allow nearly any Hexagon operation to be called
+from C code.  This allows the algorithm to be written in C, but still
+gives the programmer the ability to control which operations are used.
+This is especially important for operations that the compiler does not
+yet emit, such as the vector operations.  Often times, adding
+intrinsic calls to a program can significantly outperform the vanilla
+C code, eliminating the need to resort to hand-coded assembly.
+
+The C intrinsics exist for nearly every operation in the instruction
+set (loads/stores and branches are exceptions).  The programmer's
+reference manual or the architecture specification describe the
+C-interface to each intrinsic, as well as the behavior of the
+operation.  The intrinsic is used in a C program just like any other
+function call.  In fact, the programmer treat the intrinsics as
+library calls for high-performance specialized behavior.  The final
+result of using an intrinsic is very different from a regular function
+call, however.
+
+The C intrinsics are actually "built-in" to the compiler, so
+internally the compiler knows how to optimize in their presence.
+Additionally, the final generated assembly will replace the intrinsic
+with the actual assembly-level instruction.  So, behind-the-scenes, a
+function call is never actually generated.  Finally, the use of C
+intrinsics allows Hexagon-optimized code to be portable through the use
+of libnative.  Libnative is basically a library full of emulation
+routines that implement (in portable C code) the functionality of all
+of the C intrinsics.  Thus, code with C-intrinsics can be compiled for
+any target that supports a standard C compiler.  (Note, however, that
+performance may degrade becuase some of the intrinsics may not map
+directly to single cycle operations on the new target.)
+
+The intrinsic.c program shows how to use the C intrinsic for complex
+multiply.  As expected, the performance achieved beyond the plain
+vanilla C implementation of complex multiply is significant.
+
+Running Example:
+1) make
+
+Default compiler and options can be modified on the make command line
+using the CC and CFLAGS make variables, respectively.

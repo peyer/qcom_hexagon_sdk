@@ -1,0 +1,15 @@
+#============================================================================
+#  Name:
+#    V_mingw.min
+#
+#  Description:
+#    This file specifies the items necessary to build with mingw gcc.
+#
+#        Copyright  2005 - 2007, 2010 QUALCOMM Incorporated.
+#               All Rights Reserved.
+#            QUALCOMM Confidential and Proprietary
+#----------------------------------------------------------------------------
+
+V_ARCH=x86
+
+include $(MAKE_D_DIR)/defines_mingw.min

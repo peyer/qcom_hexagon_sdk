@@ -1,0 +1,77 @@
+#/* ======================================================================= */
+#/*  QUALCOMM TECHNOLOGIES, INC.                                            */
+#/*                                                                         */
+#/*  HVX Intrinsics Examples with Boundary Conditions                       */
+#/*                                                                         */
+#/* ----------------------------------------------------------------------- */
+#/*          Copyright (c) 2016 QUALCOMM TECHNOLOGIES Incorporated.         */
+#/*                           All Rights Reserved.                          */
+#/*                  QUALCOMM Confidential and Proprietary                  */
+#/* ======================================================================= */
+
+
+ifndef HEXAGON_SDK_ROOT
+$(error HEXAGON_SDK_ROOT not set)
+endif
+
+ifndef ANDROID_ARM64_TOOLCHAIN
+$(error ANDROID_ARM64_TOOLCHAIN not set)
+endif
+
+ifeq ($(CDSP_FLAG), 1)
+        DSPTYPE = cdsp
+else
+        DSPTYPE = adsp
+endif
+
+TOP_DIR ?= $(shell pwd)
+STANDALONE_TEST_TOP_DIR ?= $(shell pwd)
+BIN ?= bin
+SIM_DIR ?= sim
+UTILS = ${STANDALONE_TEST_TOP_DIR}/../utils
+UTILS_BIN ?= $(UTILS)/bin
+TEST_ARGS_128=1024 1024 128 10
+TEST_ARGS_64=1024 1024 64 10
+HEXAGON_QAIC=${HEXAGON_SDK_ROOT}/tools/qaic/Ubuntu14/qaic
+ANDROID_NDK_ROOT=${HEXAGON_SDK_ROOT}/tools/android-ndk-r14b
+COMMON_INCLUDES = -I${HEXAGON_SDK_ROOT}/incs -I${HEXAGON_SDK_ROOT}/incs/stddef -I${CURR_DIR}/bin/src -I${UTILS}/host/include -I${UTILS} -I$(UTILS_BIN)/src
+CXX = g++
+GENTOOLS_DIR = tools
+
+ARMCC=$(ANDROID_ARM64_TOOLCHAIN)/bin/aarch64-linux-android21-clang
+ARMCXX=$(ANDROID_ARM64_TOOLCHAIN)/bin/aarch64-linux-android21-clang++
+
+ARM_INCLUDES = ${COMMON_INCLUDES} -I${HEXAGON_SDK_ROOT}/libs/common/rpcmem/inc -I${HEXAGON_SDK_ROOT}/libs/common/remote/ship/android_Release
+#ARM_CFLAGS= --sysroot ${ANDROID_NDK_ROOT}/platforms/android-21/arch-arm64 ${ARM_INCLUDES} -fsigned-char
+ARM_CFLAGS= ${ARM_INCLUDES} -fsigned-char
+ARM_LDFLAGS = -llog -fPIE -pie -l${DSPTYPE}rpc -L${HEXAGON_SDK_ROOT}/libs/common/remote/ship/android_Release_aarch64
+
+HEXAGON_TOOLS_VER?=${HL_HEXAGON_TOOLS_REV}
+
+HEXAGON_CC=${HEXAGON_SDK_ROOT}/tools/HEXAGON_Tools/${HEXAGON_TOOLS_VER}/Tools/bin/hexagon-clang
+HEXAGON_CXX=${HEXAGON_SDK_ROOT}/tools/HEXAGON_Tools/${HEXAGON_TOOLS_VER}/Tools/bin/hexagon-clang++
+HEXAGON_INCLUDES= ${COMMON_INCLUDES} -I${HEXAGON_SDK_ROOT}/libs/common/remote/ship/android_Release -I${HEXAGON_SDK_ROOT}/libs/common/qurt/ADSPv60MP/include/qurt -I${UTILS}/dsp/include -I${HALIDE_ROOT}/include
+HEXAGON_SIM=${HEXAGON_SDK_ROOT}/tools/HEXAGON_Tools/${HEXAGON_TOOLS_VER}/Tools/bin/hexagon-sim
+HEXAGON_SIM_TIMING=--timing
+HEXAGON_SIM_ARGS=--memfill 0x0 --simulated_returnval ${HEXAGON_SIM_TIMING} --nullptr=2
+HEXAGON_SIM_TEST_ARGS=512 256 128 1
+HEXAGON_LDFLAGS=-lhexagon
+
+HALIDE_ROOT ?= ${HEXAGON_SDK_ROOT}/tools/HEXAGON_Tools/${HEXAGON_TOOLS_VER}/Tools/Halide
+GENERATOR_DEPS ?= $(HALIDE_ROOT)/$(GENTOOLS_DIR)/GenGen.cpp
+HALIDE_FLAGS=--std=c++11 -fno-rtti -DLOG2VLEN=7 -DRUN=1 -I ${HALIDE_ROOT}/include -L ${HALIDE_ROOT}/lib -lHalide -lpthread -ldl -g
+
+LD_LIBRARY_PATH=${HALIDE_ROOT}/lib
+HALIDE_TARGET=hexagon-32-noos-hvx_128
+
+ifeq (,$(LOG2VLEN))
+  LOG2VLEN:=7
+endif
+
+ifeq (7,$(LOG2VLEN))
+  MHVX_LENGTH:=-mhvx-length=128B
+else
+  MHVX_LENGTH:=-mhvx-length=64B
+endif
+
+HEXAGON_CFLAGS=-mhvx ${MHVX_LENGTH} ${HEXAGON_INCLUDES} -mv60

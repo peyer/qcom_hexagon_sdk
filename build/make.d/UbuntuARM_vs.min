@@ -1,0 +1,7 @@
+default_VS += \
+  UbuntuARM_Debug \
+  UbuntuARM_Release \
+  UbuntuARM_Release_aarch64 \
+  UbuntuARM_ReleaseG \
+  UbuntuARM_ReleaseG_aarch64 \
+  UbuntuARM_Debug_aarch64

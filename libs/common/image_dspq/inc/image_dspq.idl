@@ -1,0 +1,47 @@
+/*
+  Copyright (c) 2017 Qualcomm Technologies, Inc.
+  All Rights Reserved.
+  Confidential and Proprietary - Qualcomm Technologies, Inc.
+*/
+
+#ifndef IMAGE_DSPQ_IMAGE_IDL
+#define IMAGE_DSPQ_IMAGE_IDL
+
+#include "AEEStdDef.idl"
+
+interface image_dspq {
+
+    AEEResult dsp_init(
+        in uint32 req_queue_handle,
+        in uint32 resp_queue_handle,
+        rout uint32 queue_handle
+        );
+
+    AEEResult dsp_destroy(
+        in uint32 queue_handle
+        );
+
+    AEEResult map_buf_metadata_rpc(
+        in uint32 queue_handle,
+        in dmahandle buffer,
+        in uint32 fd
+        );
+    AEEResult map_buf_priv_data_rpc(
+        in uint32 queue_handle,
+        in dmahandle buffer,
+        in uint32 fd
+        );
+
+    AEEResult map_buffer_rpc(
+        in uint32 queue_handle,
+        in dmahandle buffer,
+        in uint32 fd
+        );
+    AEEResult unmap_buffer_rpc(
+        in uint32 queue_handle,
+        in uint32 fd
+        );
+
+};
+
+#endif //IMAGE_DSPQ_IMAGE_IDL

@@ -1,0 +1,120 @@
+src/sysmon_cachelock_client.c:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_farf.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_consts.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_alloc.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_futex.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_mutex.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_pipe.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_printf.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_assert.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_thread.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_trace.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_cycles.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_profile.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_sem.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_cond.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_barrier.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_fastint.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_allsignal.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_anysignal.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_signal.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_rmutex.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_pimutex.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_signal2.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_rmutex2.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_pimutex2.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_int.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_lifo.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_power.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_event.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_pmu.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_tlb.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_vtlb.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_memory.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_qdi.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_sclk.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_space.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_process.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_timer.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_tls.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_thread_context.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_hvx.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_mailbox.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_island.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_qdi_proxy.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_l2cfg.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_mmap.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_isr.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_busywait.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_ecc.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_callback.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_error.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_except.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_mq.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/stddef/AEEStdDef.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_debug.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_types.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_qdi_constants.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_qdi_imacros.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_qdi_driver.h:
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: src/sysmon_cachelock_client.c
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_farf.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_consts.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_alloc.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_futex.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_mutex.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_pipe.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_printf.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_assert.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_thread.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_trace.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_cycles.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_profile.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_sem.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_cond.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_barrier.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_fastint.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_allsignal.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_anysignal.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_signal.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_rmutex.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_pimutex.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_signal2.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_rmutex2.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_pimutex2.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_int.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_lifo.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_power.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_event.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_pmu.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_tlb.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_vtlb.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_memory.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_qdi.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_sclk.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_space.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_process.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_timer.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_tls.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_thread_context.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_hvx.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_mailbox.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_island.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_qdi_proxy.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_l2cfg.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_mmap.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_isr.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_busywait.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_ecc.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_callback.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_error.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_except.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_mq.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/stddef/AEEStdDef.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_debug.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_types.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_qdi_constants.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_qdi_imacros.h
+hexagon_Debug_dynamic_toolv83_v66/sysmon_cachelock_client.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/common/qurt/computev66/include/qurt/qurt_qdi_driver.h

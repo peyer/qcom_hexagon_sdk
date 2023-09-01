@@ -1,0 +1,31 @@
+##################################################################
+# Copyright (c) $Date$ QUALCOMM INCORPORATED.
+# All Rights Reserved.
+# Modified by QUALCOMM INCORPORATED on $Date$
+##################################################################
+This example shows how to vectorize code when the data length is not a
+multiple of the vector length.  In this example, the test harness will
+call the VecADD functions with 127 samples.  If we vectorize this
+naively, then we will ignore the last 3 elements because 127/4 is 31
+(integer division with truncation).  Thus, we must use a cleanup loop
+to handle the remaining elements that do not fill a complete vector.
+
+In general, it is the best practice to identify "edge" cases like this
+and to explicitly handle them.  However, sometimes high perfromance
+hand-coded assembly programs assume that it is safe to *read* past the
+edge of the input data.  This should usually be safe, as long as care
+is taken to produce the correct output even if extra data is read.
+For example, it is sometimes faster to load an entire 8 bytes and then
+only use the subset that is needed.  In general, however, it is not
+safe to *write* past array boundaries!  This could easily overwrite
+data that is part of a different array or data structure.  Thus, the
+edge cases for writes should explicitly be handled.
+
+The file cleaup_loop.c contains the example code.  Run the test
+program to view the performance impact.
+
+Running Example:
+1) make
+
+Default compiler and options can be modified on the make command line
+using the CC and CFLAGS make variables, respectively.

@@ -1,0 +1,32 @@
+// cfenv standard header
+#ifndef _CFENV_
+#define _CFENV_
+#include <yvals.h>
+
+#ifdef _STD_USING
+ #undef _STD_USING
+  #include <fenv.h>
+ #define _STD_USING
+
+#else /* _STD_USING */
+ #include <fenv.h>
+#endif /* _STD_USING */
+
+ #ifdef _GLOBAL_USING
+_STD_BEGIN
+using _CSTD fenv_t; using _CSTD fexcept_t;
+using _CSTD feclearexcept; using _CSTD fegetexceptflag;
+using _CSTD feraiseexcept; using _CSTD fesetexceptflag;
+using _CSTD fetestexcept; using _CSTD fegetround;
+using _CSTD fesetround; using _CSTD fegetenv;
+using _CSTD feholdexcept; using _CSTD fesetenv;
+using _CSTD feupdateenv;
+_STD_END
+ #endif /* _GLOBAL_USING */
+
+#endif /* _CFENV_ */
+
+/*
+ * Copyright (c) 1992-2006 by P.J. Plauger.  ALL RIGHTS RESERVED.
+ * Consult your license regarding permissions and restrictions.
+V5.01:1566 */

@@ -1,0 +1,30 @@
+ifeq ($(CDSP_FLAG), 1) 
+	LIB_DSPRPC = libcdsprpc
+else ifeq ($(MDSP_FLAG), 1) 
+	LIB_DSPRPC = libmdsprpc
+else ifeq ($(SLPI_FLAG), 1) 
+	LIB_DSPRPC = libsdsprpc
+else
+	LIB_DSPRPC = libadsprpc
+endif
+
+$(info ************  LIB=$(LIB_DSPRPC) ************) 
+
+# stand-alone sobel3x3_v60 executable
+BUILD_EXES+=sobel3x3_v60
+sobel3x3_v60_QAICIDLS += inc/sobel3x3_v60 \
+                        $(DSPCV_DIR)/inc/dspCV
+sobel3x3_v60_C_SRCS += src/sobel3x3_v60 \
+                       $V/sobel3x3_v60_stub \
+                       $V/dspCV_stub
+sobel3x3_v60_DLLS += $(LIB_DSPRPC)
+sobel3x3_v60_LIBS += rpcmem
+sobel3x3_v60_LD_FLAGS += -llog
+sobel3x3_v60_DEFINES += VERIFY_PRINT_ERROR
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

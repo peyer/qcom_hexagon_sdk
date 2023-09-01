@@ -1,0 +1,48 @@
+#!/bin/bash
+
+basedir=`dirname $0`
+cd $basedir
+. ../setup-env.sh
+declare -i result=0
+set -x
+
+EXAMPLES_ROOT=$HALIDE_ROOT/Examples
+INCLUDES="-I $HALIDE_ROOT/include -I $EXAMPLES_ROOT/include -I $HALIDE_ROOT/support -I includes"
+HL_LIBS="$HALIDE_ROOT/lib/libHalide.a"
+
+#############################################################################
+cat <<EOT
+=== Build Android ARM-64/Hexagon executable for device ===
+EOT
+
+pushd .
+cd gather
+rm -fr ./bin
+mkdir -p bin/arm-64-android
+
+${CXX} -std=c++11 $INCLUDES -g -fno-rtti pipeline.cpp $HALIDE_ROOT/tools/GenGen.cpp -g $HL_LIBS -o bin/pipeline.generator -ldl -lpthread -lz
+export LD_LIBRARY_PATH=$HALIDE_ROOT/lib/host:${HL_HEXAGON_TOOLS_SIM}/lib/iss/:.
+
+bin/pipeline.generator -g gather -f pipeline -o ./bin/arm-64-android target=arm-64-android-hvx_128-hvx_v65
+$ANDROID_ARM64_TOOLCHAIN/bin/aarch64-linux-android21-clang++ -std=c++11 $INCLUDES -I ./bin/arm-64-android -Wall -O3 process.cpp bin/arm-64-android/pipeline.a -o bin/arm-64-android/gather-hvx128 -llog -fPIE -pie
+if [ "z$RUNDROID" = "z" ]; then
+    set +x
+    export PREF=echo
+    echo "To run this example on an Android device, do:"
+else
+    num_device_lines=`adb devices -l | sed '/^$/d' | wc -l`
+    if [ $num_device_lines -gt 2 ]; then
+        if [ "z$ANDROID_SERIAL" == "z" ];  then
+            echo "Error: RUNDROID set to 1, but found more than one device. Set ANDROID_SERIAL"
+            exit 1
+        fi
+    fi
+fi
+
+$PREF    adb push bin/arm-64-android/gather-hvx128 /data/
+$PREF    adb shell chmod +x /data/gather-hvx128
+$PREF    adb shell /data/gather-hvx128 10
+
+result=$?
+popd
+exit $result

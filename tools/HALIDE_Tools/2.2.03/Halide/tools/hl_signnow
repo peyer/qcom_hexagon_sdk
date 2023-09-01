@@ -1,0 +1,31 @@
+#!/bin/bash
+#
+# Note: Do not call this script directly.  The Halide compiler will call
+# this script if the HL_HEXAGON_CODE_SIGNER environment variable is set.
+#
+# Usage: hl_signnow 'unsigned_lib' 'signed_lib'
+#
+#   Script to sign Halide shared objects during compliation.
+#
+# To use, before compiling, set the following env var:
+#
+#   export HL_HEXAGON_CODE_SIGNER=~/halide/scripts/hl_signnow
+#
+# Also make sure the HEXAGON_SDK_ROOT is set (either by hand or by
+# first calling setup_sdk_env.source)
+#
+SIGNDIR=/tmp/hl_sign_$USER
+mkdir -p $SIGNDIR
+if [[ ! -d $SIGNDIR ]]; then
+   echo "Error: hl_signnow: could not create directory $SIGNDIR"
+   exit
+fi
+echo "hl_signnow: signing $1 as $2"
+
+# Replace the following with what is needed to perform signing:
+#### Straight copy (no signing)
+# cp $1 $2
+#### SDK elfsigner.py
+yes | python $HEXAGON_SDK_ROOT/tools/elfsigner/elfsigner.py -i $1 -o $SIGNDIR
+cp $SIGNDIR/$1 $2
+

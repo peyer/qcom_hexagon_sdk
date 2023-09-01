@@ -1,0 +1,9 @@
+<Testcases>
+	<Testcase Name="TestCase1">
+		<InputFile>../../data/input_wnoise_48k_stereo.raw</InputFile>
+		<OutputFile>../../data/output__wnoise_48k_stereo.raw</OutputFile>
+		<ConfigFile>../../data/passthru.cfg</ConfigFile>
+		<Reference/>
+		<RunStatus>True</RunStatus>
+	</Testcase>
+</Testcases>

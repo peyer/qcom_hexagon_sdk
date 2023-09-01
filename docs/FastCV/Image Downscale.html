@@ -1,0 +1,1141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><title>Image downscaling example</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="../images/sidebar_top.jpg"></top><script src="../scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, true)"><input id="searchButton" onclick="postFunction(true)" type="button" value="Search"></form><p>
+<a href="../index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="../feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="../hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="../images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="../hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="../images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="../images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="../Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="../Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="../Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="../Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="../Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="../Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="../HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="../Audio/Applications.html">Audio</a>
+</p><p>
+<a href="../Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="../Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="../FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="../Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="../Voice/Applications.html">Voice</a>
+</p><p>
+<a href="../Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="../APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="../APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="../APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="../APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="../Audio/Examples.html">Audio</a>
+</p><p>
+<a href="../Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="../Examples_Common.html">Common</a>
+</p><p>
+<a href="../Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="../Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="../Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="../Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="../CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="../Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="../Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="../Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="../Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="../Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="../Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="../Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="../Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="../Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="../Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="../Tools_Signing.html">Signing</a>
+</p><p>
+<a href="../Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="../Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="../FAQ_Common.html">Common</a>
+</p><p>
+<a href="../FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="../FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="../FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="../Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="../Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="../Support_Contact.html">Contact</a>
+</p><center><img src="../images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h1>
+<a name="Image%20downscaling%20example"></a>Image downscaling example
+</h1><div class="toc"><div class="tocLevel"><a href="#Overview">Overview</a><div class="tocLevel"><a href="#downscaleBy2%20Code%20Walkthrough">downscaleBy2 Code Walkthrough</a><div class="tocLevel"><a href="#$%7bHEXAGON_SDK_ROOT%7d/examples/common/downscaleBy2/src/downscaleBy2.c">${HEXAGON_SDK_ROOT}/examples/common/downscaleBy2/src/downscaleBy2.c</a></div><div class="tocLevel"><a href="#$%7bHEXAGON_SDK_ROOT%7d/examples/common/downscaleBy2/src/downscaleBy2_imp.c">${HEXAGON_SDK_ROOT}/examples/common/downscaleBy2/src/downscaleBy2_imp.c</a></div><div class="tocLevel"><a href="#$%7bHEXAGON_SDK_ROOT%7d/examples/common/downscaleBy2/asm_src/downscaleBy2_asm.S">${HEXAGON_SDK_ROOT}/examples/common/downscaleBy2/asm_src/downscaleBy2_asm.S</a></div><div class="tocLevel"><a href="#$%7bHEXAGON_SDK_ROOT%7d/examples/common/downscaleBy2/src/downscaleBy2_C_intrinsics.c">${HEXAGON_SDK_ROOT}/examples/common/downscaleBy2/src/downscaleBy2_C_intrinsics.c</a></div></div><div class="tocLevel"><a href="#Building%20and%20Running%20for%20Hexagon%20V60%20with%20HVX%20On-target">Building and Running for Hexagon V60 with HVX On-target</a></div><div class="tocLevel"><a href="#Optimization">Optimization</a><div class="tocLevel"><a href="#C%20vs.%20Intrinsics%20vs.%20Assembly">C vs. Intrinsics vs. Assembly</a></div><div class="tocLevel"><a href="#L2%20prefetch">L2 prefetch</a></div><div class="tocLevel"><a href="#Multi-threading">Multi-threading</a></div></div><div class="tocLevel"><a href="#Advanced%20Profiling%20On-target">Advanced Profiling On-target</a></div></div></div><h2>
+<a name="Overview"></a>Overview
+</h2><p>
+This example illustrates the off-loading of an image downscale function to the Hexagon aDSP with the <a href="../HVX/ArchitectureOverview.html">HVX co-processor</a> in the Snapdragon run-time environment.
+</p><p>
+<i>Note that this example is maintained up through MSM8996. For MSM8998 and beyond, it is recommended to start with the benchmark (or benchmark_v65, for SDM845 and beyond) example (in %HEXAGON_SDK_ROOT%/examples/common).</i>
+</p><p>
+<i>Also, note that the Qurt based simulation is not supported on v60, v62 architectures.</i>
+</p><p>
+The goals of this downscaleBy2 example are to:
+</p><ul type="circle">
+<li>
+<p>
+Provide background on the considerations (e.g. concurrency with audio/voice) for using the aDSP (and HVX in particular) for compute off-loading, such as image processing and computer vision.
+</p>
+</li><li>
+<p>
+Provide details on the dspCV library, which provides convenient run-time framework API's for implementing multi-threaded, dynamically loadable compute processing.
+</p>
+</li><li>
+<p>
+Illustrate how build, run, profile, optimize, and debug a simple multi-threaded HVX algorithm in the Hexagon simulator and on Hexagon V60 HW platforms.
+</p>
+</li>
+</ul><p>
+The pre-requisites are
+</p><ul type="circle">
+<li>
+<p>
+Run the setup environment scripts. <a href="../readme.html">Setup Instructions</a>
+</p>
+</li><li>
+<p>
+Install a <a href="../Tools_Signing.html">test signature</a> on your device.
+</p>
+</li><li>
+<p>
+Suggested to run the basic <a href="../Examples_Common.html#calculator">Calculator Example</a> first.
+</p>
+</li>
+</ul><h3>
+<a name="downscaleBy2%20Code%20Walkthrough"></a>downscaleBy2 Code Walkthrough
+</h3><h4>
+<a name="$%7bHEXAGON_SDK_ROOT%7d/examples/common/downscaleBy2/src/downscaleBy2.c"></a>${HEXAGON_SDK_ROOT}/examples/common/downscaleBy2/src/downscaleBy2.c
+</h4><p>
+This is the source for a simple adb shell executable that exercises the Hexagon implementation of downscaleBy2. The downscaleBy2 project can be built for Android as follows:
+</p><pre>make tree V=android_Release
+</pre><p>
+It is also designed to compile and run as a Hexagon executable in the Hexagon simulator (when statically linked with the DSP implementation library), as follows:
+</p><pre>make tree V=hexagon_Release_toolv83_v60 VERBOSE=1
+</pre><p>
+<b>Shared Buffer Memory Allocation</b>
+</p><p>
+The code snippet below shows the usage of ION memory for shared data buffers. This is crucial for efficient RPC performance. Different targets may have different ION heaps available for allocation and sharing with the aDSP. This example, like the calculator example, uses ION memory via the rpcmem utility, which selects the appropriate ION heap after detecting the target. For more information about rpcmem and ION, see <a href="../APIs_FastRPC.html#Using%20the%20ION%20allocator">Using the ION allocator</a>.
+</p><p>
+Below are portions of src/downscaleBy2.c that perform the shared buffer allocation steps.
+</p><pre><span style="color: blue">#define</span> USE_ION_MEMORY   <span style="color: darkgreen">// to demonstrate the performance difference between ION and HLOS memory for sharing with ADSP.</span>
+<span style="color: blue">#ifndef</span> USE_ION_MEMORY
+<span style="color: blue">#define</span> rpcmem_init()
+<span style="color: blue">#define</span> rpcmem_deinit()
+<span style="color: blue">#define</span> rpcmem_alloc(a, b, c) memalign(4096, (c)) <span style="color: darkgreen">// simulate allocation from page boundary (4 KB)</span>
+<span style="color: blue">#define</span> rpcmem_free(a) free((a))
+<span style="color: blue">#endif</span>
+...
+<span style="color: blue">#ifdef</span> __hexagon__     <span style="color: darkgreen">// some defs/stubs so app can build for Hexagon simulation</span>
+<span style="color: blue">#define</span> rpcmem_init()
+<span style="color: blue">#define</span> rpcmem_deinit()
+<span style="color: blue">#define</span> rpcmem_alloc(a, b, c) memalign(4096, (c)) <span style="color: darkgreen">// simulate allocation from page boundary (4 KB)</span>
+<span style="color: blue">#define</span> rpcmem_free(a) free((a))
+<span style="color: blue">#endif</span>
+...
+<span style="color: blue">#include</span> <span style="color: darkred">"rpcmem.h"</span> <span style="color: darkgreen">// helper API's for shared buffer allocation</span>
+...
+<span style="color: darkgreen">// allocate ion buffers</span>
+rpcmem_init();
+VERIFY(0 != (src = (uint8_t*)rpcmem_alloc(RPCMEM_DEFAULT_HEAP, RPCMEM_DEFAULT_FLAGS, srcSize)));
+printf(<span style="color: darkred">"src - allocated %d\n"</span>, (<span style="color: blue">int</span>)srcSize);
+VERIFY(0 != (dst = (uint8_t*)rpcmem_alloc(RPCMEM_DEFAULT_HEAP, RPCMEM_DEFAULT_FLAGS, dstSize)));
+printf(<span style="color: darkred">"dst - allocated %d\n"</span>, (<span style="color: blue">int</span>)dstSize);
+...
+<span style="color: blue">if</span>(src) { 
+   rpcmem_free(src);
+}
+<span style="color: blue">if</span>(dst) { 
+    rpcmem_free(dst);
+}
+<span style="color: darkgreen">// free ion buffers</span>
+rpcmem_deinit();
+</pre><p>
+<b>Initializing RPC session</b>
+</p><p>
+Generally, an Android user process may implicitly initiate an RPC session by invoking any FastRPC API. That session will trigger the RPC driver to establish a corresponding RPC user process on the Hexagon, which will service all subsequent RPC invocations from the same Android user process, and will be destroyed by the RPC driver when the same Android user process is killed.
+</p><p>
+In this example, dspCV_initQ6_with_attributes() is called to perform useful initializations and configurations at the time of establishing an RPC session with the Hexagon. These include:
+</p><ul type="circle">
+<li>
+<p>
+clock voting to boost the Hexagon core clock and SNOC (bus clock).
+</p>
+</li><li>
+<p>
+configuring latency tolerance to be considered by Hexagon sleep driver whenever Hexagon is idle and available to be moved into a lower power state.
+</p>
+</li><li>
+<p>
+Creation of a worker thread pool for multi-threaded algorithms.
+</p>
+</li>
+</ul><p>
+The configuration settings described above are available as attributes to be passed in the call to dspCV_initQ6_with_attributes(), and are described in ${HEXAGON_SDK_ROOT}/libs/fastcv/dspCV/inc/dspCV.idl.
+</p><p>
+Following are the code snippets where dspCV is initialized and de-initialized.
+</p><pre><span style="color: darkgreen">// call dspCV_initQ6_with_attributes() to define Q6 clock and bus frequencies.</span>
+<span style="color: darkgreen">// Since this app is not real-time, and can fully load the DSP clock &amp; bus resources </span>
+<span style="color: darkgreen">// throughout its lifetime, vote for the maximum available MIPS &amp; BW. The selection of values</span>
+<span style="color: darkgreen">// in this initialization is crucial in defining the desired power vs. performance trade-off. </span>
+dspCV_Attribute attrib[] =
+{
+<span style="color: darkgreen">// The below values will result in the maximum aDSP performance, at Turbo voltage.</span>
+    {DSP_TOTAL_MCPS, 1000},                 <span style="color: darkgreen">// Slightly more MCPS than are available on current targets</span>
+    {DSP_MCPS_PER_THREAD, 500},             <span style="color: darkgreen">// drive the clock to MAX on known targets</span>
+    {PEAK_BUS_BANDWIDTH_MBPS, 12000},       <span style="color: darkgreen">// 12 GB/sec is slightly higher than the max realistic max BW on existing targets.</span>
+    {BUS_USAGE_PERCENT, 100},               <span style="color: darkgreen">// This app is non-real time, and constantly reading/writing memory</span>
+<span style="color: darkgreen">// The below values will result in performance at nominal voltage initially, </span>
+<span style="color: darkgreen">// and allow DCVS to move up and down as it deems optimal.</span>
+<span style="color: darkgreen">//    {DSP_TOTAL_MCPS, 600},                 // Within nominal range (for 8996) for initial performance setting</span>
+<span style="color: darkgreen">//    {DSP_MCPS_PER_THREAD, 50},             // A low setting here allows DCVS to drop clock as low as it deems possible over time</span>
+<span style="color: darkgreen">//    {PEAK_BUS_BANDWIDTH_MBPS, 6000},       // A BW within nominal range (for 8996).</span>
+<span style="color: darkgreen">//    {BUS_USAGE_PERCENT, 50},               // This app is non-real time, and constantly reading/writing memory</span>
+};
+retVal = dspCV_initQ6_with_attributes(attrib, <span style="color: blue">sizeof</span>(attrib)/<span style="color: blue">sizeof</span>(attrib[0]));
+printf(<span style="color: darkred">"return value from dspCV_initQ6() : %d \n"</span>, retVal);
+</pre><p>
+<b>Invoking the FastRPC API</b>
+</p><p>
+The rest of the file is setup and logic for testing the Hexagon implementation of the downscaleBy2 function. Below is the actual invocation that calls into the FastRPC stub.
+</p><pre><span style="color: darkgreen">// For HVX case, note that src, srcStride, dst, dstStride all must be multiples of 128 bytes.</span>
+<span style="color: darkgreen">// The HVX code for this example function does not handle unaligned inputs.</span>
+retVal = downscaleBy2_scaleDownBy2(src, srcSize, srcWidth, srcHeight, srcStride, dst, dstSize, dstStride, (uint32*)(&amp;profResult));
+</pre><h4>
+<a name="$%7bHEXAGON_SDK_ROOT%7d/examples/common/downscaleBy2/src/downscaleBy2_imp.c"></a>${HEXAGON_SDK_ROOT}/examples/common/downscaleBy2/src/downscaleBy2_imp.c
+</h4><p>
+This file implements the Hexagon version of the downscaleBy2 function. It is called by the autogenerated FastRPC skel when the application makes an invocation into the FastRPC stub.
+</p><p>
+<b>Debug Messaging</b>
+</p><p>
+The example shows how to generate messages useful for debugging and profiling. Please see <a href="../Debugging_Message%20Logging.html">Message logging</a> for more details. Below are relevant code snippets:
+</p><pre><span style="color: darkgreen">// enable message outputs for profiling by defining _DEBUG and including HAP_farf.h</span>
+<span style="color: blue">#ifndef</span> _DEBUG
+<span style="color: blue">#define</span> _DEBUG
+<span style="color: blue">#endif</span>
+<span style="color: blue">#include</span> <span style="color: darkred">"HAP_farf.h"</span>
+...
+FARF(HIGH,<span style="color: darkred">"Warning - HVX is reserved but not used. src, dst, srcStride, and/or dstStride are not aligned to 128 bytes as required"</span>);
+</pre><p>
+<b>Profiling</b>
+</p><p>
+The example shows how to measure the time (in cycles and microseconds) of execution of the downscale function. Note the relevant code sections, along with the computation to confirm the Hexagon core clock value.
+</p><pre><span style="color: darkgreen">// profile DSP execution time (without RPC overhead) via HAP_perf api's.</span>
+<span style="color: blue">#include</span> <span style="color: darkred">"HAP_perf.h"</span>
+...
+    <span style="color: darkgreen">// record start time (in both microseconds and pcycles) for profiling</span>
+<span style="color: blue">#ifdef</span> PROFILING_ON
+    uint64 startTime = HAP_perf_get_time_us();
+    uint64 startCycles = HAP_perf_get_pcycles();
+<span style="color: blue">#endif</span>
+...
+    <span style="color: darkgreen">// record end time (in both microseconds and pcycles) for profiling</span>
+<span style="color: blue">#ifdef</span> PROFILING_ON
+   uint64 endCycles = HAP_perf_get_pcycles();
+   uint64 endTime = HAP_perf_get_time_us();
+   *profResult = (uint32)(endTime - startTime);
+   FARF(HIGH,<span style="color: darkred">"downscaleBy2 profiling: %d PCycles, %d microseconds. Observed clock rate %d MHz"</span>,
+       (<span style="color: blue">int</span>)(endCycles - startCycles), (<span style="color: blue">int</span>)(endTime - startTime), (<span style="color: blue">int</span>)((endCycles - startCycles) / (endTime - startTime)));
+<span style="color: blue">#endif</span>
+...
+</pre><p>
+<b>aDSP Concurrency Checking</b>
+</p><p>
+The following block demonstrates a simple check for the aDSP concurrency level. In this example, an indication that the concurrency level is too high for compute to run, an error code is returned. This example will simply fail. Real applications may choose a better way to handle high concurrency scenarios, such as performing the processing in the CPU, if there is an equivalent implementation, or pausing the application, etc.
+</p><pre> <span style="color: darkgreen">// Determine if it is safe (from an audio/voice/camera concurrency perspective) to run a compute function now</span>
+dspCV_ConcurrencyAttribute attrib[] = 
+{
+    {COMPUTE_RECOMMENDATION, 0},  <span style="color: darkgreen">// query for compute concurrency recommendation</span>
+};
+dspCV_concurrency_query(attrib, <span style="color: blue">sizeof</span>(attrib)/<span style="color: blue">sizeof</span>(attrib[0]));
+<span style="color: blue">if</span> (COMPUTE_RECOMMENDATION_NOT_OK == attrib[0].value)
+{
+    <span style="color: darkgreen">// return error back to application</span>
+    <span style="color: blue">return</span> AEE_EBADSTATE;
+}
+</pre><p>
+<b>HVX Context Configuration</b>
+</p><p>
+Here we examine how HVX is used, conditioned upon availability (i.e. legacy targets without HVX are also supported). The wrapper and utility HVX control functions from dspCV_hvx.h are used for this purpose.
+</p><p>
+The invocation function downscaleBy2_scaleDownBy2() contains the top-level HVX logic. This example only supports using HVX if the input and output image buffers are aligned to HVX vector width of 128 bytes (both in start address and stride). Note that it is possible to support unaligned buffers, primarily through use of HVX instructions for bytewise-enabled write, vector alignment, and unaligned load/store operations. But it is ideal to manage the buffers to avoid these whenever possible. Some drawbacks of unaligned load/store operations include:
+</p><ul type="circle">
+<li>
+<p>
+Each unaligned load or store requires 2 fetches from L2 and an implicit permute operation.
+</p>
+</li><li>
+<p>
+Unaligned load and store instructions lack some of the options that aligned loads and stores offer, such as bytewise-enabled, immediate-use, new, and non-temporal.
+</p>
+</li><li>
+<p>
+Extra care must be taken for unaligned loads and stores at the beginning or end of a buffer whose size is not a multiple of the vector width (VLEN), to avoid the possibility of accessing unmapped pages.
+</p>
+</li>
+</ul><p>
+In this example, invocation with improperly aligned buffers results in fallback to the non-HVX implementation. Below is a code snippet from downscaleBy2_scaleDownBy2() with comments for the top-level HVX logic.
+</p><pre><span style="color: darkgreen">// Determine if HVX is available and in what configuration</span>
+dspCV_hvx_config_t hvxInfo = {0};
+<span style="color: blue">int</span> numWorkers = 0;
+<span style="color: darkgreen">// This HVX implementation assumes 128-byte aligned buffers (and strides)</span>
+<span style="color: blue">if</span> (0 == (127 &amp; ((uint32)imgSrc | (uint32)imgDst | srcStride | dstStride)))
+{
+    <span style="color: darkgreen">// Call utility function to prepare for a multi-threaded HVX computation sequence.</span>
+    dspCV_hvx_prepare_mt_job(&amp;hvxInfo);
+    <span style="color: darkgreen">// Check results and react accordingly (extended if/else used here for clarity of example)</span>
+    <span style="color: blue">if</span> (hvxInfo.numUnits &lt; 0)
+    {
+        <span style="color: darkgreen">// hvxInfo.numUnits &lt; 0 indicates the target does not have HVX HW. In this example,</span>
+        <span style="color: darkgreen">// we fall back to the non-HVX implementation (and use all available worker threads). </span>
+        <span style="color: darkgreen">// In other functions without a fallback, it might be appropriate to return an error </span>
+        <span style="color: darkgreen">// code indicating HVX is not present on the target.</span>
+        numWorkers = dspCV_num_workers;
+    }
+    <span style="color: blue">else</span> <span style="color: blue">if</span> (hvxInfo.numUnits == 0)
+    {
+        <span style="color: darkgreen">// hvxInfo.numUnits == 0 indicates the target has HVX HW, but currently there are no</span>
+        <span style="color: darkgreen">// contexts available for reservation. In this example,</span>
+        <span style="color: darkgreen">// we fall back to the non-HVX implementation (and use all available worker threads). </span>
+        <span style="color: darkgreen">// In other functions without a fallback, it might be appropriate to either return an error </span>
+        <span style="color: darkgreen">// code indicating HVX is not currently available.</span>
+        numWorkers = dspCV_num_workers;
+    }
+    <span style="color: blue">else</span>
+    {
+        <span style="color: darkgreen">// Reservation of HVX units was successful. Prepare to multi-thread across however many </span>
+        <span style="color: darkgreen">// threads HVX was reserved for.</span>
+        numWorkers = hvxInfo.numThreads;
+    }
+}
+<span style="color: blue">else</span> 
+{   
+    <span style="color: darkgreen">// Boundary conditions for using this HVX function are not met. Perform corrective action.</span>
+    <span style="color: darkgreen">// In this example, we will fall back to non-HVX implementation. In other functions, it </span>
+    <span style="color: darkgreen">// may be appropriate to return an error response.</span>
+    <span style="color: blue">if</span> (dspCV_hvx_num_reserved() &gt; 0) 
+    { 
+        FARF(HIGH,<span style="color: darkred">"Warning - HVX is reserved but not used. src, dst, srcStride, and/or dstStride are not aligned to 128 bytes as required"</span>);
+    }
+    <span style="color: darkgreen">// multi-thread the non-HVX implementation according to how many worker threads are available.</span>
+    numWorkers = dspCV_num_workers;
+}
+</pre><p>
+Note that the choice of how many worker threads to dispatch is based on whether HVX is being used. (Please see <a href="#Multi-threading">Multi-threading</a> above for the background information). This is to ensure that the number of competing worker threads be limited to the number of successfully reserved HVX contexts (if any). If HVX is not to be used, the number of dispatched workers is simply set to the number of available workers.
+</p><p>
+Now we examine the HVX logic in worker callback function, downby2_callback(). Below is the callback function, with comments inline.
+</p><pre><span style="color: darkgreen">// multi-threading callback function</span>
+<span style="color: blue">static</span> <span style="color: blue">void</span> downby2_callback(<span style="color: blue">void</span>* data)
+{
+   downby2_callback_t    *dptr = (downby2_callback_t*)data;
+
+   <span style="color: darkgreen">// If HVX contexts reserved, lock one for this thread. </span>
+   <span style="color: darkgreen">// (Even though HVX contexts have been reserved for this process, each thread still needs to </span>
+   <span style="color: darkgreen">// lock a context before using any HVX instructions.)</span>
+   <span style="color: blue">int</span> hvxReserved = (dptr-&gt;hvxInfo-&gt;numUnits &gt; 0);
+   <span style="color: blue">int</span> lockResult = 0;
+
+   <span style="color: blue">if</span> (hvxReserved)
+   {
+       <span style="color: darkgreen">// 128B mode preferred</span>
+       lockResult = dspCV_hvx_lock(DSPCV_HVX_MODE_128B, 0);
+
+       <span style="color: darkgreen">// 128B mode failure likely indicates a concurrent HVX user with mode already locked to 64B. </span>
+       <span style="color: darkgreen">// This function is compatible with both 128B and 64B modes, so try falling back to 64B.</span>
+       <span style="color: blue">if</span> (lockResult != 128) lockResult = dspCV_hvx_lock(DSPCV_HVX_MODE_64B, 0);
+       <span style="color: blue">if</span> (0 &gt; lockResult)
+       {
+            <span style="color: darkgreen">// This should never happen, but fall back to scalar with a warning message. </span>
+            FARF(HIGH,<span style="color: darkred">"Warning - HVX is reserved but could not be locked. Using scalar version"</span>);
+            lockResult = 0;
+       }
+   }
+
+   <span style="color: darkgreen">// loop until no more horizontal stripes to process</span>
+   <span style="color: blue">while</span> (lockResult &gt;= 0)
+   {
+       <span style="color: darkgreen">// atomically add 1 to the job count to claim a stripe.</span>
+       <span style="color: blue">unsigned</span> <span style="color: blue">int</span> jobCount = dspCV_atomic_inc_return(&amp;(dptr-&gt;jobCount)) - 1;
+
+       <span style="color: darkgreen">// if all horizontal stripes have been claimed for processing, break out and exit the callback</span>
+       <span style="color: blue">if</span> (jobCount * dptr-&gt;rowsPerJob &gt;= dptr-&gt;srcHeight)
+       {
+           <span style="color: blue">break</span>;
+       }
+
+       <span style="color: darkgreen">// Set pointers to appropriate line of image for this stripe</span>
+       <span style="color: blue">unsigned</span> <span style="color: blue">char</span> *src = dptr-&gt;src + (dptr-&gt;srcStride * dptr-&gt;rowsPerJob * jobCount);
+       <span style="color: blue">unsigned</span> <span style="color: blue">char</span> *dst = dptr-&gt;dst + (dptr-&gt;dstStride * (dptr-&gt;rowsPerJob / 2) * jobCount);
+
+       <span style="color: darkgreen">// find height of this stripe. Usually dptr-&gt;rowsPerJob, except possibly for the last stripe.</span>
+       <span style="color: blue">unsigned</span> <span style="color: blue">int</span> remainingRows = dptr-&gt;srcHeight - (dptr-&gt;rowsPerJob * jobCount);
+       <span style="color: blue">unsigned</span> <span style="color: blue">int</span> srcHeight = (remainingRows &lt; dptr-&gt;rowsPerJob) ? remainingRows : dptr-&gt;rowsPerJob;
+
+       <span style="color: darkgreen">// call optimized assembly</span>
+       <span style="color: blue">if</span> (!hvxReserved || !lockResult)
+       {
+           <span style="color: darkgreen">// legacy implementation for non-HVX targets, or for HVX targets in case HVX is not available.</span>
+           down2(src, dptr-&gt;srcWidth, srcHeight, dptr-&gt;srcStride, dst, dptr-&gt;dstStride);
+       }
+       <span style="color: blue">else</span>
+       {
+           <span style="color: darkgreen">// HVX-optimized implementation</span>
+           down2_hvx(src, dptr-&gt;srcWidth, srcHeight, dptr-&gt;srcStride, dst, dptr-&gt;dstStride, lockResult);
+       }
+   }
+
+   <span style="color: darkgreen">// If HVX was locked, unlock it.</span>
+   <span style="color: blue">if</span> (lockResult &gt; 0) dspCV_hvx_unlock();
+   <span style="color: darkgreen">// release multi-threading job token</span>
+   dspCV_worker_pool_synctoken_jobdone(dptr-&gt;token); 
+}
+</pre><h4>
+<a name="$%7bHEXAGON_SDK_ROOT%7d/examples/common/downscaleBy2/asm_src/downscaleBy2_asm.S"></a>${HEXAGON_SDK_ROOT}/examples/common/downscaleBy2/asm_src/downscaleBy2_asm.S
+</h4><p>
+This file contains the hand-optimized assembly function for downscaling, down2_hvx(). The function is thoroughly commented inline, but below are some key points to note:
+</p><ul type="circle">
+<li>
+<p>
+There is no usage of DCZEROA or DCFETCH, which were used to good effect in down2(), the non-HVX implementation. This is because HVX load/store operations go directly through L2 cache, so that L1 cache operations are not useful.
+</p>
+</li><li>
+<p>
+VLEN (the vector width) is passed in as an argument, and the assembly code is agnostic (all operations operate in terms of VLEN or log2(VLEN), never a 128 or 64). While VLEN can be defined by the compiler, the true value is defined at run time, based on the mode in which the HVX context was locked. Keeping the assembly code agnostic is ideal for portability of pre-compiled libraries that may be used in different targets and run-time environments.
+</p>
+</li><li>
+<p>
+All of the load/store operations use the non-temporal qualifier (:NT). This is a hint to the core that the line is not expected to be immediately reused, and hence is a good candidate for cache eviction. This helps reduce thrashing other threads' cache.
+</p>
+</li><li>
+<p>
+Care is taken with the &#8220;Early Source&#8221; instructions in the inner loop to avoid interlock stalls, as described in 4.4 of Hexagon V60 Vector Extensions Architecture Specification.
+</p>
+</li><li>
+<p>
+While start addresses and strides are required to be VLEN-aligned, the width is not. Handling unaligned width requires bytewise-enabled stores and extra tail logic.
+</p>
+</li>
+</ul><h4>
+<a name="$%7bHEXAGON_SDK_ROOT%7d/examples/common/downscaleBy2/src/downscaleBy2_C_intrinsics.c"></a>${HEXAGON_SDK_ROOT}/examples/common/downscaleBy2/src/downscaleBy2_C_intrinsics.c
+</h4><p>
+This file contains the C-with-intrinsics version of down2_hvx. It is sparsely commented, as it is basically a back-port of the assembly version into C. One noteworthy difference is that the vector data types from hexagon_types.h cannot be agnostic of run-time VLEN. The compiler must choose one or the other, and in this example, 128-byte mode is assumed through the use of &#8220;-mhvx-double&#8221; in the hexagon.min makefile.
+</p><h3>
+<a name="Building%20and%20Running%20for%20Hexagon%20V60%20with%20HVX%20On-target"></a>Building and Running for Hexagon V60 with HVX On-target
+</h3><p>
+To execute the downscaleBy2 example on a V60 device, use the following steps from ${HEXAGON_SDK_ROOT}/examples/common/downscaleBy2:
+</p><pre>make tree V=hexagon_Release_dynamic_toolv83_v60
+make tree V=android_Release
+adb root
+adb wait-<span style="color: blue">for</span>-device
+adb remount
+adb push hexagon_Release_dynamic_toolv83_v60\ship\libdownscaleBy2_skel.so /vendor/lib/rfsa/adsp
+adb push android_Release/ship/downscaleBy2 /vendor/bin
+adb shell chmod 755 /vendor/bin/downscaleBy2
+adb push ../../../libs/fastcv/dspCV/hexagon_Release_dynamic_toolv83_v60/ship/libdspCV_skel.so /vendor/lib/rfsa/adsp
+adb push ../../../libs/common/apps_mem_heap/ship/hexagon_Release_dynamic_toolv83_v60/libapps_mem_heap.so /vendor/lib/rfsa/adsp
+adb shell /vendor/bin/downscaleBy2
+</pre><p>
+All the above steps are captured in the script:
+</p><p>
+For Windows: . &lt;HEXAGON_SDK_ROOT&gt;\examples\common\downscaleBy2\downby2_walkthrough.py For Linux: . &lt;HEXAGON_SDK_ROOT&gt;/examples/common/downscaleBy2/downby2_walkthrough.py
+</p><p>
+The output should look like the following:
+</p><pre>D:\p4\main\a\pkg\downscaleBy2&gt;adb shell /vendor/bin/downscaleBy2
+<span style="color: blue">return</span> value from dspCV_initQ6() : 0
+src - allocated 2073600
+dst - allocated 1036800
+calling downscaleBy2_scaleDownBy2 on a 1920x1080 image...
+run time of downscaleBy2_scaleDownBy2: 1531906 microseconds <span style="color: blue">for</span> 1000 iterations
+DSP-measured duration (<span style="color: blue">for</span> single, last invocation): 450 microseconds
+<span style="color: blue">return</span> value from downscaleBy2_scaleDownBy2: 0
+Number of bit-exact errors: 0
+calling dspCV_deinitQ6()...
+<span style="color: blue">return</span> value from dspCV_deinitQ6(): 0
+- success
+</pre><h3>
+<a name="Optimization"></a>Optimization
+</h3><p>
+Here we explore the (on-target) performance improvements gained by the optimization approaches that have been implemented in this example.
+</p><h4>
+<a name="C%20vs.%20Intrinsics%20vs.%20Assembly"></a>C vs. Intrinsics vs. Assembly
+</h4><p>
+The example is running a hand-written assembly version of the core downscale algorithm. To compare the performance (450 microseconds measured within DSP above) to the C-with-intrinsics and plain C versions, edit the hexagon.min file in the example directory. Around line 20, change as follows to select the C with intrin:
+</p><pre># choose one of the following 3 to profile different implementations. 
+# The assembly implementation is the best, others are just <span style="color: blue">for</span> comparison.                               
+#libdownscaleBy2_skel.ASM_SRCS += asm_src/downscaleBy2_asm.S
+#libdownscaleBy2_skel_C_SRCS += src/downscaleBy2_plain_C 
+libdownscaleBy2_skel_C_SRCS += src/downscaleBy2_C_intrinsics
+</pre><p>
+Then do the following.
+</p><pre>make V=hexagon_Release_dynamic_toolv83_v60
+adb push hexagon_Release_dynamic_toolv83_v60\ship\libdownscaleBy2_skel.so /vendor/lib/rfsa/adsp
+adb shell /vendor/bin/downscaleBy2
+</pre><p>
+You will see that the C-with-intrinsics version is slightly slower, while the plain C version is dramatically slower.
+</p><h4>
+<a name="L2%20prefetch"></a>L2 prefetch
+</h4><p>
+L2 prefetch is a crucial element of Hexagon optimization. It enables pipelined background transfer of external memory into the L2 cache ahead of corresponding load instructions. This particular example is not a very good demonstration of the benefit, because the HVX load instructions in the downscale assembly code are so tightly packed that they get effectively pipelined anyway. The benefit is much better illustrated if we use the non-HVX version of the downscale.
+</p><p>
+To do this, revert the above changes to hexagon.min to enable the assembly version again, and make the following change to src/downscaleBy2_imp.c, around line 120:
+</p><pre><span style="color: darkgreen">// call optimized assembly</span>
+<span style="color: blue">if</span> (1) <span style="color: darkgreen">// !hvxReserved || !lockResult)</span>
+</pre><p>
+and then
+</p><pre>make V=hexagon_Release_dynamic_toolv83_v60
+adb push hexagon_Release_dynamic_toolv83_v60\ship\libdownscaleBy2_skel.so /vendor/lib/rfsa/adsp
+adb shell /vendor/bin/downscaleBy2
+</pre><p>
+You should see that the DSP-measured duration has roughly doubled, due to using the non-HVX version of assembly code. (Note again, that this particular being so dominated by memory access does not fully illustrate the power of HVX computation). Now observe the impact of L2 prefetch by disabling in the non-HVX assembly. In file src_dsp/downscaleBy2.asm, around line 86, comment out the following line:
+</p><pre><span style="color: darkgreen">//L2FETCH(R0,R25:24)                // during processing of src rows (N, N+1), fetch rows N..N+3</span>
+</pre><p>
+Build, push, and run again. You should now see the DSP-measured duration roughly triple.
+</p><h4>
+<a name="Multi-threading"></a>Multi-threading
+</h4><p>
+Another crucial element of Hexagon optimization is multi-threading. Due to the interleaved multi-threaded architecture of the Hexagon, full utilization of the DSP can only be achieved when multiple software threads are running concurrently.
+</p><p>
+The downscaleBy2 example uses the dspCV worker pool to assist with multi-threading. To observe the impact, first restore the L2 prefetch in the non-HVX assembly code (but don't revert the hack to make it use the non-HVX version). Then, in src/downscaleBy2_imp.c, around line 250, switch from the multi-threaded job sumbission to the in-context call to the callback as follows.
+</p><pre><span style="color: darkgreen">// for multi-threaded impl, use this line.</span>
+<span style="color: darkgreen">// (void) dspCV_worker_pool_submit(job);</span>
+<span style="color: darkgreen">// This line can be used instead of the above to directly invoke the </span>
+<span style="color: darkgreen">// callback function without dispatching to the worker pool. Useful</span>
+<span style="color: darkgreen">// to avoid multi-threading in debug scenarios to narrow down problems.</span>
+job.fptr(job.dptr);
+</pre><p>
+Build, push and run. You should see about a 1.5x increase compared to the multi-threaded version. Note that if you revert the hack to choose the non-HVX version and run the HVX version with and without multi-threading, there is not much difference. This is again due to fact that the HVX version of this example is completely bottle-necked by memory throughput, even when there is only 1 active thread.
+</p><p>
+Revert all of the changes from the above experiments.
+</p><h3>
+<a name="Advanced%20Profiling%20On-target"></a>Advanced Profiling On-target
+</h3><p>
+Detailed on-target profiling is available with the sysmon utility, which is present (with documentation) in the SDK, at /tools/utils/sysmon.
+</p><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+// t32 Wed Oct 01 17:11:59 2014
+
+ B::
+
+ TOOLBAR ON
+ STATUSBAR ON
+ FramePOS 10.25 8.0 168. 53.
+ WinPAGE.RESet
+
+ WinPAGE.Create P000
+
+ WinCLEAR
+ WinPOS 91.25 0.0 73. 25. 0. 0. W003
+ register /spotlight
+
+ WinPOS 0.125 38.857 65. 10. 0. 0. W000
+ area
+
+ WinPOS 55.25 38.857 32. 8. 5. 0. W002
+ var.frame /locals /caller
+
+ WinPOS 0.0 0.071429 87. 33. 13. 1. W001
+ WinTABS 16. 10. 25. 62.
+ data.list
+
+ WinPAGE.select P000
+
+ ENDDO

@@ -1,0 +1,17 @@
+#============================================================================
+#  Name:
+#    V_Win32.min
+#
+#  Description:
+#    This file specifies the items necessary to build using 
+#     Microsoft's Vc7 compilers (by default).
+#
+#        Copyright  2005 - 2007, 2010 QUALCOMM Incorporated.
+#               All Rights Reserved.
+#            QUALCOMM Confidential and Proprietary
+#----------------------------------------------------------------------------
+
+V_ARCH=x86
+V_TOOLCHAIN=vc7
+
+include $(MAKE_D_DIR)/defines_$(V_TOOLCHAIN).min

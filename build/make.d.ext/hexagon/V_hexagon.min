@@ -1,0 +1,43 @@
+V_ARCH=v60
+
+ifeq (1,$(V_v2))
+V_ARCH=v2
+endif
+
+ifeq (1,$(V_v3))
+V_ARCH=v3
+endif
+
+ifeq (1,$(V_v4))
+V_ARCH=v4
+endif
+
+ifeq (1,$(V_v5))
+V_ARCH=v5
+endif
+
+ifeq (1,$(V_v55))
+V_ARCH=v55
+endif
+
+ifeq (1,$(V_v56))
+V_ARCH=v56
+endif
+
+ifeq (1,$(V_v60))
+V_ARCH=v60
+endif
+
+ifeq (1,$(V_v62))
+V_ARCH=v62
+endif
+
+ifeq (1,$(V_v65))
+V_ARCH=v65
+endif
+
+ifeq (1,$(V_v66))
+V_ARCH=v66
+endif
+
+include $(thisDir)/defines_hexagon.min

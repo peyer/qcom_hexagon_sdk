@@ -1,0 +1,375 @@
+// xlocinfo internal header for Dinkum C
+#ifndef _XLOCINFO_
+#define _XLOCINFO_
+#include <cctype>
+#include <clocale>
+#include <cstdlib>
+#include <cstring>
+#include <ctime>
+#include <xstrxfrm.h>
+#include <xtinfo.h>
+#include <xwcsxfrm.h>
+#include <xstring>
+
+ #if _IS_WRS	/* compiler test */
+
+  #if _CSL_USE_WCHAR || defined(__RTP__)
+   #include <cwchar.h>
+  #endif
+
+ #else /* _IS_WRS */
+  #include <cwchar>
+  #include <xwchar.h>
+ #endif /* _IS_WRS */
+
+_STD_BEGIN
+
+		// SUPPLEMENTAL LOCALE MACROS AND DECLARATIONS
+#define _X_COLLATE	_LC_COLLATE
+#define _X_CTYPE	_LC_CTYPE
+#define _X_MONETARY	_LC_MONETARY
+#define _X_NUMERIC	_LC_NUMERIC
+#define _X_TIME 	_LC_TIME
+#define _X_MESSAGES	_LC_MESSAGES
+#define _X_MAX		_LC_MESSAGES
+
+#define _CAT_TO_LC(cat)	_CATMASK(cat)
+
+		// CLASS _Collvec
+struct _Collvec
+	{	// locale-specific collation information
+	_CSTD _Statab *_Costate;
+	_CSTD _Statab *_WCostate;
+	};
+
+		// CLASS _Ctypevec
+struct _Ctypevec
+	{	// locale-specific ctype information
+	const short *_Table;
+	const short *_Tolotab;
+	const short *_Touptab;
+	int _Delfl;
+	};
+
+		// CLASS _Cvtvec
+struct _Cvtvec
+	{	// locale-specific codecvt information
+	_CSTD _Statab *_Mbstate;
+	_CSTD _Statab *_Wcstate;
+	};
+
+		// CLASS _Timevec
+class _Timevec
+	{	// smart pointer to information used by _Strftime
+public:
+	_Timevec()
+		: _Timestuff(*_CSTD _Getptimes())
+		{	// construct from C timne information
+		}
+
+	const void *_Getptr() const
+		{	// return pointer to time information
+		return ((const void *)&_Timestuff);
+		}
+
+private:
+	_CSTD _Tinfo _Timestuff;	// time information from C
+	};
+
+		// CLASS _Locinfo
+class _Locinfo
+	{	// summary of all stuff peculiar to a locale used by standard facets
+public:
+	typedef _STD _Collvec _Collvec;
+	typedef _STD _Ctypevec _Ctypevec;
+	typedef _STD _Cvtvec _Cvtvec;
+	typedef _STD _Timevec _Timevec;
+
+	_Locinfo(const char * = "C");	// construct from named locale
+	_Locinfo(const string&);		// construct from named locale
+	_Locinfo(int, const char *);	// construct from category
+
+	~_Locinfo();	// destroy the object
+
+	_Locinfo& _Addcats(int, const char *);	// add stuff for a category
+
+	string _Getname() const
+		{	// return the new locale name
+		return (_Newlocname);
+		}
+
+	_Collvec _Getcoll() const
+		{	// return collation stuff
+		_Collvec x = {0};
+		x._Costate = _CSTD _Getpcostate();
+		x._WCostate = _CSTD _Getpwcostate();
+		return (x);
+		}
+
+	_Ctypevec _Getctype() const
+		{	// return ctype stuff
+		_Ctypevec x = {0};
+		x._Table = _CSTD _Getpctype();
+		x._Tolotab = _CSTD _Getptolower();
+		x._Touptab = _CSTD _Getptoupper();
+		return (x);
+		}
+
+	_Cvtvec _Getcvt() const
+		{	// return codecvt stuff
+		_Cvtvec x = {0};
+		x._Mbstate = _CSTD _Getpmbstate();
+		x._Wcstate = _CSTD _Getpwcstate();
+		return (x);
+		}
+
+	const lconv *_Getlconv() const
+		{	// return localeconv stuff
+		return (localeconv());
+		}
+
+	_Timevec _Gettnames() const
+		{	// return names used by _Strftime
+		return (_Timeinfo);
+		}
+
+	const char *_Getdays() const
+		{	// return names for weekdays
+		return (_CSTD _Getptimes()->_Days);
+		}
+
+	const char *_Getmonths() const
+		{	// return names for months
+		return (_CSTD _Getptimes()->_Months);
+		}
+
+	const char *_Getfalse() const
+		{	// return false name
+		return (localeconv()->_False);
+		}
+
+	const char *_Gettrue() const
+		{	// return true name
+		return (localeconv()->_True);
+		}
+
+private:
+	_Lockit _Lock;	// thread lock, because global locale is altered
+	_Timevec _Timeinfo;	// pointers to static time-format strings
+	string _Oldlocname;	// old locale name to revert to on destruction
+	string _Newlocname;	// new locale name for this object
+	};
+
+		// TEMPLATE FUNCTION _LStrcoll
+template<class _Elem> inline
+	int _LStrcoll(const _Elem *_First1, const _Elem *_Last1,
+		const _Elem *_First2, const _Elem *_Last2, const _Collvec *)
+	{	// perform locale-specific comparison of _Elem sequences
+	for (; _First1 != _Last1 && _First2 != _Last2; ++_First1, ++_First2)
+		if (*_First1 < *_First2)
+			return (-1);	// [_First1, _Last1) < [_First2, _Last2)
+		else if (*_First2 < *_First1)
+			return (+1);	// [_First1, _Last1) > [_First2, _Last2)
+
+	return (_First2 != _Last2 ? -1 : _First1 != _Last1 ? +1 : 0);
+	}
+
+template<> inline
+	int _LStrcoll(const char *_First1, const char *_Last1,
+		const char *_First2, const char *_Last2, const _Collvec *_Pcoll)
+	{	// perform locale-specific comparison of char sequences
+	string _Str1, _Str2;
+	size_t _Len1 = _Last1 - _First1;
+	size_t _Len2 = _Last2 - _First2;
+
+	if (0 < _Len1 && _Last1[-1] != '\0')
+		{	// copy first operand to string
+		_Str1.assign(_First1, _Last1);
+		_First1 = _Str1.c_str();
+		}
+	if (0 < _Len2 && _Last2[-1] != '\0')
+		{	// copy second operand to string
+		_Str2.assign(_First2, _Last2);
+		_First2 = _Str2.c_str();
+		}
+
+	int _Ans = 0;
+	while (0 < _Len1 && 0 < _Len2
+		&& (_Ans = _Strcollx(_First1, _First2, _Pcoll->_Costate)) == 0)
+		{	// equal through nul, test for following strings
+		size_t _Prefix = _CSTD strlen(_First1) + 1;
+		if (_Len1 <= _Prefix || _Len2 <= _Prefix)
+			return (_Len1 < _Len2 ? -1 : _Len1 == _Len2 ? 0 : +1);
+
+		_Len1 -= _Prefix, _Len2 -= _Prefix;
+		_First1 += _Prefix, _First2 += _Prefix;
+		}
+	return (_Ans != 0 || _Len1 == _Len2 ? _Ans
+		: _Len1 < _Len2 ? -1 : +1);
+	}
+
+ #if _IS_EMBEDDED
+
+ #else /* _IS_EMBEDDED */
+template<> inline
+	int _LStrcoll(const wchar_t *_First1, const wchar_t *_Last1,
+		const wchar_t *_First2, const wchar_t *_Last2, const _Collvec *_Pcoll)
+	{	// perform locale-specific comparison of wchar_t sequences
+	wstring _Str1, _Str2;
+	size_t _Len1 = _Last1 - _First1;
+	size_t _Len2 = _Last2 - _First2;
+
+	if (0 < _Len1 && _Last1[-1] != L'\0')
+		{	// copy first operand to string
+		_Str1.assign(_First1, _Last1);
+		_First1 = _Str1.c_str();
+		}
+	if (0 < _Len2 && _Last2[-1] != L'\0')
+		{	// copy second operand to string
+		_Str2.assign(_First2, _Last2);
+		_First2 = _Str2.c_str();
+		}
+
+	int _Ans = 0;
+	while (0 < _Len1 && 0 < _Len2
+		&& (_Ans = _Wcscollx(_First1, _First2, _Pcoll->_WCostate)) == 0)
+		{	// equal through nul, test for following strings
+		size_t _Prefix = _CSTD wcslen(_First1) + 1;
+		if (_Len1 <= _Prefix || _Len2 <= _Prefix)
+			return (_Len1 < _Len2 ? -1 : _Len1 == _Len2 ? 0 : +1);
+
+		_Len1 -= _Prefix, _Len2 -= _Prefix;
+		_First1 += _Prefix, _First2 += _Prefix;
+		}
+	return (_Ans != 0 || _Len1 == _Len2 ? _Ans
+		: _Len1 < _Len2 ? -1 : +1);
+	}
+ #endif /* _IS_EMBEDDED */
+
+		// TEMPLATE FUNCTION _LStrxfrm
+template<class _Elem> inline
+	size_t _LStrxfrm(_Elem *_First1, _Elem *_Last1,
+		const _Elem *_First2, const _Elem *_Last2,
+			const _Locinfo::_Collvec *)
+	{	// perform locale-specific transform of _Elems to [_First1, _Last1)
+	size_t _Count = _Last2 - _First2;
+
+	if (_Count <= (size_t)(_Last1 - _First1))
+		_CSTD memcpy(_First1, _First2, _Count * sizeof (_Elem));
+	return (_Count);
+	}
+
+template<> inline
+	size_t _LStrxfrm(char *_First1, char *_Last1,
+		const char *_First2, const char *_Last2,
+			const _Locinfo::_Collvec *_Pcoll)
+	{	// perform locale-specific transform of chars to [_First1, _Last1)
+	string _Str2;
+	size_t _Len1 = _Last1 - _First1;
+	size_t _Len2 = _Last2 - _First2;
+
+	if (0 < _Len2 && _Last2[-1] != '\0')
+		{	// copy second operand to string
+		_Str2.assign(_First2, _Last2);
+		_First2 = _Str2.c_str();
+		}
+
+	size_t _Count = 0;
+	while (0 < _Len2)
+		{	// more to translate, try another nul-terminated sequence
+		size_t _Num = _Strxfrmx(_First1, _First2, _Len1,
+			_Pcoll->_Costate) + 1;
+		_Count += _Num;
+		if (_Len1 < _Num)
+			break;	// translation too long, give up
+
+		size_t _Prefix = _CSTD strlen(_First2) + 1;
+		if (_Len1 <= _Prefix)
+			break;	// translation done, quit
+		_Len1 -= _Num;
+		_First1 += _Num;
+		_First2 += _Prefix;
+		}
+	return (_Count);
+	}
+
+ #if _IS_EMBEDDED
+
+ #else /* _IS_EMBEDDED */
+template<> inline
+	size_t _LStrxfrm(wchar_t *_First1, wchar_t *_Last1,
+		const wchar_t *_First2, const wchar_t *_Last2,
+			const _Locinfo::_Collvec *_Pcoll)
+	{	// perform locale-specific transform of wchar_ts to [_First1, _Last1)
+	wstring _Str2;
+	size_t _Len1 = _Last1 - _First1;
+	size_t _Len2 = _Last2 - _First2;
+
+	if (0 < _Len2 && _Last2[-1] != L'\0')
+		{	// copy second operand to string
+		_Str2.assign(_First2, _Last2);
+		_First2 = _Str2.c_str();
+		}
+
+	size_t _Count = 0;
+	while (0 < _Len2)
+		{	// more to translate, try another nul-terminated sequence
+		size_t _Num = _Wcsxfrmx(_First1, _First2, _Len1,
+			_Pcoll->_WCostate) + 1;
+		_Count += _Num;
+		if (_Len1 < _Num)
+			break;	// translation too long, give up
+
+		size_t _Prefix = _CSTD wcslen(_First2) + 1;
+		if (_Len1 <= _Prefix)
+			break;	// translation done, quit
+		_Len1 -= _Num;
+		_First1 += _Num;
+		_First2 += _Prefix;
+		}
+	return (_Count);
+	}
+ #endif /* _IS_EMBEDDED */
+
+		// FUNCTION _Mbrtowc
+inline int _Mbrtowc(wchar_t *_Wptr, const char *_Ptr, size_t _Count,
+	mbstate_t *_Pstate, const _Cvtvec *_Pcvt)
+	{	// perform locale-specific mbrtowc
+	return (_CSTD _Mbtowcx(_Wptr, _Ptr, _Count, _Pstate,
+		_Pcvt->_Mbstate));
+	}
+
+		// FUNCTION _Strftime
+inline size_t _Strftime(char *_Ptr, size_t _Count, const char *_Format,
+	const struct tm *_Ptime, const void *_Timeptr)
+	{	// perform locale-specific strftime
+	return (_CSTD _CStrftime(_Ptr, _Count, _Format, _Ptime,
+		(const _CSTD _Tinfo *)_Timeptr));
+	}
+
+		// FUNCTION _Tolower
+inline int _Tolower(int _Byte, const _Ctypevec *_Pctype)
+	{	// perform locale-specific tolower
+	return (_Pctype->_Tolotab[_Byte & 0xff]);
+	}
+
+		// FUNCTION _Toupper
+inline int _Toupper(int _Byte, const _Ctypevec *_Pctype)
+	{	// perform locale-specific toupper
+	return (_Pctype->_Touptab[_Byte & 0xff]);
+	}
+
+		// FUNCTION _Wcrtomb
+inline int _Wcrtomb(char *_Ptr, wchar_t _Char,
+	mbstate_t *_Pstate, const _Cvtvec *_Pcvt)
+	{	// perform locale-specific wcrtomb
+	return (_CSTD _Wctombx(_Ptr, _Char, _Pstate,
+		_Pcvt->_Mbstate, _Pcvt->_Wcstate));
+	}
+_STD_END
+#endif /* _XLOCINFO_ */
+
+/*
+ * Copyright (c) 1992-2006 by P.J. Plauger.  ALL RIGHTS RESERVED.
+ * Consult your license regarding permissions and restrictions.
+V5.01:1566 */

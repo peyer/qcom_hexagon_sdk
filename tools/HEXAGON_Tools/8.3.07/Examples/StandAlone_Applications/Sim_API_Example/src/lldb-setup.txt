@@ -1,0 +1,8 @@
+file bin/hello.elf
+gdb-remote 9912
+b main
+cont
+fr v
+th l
+cont
+exit

@@ -1,0 +1,242 @@
+#============================================================================
+#  Name:
+#    defines_armgcc.min
+#
+#  Assumes:
+#    ANDROID_TOOLS_DIR points to a copy of CodeSourcery ARM gcc OR the directory
+#      containing "arm-non-eabi-gcc" is in your path.
+#
+#  Description:
+#    This file specifies the items necessary to build libraries using the
+#    CodeSourcery gcc toolchain for ARM (EABI-NONE config).  
+#
+# Copyright 2009-2011 by QUALCOMM, Incorporated.  All Rights Reserved.
+#----------------------------------------------------------------------------
+
+ifeq (1, $(V_GCC))
+   ANDROID_GCC_PREFIX?=arm-linux-androideabi-# default
+   ifeq (1,$(V_aarch64))
+      ANDROID_LIB_DIR=$(ANDROID_PLATFORM_DIR)/usr/lib
+      ARMGCC_PREFIX=$(ANDROID_TOOLS_DIR)/bin/aarch64-linux-android-
+      CC_PREFIX=$(ARMGCC_PREFIX)#
+      
+      CC=$(CC_PREFIX)gcc#
+      ARMCC=$(CC_PREFIX)gcc#
+      CXX=$(CC_PREFIX)g++ $(LLVM_TRIPPLE)#
+      ARMCXX=$(CC_PREFIX)g++ $(LLVM_TRIPPLE)#
+      
+      LD=$(CXX)
+      AR=$(CC_PREFIX)ar#
+      AR_FLAGS=-rsc#
+      
+      CPP=$(CC_PREFIX)cpp#
+   else
+      ANDROID_LIB_DIR=$(ANDROID_PLATFORM_DIR)/usr/lib
+      ARMGCC_PREFIX=$(ANDROID_TOOLS_DIR)/bin/$(ANDROID_GCC_PREFIX)
+      CC_PREFIX=$(ARMGCC_PREFIX)#
+      
+      CC=$(CC_PREFIX)gcc -mthumb#
+      ARMCC=$(CC_PREFIX)gcc -marm#
+      CXX=$(CC_PREFIX)g++ $(LLVM_TRIPPLE) -mthumb#
+      ARMCXX=$(CC_PREFIX)g++ $(LLVM_TRIPPLE) -marm#
+      
+      LD=$(CXX)
+      AR=$(CC_PREFIX)ar#
+      AR_FLAGS=-rsc#
+      
+      CPP=$(CC_PREFIX)cpp#
+   endif
+else 
+   ifeq (1, $(V_aarch64))
+       ANDROID_LIB_DIR=$(ANDROID_PLATFORM_DIR)/usr/lib
+       LLVM_TRIPPLE=-target aarch64-linux-android$(API_LEVEL)
+	   TRIPLE=aarch64-linux-android$(API_LEVEL)-#  
+	   
+	   CC_PREFIX=$(ANDROID_TOOLS_DIR)/bin#
+       CC=$(CC_PREFIX)/$(TRIPLE)clang $(LLVM_TRIPPLE)#
+       ARMCC=$(CC_PREFIX)/$(TRIPLE)clang $(LLVM_TRIPPLE) -marm#
+   
+       CXX=$(CC_PREFIX)/$(TRIPLE)clang++ $(LLVM_TRIPPLE)#
+       ARMCXX=$(CC_PREFIX)/$(TRIPLE)clang++ $(LLVM_TRIPPLE) -marm#
+   else 
+       ANDROID_LIB_DIR=$(ANDROID_PLATFORM_DIR)/usr/lib
+       LLVM_TRIPPLE=-target arm-linux-androideabi$(API_LEVEL)
+       TRIPLE=armv7a-linux-androideabi$(API_LEVEL)-#
+	   
+	   CC_PREFIX=$(ANDROID_TOOLS_DIR)/bin#
+       CC=$(CC_PREFIX)/$(TRIPLE)clang $(LLVM_TRIPPLE) -mthumb#
+       ARMCC=$(CC_PREFIX)/$(TRIPLE)clang $(LLVM_TRIPPLE) -marm#
+   
+       CXX=$(CC_PREFIX)/$(TRIPLE)clang++ $(LLVM_TRIPPLE) -mthumb#
+       ARMCXX=$(CC_PREFIX)/$(TRIPLE)clang++ $(LLVM_TRIPPLE) -marm#
+   endif
+  
+   LD=$(CXX)
+   AR=$(CC_PREFIX)/llvm-ar#
+   AR_FLAGS=rsc#
+   CPP=$(CXX)
+   STL_FLAG=-stdlib=libstdc++#
+
+endif   
+
+FEZ=$(ARMGCC_PREFIX)size
+
+ifneq (1,$(V_notpie))
+  __CXX_FLAGS+=-fpie -fpic -fPIE -fPIC
+  LD_FLAGS+=-fpie -fpic -fPIE -fPIC
+endif  
+
+__CXX_FLAGS+=-Wall -Wno-missing-braces#
+ifeq (1,$(V_GCC))
+ifneq (1,$(V_aarch64))
+   __CXX_FLAGS+=-mword-relocations -mthumb-interwork#
+endif
+endif
+
+ifeq (1,$(V_aarch64))
+__CXX_FLAGS+=-fpic
+else
+__CXX_FLAGS+=-march=armv7-a -Werror
+endif
+
+CC_NO_WARN_UNUSED_FUNCTIONS=-Wno-unused-function#
+CC_NO_WARN_UNINITIALIZED=-Wno-uninitialized#
+
+ifneq ($(V_FLAVOR),Release)
+__CXX_FLAGS+=-g
+endif
+
+ifneq ($(V_FLAVOR),Debug)
+ifneq ($(V_FLAVOR),Coverage)
+__CXX_FLAGS+=-O2 -fno-strict-aliasing#
+endif
+endif
+LD_FLAG=-Wl,#
+
+ifeq (1,$(V_aarch64))
+LD_FLAGS+=$(LD_FLAG)-Map=$(basename $(@)).map -fPIE $(LD_FLAG)-dynamic-linker,/system/bin/linker64 $(LD_FLAG)-z,nocopyreloc $(LD_FLAG)-unresolved-symbols=ignore-in-shared-libs $(LD_FLAG)-rpath-link=$(ANDROID_LIB_DIR)#
+else
+LD_FLAGS+=$(LD_FLAG)-Map=$(basename $(@)).map -march=armv7-a $(LD_FLAG)-unresolved-symbols=ignore-in-shared-libs#
+endif
+
+ifeq ($(V_FLAVOR),Coverage)
+__CXX_FLAGS+=-fprofile-arcs -ftest-coverage#
+LD_FLAGS+=-fprofile-arcs -ftest-coverage#
+endif
+
+ANDROID_SYSTEM_INCS=usr/include
+__CXX_FLAGS+=$(addprefix -isystem $(ANDROID_PLATFORM_DIR)/,$(ANDROID_SYSTEM_INCS))
+__CXX_FLAGS+=-D_ANDROID_ -DANDROID
+CXXSTL_FLAGS=-isystem $(ANDROID_GLIBSTDC_DIR)/../../include
+ifeq (1,$(V_GCC))
+  CXXSTL_FLAGS+=-isystem $(ANDROID_GLIBSTDC_DIR)/include
+else
+  CXXSTL_FLAGS+=-isystem $(ANDROID_GLIBSTDC_DIR)
+endif
+
+DEFINES+=__FILENAME__=\"$(notdir $(<))\"
+
+CXX_FLAGS=-c $(__CXX_FLAGS) $(CXXSTL_FLAGS) -std=c++11#
+CXX_MIX_FLAGS=-S $(__CXX_FLAGS) $(CXXSTL_FLAGS) -std=c++11#
+
+CC_FLAGS=-c $(__CXX_FLAGS) -std=gnu99#
+CC_MIX_FLAGS=-S $(__CXX_FLAGS) -std=gnu99#
+
+CC_INC=#
+
+CC_INCFLAG=-I#
+CC_DEFINEFLAG=-D#
+CC_UNDEFINEFLAG=-U#
+CC_OUTPUTFLAG=-o#
+CC_MIX_OUTPUTFLAG=-o#
+
+ifeq (1,$(V_GCC))
+CPP_FLAGS=-C#
+else
+CPP_FLAGS=$(STL_FLAG)#
+endif
+
+AR_OUTPUTFLAG=#
+
+LD_LIBDIRFLAG=#-L
+LD_OUTPUTFLAG=-o #
+
+LD_LIBS=-L$(ANDROID_LIB_DIR) -lm -lc -ldl -lgcc
+
+
+ifeq ($(V_FLAVOR),Coverage)
+LD_LIBS+=-lgcov#
+endif
+
+ld_inputs = $(strip \
+  $(foreach L,$1,\
+    $(if $(filter lib%$(DLL_EXT),$(notdir $L)),\
+        -L$(dir $L) -l$(patsubst lib%$(DLL_EXT),%,$(notdir $L)),\
+      $L)))
+
+
+LD_INPUTS+=$(LD_FLAG)--start-group $(call ld_inputs,$(1)) $(LD_FLAG)--end-group $(LD_LIBS)#
+
+DEFS_OF=$(foreach def,$(addsuffix .lst,$(call uniq,$($(call NAME_OF,$(1))_DEFS)\
+           $(foreach comp,$(call COMPONENTS_OF,$(1)),$(COMPONENT_$(comp)_DEFS)))),\
+            $(LD_FLAG)--version-script=$(def))
+
+EXE_LD_FLAGS+=$(LD_FLAGS) -pie -nostdlib -Bdynamic $(ANDROID_LIB_DIR)/crtbegin_dynamic.o $(ANDROID_LIB_DIR)/crtend_android.o#
+ifeq (1,$(V_GCC))
+  QEXE_LD_FLAGS=-static --sysroot=$(ANDROID_PLATFORM_DIR) -lm -lstdc++ -lc
+else
+  ifeq (1,$(V_aarch64))
+    QEXE_LD_FLAGS=-static --sysroot=$(ANDROID_PLATFORM_DIR) -lm -lstdc++ -lc $(STL_FLAG)
+  else 
+    QEXE_LD_FLAGS=-static --sysroot=$(ANDROID_PLATFORM_DIR) -lm -lstdc++ -lc  -lunwind -L$(ANDROID_GLIBSTDC_DIR) $(STL_FLAG)
+  endif
+endif
+
+DLL_LD_FLAGS+=$(LD_FLAGS) $(LD_FLAG)-soname=$(notdir $(@)) -nostartfiles -nostdlib -shared -Bsymbolc $(call DEFS_OF,$(@))#
+
+IMAR_OUTPUTFLAG=-o #
+
+define IMPLIB_AR_CMD
+	$(call exec,$(LD)) $(IMPLIB_LD_FLAGS) $(LD_OUTPUTFLAG)$(2) $(call LD_INPUTS,$(1))
+endef
+
+ASM=$(CC)#
+ASM_INCFLAG=$(CC_INCFLAG)#
+ASM_DEFINEFLAG=$(CC_DEFINEFLAG)#
+ASM_UNDEFINEFLAG=$(CC_UNDEFINEFLAG)#
+ASM_OUTPUTFLAG=$(CC_OUTPUTFLAG)#
+ASM_MIX_OUTPUTFLAG=$(CC_MIX_OUTPUTFLAG)#
+ASM_FLAGS=$(CC_FLAGS) -DRUN_ON_NEON -DHAVE_NEON=1 -mfpu=neon#
+
+#APP_FLAGS=-E -P - #
+#APP=$(CC)#
+
+#-----------------------------------------------------------------------------
+# QEXE exec
+#-----------------------------------------------------------------------------
+ifeq (1,$(V_aarch64))
+QEMU=qemu-aarch64
+else
+QEMU=qemu-arm
+endif
+ifeq (yes,$(CMD_MODE))
+HAVE_QEMU=$(shell $(QEMU) -version 2>nul)
+else
+HAVE_QEMU=$(shell $(QEMU) -version 2>/dev/null)
+endif
+ifneq (,$(findstring version,$(HAVE_QEMU)))
+QEXE_EXEC=$(call exec,$(QEMU)) $(1) $(2)
+endif
+
+#-----------------------------------------------------------------------------
+# extensions
+#-----------------------------------------------------------------------------
+EXE_EXT=#
+LIB_EXT=.a#
+DLL_EXT=.so#
+DLL_LIB_EXT=.so#
+# TODO image not building!
+IMG_EXT=.elf#
+
+# pull extensions
+$(call INCLUDE_MAKE_D_EXTS,defines_android.min)

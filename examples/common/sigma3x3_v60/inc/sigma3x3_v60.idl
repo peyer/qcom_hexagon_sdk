@@ -1,0 +1,23 @@
+/**=============================================================================
+Copyright (c) 2015 QUALCOMM Technologies Incorporated.
+All Rights Reserved Qualcomm Proprietary
+=============================================================================**/
+#ifndef SIGMA3X3_APP_IDL
+#define SIGMA3X3_APP_IDL
+
+#include "AEEStdDef.idl"
+
+interface sigma3x3_v60{
+
+AEEResult sigma(
+    in sequence<uint8> inp,        // input buffer of unsigned 8-bit values
+    in int32 stride_i,             // stride of src image
+    in int32 width,                // width of src image
+    in int32 height,               // height of src image
+    in uint8 threshold,           // threshold
+	inrout sequence<uint8> outp,   // output buffer of unsigned 8-bit values
+    inrout int32 dspUsec           // profiling result
+	);
+};
+
+#endif //SIGMA3X3_APP_IDL

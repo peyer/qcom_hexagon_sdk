@@ -1,0 +1,202 @@
+<DSP type="WDSP" versionMajor="0x2" versionMinor="0x8" versionBranch="0x10" versionSubBranch="0x20">
+  <MODULE_LIST>
+    <MODULE name="MODULE_1" id="0x11111111">
+      <MODULE_INFO pidFwk="0x20002">
+        <META_DATA/>
+        <PIN_INFO type="STATIC">
+          <INPUT_PINS/>
+          <OUTPUT_PINS/>
+        </PIN_INFO>
+      </MODULE_INFO>
+      <PARAMETER_LIST>
+        <PARAMETER name="Parameter1" pid="0x11111111" maxSize="0x160">
+          <TOOL_POLICIES>
+            <POLICY name="RTC"/>
+            <POLICY name="CALIBRATION"/>
+          </TOOL_POLICIES>
+          <DEFAULT_DEPENDENCIES/>
+          <CONFIG_ELEMENT name="a_1_1" type="int" byteSize="0x4" byteOffset="0x0" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="a_1_2" type="int" byteSize="0x4" byteOffset="0x4" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="a_1_3" type="int" byteSize="0x4" byteOffset="0x8" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="a_2_1" type="int" byteSize="0x4" byteOffset="0xc" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="a_2_2" type="int" byteSize="0x4" byteOffset="0x10" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="a_2_3" type="int" byteSize="0x4" byteOffset="0x14" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="a_3_1" type="int" byteSize="0x4" byteOffset="0x18" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="a_3_2" type="int" byteSize="0x4" byteOffset="0x1c" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="a_3_3" type="int" byteSize="0x4" byteOffset="0x20" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="a_4_1" type="int" byteSize="0x4" byteOffset="0x24" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="a_4_2" type="int" byteSize="0x4" byteOffset="0x28" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="a_4_3" type="int" byteSize="0x4" byteOffset="0x2c" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="a_5_1" type="int" byteSize="0x4" byteOffset="0x30" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="a_5_2" type="int" byteSize="0x4" byteOffset="0x34" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="a_5_3" type="int" byteSize="0x4" byteOffset="0x38" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="a_6_1" type="int" byteSize="0x4" byteOffset="0x3c" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="a_6_2" type="int" byteSize="0x4" byteOffset="0x40" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="a_6_3" type="int" byteSize="0x4" byteOffset="0x44" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="a_7_1" type="int" byteSize="0x4" byteOffset="0x48" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="a_7_2" type="int" byteSize="0x4" byteOffset="0x4c" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="a_7_3" type="int" byteSize="0x4" byteOffset="0x50" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="a_8_1" type="int" byteSize="0x4" byteOffset="0x54" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="a_8_2" type="int" byteSize="0x4" byteOffset="0x58" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="a_8_3" type="int" byteSize="0x4" byteOffset="0x5c" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="a_9_1" type="int" byteSize="0x4" byteOffset="0x60" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="a_9_2" type="int" byteSize="0x4" byteOffset="0x64" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="a_9_3" type="int" byteSize="0x4" byteOffset="0x68" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="a_10_1" type="int" byteSize="0x4" byteOffset="0x6c" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="a_10_2" type="int" byteSize="0x4" byteOffset="0x70" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="a_10_3" type="int" byteSize="0x4" byteOffset="0x74" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_1" type="short" byteSize="0x2" byteOffset="0x78" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_2" type="short" byteSize="0x2" byteOffset="0x7a" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_3" type="short" byteSize="0x2" byteOffset="0x7c" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_4" type="short" byteSize="0x2" byteOffset="0x7e" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_5" type="short" byteSize="0x2" byteOffset="0x80" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_6" type="short" byteSize="0x2" byteOffset="0x82" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_7" type="short" byteSize="0x2" byteOffset="0x84" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_8" type="short" byteSize="0x2" byteOffset="0x86" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_9" type="short" byteSize="0x2" byteOffset="0x88" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_10" type="short" byteSize="0x2" byteOffset="0x8a" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_11" type="short" byteSize="0x2" byteOffset="0x8c" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_12" type="short" byteSize="0x2" byteOffset="0x8e" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_13" type="short" byteSize="0x2" byteOffset="0x90" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_14" type="short" byteSize="0x2" byteOffset="0x92" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_15" type="short" byteSize="0x2" byteOffset="0x94" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_16" type="short" byteSize="0x2" byteOffset="0x96" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_17" type="short" byteSize="0x2" byteOffset="0x98" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_18" type="short" byteSize="0x2" byteOffset="0x9a" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_19" type="short" byteSize="0x2" byteOffset="0x9c" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_20" type="short" byteSize="0x2" byteOffset="0x9e" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="c" type="char" byteSize="0x1e" byteOffset="0xa0" arrayElements="30" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="d_1" type="long" byteSize="0x4" byteOffset="0xc0" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_2" type="long" byteSize="0x4" byteOffset="0xc4" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_3" type="long" byteSize="0x4" byteOffset="0xc8" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_4" type="long" byteSize="0x4" byteOffset="0xcc" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_5" type="long" byteSize="0x4" byteOffset="0xd0" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_6" type="long" byteSize="0x4" byteOffset="0xd4" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_7" type="long" byteSize="0x4" byteOffset="0xd8" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_8" type="long" byteSize="0x4" byteOffset="0xdc" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_9" type="long" byteSize="0x4" byteOffset="0xe0" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_10" type="long" byteSize="0x4" byteOffset="0xe4" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_11" type="long" byteSize="0x4" byteOffset="0xe8" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_12" type="long" byteSize="0x4" byteOffset="0xec" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_13" type="long" byteSize="0x4" byteOffset="0xf0" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_14" type="long" byteSize="0x4" byteOffset="0xf4" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_15" type="long" byteSize="0x4" byteOffset="0xf8" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_16" type="long" byteSize="0x4" byteOffset="0xfc" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_17" type="long" byteSize="0x4" byteOffset="0x100" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_18" type="long" byteSize="0x4" byteOffset="0x104" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_19" type="long" byteSize="0x4" byteOffset="0x108" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_20" type="long" byteSize="0x4" byteOffset="0x10c" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_21" type="long" byteSize="0x4" byteOffset="0x110" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_22" type="long" byteSize="0x4" byteOffset="0x114" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_23" type="long" byteSize="0x4" byteOffset="0x118" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_24" type="long" byteSize="0x4" byteOffset="0x11c" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_25" type="long" byteSize="0x4" byteOffset="0x120" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_26" type="long" byteSize="0x4" byteOffset="0x124" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_27" type="long" byteSize="0x4" byteOffset="0x128" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_28" type="long" byteSize="0x4" byteOffset="0x12c" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_29" type="long" byteSize="0x4" byteOffset="0x130" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_30" type="long" byteSize="0x4" byteOffset="0x134" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_31" type="long" byteSize="0x4" byteOffset="0x138" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_32" type="long" byteSize="0x4" byteOffset="0x13c" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_33" type="long" byteSize="0x4" byteOffset="0x140" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_34" type="long" byteSize="0x4" byteOffset="0x144" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_35" type="long" byteSize="0x4" byteOffset="0x148" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_36" type="long" byteSize="0x4" byteOffset="0x14c" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_37" type="long" byteSize="0x4" byteOffset="0x150" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_38" type="long" byteSize="0x4" byteOffset="0x154" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_39" type="long" byteSize="0x4" byteOffset="0x158" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="d_40" type="long" byteSize="0x4" byteOffset="0x15c" min="0x80000000" max="0x7fffffff" default="0x0"/>
+        </PARAMETER>
+        <PARAMETER name="Parameter1" pid="0x11111111" maxSize="0x12c">
+          <TOOL_POLICIES>
+            <POLICY name="RTC"/>
+            <POLICY name="CALIBRATION"/>
+          </TOOL_POLICIES>
+          <DEFAULT_DEPENDENCIES/>
+          <CONFIG_ELEMENT name="a" type="int" byteSize="0x28" byteOffset="0x0" arrayElements="10" min="0x80000000" max="0x7fffffff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_5" type="short" byteSize="0x2" byteOffset="0x28" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_6" type="short" byteSize="0x2" byteOffset="0x2a" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_7" type="short" byteSize="0x2" byteOffset="0x2c" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_8" type="short" byteSize="0x2" byteOffset="0x2e" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_9" type="short" byteSize="0x2" byteOffset="0x30" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_10" type="short" byteSize="0x2" byteOffset="0x32" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_11" type="short" byteSize="0x2" byteOffset="0x34" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_12" type="short" byteSize="0x2" byteOffset="0x36" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_13" type="short" byteSize="0x2" byteOffset="0x38" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_14" type="short" byteSize="0x2" byteOffset="0x3a" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_15" type="short" byteSize="0x2" byteOffset="0x3c" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_16" type="short" byteSize="0x2" byteOffset="0x3e" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_17" type="short" byteSize="0x2" byteOffset="0x40" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_18" type="short" byteSize="0x2" byteOffset="0x42" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_19" type="short" byteSize="0x2" byteOffset="0x44" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_20" type="short" byteSize="0x2" byteOffset="0x46" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_21" type="short" byteSize="0x2" byteOffset="0x48" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_22" type="short" byteSize="0x2" byteOffset="0x4a" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_23" type="short" byteSize="0x2" byteOffset="0x4c" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="b_24" type="short" byteSize="0x2" byteOffset="0x4e" min="0x8000" max="0x7fff" default="0x0"/>
+          <CONFIG_ELEMENT name="c_3_3" type="char" byteSize="0x1" byteOffset="0x50" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_3_4" type="char" byteSize="0x1" byteOffset="0x51" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_4_3" type="char" byteSize="0x1" byteOffset="0x52" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_4_4" type="char" byteSize="0x1" byteOffset="0x53" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_5_3" type="char" byteSize="0x1" byteOffset="0x54" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_5_4" type="char" byteSize="0x1" byteOffset="0x55" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_6_3" type="char" byteSize="0x1" byteOffset="0x56" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_6_4" type="char" byteSize="0x1" byteOffset="0x57" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_7_3" type="char" byteSize="0x1" byteOffset="0x58" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_7_4" type="char" byteSize="0x1" byteOffset="0x59" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_8_3" type="char" byteSize="0x1" byteOffset="0x5a" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_8_4" type="char" byteSize="0x1" byteOffset="0x5b" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_9_3" type="char" byteSize="0x1" byteOffset="0x5c" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_9_4" type="char" byteSize="0x1" byteOffset="0x5d" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_10_3" type="char" byteSize="0x1" byteOffset="0x5e" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_10_4" type="char" byteSize="0x1" byteOffset="0x5f" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_11_3" type="char" byteSize="0x1" byteOffset="0x60" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_11_4" type="char" byteSize="0x1" byteOffset="0x61" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_12_3" type="char" byteSize="0x1" byteOffset="0x62" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_12_4" type="char" byteSize="0x1" byteOffset="0x63" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_13_3" type="char" byteSize="0x1" byteOffset="0x64" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_13_4" type="char" byteSize="0x1" byteOffset="0x65" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_14_3" type="char" byteSize="0x1" byteOffset="0x66" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_14_4" type="char" byteSize="0x1" byteOffset="0x67" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_15_3" type="char" byteSize="0x1" byteOffset="0x68" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_15_4" type="char" byteSize="0x1" byteOffset="0x69" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_16_3" type="char" byteSize="0x1" byteOffset="0x6a" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_16_4" type="char" byteSize="0x1" byteOffset="0x6b" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_17_3" type="char" byteSize="0x1" byteOffset="0x6c" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_17_4" type="char" byteSize="0x1" byteOffset="0x6d" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_18_3" type="char" byteSize="0x1" byteOffset="0x6e" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_18_4" type="char" byteSize="0x1" byteOffset="0x6f" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_19_3" type="char" byteSize="0x1" byteOffset="0x70" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_19_4" type="char" byteSize="0x1" byteOffset="0x71" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_20_3" type="char" byteSize="0x1" byteOffset="0x72" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_20_4" type="char" byteSize="0x1" byteOffset="0x73" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_21_3" type="char" byteSize="0x1" byteOffset="0x74" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_21_4" type="char" byteSize="0x1" byteOffset="0x75" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_22_3" type="char" byteSize="0x1" byteOffset="0x76" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_22_4" type="char" byteSize="0x1" byteOffset="0x77" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_23_3" type="char" byteSize="0x1" byteOffset="0x78" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_23_4" type="char" byteSize="0x1" byteOffset="0x79" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_24_3" type="char" byteSize="0x1" byteOffset="0x7a" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_24_4" type="char" byteSize="0x1" byteOffset="0x7b" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_25_3" type="char" byteSize="0x1" byteOffset="0x7c" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_25_4" type="char" byteSize="0x1" byteOffset="0x7d" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_26_3" type="char" byteSize="0x1" byteOffset="0x7e" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_26_4" type="char" byteSize="0x1" byteOffset="0x7f" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_27_3" type="char" byteSize="0x1" byteOffset="0x80" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_27_4" type="char" byteSize="0x1" byteOffset="0x81" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_28_3" type="char" byteSize="0x1" byteOffset="0x82" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_28_4" type="char" byteSize="0x1" byteOffset="0x83" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_29_3" type="char" byteSize="0x1" byteOffset="0x84" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_29_4" type="char" byteSize="0x1" byteOffset="0x85" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_30_3" type="char" byteSize="0x1" byteOffset="0x86" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_30_4" type="char" byteSize="0x1" byteOffset="0x87" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_31_3" type="char" byteSize="0x1" byteOffset="0x88" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_31_4" type="char" byteSize="0x1" byteOffset="0x89" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_32_3" type="char" byteSize="0x1" byteOffset="0x8a" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="c_32_4" type="char" byteSize="0x1" byteOffset="0x8b" min="0x80" max="0x7f" default="0x0"/>
+          <CONFIG_ELEMENT name="d" type="long" byteSize="0xa0" byteOffset="0x8c" arrayElements="40" min="0x80000000" max="0x7fffffff" default="0x0"/>
+        </PARAMETER>
+      </PARAMETER_LIST>
+    </MODULE>
+  </MODULE_LIST>
+</DSP>

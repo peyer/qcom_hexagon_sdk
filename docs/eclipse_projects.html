@@ -1,0 +1,1106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><title>&#65279;Working with projects</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="images/sidebar_top.jpg"></top><script src="scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, false)"><input id="searchButton" onclick="postFunction(false)" type="button" value="Search"></form><p>
+<a href="index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<p>
+<a href="sitemap.html">Sitemap</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="Audio/Applications.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="Voice/Applications.html">Voice</a>
+</p><p>
+<a href="Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="Audio/Examples.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="Examples_Common.html">Common</a>
+</p><p>
+<a href="Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="Tools_Signing.html">Signing</a>
+</p><p>
+<a href="Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="FAQ_Common.html">Common</a>
+</p><p>
+<a href="FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="Support_Contact.html">Contact</a>
+</p><center><img src="images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h1>
+<a name="﻿Working%20with%20projects"></a>&#65279;Working with projects
+</h1><div class="toc"><div class="tocLevel"><a href="#Overview">Overview</a></div><div class="tocLevel"><a href="#Hexagon%20C/C++%20perspective">Hexagon C/C++ perspective</a></div><div class="tocLevel"><a href="#Creating%20projects">Creating projects</a><div class="tocLevel"><a href="#Project%20types">Project types</a></div><div class="tocLevel"><a href="#Executable%20projects">Executable projects</a></div><div class="tocLevel"><a href="#Library%20projects">Library projects</a></div></div><div class="tocLevel"><a href="#Building%20projects">Building projects</a></div><div class="tocLevel"><a href="#Running%20projects">Running projects</a></div><div class="tocLevel"><a href="#Run%20configuration">Run configuration</a><div class="tocLevel"><a href="#Simulator%20tab%20fields">Simulator tab fields</a></div></div><div class="tocLevel"><a href="#Debugging%20projects">Debugging projects</a><div class="tocLevel"><a href="#Debug%20configuration">Debug configuration</a></div><div class="tocLevel"><a href="#Debugger%20tab%20fields">Debugger tab fields</a></div></div><div class="tocLevel"><a href="#Debugging%20remote%20applications">Debugging remote applications</a></div><div class="tocLevel"><a href="#Projects%20with%20IDL%20files">Projects with IDL files</a><div class="tocLevel"><a href="#Creating%20IDL%20projects">Creating IDL projects</a></div><div class="tocLevel"><a href="#Building%20IDL%20projects">Building IDL projects</a></div><div class="tocLevel"><a href="#Configuring%20IDL%20compiler">Configuring IDL compiler</a></div></div><div class="tocLevel"><a href="#Switching%20project%20toolchains">Switching project toolchains</a></div></div><h2>
+<a name="Overview"></a>Overview
+</h2><p>
+This chapter describes how to work with projects in the Hexagon IDE. It focuses on the Hexagon-specific differences from standard Eclipse.
+</p><p>
+It covers the following topics:
+</p><ul type="circle">
+<li>
+<p>
+Hexagon C/C++ perspective
+</p>
+</li><li>
+<p>
+Creating projects
+</p>
+</li><li>
+<p>
+Building projects
+</p>
+</li><li>
+<p>
+Running projects
+</p>
+</li><li>
+<p>
+Debugging projects
+</p>
+</li><li>
+<p>
+Debugging remote applications
+</p>
+</li><li>
+<p>
+Projects with IDL files
+</p>
+</li><li>
+<p>
+Switching project toolchains
+</p>
+</li>
+</ul><h2>
+<a name="Hexagon%20C/C++%20perspective"></a>Hexagon C/C++ perspective
+</h2><p>
+The Hexagon IDE includes a perspective specifically designed for working with Hexagon C/C++ projects.
+</p><p>
+The Hexagon C/C++ perspective is nearly identical in use to the standard Eclipse C/C++ perspective. The one difference is that the four toolbar commands normally used to create new projects/folders/files/classes are replaced with Hexagon-specific equivalents (whose icons are all marked by the letter <code>H</code>).
+</p><left><img src="images/proj_hex_perspective_window.png"></left><p>
+These toolbar commands perform the Hexagon-specific versions of the corresponding standard C/C++ toolbar commands.
+</p><p>
+NOTE - Perspectives exist independently of projects in the IDE. The current perspective can be changed using the perspective control which appears in the upper righthand corner of the IDE main window.
+</p><p>
+NOTE - In the current release of the Hexagon IDE, some of the Hexagon-specific toolbar commands are functionally identical to the corresponding C/C++ commands. In future releases this may change.
+</p><h2>
+<a name="Creating%20projects"></a>Creating projects
+</h2><p>
+To create a new Hexagon C/C++ project, switch to the <a href="#Hexagon%20C/C++%20perspective">Hexagon C/C++ perspective</a> and use any of the following methods:
+</p><ul type="circle">
+<li>
+<p>
+Choose <code>New -&gt; Hexagon Project</code> from the <code>File</code> menu.
+</p>
+</li><li>
+<p>
+Right-click in Project Explorer and choose <code>New -&gt; Hexagon Project</code>.
+</p>
+</li><li>
+<p>
+Click on the <code>Create new Hexagon C/C++ Project</code> toolbar icon:
+</p>
+</li>
+</ul><left><img src="images/proj_hex_new_proj_icon.png"></left><p>
+NOTE - Project names cannot contain spaces.
+</p><h3>
+<a name="Project%20types"></a>Project types
+</h3><p>
+When you create a new project in the Hexagon IDE, the dialog box lists the project types that are supported:
+</p><ul type="circle">
+<li>
+<p>
+Executable
+</p>
+</li><li>
+<p>
+Static library
+</p>
+</li><li>
+<p>
+Shared library
+</p>
+</li><li>
+<p>
+Common library
+</p>
+</li>
+</ul><left><img src="images/proj_new_hex_proj_name_dialog.png"></left><h3>
+<a name="Executable%20projects"></a>Executable projects
+</h3><p>
+Executable projects are used to create projects that generate executable files using the Eclipse managed build system.
+</p><p>
+NOTE - Executable projects include the unit test templates described in <a href="Testing_Eclipse%20Unit%20Tests.html">Unit Tests</a>.
+</p><h3>
+<a name="Library%20projects"></a>Library projects
+</h3><p>
+Library projects are used to create static or shared library projects using the Eclipse managed build system.
+</p><ul type="circle">
+<li>
+<p>
+Static library projects generate <code>.lib</code> files
+</p>
+</li><li>
+<p>
+Shared library projects generate <code>.so</code> files
+</p>
+</li><li>
+<p>
+Common library projects generate <code>.lib</code> or <code>.so</code> files
+</p>
+</li>
+</ul><p>
+The file type generated by a common library project is determined by the build configuration that you specify for the project. The possible configurations in this case are <code>Static-Debug</code>, <code>Static-Release</code>, <code>Shared-Debug</code>, and <code>Shared-Dynamic</code>. Static common libraries generate <code>.lib</code> files, while shared common libraries generate <code>.so</code> files.
+</p><p>
+For each of the library project types, the Hexagon IDE provides template projects (named <code>Audio PP Project</code> and <code>Audio Codec Project</code>) for developing the following kinds of Hexagon libraries:
+</p><ul type="circle">
+<li>
+<p>
+Audio post-processing
+</p>
+</li><li>
+<p>
+Audio codec
+</p>
+</li>
+</ul><p>
+NOTE - Common libraries replace the need for separate static and shared library types. The latter can still be used if you want to create only static or shared libraries &#8211; they are supported in the IDE for backward compatibility.
+</p><h2>
+<a name="Building%20projects"></a>Building projects
+</h2><p>
+To build a project, you can use either of the two following methods:
+</p><ul type="circle">
+<li>
+<p>
+In Project Explorer, right-click on the project and choose <code>Build Project</code>.
+</p>
+</li><li>
+<p>
+Alternatively, choose <code>Build Project</code> from the <code>Project</code> menu.
+</p>
+</li>
+</ul><p>
+A log recording the build status is displayed in the <code>Console</code> view at the bottom of the main IDE window.
+</p><h2>
+<a name="Running%20projects"></a>Running projects
+</h2><p>
+To run a project, you can use either of the two following methods:
+</p><ul type="circle">
+<li>
+<p>
+In Project Explorer, right-click on the project and choose <code>Run As -&gt; Hexagon C/C++ Application</code>.
+</p>
+</li><li>
+<p>
+Alternatively, select the project in Project Explorer, then click on the <code>Run</code> toolbar icon:
+</p>
+</li>
+</ul><left><img src="images/proj_run_as_icon.png"></left><p>
+Select <code>Hexagon C/C++ application</code>, and click on the <code>OK</code> button.
+</p><left><img src="images/proj_run_as_dialog.png"></left><p>
+NOTE - The selection step in this method is required only once; after that, clicking on the <code>Run</code> icon automatically selects the most recent project.
+</p><h2>
+<a name="Run%20configuration"></a>Run configuration
+</h2><p>
+Run configuration can be performed using either of the two following methods:
+</p><ul type="circle">
+<li>
+<p>
+In Project Explorer, right-click on the project and choose <code>Run As -&gt; Run Configuration</code>.
+</p>
+</li><li>
+<p>
+Alternatively, select the project in Project Explorer, then click on the arrow to the right of the <code>Run</code> toolbar icon and select <code>Run Configuration</code>.
+</p>
+</li>
+</ul><p>
+Both of these display the <code>Run Configurations</code> dialog box. Using the tabs in this dialog box you can configure the Hexagon simulator, program arguments, and runtime environment.
+</p><p>
+To specify the program arguments, select the <code>Arguments</code> tab and enter the program arguments separated by spaces.
+</p><p>
+To configure the Hexagon simulator for the program, select the <code>Simulator</code> tab and enter the appropriate values.
+</p><left><img src="images/proj_run_configs_dialog_sim.png"></left><p>
+The following table lists the simulator tab fields. The remaining run configuration tabs (e.g., <code>Common</code>, <code>Main</code>) control standard Eclipse settings.
+</p><h3>
+<a name="Simulator%20tab%20fields"></a>Simulator tab fields
+</h3><table><tr><th><p>
+Field
+</p></th><th><p>
+Description
+</p></th></tr><tr><td><p>
+Simulator
+</p></td><td><p>
+Name of simulator executable that is invoked when a Hexagon project is run
+</p></td></tr><tr><td><p>
+CPU architecture
+</p></td><td><p>
+Hexagon processor version to simulate
+</p></td></tr><tr><td><p>
+DSP clock
+</p></td><td><p>
+Simulated processor clock speed (in MHz)
+</p></td></tr><tr><td><p>
+Memory fill
+</p></td><td><p>
+Initial value of all bytes in simulated processor memory
+</p></td></tr><tr><td><p>
+Timing
+</p></td><td><p>
+Checkbox controlling the specification of a bus penalty
+</p></td></tr><tr><td><p>
+Bus penalty
+</p></td><td><p>
+Delay time for processor bus access (in cycles)
+</p></td></tr><tr><td><p>
+Stack start
+</p></td><td><p>
+Base address of processor stack (thread 0)
+</p></td></tr><tr><td><p>
+Cosim file
+</p></td><td><p>
+File name of co-simulator to register with simulator
+</p></td></tr><tr><td><p>
+Input file
+</p></td><td><p>
+File name of standard input for target application
+</p></td></tr><tr><td><p>
+Output file
+</p></td><td><p>
+File name of standard output for target application
+</p></td></tr><tr><td><p>
+Error file
+</p></td><td><p>
+File name of standard error stream for target application
+</p></td></tr><tr><td><p>
+Miscellaneous flags
+</p></td><td><p>
+Command options for any simulator options which cannot be specified in the other tab fields
+</p></td></tr></table><p>
+NOTE - For more information on the simulator see the <a href="Tools_Hexagon%20Tools%208.3.html">Hexagon Simulator User Guide</a>.
+</p><h2>
+<a name="Debugging%20projects"></a>Debugging projects
+</h2><p>
+To debug an executable generated by a project, you can perform either of the two following methods:
+</p><ul type="circle">
+<li>
+<p>
+In Project Explorer, right-click on the project and choose <code>Debug As -&gt; Hexagon C/C++ Application</code>.
+</p>
+</li><li>
+<p>
+Alternatively, select the project in Project Explorer, then click on the <code>Debug</code> toolbar icon, select <code>Hexagon C/C++ Application</code>, and click on the <code>OK</code> button:
+</p>
+</li>
+</ul><left><img src="images/proj_debug_icon.png"></left><p>
+The debug perspective enables you to perform standard debugging operations such as stepping, viewing, disassembly, setting breakpoints, viewing/modifying variables, and viewing registers.
+</p><h3>
+<a name="Debug%20configuration"></a>Debug configuration
+</h3><p>
+Debug configuration can be performed using either of the two following methods:
+</p><ul type="circle">
+<li>
+<p>
+In Project Explorer, right-click on the project and choose <code>Debug As -&gt; Debug configuration</code>.
+</p>
+</li><li>
+<p>
+Alternatively, select the project in Project Explorer, then click on the arrow to the right of the <code>Debug</code> toolbar icon and select <code>Debug Configuration</code>:
+</p>
+</li>
+</ul><left><img src="images/proj_debug_icon.png"></left><p>
+Both of these display the <code>Debug Configurations</code> dialog box. Using the tabs in this dialog box you can configure the Hexagon debugger, program arguments, and runtime environment.
+</p><p>
+To specify the debugger for the Hexagon program, select the <code>Debugger</code> tab and enter the appropriate values.
+</p><p>
+The following table lists the debugger tab fields. The remaining debug configuration tabs control either standard Eclipse settings or settings defined as part of <a href="#Run%20configuration">Run configuration</a>.
+</p><h3>
+<a name="Debugger%20tab%20fields"></a>Debugger tab fields
+</h3><table><tr><th><p>
+Field
+</p></th><th><p>
+Description
+</p></th></tr><tr><td><p>
+Stop on startup at:
+</p></td><td><p>
+Name of application function to stop on at debug startup
+</p></td></tr><tr><td><p>
+Stop at Coredump:
+</p></td><td><p>
+Crash handler for dsp
+</p></td></tr><tr><td><p>
+Debugger
+</p></td><td><p>
+Name of debugger executable that is invoked when a Hexagon project is debugged
+</p></td></tr><tr><td><p>
+Debugger command file
+</p></td><td><p>
+Name of file used to automate debug session (text file containing lines which are GDB commands)
+</p></td></tr><tr><td><p>
+Shared Libraries
+</p></td><td><p>
+List of directories containing the shared libraries that are loaded dynamically
+</p></td></tr><tr><td><p>
+Symbol Files
+</p></td><td><p>
+Symbol file the is used by the debugger
+</p></td></tr></table><p>
+NOTE - The run configuration <code>Simulator</code> tab and the debug configuration <code>Target</code> tab control the same runtime environment settings.
+</p><h2>
+<a name="Debugging%20remote%20applications"></a>Debugging remote applications
+</h2><p>
+The Hexagon IDE debugger (GDB) can be attached to a running instance of a remote simulation. A remote simulation is a simulator instance which was not launched by the IDE, and which can be running either on the same machine as the IDE, or on a different machine.
+</p><p>
+To debug the application running on a remote simulation, you can perform either of the following methods:
+</p><ul type="circle">
+<li>
+<p>
+In Project Explorer, right-click on the project and choose <code>Debug As -&gt; Hexagon Attach to Application</code>.
+</p>
+</li><li>
+<p>
+Alternatively, select the project in Project Explorer, then click on the <code>Debug</code> toolbar icon, select <code>Hexagon Attach to Application</code>, and click on the <code>OK</code> button:
+</p>
+</li>
+</ul><left><img src="images/proj_debug_icon.png"></left><p>
+Both of these display the following dialog box:
+</p><left><img src="images/proj_remote_debug_dialog.png"></left><p>
+In the <code>Executable</code> field, specify the binary file to debug. Use <code>Search project</code> to search for binary files, or <code>File System</code> to navigate to a different file system.
+</p><p>
+Specify the machine and port number where the remote simulation is waiting.
+</p><p>
+Click on the <code>Debug</code> button to start the remote debug session.
+</p><p>
+Another dialog box appears, asking you to verify switching to a <a href="#Debugging%20projects">normal debug session</a>.
+</p><p>
+NOTE - The default machine and port number can be set by going to the debugger tab in the debug configuration for <code>Hexagon C/C++ Attach to Remote Application</code>.
+</p><h2>
+<a name="Projects%20with%20IDL%20files"></a>Projects with IDL files
+</h2><p>
+The Hexagon IDE supports library projects that use Interface Definition Language (IDL) to define their component interfaces.
+</p><p>
+This section describes how to create and build a Hexagon library project which uses IDL. It assumes you already have an IDL file defined for the project.
+</p><p>
+NOTE - IDL is used in FastRPC applications. For more information see <a href="APIs_FastRPC.html">FastRPC</a>.
+</p><h3>
+<a name="Creating%20IDL%20projects"></a>Creating IDL projects
+</h3><p>
+To create a library project which uses IDL, first create or import a Hexagon C/C++ library project <a href="#Creating%20projects">in the standard way</a>.
+</p><p>
+Add the IDL file to the library project.
+</p><p>
+When the file is added a dialog box appears, asking whether you want to add an IDL builder to the project.
+</p><left><img src="images/proj_idl_builder_dialog.png"></left><p>
+Click on the <code>Yes</code> button to add the IDL builder.
+</p><p>
+Doing this automatically enables IDL support in the project.
+</p><p>
+NOTE - IDL support can be explicitly enabled or disabled in a project by right-clicking on the project and selecting <code>Hexagon -&gt; Enable IDL support/Disable IDL support</code>.
+</p><h3>
+<a name="Building%20IDL%20projects"></a>Building IDL projects
+</h3><p>
+To build a library project that uses IDL, simply build the project <a href="#Building%20projects">in the standard way</a>.
+</p><p>
+Because the project has IDL support enabled, the Hexagon IDE automatically invokes the IDL builder, which in turn invokes the <code>qaic</code> compiler to generate the IDL stub and skel files.
+</p><p>
+When the IDL builder is complete, the Hexagon IDE invokes the standard C/C++ builder to build the project. The standard builder uses the generated skel files to build the library.
+</p><p>
+NOTE - Stub files are for the application processor, while skel files are for the Hexagon processor. Thus the generated stub files are automatically excluded from the build.
+</p><h3>
+<a name="Configuring%20IDL%20compiler"></a>Configuring IDL compiler
+</h3><p>
+Once a project is created, its <a href="#Creating%20IDL%20projects">IDL compiler settings</a> can be configured by right-clicking on the project in Project Explorer and choosing <code>Properties -&gt; Hexagon -&gt; IDL Settings</code>.
+</p><p>
+The following dialog box appears:
+</p><left><img src="images/proj_idl_properties_dialog.png"></left><p>
+NOTE - IDL compiler settings can be limited to a single IDL file by right-clicking on the IDL file in Project Explorer and choosing <code>Properties -&gt; Hexagon -&gt; IDL Settings</code>.
+</p><p>
+NOTE - The <code>IDL Settings</code> menu is available in Project Explorer only if a project has IDL support enabled.
+</p><h2>
+<a name="Switching%20project%20toolchains"></a>Switching project toolchains
+</h2><p>
+The Hexagon IDE supports software development using the following toolchains:
+</p><ul type="circle">
+<li>
+<p>
+Hexagon GNU toolchain
+</p>
+</li><li>
+<p>
+Hexagon LLVM toolchain
+</p>
+</li>
+</ul><p>
+The toolchain is normally chosen when a project is first created. However, you can also update an existing project so it uses a different toolchain.
+</p><p>
+To change the toolchain in a project, first select the project in Project Explorer (in this case, the project name is <code>factorial</code>).
+</p><left><img src="images/proj_hex_proj_factorial_window.png"></left><p>
+Choose <code>Properties</code> from the <code>File</code> menu. The following dialog box appears:
+</p><left><img src="images/proj_hex_proj_properties_dialog_1.png"></left><p>
+To change the toolchain for this project, expand the <code>Hexagon</code> folder. The dialog box changes to the following:
+</p><left><img src="images/proj_hex_proj_properties_dialog_2.png"></left><p>
+In the <code>Current toolchain</code> drop-down list, choose the new toolchain.
+</p><p>
+Click on the <code>Apply</code> button to save the changes, then click on <code>OK</code> to close the dialog box.
+</p><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

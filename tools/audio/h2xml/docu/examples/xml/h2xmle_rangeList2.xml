@@ -1,0 +1,54 @@
+<DSP type="WDSP" versionMajor="0x2" versionMinor="0x8" versionBranch="0x10" versionSubBranch="0x20">
+  <MODULE_LIST>
+    <MODULE name="MODULE_1" id="0x11111111">
+      <MODULE_INFO pidFwk="0x20002">
+        <META_DATA/>
+        <PIN_INFO type="STATIC">
+          <INPUT_PINS/>
+          <OUTPUT_PINS/>
+        </PIN_INFO>
+      </MODULE_INFO>
+      <PARAMETER_LIST>
+        <PARAMETER name="Parameter2" pid="0x22222299" maxSize="0x8">
+          <TOOL_POLICIES>
+            <POLICY name="RTC"/>
+            <POLICY name="CALIBRATION"/>
+          </TOOL_POLICIES>
+          <DEFAULT_DEPENDENCIES/>
+          <CONFIG_ELEMENT name="a" type="char" byteSize="0x1" byteOffset="0x0" min="0x80" max="0x7f" default="0x15">
+            <RANGE_LIST>
+              <RANGE name="label_1" value="0x1"/>
+              <RANGE name="label_2" value="0x2"/>
+              <RANGE name="label_3" value="0x3"/>
+              <RANGE name="label_4" value="0x4"/>
+              <RANGE name="label_5" value="0x5"/>
+              <RANGE name="label_6" value="0x6"/>
+              <RANGE name="label_7" value="0x7"/>
+              <RANGE name="label_8" value="0x8"/>
+              <RANGE name="label_9" value="0x9"/>
+              <RANGE name="label_10" value="0xa"/>
+              <RANGE name="label_11" value="0xb"/>
+              <RANGE name="label_12" value="0xc"/>
+              <RANGE name="label_13" value="0xd"/>
+              <RANGE name="label_14" value="0xe"/>
+              <RANGE name="label_15" value="0xf"/>
+              <RANGE name="label_16" value="0x10"/>
+              <RANGE name="label_17" value="0x11"/>
+              <RANGE name="label_18" value="0x12"/>
+              <RANGE name="label_19" value="0x13"/>
+              <RANGE name="label_20" value="0x14"/>
+              <RANGE name="label_21" value="0x15"/>
+            </RANGE_LIST>
+          </CONFIG_ELEMENT>
+          <CONFIG_ELEMENT name="b" type="long" byteSize="0x4" byteOffset="0x4" min="0x80000000" max="0x7fffffff" default="0x0">
+            <RANGE_LIST>
+              <RANGE name="a" value="0xffffffff"/>
+              <RANGE name="b" value="0x20"/>
+              <RANGE name="c" value="0x0"/>
+            </RANGE_LIST>
+          </CONFIG_ELEMENT>
+        </PARAMETER>
+      </PARAMETER_LIST>
+    </MODULE>
+  </MODULE_LIST>
+</DSP>

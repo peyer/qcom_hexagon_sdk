@@ -1,0 +1,568 @@
+// xlocnum internal header (from <locale>)
+#ifndef _XLOCNUM_
+#define _XLOCNUM_
+#include <climits>
+#include <cmath>
+#include <cstdio>
+#include <cstdlib>
+#include <streambuf>
+
+		// TEXT-TO-NUMERIC CONVERSION FUNCTIONS
+_C_STD_BEGIN
+_C_LIB_DECL
+extern long _Stolx(const char *, char **, int, int *);
+extern unsigned long _Stoulx(const char *, char **, int, int *);
+extern float _Stofx(const char *, char **, long, int *);
+extern double _Stodx(const char *, char **, long, int *);
+extern long double _Stoldx(const char *, char **, long, int *);
+
+ #ifdef _LONGLONG
+extern _LONGLONG _Stollx(const char *, char **, int, int *);
+extern _ULONGLONG _Stoullx(const char *, char **, int, int *);
+
+  #define _STOLL(buf, ptr, base, perr)	_Stollx(buf, ptr, base, perr)
+  #define _STOULL(buf, ptr, base, perr)	_Stoullx(buf, ptr, base, perr)
+ #endif /* _LONGLONG */
+
+_END_C_LIB_DECL
+_C_STD_END
+
+_STD_BEGIN
+
+ #define _VIRTUAL	virtual
+
+		// TEMPLATE CLASS _Is_required
+ #define _FACET_REQUIRED(facet)	(0 < (_Is_required<_Elem>::_Type)(-1))
+
+template<class _Elem>
+	class _Is_required
+	{	// determine whether facet is required
+public:
+	typedef int _Type;	// signed means not required
+	};
+
+template<>
+	class _Is_required<char>
+	{	// determine whether facet is required
+public:
+	typedef unsigned int _Type;	// unsigned means required
+	};
+
+template<>
+	class _Is_required<wchar_t>
+	{	// determine whether facet is required
+public:
+	typedef unsigned int _Type;	// unsigned means required
+	};
+
+		// TEMPLATE CLASS numpunct
+export
+template<class _Elem>
+	class numpunct
+		: public locale::facet
+	{	// facet for defining numeric punctuation text
+public:
+	typedef basic_string<_Elem, char_traits<_Elem>, allocator<_Elem> >
+		string_type;
+	typedef _Elem char_type;
+
+	static locale::id id;	// unique facet id
+
+	_Elem decimal_point() const
+		{	// return decimal point
+		return (do_decimal_point());
+		}
+
+	_Elem thousands_sep() const
+		{	// return thousands separator
+		return (do_thousands_sep());
+		}
+
+	string grouping() const
+		{	// return grouping string
+		return (do_grouping());
+		}
+
+	string_type falsename() const
+		{	// return name for false
+		return (do_falsename());
+		}
+
+	string_type truename() const
+		{	// return name for true
+		return (do_truename());
+		}
+
+	explicit numpunct(size_t _Refs = 0)
+		: locale::facet(_Refs)
+		{	// construct from current locale
+		_Locinfo _Lobj;
+
+		_Init(_Lobj);
+		if (_Kseparator == 0)
+			_Kseparator =	// NB: differs from "C" locale
+				_MAKLOCCHR(_Elem, ',', _Lobj._Getcvt());
+		}
+
+	numpunct(const _Locinfo& _Lobj, size_t _Refs = 0)
+		: locale::facet(_Refs)
+		{	// construct from specified locale
+		_Init(_Lobj);
+		}
+
+	static size_t _Getcat(const locale::facet **_Ppf = 0,
+		const locale *_Ploc = 0)
+		{	// return locale category mask and construct standard facet
+		if (_Ppf != 0 && *_Ppf == 0)
+			*_Ppf = _NEW_CRT numpunct<_Elem>(
+				_Locinfo(_Ploc->name()));
+		return (_X_NUMERIC);
+		}
+
+_PROTECTED:
+	_VIRTUAL ~numpunct()
+		{	// destroy the object
+		_Tidy();
+		}
+
+protected:
+	void _Init(const _Locinfo& _Lobj);
+
+	_VIRTUAL _Elem do_decimal_point() const
+		{	// return decimal point
+		return (_Dp);
+		}
+
+	_VIRTUAL _Elem do_thousands_sep() const
+		{	// return thousands separator
+		return (_Kseparator);
+		}
+
+	_VIRTUAL string do_grouping() const
+		{	// return grouping string
+		return (string(_Grouping));
+		}
+
+	_VIRTUAL string_type do_falsename() const
+		{	// return name for false
+		return (string_type(_Falsename));
+		}
+
+	_VIRTUAL string_type do_truename() const
+		{	// return name for true
+		return (string_type(_Truename));
+		}
+
+private:
+	void _Tidy();
+
+	const char *_Grouping;	// grouping string, "" for "C" locale
+	_Elem _Dp;	// decimal point, '.' for "C" locale
+	_Elem _Kseparator;	// thousands separator, '\0' for "C" locale
+	const _Elem *_Falsename;	// name for false, "false" for "C" locale
+	const _Elem *_Truename;	// name for true, "true" for "C" locale
+	};
+
+typedef numpunct<char> _Npc;
+typedef numpunct<wchar_t> _Npwc;
+
+		// TEMPLATE CLASS numpunct_byname
+template<class _Elem>
+	class numpunct_byname
+		: public numpunct<_Elem>
+	{	// numpunct for named locale
+public:
+	explicit numpunct_byname(const char *_Locname, size_t _Refs = 0)
+		: numpunct<_Elem>(_Locinfo(_Locname), _Refs)
+		{	// construct for named locale
+		}
+
+_PROTECTED:
+	_VIRTUAL ~numpunct_byname()
+		{	// destroy the object
+		}
+	};
+
+		// STATIC numpunct::id OBJECT
+template<class _Elem>
+	locale::id numpunct<_Elem>::id;
+
+		// TEMPLATE CLASS num_get
+export
+template<class _Elem,
+	class _InIt = istreambuf_iterator<_Elem, char_traits<_Elem> > >
+	class num_get
+		: public locale::facet
+	{	// facet for converting text to encoded numbers
+public:
+	typedef numpunct<_Elem> _Mypunct;
+	typedef basic_string<_Elem, char_traits<_Elem>, allocator<_Elem> >
+		_Mystr;
+
+	static size_t _Getcat(const locale::facet **_Ppf = 0,
+		const locale *_Ploc = 0)
+		{	// return locale category mask and construct standard facet
+		if (_Ppf != 0 && *_Ppf == 0)
+			*_Ppf = _NEW_CRT num_get<_Elem, _InIt>(
+				_Locinfo(_Ploc->name()));
+		return (_X_NUMERIC);
+		}
+
+	static locale::id id;	// unique facet id
+
+_PROTECTED:
+	_VIRTUAL ~num_get()
+		{	// destroy the object
+		}
+
+protected:
+	void _Init(const _Locinfo& _Lobj)
+		{	// initialize from _Locinfo object
+		_Cvt = _Lobj._Getcvt();
+		}
+
+	_Locinfo::_Cvtvec _Cvt;		// conversion information
+
+public:
+	explicit num_get(size_t _Refs = 0)
+		: locale::facet(_Refs)
+		{	// construct from current locale
+		_Init(_Locinfo());
+		}
+
+	num_get(const _Locinfo& _Lobj, size_t _Refs = 0)
+		: locale::facet(_Refs)
+		{	// construct from specified locale
+		_Init(_Lobj);
+		}
+
+	typedef _Elem char_type;
+	typedef _InIt iter_type;
+
+	_InIt get(_InIt _First, _InIt _Last,
+		ios_base& _Iosbase,	ios_base::iostate& _State,
+			_Bool& _Val) const
+		{	// get bool from [_First, _Last) into _Val
+		return (do_get(_First, _Last, _Iosbase, _State, _Val));
+		}
+
+	_InIt get(_InIt _First, _InIt _Last,
+		ios_base& _Iosbase,	ios_base::iostate& _State,
+			unsigned short& _Val) const
+		{	// get unsigned short from [_First, _Last) into _Val
+		return (do_get(_First, _Last, _Iosbase, _State, _Val));
+		}
+
+	_InIt get(_InIt _First, _InIt _Last,
+		ios_base& _Iosbase,	ios_base::iostate& _State,
+			unsigned int& _Val) const
+		{	// get unsigned int from [_First, _Last) into _Val
+		return (do_get(_First, _Last, _Iosbase, _State, _Val));
+		}
+
+	_InIt get(_InIt _First, _InIt _Last,
+		ios_base& _Iosbase, ios_base::iostate& _State,
+			long& _Val) const
+		{	// get long from [_First, _Last) into _Val
+		return (do_get(_First, _Last, _Iosbase, _State, _Val));
+		}
+
+	_InIt get(_InIt _First, _InIt _Last,
+		ios_base& _Iosbase, ios_base::iostate& _State,
+			unsigned long& _Val) const
+		{	// get unsigned long from [_First, _Last) into _Val
+		return (do_get(_First, _Last, _Iosbase, _State, _Val));
+		}
+
+ #ifdef _LONGLONG
+	_InIt get(_InIt _First, _InIt _Last,
+		ios_base& _Iosbase, ios_base::iostate& _State,
+			_LONGLONG& _Val) const
+		{	// get long long from [_First, _Last) into _Val
+		return (do_get(_First, _Last, _Iosbase, _State, _Val));
+		}
+
+	_InIt get(_InIt _First, _InIt _Last,
+		ios_base& _Iosbase, ios_base::iostate& _State,
+			_ULONGLONG& _Val) const
+		{	// get unsigned long long from [_First, _Last) into _Val
+		return (do_get(_First, _Last, _Iosbase, _State, _Val));
+		}
+ #endif /* _LONGLONG */
+
+	_InIt get(_InIt _First, _InIt _Last,
+		ios_base& _Iosbase, ios_base::iostate& _State,
+			float& _Val) const
+		{	// get float from [_First, _Last) into _Val
+		return (do_get(_First, _Last, _Iosbase, _State, _Val));
+		}
+
+	_InIt get(_InIt _First, _InIt _Last,
+		ios_base& _Iosbase, ios_base::iostate& _State,
+			double& _Val) const
+		{	// get double from [_First, _Last) into _Val
+		return (do_get(_First, _Last, _Iosbase, _State, _Val));
+		}
+
+	_InIt get(_InIt _First, _InIt _Last,
+		ios_base& _Iosbase, ios_base::iostate& _State,
+			long double& _Val) const
+		{	// get long double from [_First, _Last) into _Val
+		return (do_get(_First, _Last, _Iosbase, _State, _Val));
+		}
+
+	_InIt get(_InIt _First, _InIt _Last,
+		ios_base& _Iosbase, ios_base::iostate& _State,
+			void *& _Val) const
+		{	// get void pointer from [_First, _Last) into _Val
+		return (do_get(_First, _Last, _Iosbase, _State, _Val));
+		}
+
+protected:
+	_VIRTUAL _InIt do_get(_InIt _First, _InIt _Last,
+		ios_base& _Iosbase, ios_base::iostate& _State,
+			_Bool& _Val) const;
+
+	_VIRTUAL _InIt do_get(_InIt _First, _InIt _Last,
+		ios_base& _Iosbase, ios_base::iostate& _State,
+			unsigned short& _Val) const;
+
+	_VIRTUAL _InIt do_get(_InIt _First, _InIt _Last,
+		ios_base& _Iosbase, ios_base::iostate& _State,
+			unsigned int& _Val) const;
+
+	_VIRTUAL _InIt do_get(_InIt _First, _InIt _Last,
+		ios_base& _Iosbase, ios_base::iostate& _State,
+			long& _Val) const;
+
+	_VIRTUAL _InIt do_get(_InIt _First, _InIt _Last,
+		ios_base& _Iosbase, ios_base::iostate& _State,
+			unsigned long& _Val) const;
+
+ #ifdef _LONGLONG
+	_VIRTUAL _InIt do_get(_InIt _First, _InIt _Last,
+		ios_base& _Iosbase, ios_base::iostate& _State,
+			_LONGLONG& _Val) const;
+
+	_VIRTUAL _InIt do_get(_InIt _First, _InIt _Last,
+		ios_base& _Iosbase, ios_base::iostate& _State,
+			_ULONGLONG& _Val) const;
+ #endif /* _LONGLONG */
+
+	_VIRTUAL _InIt do_get(_InIt _First, _InIt _Last,
+		ios_base& _Iosbase, ios_base::iostate& _State,
+			float& _Val) const;
+
+	_VIRTUAL _InIt do_get(_InIt _First, _InIt _Last,
+		ios_base& _Iosbase, ios_base::iostate& _State,
+			double& _Val) const;
+
+	_VIRTUAL _InIt do_get(_InIt _First, _InIt _Last,
+		ios_base& _Iosbase, ios_base::iostate& _State,
+			long double& _Val) const;
+
+	_VIRTUAL _InIt do_get(_InIt _First, _InIt _Last,
+		ios_base& _Iosbase, ios_base::iostate& _State,
+			void *& _Val) const;
+
+private:
+	int _Getifld(char *_Ac,
+		_InIt& _First, _InIt& _Last, ios_base::fmtflags _Basefield,
+			const locale& _Loc) const;
+
+	int _Getffld(char *_Ac,
+		_InIt& _First, _InIt &_Last,
+		ios_base& _Iosbase, int *_Phexexp) const;
+
+	int _Hexdig(const _Elem _Dig, const _Elem _E0,
+		const _Elem _Al, const _Elem _Au) const
+		{	// convert hex digit
+		if (_E0 <= _Dig && _Dig <= _E0 + 9)
+			return (_Dig - _E0);	// assume 0-9 contiguous (C Standard)
+		else if (_Al <= _Dig && _Dig <= _Al + 5)
+			return (_Dig - _Al + 10);	// assume a-f contiguous
+		else if (_Au <= _Dig && _Dig <= _Au + 5)
+			return (_Dig - _Au + 10);	// assume A-F contiguous
+		else
+			return (-1);
+		}
+
+	int _Getffldx(char *_Ac,
+		_InIt& _First, _InIt &_Last,
+		ios_base& _Iosbase, int *_Phexexp) const;
+	};
+
+		// STATIC num_get::id OBJECT
+template<class _Elem,
+	class _InIt>
+	locale::id num_get<_Elem, _InIt>::id;
+
+		// TEMPLATE CLASS num_put
+export
+template<class _Elem,
+	class _OutIt = ostreambuf_iterator<_Elem, char_traits<_Elem> > >
+	class num_put
+		: public locale::facet
+	{	// facet for converting encoded numbers to text
+public:
+	typedef numpunct<_Elem> _Mypunct;
+	typedef basic_string<_Elem, char_traits<_Elem>, allocator<_Elem> >
+		_Mystr;
+
+	static size_t _Getcat(const locale::facet **_Ppf = 0,
+		const locale *_Ploc = 0)
+		{	// return locale category mask and construct standard facet
+		if (_Ppf != 0 && *_Ppf == 0)
+			*_Ppf = _NEW_CRT num_put<_Elem, _OutIt>(
+				_Locinfo(_Ploc->name()));
+		return (_X_NUMERIC);
+		}
+
+	static locale::id id;	// unique facet id
+
+_PROTECTED:
+	_VIRTUAL ~num_put()
+		{	// destroy the object
+		}
+
+protected:
+	void _Init(const _Locinfo& _Lobj)
+		{	// initialize from _Locinfo object
+		_Cvt = _Lobj._Getcvt();
+		}
+
+	_Locinfo::_Cvtvec _Cvt;		// conversion information
+
+public:
+	explicit num_put(size_t _Refs = 0)
+		: locale::facet(_Refs)
+		{	// construct from current locale
+		_Init(_Locinfo());
+		}
+
+	num_put(const _Locinfo& _Lobj, size_t _Refs = 0)
+		: locale::facet(_Refs)
+		{	// construct from specified locale
+		_Init(_Lobj);
+		}
+
+	typedef _Elem char_type;
+	typedef _OutIt iter_type;
+
+	_OutIt put(_OutIt _Dest,
+		ios_base& _Iosbase, _Elem _Fill, _Bool _Val) const
+		{	// put formatted bool to _Dest
+		return (do_put(_Dest, _Iosbase, _Fill, _Val));
+		}
+
+	_OutIt put(_OutIt _Dest,
+		ios_base& _Iosbase, _Elem _Fill, long _Val) const
+		{	// put formatted long to _Dest
+		return (do_put(_Dest, _Iosbase, _Fill, _Val));
+		}
+
+	_OutIt put(_OutIt _Dest,
+		ios_base& _Iosbase, _Elem _Fill, unsigned long _Val) const
+		{	// put formatted unsigned long to _Dest
+		return (do_put(_Dest, _Iosbase, _Fill, _Val));
+		}
+
+ #ifdef _LONGLONG
+	_OutIt put(_OutIt _Dest,
+		ios_base& _Iosbase, _Elem _Fill, _LONGLONG _Val) const
+		{	// put formatted long long to _Dest
+		return (do_put(_Dest, _Iosbase, _Fill, _Val));
+		}
+
+	_OutIt put(_OutIt _Dest,
+		ios_base& _Iosbase, _Elem _Fill, _ULONGLONG _Val) const
+		{	// put formatted unsigned long long to _Dest
+		return (do_put(_Dest, _Iosbase, _Fill, _Val));
+		}
+ #endif /* _LONGLONG */
+
+	_OutIt put(_OutIt _Dest,
+		ios_base& _Iosbase, _Elem _Fill, double _Val) const
+		{	// put formatted double to _Dest
+		return (do_put(_Dest, _Iosbase, _Fill, _Val));
+		}
+
+	_OutIt put(_OutIt _Dest,
+		ios_base& _Iosbase, _Elem _Fill, long double _Val) const
+		{	// put formatted long double to _Dest
+		return (do_put(_Dest, _Iosbase, _Fill, _Val));
+		}
+
+	_OutIt put(_OutIt _Dest,
+		ios_base& _Iosbase, _Elem _Fill, const void *_Val) const
+		{	// put formatted void pointer to _Dest
+		return (do_put(_Dest, _Iosbase, _Fill, _Val));
+		}
+
+protected:
+	_VIRTUAL _OutIt do_put(_OutIt _Dest,
+		ios_base& _Iosbase, _Elem _Fill, _Bool _Val) const;
+
+	_VIRTUAL _OutIt do_put(_OutIt _Dest,
+		ios_base& _Iosbase, _Elem _Fill, long _Val) const;
+
+	_VIRTUAL _OutIt do_put(_OutIt _Dest,
+		ios_base& _Iosbase, _Elem _Fill, unsigned long _Val) const;
+
+ #ifdef _LONGLONG
+	_VIRTUAL _OutIt do_put(_OutIt _Dest,
+		ios_base& _Iosbase, _Elem _Fill, _LONGLONG _Val) const;
+
+	_VIRTUAL _OutIt do_put(_OutIt _Dest,
+		ios_base& _Iosbase, _Elem _Fill, _ULONGLONG _Val) const;
+ #endif /* _LONGLONG */
+
+	_VIRTUAL _OutIt do_put(_OutIt _Dest,
+		ios_base& _Iosbase, _Elem _Fill, double _Val) const;
+
+	_VIRTUAL _OutIt do_put(_OutIt _Dest,
+		ios_base& _Iosbase, _Elem _Fill, long double _Val) const;
+
+	_VIRTUAL _OutIt do_put(_OutIt _Dest,
+		ios_base& _Iosbase, _Elem _Fill, const void *_Val) const;
+
+private:
+	char *_Ffmt(char *_Fmt,
+		char _Spec, ios_base::fmtflags _Flags) const;
+
+	_OutIt _Fput(_OutIt _Dest,
+		ios_base& _Iosbase, _Elem _Fill, const char *_Buf,
+			size_t _Beforepoint, size_t _Afterpoint,
+				size_t _Trailing, size_t _Count) const;
+
+	char *_Ifmt(char *_Fmt,
+		const char *_Spec, ios_base::fmtflags _Flags) const;
+
+	_OutIt _Iput(_OutIt _Dest,
+		ios_base& _Iosbase, _Elem _Fill, char *_Buf, size_t _Count) const;
+
+	_OutIt _Put(_OutIt _Dest,
+		const _Elem *_Ptr, size_t _Count) const;
+
+	_OutIt _Putc(_OutIt _Dest,
+		const char *_Ptr, size_t _Count) const;
+
+	_OutIt _Putgrouped(_OutIt _Dest,
+		const char *_Ptr, size_t _Count, _Elem _Kseparator) const;
+
+	_OutIt _Rep(_OutIt _Dest,
+		_Elem _Ch, size_t _Count) const;
+	};
+
+		// STATIC num_put::id OBJECT
+template<class _Elem,
+	class _OutIt>
+	locale::id num_put<_Elem, _OutIt>::id;
+
+_STD_END
+#endif /* _XLOCNUM_ */
+
+/*
+ * Copyright (c) 1992-2006 by P.J. Plauger.  ALL RIGHTS RESERVED.
+ * Consult your license regarding permissions and restrictions.
+V5.01:1566 */

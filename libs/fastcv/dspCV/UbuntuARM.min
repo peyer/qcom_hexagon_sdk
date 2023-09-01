@@ -1,0 +1,6 @@
+BUILD_COPIES = \
+   inc/dspCV.idl \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

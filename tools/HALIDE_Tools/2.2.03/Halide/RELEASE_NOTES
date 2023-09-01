@@ -1,0 +1,222 @@
+[*======================= COPYRIGHT NOTICE ======================*]
+[* Copyright 2018 QUALCOMM Incorporated.                         *]
+[* All rights reserved.                                          *]
+[*                                                               *]
+[* All data and information contained in or disclosed by this    *]
+[* document is confidental and proprietary information of        *]
+[* QUALCOMM Incorporated and all rights therein are expressly    *]
+[* reserved. By accepting this material the recipient agrees     *]
+[* that this material and the information contained therein is   *]
+[* held in confidence and in trust and will not be used, copied, *]
+[* reproduced in whole or in part, nor its contents revealed in  *]
+[* any manner to others without the express written permission   *]
+[* of QUALCOMM.                                                  *]
+[*===============================================================*]
+
+Halide changes in Halide 2.2.03
+===============================
+- Update Example build scripts so that they work with Android NDK r19. This now
+  means that Android NDK r19 or later is required to run the Examples. There are
+  other changes too that related to fixing paths to headers and libs inside the SDK.
+- Fix a bug that was causing device-standalone mode to fail on Windows.
+- Add more ubwcdma (device-standalone) examples.
+- Fix the build of the camera pipe apk.
+
+Halide changes in Halide 2.2.02
+===============================
+- Update the prebuilds for the halide runtime for Hexagon SDK 3.5.0/Hexagon Tools 8.3.03 or later.
+- Fix the standalone simulator examples
+
+This release needs a minimum of Hexagon SDK 3.5.0 or Hexagon Tools 8.3.03
+
+Halide changes in Halide 2.2.01
+===============================
+- Support for Unsigned PD
+  - You do not need to sign your Halide offload pipeline anymore
+    This is supported on SDM8150 and later only. For more information
+    see documentation in the Hexagon SDK (3.4.2 and later)
+  To use this feature in device offload mode, call the following function at
+  the very beginning of your program before any call into the Halide runtime
+  (eg. device_malloc, halide_hexagon_set_performance_mode(), etc)
+
+      halide_hexagon_init_unsigned_mode(NULL);
+
+- Improved support for using intermediate stages to be stored in VTCM.
+  - This change means that we no longer need to allocate full aligned pages
+    in VTCM for buffers that do not do scatters and gathers.
+
+
+Halide changes in Halide 2.2
+===============================
+- Support for Vector Tightly Coupled Memory(VTCM)
+  - This allows intermediate stages to be stored in fast memory.
+  - Enhanced support for vector scatter and gather using VTCM.
+- Support for Android P (memory allocation updated)
+- Support in Halide for the instrumentation of the Halide pipeline
+  with Sysmon Markers* around Halide Funcs/stages*
+- Beta support for UBWCDMA for read (from DDR) and write (to DDR)**
+- Miscellaneous stability and performance improvements
+
+* -  For more about how to have Sysmon Markers generated in your code, refer to the
+"Halide for HVX User Guide". To learn about Sysmon Markers, refer to the Hexagon SDK documentation.
+** - Supported on SM8150 on its Compute DSP (cDSP) and requiring Hexagon SDK 3.4.2(or later).
+
+*****
+libHalide.so in Halide 2.2 is built using g++ 4.8.4. We recommend using the same version of g++
+when compiling your Halide generators. If, however, you are not able to move to this version, but have
+a version of g++ 5.1 or later then make sure your generator defines the following macro to 0 before
+incluing any header files.
+
+         #define _GLIBCXX_USE_CXX11_ABI 0
+
+*****
+Halide changes in Halide 2.1.04
+===============================
+Add flag to enable malloc tracing via API callable from host
+  enabled via halide_hexagon_set_malloc_tracing(NULL, [0,1,2]
+    0 => off
+    1 => start and end
+    2 => all mallocs (large amount of output)
+
+Provide API for calls to hap_mem_grow_size
+    const long long int grow_min = 256*1024*1024;
+    halide_hexagon_mem_set_grow_size(NULL, grow_min, 0x7fffffff);
+
+Support user controllable error enums for halide runtime crash on null deref
+  Example:
+  sets 2 errors to be null deref'ed.
+    int err_list[] = {halide_error_code_out_of_memory, halide_error_code_copy_to_host_failed, 0};
+    (void) halide_hexagon_set_error_fault_mask(NULL, false, err_list);
+  Enables all errors by setting 2nd arg to true, 3rd arg ignored in this case
+    (void) halide_hexagon_set_error_fault_mask(NULL, true, err_list);
+
+Use dlopen(lib[ca]dsprpc.so) approach instead of stat, concerns about Android P and security.
+Fix hexagon_profile lib generation and message on how to run.
+Add support for using libion.so if it exists at runtime.
+    First try old ioctl approach, then do a malloc/free.
+    if this fails, try the new libions.so approach.
+
+Support for Android P where libcdsprc_system.so now exists. 
+Offload mode will attempt to open this library before opening libcdsprpc.so
+
+
+Halide changes in Halide 2.1.03
+===============================
+Added optional last parameter to the two set_performance API's to allow disable of DCVS
+To disable DCVS, specify false for the dcvs_enable parameter.
+
+    extern int halide_hexagon_set_performance_mode(void *user_context, halide_hexagon_power_mode_t mode, bool dcvs_enable=true);
+    extern int halide_hexagon_set_performance(void *user_context, halide_hexagon_power_t *perf, bool dcvs_enable=true);
+
+Added user callable API to acquire or cleanup ION file descriptors.
+
+    #include "HalideRuntimeHexagonHost.h"
+    extern void halide_hexagon_cleanup_ion_fd();
+    extern void halide_hexagon_acquire_ion_fd();
+
+Delete the signed file after its used in module signing
+Use the dynamic program header to find the SONAME to support signed modules.
+Fix windows HL_HEXAGON_CODE_SIGNER issue.
+Reverted previous fix for leaked ion file descriptor issue.
+
+Halide changes in Halide 2.1.02
+===============================
+Corrected a leaked ion file descriptor issue.
+
+Halide changes in Halide 2.1.01
+===============================
+Added support for statically signing shared objects.
+
+Halide changes in Halide 2.1   
+===============================
+Added support for Hexagon/HVX v65 instructions
+  in this release generation of vgather or vscatter is off by default
+  to enable v65 code generation, add -hvx_v65 to the HL_TARGET
+  to enable v65 gather generation, add -hvx_v65-hvx_gather
+  to enable v65 scatter generation, add -hvx_v65-hvx_scatter
+  to enable v65 gather and scatter generation, add -hvx_v65-hvx_gather-hvx_scatter
+  the size of the allocated VCTM is 65536 per thread (max 4 threads)
+    can be changed at compile time by setting HL_VTCM_SIZE to a smaller integer
+    export HL_VTCM_SIZE=32768
+    the maximum size for VTCM in v65 is 262144, (single threaded)
+
+Improved profiling support on target by calling HAP_timers and displaying
+the information when -profile is added to the HL_TARGET
+  When -profile is added to HL_TARGET, the overall time spent executing
+  the pipeline on the Hexagon using HAP_perf_get_time_us() is now also
+  reported via the mini-dm interface.
+
+Added the ability to set Halide Hexagon thread priority with:
+   int halide_hexagon_set_thread_priority(void *user_context, int priority);
+
+    Valid priority values range from 1 to 255
+    Smaller number specifies a higher priority
+    The highest priority for a user thread is 1, 0 reserved for OS usage
+    If not set, Halide thread priority will default to 100
+    This should be called before running a pipeline.
+
+Improved schedules in hexagon_benchmarks ~12%
+  Also increased image size to 4k, 3840x2160, was 1024x1024
+
+General Performance improvements for Hexagon/HVX
+
+Known issues:
+  Nested parallelism has exhibited abort issues on device, and should be
+  avoided when  using Halide 2.1, this will be resolved in the next release.
+
+
+Halide changes in Halide 2.0.02
+===============================
+Fixed HVX64 byte acquire problems on SDM670 and SDM845
+
+Added SDK specific setup-env.* scripts/cmd
+
+Halide changes in Halide 2.0.01
+===============================
+Enabled DCVS_v2 power API's for SDM835, SDM660, and later
+Fix offload profiling to handle libhalide_shared_runtime.so
+
+Halide changes in Halide 2.0
+============================
+
+Notes:
+Starting from this release, the Halide installer is structured as a
+standalone installer separate from the Hexagon LLVM tools and
+intended to work with the Hexagon SDK and interoperate
+across 8.0.X , 8.1.X, and 8.2.X Hexagon_Tools
+
+We recommend using Hexagon SDK 3.3.0 or later with this release.
+
+We recommend using g++ version 4.8.4 when building Halide generators.
+
+Changes (Since July 14th release 8.1.04):
+- Added support for hexagon print_when()
+- Parallel standalone support on device is still not supported
+  in both simulator-offload simulator-standalone modes
+- Target for Halide pipelines in simulator-standalone mode need
+  to change from using qurt to using "noos":
+  "hexagon-32-qurt-hvx_128" -> "hexagon-32-noos-hvx_128"
+- Fix for prefetch in some cases where it produced unresolved symbol
+- Initial OpenCL support for the Adreno GPU
+- Support for vprint() directive to dump vector register content
+- Generator syntax has changed:
+  HALIDE_REGISTER_GENERATOR second argument should no longer be quoted
+  Was:
+    HALIDE_REGISTER_GENERATOR(class_name, “registry_name”);
+  Now:
+    HALIDE_REGISTER_GENERATOR(class_name, registry_name);
+- Need -g <generator name> to explicitly specify the generator name
+  [even if it has 1 generator class only] while running the generator file.
+  For eg: Old:
+    bin/pipeline_generator -o ./bin -e o,h,html,bitcode,assembly -f pipeline_hvx128 target=hexagon-32-qurt-hvx_128
+  New:
+    bin/pipeline_generator -o ./bin -e o,h,html,bitcode,assembly -g MyPipeline -f pipeline_hvx128 target=hexagon-32-qurt-hvx_128
+- Separate versions of libhalide_hexagon_host.so explicitly for CDSP and ADSP
+   Halide/lib/arm-32-android/cdsp/libhalide_hexagon_host.so
+   Halide/lib/arm-64-android/cdsp/libhalide_hexagon_host.so
+   Halide/lib/arm-32-android/adsp/libhalide_hexagon_host.so
+   Halide/lib/arm-64-android/adsp/libhalide_hexagon_host.so
+
+Support:   
+For Halide support, please contact halide@quicinc.com
+

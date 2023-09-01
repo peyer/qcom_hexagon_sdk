@@ -1,0 +1,4 @@
+-rsc
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.a
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/audio/capi_v2_utils_props/hexagon_Debug_dynamic_toolv83_v66/ship/capi_v2_utils_props.a

@@ -1,0 +1,33 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Startup Script for Trace32
+;  1) Configure for "HexagonV60" processor
+;  2) Start the simulator and T32 is attached to it
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Input argument = Hexagon ELF file that is simulated
+entry &program_name &cpu_arch
+
+; Select a CPU
+system.CPU HexagonV60
+; Configure the options for Hexagon simulator before starting
+system.mcdconfig simargs=-m&cpu_arch --timing_nodbc &program_name
+; Start the simulator and T32 is attached to it
+system.mode attach
+
+; load the ELF file symbols
+data.load.elf &program_name /nocode /noclear /nomap
+b.s event_handle_trap0 /ONCHIP
+TERM.method ANGEL event_handle_trap0
+TERM.mode string
+TERM.scroll on
+TERM.gate
+
+; set break points at main() and exit
+break.set main
+break.set \Global\exit
+mode.mix
+do cmm/mywin.cmm
+go
+
+; End the cmm script
+end

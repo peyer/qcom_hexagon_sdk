@@ -1,0 +1,955 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><style type="text/css">
+.html2d { position: relative; }
+.html2d div { position: absolute; border-width: 0; border-style: solid; }
+.html2d div div { position: absolute; border-width: 0; border-style: solid; }
+
+</style><title>Voice examples</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="../images/sidebar_top.jpg"></top><script src="../scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, true)"><input id="searchButton" onclick="postFunction(true)" type="button" value="Search"></form><p>
+<a href="../index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="../feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="../hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="../images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="../hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="../images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="../images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="../Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="../Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="../Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="../Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="../Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="../Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="../HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="../Audio/Applications.html">Audio</a>
+</p><p>
+<a href="../Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="../Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="../FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="../Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="../Voice/Applications.html">Voice</a>
+</p><p>
+<a href="../Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="../APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="../APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="../APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="../APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="../Audio/Examples.html">Audio</a>
+</p><p>
+<a href="../Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="../Examples_Common.html">Common</a>
+</p><p>
+<a href="../Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="../Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="../Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="../Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="../CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="../Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="../Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="../Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="../Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="../Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="../Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="../Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="../Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="../Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="../Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="../Tools_Signing.html">Signing</a>
+</p><p>
+<a href="../Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="../Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="../FAQ_Common.html">Common</a>
+</p><p>
+<a href="../FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="../FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="../FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="../Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="../Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="../Support_Contact.html">Contact</a>
+</p><center><img src="../images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h1>
+<a name="Voice%20examples"></a>Voice examples
+</h1><div class="toc"><div class="tocLevel"><a href="#Overview">Overview</a></div><div class="tocLevel"><a href="#Building%20-%20architecture">Building - architecture</a><div class="tocLevel"><a href="#CAPI%20V2">CAPI V2</a></div></div><div class="tocLevel"><a href="#Building%20CAPI%20V2%20modules">Building CAPI V2 modules</a><div class="tocLevel"><a href="#Eclipse%20based">Eclipse based</a></div><div class="tocLevel"><a href="#Command%20line%20interface">Command line interface</a></div></div><div class="tocLevel"><a href="#Moving%20ahead">Moving ahead</a><div class="tocLevel"><a href="#Unit%20testing">Unit testing</a></div></div></div><h2>
+<a name="Overview"></a>Overview
+</h2><p>
+The Hexagon SDK contains projects which are intended to serve as templates for creating new voice custom pp modules and topology definitions. Voice Tx and Rx processing customization is supported with dynamic loading of capi v2 modules.
+</p><ul class="indent" type="circle">
+<li>
+<p>
+CAPI V2 - Wrapper around a Post/Pre processing algorithm.
+</p><div class=diagram>
+<div class="html2d art" style="width:208px;height:176px;line-height:16px;white-space:nowrap;font-size:12.48px">
+<div class="rect round" style="border-width:3px;left:3px;top:7px;right:2px;bottom:6px"></div>
+<div class="rect round" style="border-width:3px;left:27px;top:119px;right:18px;bottom:22px"></div>
+<div class="rect round" style="border-width:3px;left:27px;top:71px;right:18px;bottom:70px"></div>
+<div class="rect round" style="border-width:3px;left:27px;top:23px;right:18px;bottom:118px"></div>
+<div style="text-align:center;left:48px;top:32px;right:40px;bottom:128px">Voice Framework</div>
+<div style="text-align:center;left:48px;top:80px;right:40px;bottom:80px">CAPI V2 Wrapper</div>
+<div style="text-align:center;left:48px;top:128px;right:40px;bottom:32px">Core  Algorithm</div>
+</div>
+</div>
+
+</li>
+</ul><p>
+The SDK contains the following examples (<i>note that some of these are not currently working on some targets. Please refer to the <a href="../feature_matrix.html">feature matrix</a> for details</i>):
+</p><ul type="circle">
+<li>
+<p>
+<a href="capi_v2_gain_walkthrough.html">capi_v2_gain</a> - Example CAPI_V2 based PP module, applies a gain to PCM data
+</p>
+</li><li>
+<p>
+capi_v2_gain_32ch - Example CAPI_V2 based pp module, this example explains on the usage of multi-channel module implementation, currently framework supports upto 32 channels
+</p>
+</li><li>
+<p>
+capi_v2_gain_cpp - Example CAPI_V2 based pp module, this example explains the usage of C++14 functionaliy in CAPI_V2 module. This is the first module which supports C++14 and runs its unit-test on QURT instead of running standalone.
+</p>
+</li><li>
+<p>
+capi_v2_passthru - Example CAPI_V2 based pp module, basically an empty shell and has no effect on the PCM data
+</p>
+</li><li>
+<p>
+capi_v2_dummy_ecns - Example CAPI_V2 based dummy ECNS(Echo Cancellation and Noise Suppression) module on Voice Path. This example describes, how to integrate a custom ECNS module on Voice path and supports single, dual and quad microphone input scenarios. Please run the unit test for the example followed by on target verification. Please refer capi_v2_dummy_ecns for implementation details.
+</p>
+</li><li>
+<p>
+capi_v2_voice_imc - Example CAPI_V2 for Inter Module communication between Tx and Rx modules on Voice Path . This algoritm shows an important feature of CAPIv2 interface - Intermodule communication between Voice modules. There are two modules in this example - one running on TX path and the other running on RX path. Please run the unit test for the example followed by target verification. Please refer capi_v2_voice_imc for implementation details.
+</p>
+</li>
+</ul><p>
+Libraries may contain one or more pp modules. The examples in this SDK are currently built as different libraries but there is no reason they cannot be combined into one.
+</p><h2>
+<a name="Building%20-%20architecture"></a>Building - architecture
+</h2><h3>
+<a name="CAPI%20V2"></a>CAPI V2
+</h3><p>
+<a href="../Environments_Build%20System.html#Building%20a%20make.d%20project">Building a make.d project</a> provides information on how to build the SDK examples and how to interpret and modify the makefiles.
+</p><ul type="circle">
+<li>
+<p>
+Create a module test file
+</p><ul type="circle">
+<li>
+<p>
+The module test file loads the library and calls the test framework. See <a href="../Platforms_Simulator.html#Test%20sources">Test sources</a> for more information
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Create a test configuration file
+</p><ul type="circle">
+<li>
+<p>
+The test configuration file exercises the module. See <a href="TestingVoiceUnitTests.html#Test%20configuration%20file">Test configuration file</a> for more information
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Build the library and the <a href="../Platforms_Simulator.html#Overview">q test</a> executable
+</p>
+</li>
+</ul><div class=diagram>
+<div class="html2d art" style="width:464px;height:224px;line-height:16px;white-space:nowrap;font-size:12.48px">
+<div class="rect round" style="border-width:3px;left:323px;top:103px;right:10px;bottom:86px"></div>
+<div class="rect round" style="border-width:3px;left:155px;top:183px;right:18px;bottom:6px"></div>
+<div class="rect round" style="border-width:3px;left:163px;top:7px;right:154px;bottom:182px"></div>
+<div class="rect round" style="border-width:3px;left:3px;top:7px;right:354px;bottom:182px"></div>
+<div class="rect round" style="border-width:3px;left:323px;top:55px;right:10px;bottom:134px"></div>
+<div class="rect round" style="border-width:3px;left:3px;top:183px;right:370px;bottom:6px"></div>
+<div class="rect round" style="border-width:3px;left:323px;top:7px;right:2px;bottom:182px"></div>
+<div class=dline style="border-top-width:2px;left:263px;top:23px;right:191px;bottom:199px;line-height:0"></div>
+<div style="border-right: 4px solid transparent;border-left: 4px solid transparent;border-top-width: 10.5px;left:384px;top:165.5px;line-height:0"></div>
+<div class=line style="border-left-width:2px;left:387px;top:143px;right:75px;bottom:51px"></div>
+<div class=dline style="border-top-width:2px;left:407px;top:119px;right:47px;bottom:103px;line-height:0"></div>
+<div style="border-left-width: 10.5px;border-bottom: 4px solid transparent;border-top: 4px solid transparent;left:133.5px;top:196px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:95px;top:199px;right:323px;bottom:23px;line-height:0"></div>
+<div class=dline style="border-top-width:2px;left:431px;top:23px;right:23px;bottom:199px;line-height:0"></div>
+<div style="border-right: 4px solid transparent;border-left: 4px solid transparent;border-top-width: 10.5px;left:224px;top:165.5px;line-height:0"></div>
+<div class=line style="border-left-width:2px;left:227px;top:47px;right:235px;bottom:51px"></div>
+<div class=dline style="border-top-width:2px;left:63px;top:23px;right:391px;bottom:199px;line-height:0"></div>
+<div class=dline style="border-top-width:2px;left:407px;top:71px;right:47px;bottom:151px;line-height:0"></div>
+<div style="border-right: 4px solid transparent;border-left: 4px solid transparent;border-top-width: 10.5px;left:48px;top:165.5px;line-height:0"></div>
+<div class=line style="border-left-width:2px;left:51px;top:47px;right:411px;bottom:51px"></div>
+<div style="text-align:center;left:12px;top:16px;right:404px;bottom:192px">module</div>
+<div style="left:72px;top:16px;right:384px;bottom:192px">o</div>
+<div style="text-align:center;left:172px;top:16px;right:204px;bottom:192px">module_test</div>
+<div style="left:272px;top:16px;right:184px;bottom:192px">o</div>
+<div style="text-align:center;left:332px;top:16px;right:36px;bottom:192px">test_capi_v2</div>
+<div style="text-align:center;left:444px;top:16px;right:12px;bottom:192px">o</div>
+<div style="text-align:center;left:332px;top:64px;right:60px;bottom:144px">test_main</div>
+<div style="left:416px;top:64px;right:40px;bottom:144px">o</div>
+<div style="text-align:center;left:332px;top:112px;right:60px;bottom:96px">test_util</div>
+<div style="left:416px;top:112px;right:40px;bottom:96px">o</div>
+<div style="text-align:center;left:16px;top:192px;right:384px;bottom:16px">module.a</div>
+<div style="text-align:center;left:268px;top:192px;right:132px;bottom:16px">module_q</div>
+</div>
+</div>
+<ul type="circle">
+<li>
+<p>
+Below shown diagram takes capi_v2_gain as an example
+</p>
+</li>
+</ul><div class=diagram>
+<div class="html2d art" style="width:496px;height:224px;line-height:16px;white-space:nowrap;font-size:12.48px">
+<div class="rect round" style="border-width:3px;left:179px;top:7px;right:154px;bottom:182px"></div>
+<div class="rect round" style="border-width:3px;left:355px;top:103px;right:10px;bottom:86px"></div>
+<div class="rect round" style="border-width:3px;left:3px;top:183px;right:362px;bottom:6px"></div>
+<div class="rect round" style="border-width:3px;left:355px;top:55px;right:10px;bottom:134px"></div>
+<div class="rect round" style="border-width:3px;left:355px;top:7px;right:2px;bottom:182px"></div>
+<div class="rect round" style="border-width:3px;left:3px;top:7px;right:354px;bottom:182px"></div>
+<div class="rect round" style="border-width:3px;left:195px;top:183px;right:10px;bottom:6px"></div>
+<div class=dline style="border-top-width:2px;left:111px;top:23px;right:375px;bottom:199px;line-height:0"></div>
+<div class=dline style="border-top-width:2px;left:439px;top:119px;right:47px;bottom:103px;line-height:0"></div>
+<div style="border-right: 4px solid transparent;border-left: 4px solid transparent;border-top-width: 10.5px;left:48px;top:165.5px;line-height:0"></div>
+<div class=line style="border-left-width:2px;left:51px;top:47px;right:443px;bottom:51px"></div>
+<div style="border-right: 4px solid transparent;border-left: 4px solid transparent;border-top-width: 10.5px;left:408px;top:165.5px;line-height:0"></div>
+<div class=line style="border-left-width:2px;left:411px;top:143px;right:83px;bottom:51px"></div>
+<div style="border-left-width: 10.5px;border-bottom: 4px solid transparent;border-top: 4px solid transparent;left:173.5px;top:196px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:135px;top:199px;right:315px;bottom:23px;line-height:0"></div>
+<div style="border-right: 4px solid transparent;border-left: 4px solid transparent;border-top-width: 10.5px;left:224px;top:165.5px;line-height:0"></div>
+<div class=line style="border-left-width:2px;left:227px;top:47px;right:267px;bottom:51px"></div>
+<div class=dline style="border-top-width:2px;left:319px;top:23px;right:167px;bottom:199px;line-height:0"></div>
+<div class=dline style="border-top-width:2px;left:463px;top:23px;right:23px;bottom:199px;line-height:0"></div>
+<div class=dline style="border-top-width:2px;left:439px;top:71px;right:47px;bottom:151px;line-height:0"></div>
+<div style="text-align:center;left:12px;top:16px;right:388px;bottom:192px">capi_v2_gain</div>
+<div style="text-align:center;left:124px;top:16px;right:364px;bottom:192px">o</div>
+<div style="text-align:center;left:184px;top:16px;right:176px;bottom:192px">capi_v2_gain_test</div>
+<div style="text-align:center;left:328px;top:16px;right:160px;bottom:192px">o</div>
+<div style="text-align:center;left:364px;top:16px;right:36px;bottom:192px">test_capi_v2</div>
+<div style="text-align:center;left:476px;top:16px;right:12px;bottom:192px">o</div>
+<div style="text-align:center;left:364px;top:64px;right:60px;bottom:144px">test_main</div>
+<div style="left:448px;top:64px;right:40px;bottom:144px">o</div>
+<div style="text-align:center;left:364px;top:112px;right:60px;bottom:96px">test_util</div>
+<div style="left:448px;top:112px;right:40px;bottom:96px">o</div>
+<div style="text-align:center;left:12px;top:192px;right:372px;bottom:16px">capi_v2_gain.a</div>
+<div style="text-align:center;left:284px;top:192px;right:100px;bottom:16px">capi_v2_gain_q</div>
+</div>
+</div>
+<ul type="circle">
+<li>
+<p>
+Test the new CAPI V2 module
+</p><ul type="circle">
+<li>
+<p>
+A module can be tested as a standalone unit in the simulation environment
+</p>
+</li><li>
+<p>
+The test configuration file defines the test commands to be executed
+</p>
+</li>
+</ul>
+</li>
+</ul><p>
+The following diagram shows the structure of an CAPI V2 module q test.
+</p><div class=diagram>
+<div class="html2d art" style="width:496px;height:464px;line-height:16px;white-space:nowrap;font-size:12.48px">
+<div class=rect style="border-width:3px;left:3px;top:135px;right:394px;bottom:294px"></div>
+<div class="rect round" style="border-width:3px;left:155px;top:7px;right:178px;bottom:6px"></div>
+<div class="rect round" style="border-width:3px;left:187px;top:55px;right:210px;bottom:374px"></div>
+<div class="rect round" style="border-width:3px;left:187px;top:295px;right:194px;bottom:134px"></div>
+<div class="rect round" style="border-width:3px;left:171px;top:215px;right:202px;bottom:214px"></div>
+<div class="rect round" style="border-width:3px;left:179px;top:135px;right:202px;bottom:294px"></div>
+<div class=rect style="border-width:3px;left:339px;top:215px;right:66px;bottom:214px"></div>
+<div class=rect style="border-width:3px;left:3px;top:295px;right:394px;bottom:134px"></div>
+<div class="rect round" style="border-width:3px;left:379px;top:295px;right:2px;bottom:134px"></div>
+<div class="rect round" style="border-width:3px;left:195px;top:407px;right:202px;bottom:22px"></div>
+<div style="border-right: 4px solid transparent;border-left: 4px solid transparent;border-bottom-width: 10.5px;left:48px;top:176px;line-height:0"></div>
+<div class=line style="border-bottom-width:2px;border-left-width:2px;-webkit-border-bottom-left-radius:8px;-moz-border-radius-bottomleft:8px;border-bottom-left-radius:8px;left:51px;top:179px;right:327px;bottom:231px"></div>
+<div style="border-left-width: 10.5px;border-bottom: 4px solid transparent;border-top: 4px solid transparent;left:173.5px;top:308px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:103px;top:311px;right:315px;bottom:151px;line-height:0"></div>
+<div style="border-right: 4px solid transparent;border-left: 4px solid transparent;border-top-width: 10.5px;left:256px;top:389.5px;line-height:0"></div>
+<div class=line style="border-left-width:2px;left:259px;top:335px;right:235px;bottom:67px"></div>
+<div style="border-right-width: 10.5px;border-bottom: 4px solid transparent;border-top: 4px solid transparent;left:296px;top:228px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:299px;top:231px;right:159px;bottom:231px;line-height:0"></div>
+<div style="border-right: 4px solid transparent;border-left: 4px solid transparent;border-top-width: 10.5px;left:240px;top:117.5px;line-height:0"></div>
+<div class=line style="border-left-width:2px;left:243px;top:95px;right:251px;bottom:339px"></div>
+<div style="border-right-width: 10.5px;border-bottom: 4px solid transparent;border-top: 4px solid transparent;left:104px;top:148px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:107px;top:151px;right:319px;bottom:311px;line-height:0"></div>
+<div style="border-left-width: 10.5px;border-bottom: 4px solid transparent;border-top: 4px solid transparent;left:365.5px;top:308px;line-height:0"></div>
+<div class=line style="border-top-width:2px;left:303px;top:311px;right:123px;bottom:151px;line-height:0"></div>
+<div style="border-right: 4px solid transparent;border-left: 4px solid transparent;border-top-width: 10.5px;left:240px;top:197.5px;line-height:0"></div>
+<div class=line style="border-left-width:2px;left:243px;top:175px;right:251px;bottom:259px"></div>
+<div style="border-right: 4px solid transparent;border-left: 4px solid transparent;border-bottom-width: 10.5px;left:216px;top:336px;line-height:0"></div>
+<div class=line style="border-left-width:2px;left:219px;top:339px;right:275px;bottom:63px"></div>
+<div style="border-right: 4px solid transparent;border-left: 4px solid transparent;border-top-width: 10.5px;left:240px;top:277.5px;line-height:0"></div>
+<div class=line style="border-left-width:2px;left:243px;top:255px;right:251px;bottom:179px"></div>
+<div style="text-align:center;left:184px;top:16px;right:208px;bottom:432px">module q test</div>
+<div style="text-align:center;left:200px;top:64px;right:224px;bottom:384px">test_main</div>
+<div style="text-align:center;left:16px;top:144px;right:408px;bottom:304px">test_util</div>
+<div style="text-align:center;left:192px;top:144px;right:216px;bottom:304px">module_test</div>
+<div style="text-align:center;left:184px;top:224px;right:216px;bottom:224px">test_capi_v2</div>
+<div style="text-align:center;left:352px;top:224px;right:80px;bottom:224px">cfg file</div>
+<div style="text-align:center;left:12px;top:304px;right:404px;bottom:144px">Input File</div>
+<div style="text-align:center;left:196px;top:304px;right:204px;bottom:144px">capi_v2_test</div>
+<div style="text-align:center;left:392px;top:304px;right:16px;bottom:144px">Output File</div>
+<div style="text-align:center;left:212px;top:416px;right:220px;bottom:32px">module.a</div>
+</div>
+</div>
+<h2>
+<a name="Building%20CAPI%20V2%20modules"></a>Building CAPI V2 modules
+</h2><h3>
+<a name="Eclipse%20based"></a>Eclipse based
+</h3><ol type="1">
+<li>
+<p>
+Import the project from specific example to be tested. Import the project as Common Library project. As an example, capi_v2_gain is used
+</p><pre style="font-size: 83%">File -&gt; Import -&gt; Hexagon C/C++
+Project Type : Common Library (.lib/.so)
+Project location: &lt;HEXAGON_SDK_ROOT&gt;\examples\voice\capi_v2_gain\eclipse\capi_v2_gain
+</pre><left><img alt="<Image not found&gt;" src="images/capi_v2_gain_eclipse_import.jpg"></left><p>
+Ensure that project path, SDK root and Tools root are set appropriately.
+</p>
+</li><li>
+<p>
+Build the project
+</p><pre>Right click on project -&gt; Build Configuration -&gt; Build all
+</pre><p>
+This project builds Dynamic and Static libraries in debug and release mode. Verify all libraries to be built.
+</p><p>
+NOTE : Snapshot may vary slightly based on version of Eclipse plugins used.
+</p>
+</li>
+</ol><h3>
+<a name="Command%20line%20interface"></a>Command line interface
+</h3><p>
+Building and testing a library is clubbed together in a single command. The steps to generate a library are covered in command line based unit testing .
+</p><h2>
+<a name="Moving%20ahead"></a>Moving ahead
+</h2><h3>
+<a name="Unit%20testing"></a>Unit testing
+</h3><p>
+To unit test an CAPI V2 module click <a href="TestingVoiceUnitTests.html">here</a>
+</p><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

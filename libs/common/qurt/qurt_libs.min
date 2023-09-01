@@ -1,0 +1,108 @@
+ifdef NEW_QURT_SIMULATION
+INCDIRS += $(QURT_INCDIRS)
+EXE_LD_FLAGS = $(QURT_EXE_LD_FLAGS)
+
+debug: QEXE_EXEC
+else
+
+ifeq ($(V_ARCH),$(filter $(V_ARCH),v65 v66))
+# load user module into user pd (runelf.pgn)
+
+_QURT_INSTALL_DIR := $(dir $(lastword $(MAKEFILE_LIST)))/compute$(V_ARCH)
+
+RTOS_DIR = $(_QURT_INSTALL_DIR)
+QCC_DIR = $(HEXAGON_QCC_DIR)/$(V_ARCH)/G0
+TARGET_DIR = $(HEXAGON_LIB_DIR)/$(V_ARCH)/G0
+
+INCDIRS += $(_QURT_INSTALL_DIR)/include
+INCDIRS += $(_QURT_INSTALL_DIR)/include/qurt
+INCDIRS += $(_QURT_INSTALL_DIR)/include/posix
+
+EXE_LD_FLAGS = \
+  -m$(V_ARCH) \
+  -g \
+  -nodefaultlibs \
+  -nostdlib \
+  $(LD_FLAG)--section-start \
+  $(LD_FLAG).interp=0x23000000 \
+  $(LD_FLAG)--dynamic-linker= \
+  $(LD_FLAG)--force-dynamic \
+  $(LD_FLAG)-E \
+  $(LD_FLAG)-z \
+  $(LD_FLAG)muldefs \
+  $(LD_FLAG)--whole-archive
+
+QURT_INIT_LIBS += $(TARGET_DIR)/init.o
+
+QURT_LINK_LIBS += $(RTOS_DIR)/lib/crt1.o
+QURT_LINK_LIBS += $(RTOS_DIR)/lib/libqurt.a
+QURT_LINK_LIBS += $(TARGET_DIR)/libc.a
+QURT_LINK_LIBS += $(QCC_DIR)/libqcc.a
+QURT_LINK_LIBS += $(TARGET_DIR)/libhexagon.a
+QURT_LINK_LIBS += $(RTOS_DIR)/lib/libqurtcfs.a
+QURT_LINK_LIBS += $(RTOS_DIR)/lib/libtimer.a
+QURT_LINK_LIBS += $(RTOS_DIR)/lib/libposix.a
+
+QURT_FINI_LIBS += $(TARGET_DIR)/fini.o
+
+QURT_LIBS += $(QURT_INIT_LIBS)
+QURT_LIBS += $(QURT_LINK_LIBS)
+QURT_LIBS += $(QURT_FINI_LIBS)
+
+all:$(V)/osam.cfg $(V)/q6ss.cfg 
+
+ifeq (WinNT,$(UNAME_S))
+$(V)/osam.cfg:
+	"mkdir" -p $(@D)
+	@echo $(RTOS_DIR)/debugger/Win/qurt_model.dll > $@
+else
+$(V)/osam.cfg:
+	"mkdir" -p $(@D)
+	@echo $(RTOS_DIR)/debugger/lnx64/qurt_model.so > $@
+endif
+
+ifeq (WinNT,$(UNAME_S))
+$(V)/q6ss.cfg:
+	"mkdir" -p $(@D)
+	@echo $(HEXAGON_ISS_DIR)/qtimer.dll --csr_base=0xFC900000 --irq_p=1 --freq=19200000 --cnttid=1 > $@
+	@echo $(HEXAGON_ISS_DIR)/l2vic.dll 32 0xFC910000 >> $@
+else
+$(V)/q6ss.cfg:
+	"mkdir" -p $(@D)
+	@echo $(HEXAGON_ISS_DIR)/qtimer.so --csr_base=0xFC900000 --irq_p=1 --freq=19200000 --cnttid=1 > $@
+	@echo $(HEXAGON_ISS_DIR)/l2vic.so 32 0xFC910000 >> $@
+endif
+
+QEXE_EXEC = $(SIM) -m$(SIM_V_ARCH) --simulated_returnval#
+QEXE_EXEC += --usefs $(V)#
+
+QEXE_EXEC += --pmu_statsfile $(V)/pmu_stats.txt
+
+QEXE_EXEC += $(QEXE_SIM_OPTIONS)
+
+QEXE_EXEC += --cosim_file $(V)/q6ss.cfg
+
+QEXE_EXEC += --l2tcm_base 0xd800
+QEXE_EXEC += --rtos $(V)/osam.cfg $(RTOS_DIR)/sdksim_bin/runelf.pbn -- 
+QEXE_EXEC += $1#
+QEXE_EXEC += $(QEXE_CMD_OPTIONS)
+
+debug: QEXE_EXEC
+
+else # not v65/v66
+
+NO_QEXE = 1
+
+_QURT_INSTALL_DIR := $(dir $(lastword $(MAKEFILE_LIST)))/ADSP$(V_ARCH)MP
+
+INCDIRS += $(_QURT_INSTALL_DIR)/include
+INCDIRS += $(_QURT_INSTALL_DIR)/include/qurt
+ifneq (1,$(filter 1,$(V_toolv72) $(V_toolv74)))
+# posix not compatible with Hexagon Tools 7.2 or 7.4
+INCDIRS += $(_QURT_INSTALL_DIR)/include/posix
+INCDIRS += $(_QURT_INSTALL_DIR)/include/posix/common
+endif
+
+endif
+
+endif

@@ -1,0 +1,147 @@
+#============================================================================
+#  Name:
+#    defines_gcc.min
+#
+#  Description:
+#    This file specifies the items necessary to build libraries using the
+#    gcc toolchain.  This file supports builds for NetBSD, Linux, and Cygwin
+#
+# Copyright (c) 2006 by QUALCOMM, Incorporated.  All Rights Reserved.
+#----------------------------------------------------------------------------
+V_TOOLCHAIN=gcc
+
+CC=gcc
+CXX=g++
+
+FEZ=size
+
+GCC_FLAGS     = -Wall -Werror -Wno-missing-braces -D__NIX
+ifneq ($(V_TARGET),cygwin)
+GCC_FLAGS+=-fPIC
+endif
+GCC_OBJ_FLAGS = -c $(GCC_FLAGS)
+GCC_MIX_FLAGS = -S $(GCC_FLAGS)
+
+GCC_OPT_FLAGS = -O2
+
+ifeq ($(V_ARCH),x86_64)
+GCC_FLAGS+=-m64#
+else
+GCC_FLAGS+=-m32#
+endif
+
+CC_NO_WARN_UNUSED_FUNCTIONS=-Wno-unused-function
+
+ifneq ($(V_FLAVOR),Release)
+GCC_OBJ_FLAGS+=-g
+endif
+
+ifneq ($(V_FLAVOR),Debug)
+ifneq ($(V_FLAVOR),Coverage)
+GCC_OBJ_FLAGS+=$(GCC_OPT_FLAGS) -fno-strict-aliasing
+endif
+endif
+
+ifeq ($(V_FLAVOR),Coverage)
+GCC_OBJ_FLAGS+= -fprofile-arcs -ftest-coverage
+LD_FLAGS+=-fprofile-arcs -ftest-coverage
+endif
+
+GCC_OBJ_FLAGS+=-D__FILENAME__=\"$(notdir $(<))\"#
+
+CXX_FLAGS=$(GCC_OBJ_FLAGS)
+CC_FLAGS=$(GCC_OBJ_FLAGS) -std=gnu99
+CXX_MIX_FLAGS=$(GCC_MIX_FLAGS)
+CC_MIX_FLAGS=$(GCC_MIX_FLAGS) -std=gnu99
+
+CC_INC=
+
+CC_INCFLAG=-I
+CC_DEFINEFLAG=-D
+CC_UNDEFINEFLAG=-U
+CC_OUTPUTFLAG=-o
+CC_MIX_OUTPUTFLAG=-o
+
+CPP=cpp
+CPP_FLAGS=-C#
+
+AR=ar
+AR_FLAGS=-rsc
+AR_OUTPUTFLAG=
+
+LD=g++
+LD_LIBDIRFLAG=-L
+LD_OUTPUTFLAG=-o #
+
+LD_LIBS=-lc -lpthread
+ifeq ($(V_TARGET),Linux)
+LD_LIBS+=-ldl -lrt
+endif
+
+ifeq ($(V_FLAVOR),Coverage)
+LD_LIBS+=-lgcov
+endif
+
+#
+# gcc requires that we put libraries behind the callers
+# (Actually, this varies with the linker.  See defines_darwin.min.)
+#
+LD_INPUTS=-Wl,"-(" $(1) -Wl,"-)" $(LD_LIBS)
+LD_FLAG=-Wl,
+
+# We want '$ORIGIN' in the rpath (which makes the dynamic loader include the
+# directory the executable lives in in the search path for shared libs), but
+# to do that we need to escape it twice: once for Make, and once for the
+# shell.  Place this in a separate LD_ORIGIN_FLAG variable to allow it to be
+# overridden per OS (see defines_darwin.min).
+LD_FLAGS+=$(LD_ORIGIN_FLAG)
+LD_ORIGIN_FLAG=-Wl,-rpath=\$$ORIGIN
+
+ifeq ($(V_ARCH),x86_64)
+LD_FLAGS+=-m64#
+else
+LD_FLAGS+=-m32#
+endif
+
+ifneq (,$(filter --hash-style=%,$(shell $(CC) -dumpspecs)))
+LD_FLAGS+=-Wl,--hash-style=both
+endif
+
+EXE_LD_FLAGS=$(LD_FLAGS)
+
+DEFS_OF=$(foreach def,$(addsuffix .def,$(call uniq,$($(call NAME_OF,$(1))_DEFS)\
+           $(foreach comp,$(call COMPONENTS_OF,$(1)),$(COMPONENT_$(comp)_DEFS)))),\
+            -Wl,--version-script=$(def))
+
+SO_LD_FLAGS=$(LD_FLAGS) -shared -Wl,-soname=$(@F)
+
+DLL_LD_FLAGS=$(SO_LD_FLAGS) $(call DEFS_OF,$(@))
+
+MOD_LD_FLAGS=$(SO_LD_FLAGS) -Wl,--no-undefined
+
+ASM=as
+ASM_OUTPUTFLAG=-o
+ASM_FLAGS=#
+APP_FLAGS=-E -P - #
+APP=$(CC)
+
+#This compiler flag ensures that we get consistent representation of floating
+#point numbers that cannot be accurately represented by IEEE 754 floating
+#point standard (such as 0.3)
+IEEE_FLOAT_CFLAG=-ffloat-store
+
+#-----------------------------------------------------------------------------
+# QEXE exec
+#-----------------------------------------------------------------------------
+QEXE_EXEC=$(call exec,$(1)) $(2)
+
+#-----------------------------------------------------------------------------
+# extensions
+#-----------------------------------------------------------------------------
+MOD_EXT=.so1#
+EXE_EXT=#
+DLL_EXT=.so#
+DLL_LIB_EXT=.so#
+
+# pull extensions
+$(call INCLUDE_MAKE_D_EXTS,defines_gcc.min)

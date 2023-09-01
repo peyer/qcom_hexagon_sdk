@@ -1,0 +1,18 @@
+# builds the static lib
+BUILD_LIBS += libqfxp 
+
+CC_FLAGS += $(MHVX_DOUBLE_FLAG)
+ASM_FLAGS += $(MHVX_DOUBLE_FLAG)
+
+INCDIRS += inc
+
+libqfxp_C_SRCS += src/qfxp 
+libqfxp_ASM_SRCS += asm_src/mathLibs
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   inc/qfxp.h \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

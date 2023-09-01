@@ -1,0 +1,41 @@
+INCDIRS += \
+   inc \
+   src \
+   $(HEXAGON_SDK_ROOT)/incs/audio
+
+LIBDIRS += $(HEXAGON_SDK_ROOT)/libs/common/a1std/ship/$(V) \
+    $(HEXAGON_SDK_ROOT)/libs/audio/voice_imc_utils/ship/$(V) \
+
+# only build the shared object if dynamic option specified in V
+ifeq (1,$(V_dynamic))
+BUILD_DLLS = capi_v2_gain
+endif
+
+BUILD_LIBS = capi_v2_gain 
+
+capi_v2_gain_C_SRCS += \
+   src/capi_v2_gain
+
+capi_v2_gain_LIBS += capi_v2_utils_props
+
+# quality test
+BUILD_QEXES += capi_v2_gain_q
+
+capi_v2_gain_q_C_SRCS = src/capi_v2_gain_test
+capi_v2_gain_q_LIBS = rtld a1std test_main test_util test_capi_v2_voice capi_v2_utils_props capi_v2_gain voice_imc_utils test_profile atomic
+ifeq (1,$(V_toolv83))
+capi_v2_gain_q_LIBS += $(HEXAGON_LIB_DIR)/$(V_ARCH)/G0/libstdc++.a
+endif
+# if building shared object must also list it as a dependency to the qtest
+ifeq (1,$(V_dynamic))
+$V/capi_v2_gain_q.ok: $V/capi_v2_gain_q $V/capi_v2_gain$(DLL_EXT)
+endif
+
+# specify final build products, in this case the module's header file and
+# its associated libraries (and shared objects)
+BUILD_COPIES = \
+   inc/capi_v2_gain.h \
+   $(DLLS) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;
+

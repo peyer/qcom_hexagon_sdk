@@ -1,0 +1,32 @@
+ifeq ($(CDSP_FLAG), 1) 
+	LIB_DSPRPC = libcdsprpc
+else ifeq ($(MDSP_FLAG), 1) 
+	LIB_DSPRPC = libmdsprpc
+else ifeq ($(SLPI_FLAG), 1) 
+	LIB_DSPRPC = libsdsprpc
+else
+	LIB_DSPRPC = libadsprpc
+endif
+
+# test library executed using TISE
+BUILD_DLLS += calculator_test
+calculator_test_QAICIDLS += inc/calculator
+calculator_test_C_SRCS += src/calculator_test_main src/calculator_test
+calculator_test_LIBS += rpcmem
+calculator_test_DLLS += libcalculator $(LIB_DSPRPC)
+calculator_test_main_DEFINES += CALC_EXPORT=__declspec\(dllexport\)
+
+# stand-alone calculator executable
+BUILD_EXES+=calculator
+calculator_QAICIDLS += inc/calculator
+calculator_C_SRCS += src/calculator_main src/calculator_test
+calculator_LIBS += rpcmem
+calculator_DLLS += libcalculator $(LIB_DSPRPC)
+calculator_DEFINES += VERIFY_PRINT_ERROR
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

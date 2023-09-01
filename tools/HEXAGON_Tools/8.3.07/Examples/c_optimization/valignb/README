@@ -1,0 +1,43 @@
+##################################################################
+# Copyright (c) $Date$ QUALCOMM INCORPORATED.
+# All Rights Reserved.
+# Modified by QUALCOMM INCORPORATED on $Date$
+##################################################################
+The misalignment examples show how to handle situations where all
+array accesses in a loop are misaligned by the same amount.  However,
+there are cases where accesses are misaligned by different amounts.
+In this case, no amount of static or dynamic loop peeling can align
+all array pointers to an 8-byte boundary at the same time.  This
+example shows how to use the valignb intrinsic to support misaligned
+array accesses.
+
+The architecture only supports 8-byte memory accesses for addresses
+that are 8-byte aligned.  However, 8-byte memory accesses for
+unaligned addresses can be implemented in software.  In other words,
+the programmer can achieve the result of an 8-byte unaligned memory
+access by using several operations together.  The obvious penalty for
+this is that the memory access is no longer a single operation with
+1-cycle latency.
+
+In general, it is much easier to implement unaligned loads than it is
+to implement unaligned stores.  An unaligned load consists of loading
+two consecutive (aligned) 8-byte vectors, and then using the valignb
+operation to select the desired bytes from across the entire 16-byte
+range.  This is three operations, two of which can execute in
+parallel.  An unaligned store is much more complex, because it first
+requires loading the old values from the 16-byte range.  Then, the old
+and new values must be combined before writing back the entire 16-byte
+range.  Thus, in cases where the array accesses within a loop are
+misaligned by different amounts, it is best to use loop peeling to
+make sure the destination array is aligned.  Then, the only misaligned
+accesses will be loads.
+
+This example in file pairadd.c shows how to use the valignb intrinsic
+to support misaligned loads.  Run the test program to view the
+performance impact.
+
+Running Example:
+1) make
+
+Default compiler and options can be modified on the make command line
+using the CC and CFLAGS make variables, respectively.

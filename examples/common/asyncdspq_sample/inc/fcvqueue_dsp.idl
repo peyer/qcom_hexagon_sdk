@@ -1,0 +1,38 @@
+/*
+  Copyright (c) 2017 Qualcomm Technologies, Inc.
+  All Rights Reserved.
+  Confidential and Proprietary - Qualcomm Technologies, Inc.
+*/
+
+#ifndef FCVQUEUE_DSP_IDL
+#define FCVQUEUE_DSP_IDL
+
+#include "AEEStdDef.idl"
+
+interface fcvqueue_dsp {
+
+    AEEResult init(
+        in uint32 req_queue_handle,
+        in uint32 resp_queue_handle,
+        rout uint32 queue_handle
+        );
+
+    AEEResult destroy(
+        in uint32 queue_handle
+        );
+
+    AEEResult map(
+        in uint32 queue_handle,
+        in dmahandle buffer,
+        in uint32 width,
+        in uint32 height,
+        in uint32 stride
+        );        
+
+    AEEResult unmap(
+        in uint32 queue_handle,
+        in int32 buffer_fd
+        );        
+};
+
+#endif //FCVQUEUE_DSP_IDL

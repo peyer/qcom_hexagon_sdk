@@ -1,0 +1,148 @@
+
+Example Name: dlopen
+
+Description:
+
+    This example demonstrates the following:
+
+	1: How to create a dynamic library.  
+
+		liba.so: liba.c
+			$(CC) -fPIC -shared -nostartfiles liba.c -o liba.so
+
+	   - See the Makefile for more details.
+
+	2: How to initialize a program that will use dynamic
+           services:
+
+		dlinit (argv[0]);
+
+	   - See dlopen.c for more details.
+
+	3: How to open a dynamic library.
+
+		handle = dlopen ("liba.so", RTLD_LAZY);
+
+	   - See dlopen.c for more details.
+
+	4: How to get symbols from a dynamic library:
+
+		fun_ptr = dlsym(handle, "fun");
+
+	   - See dlopen.c for more details.
+
+	5: How to detect errors from dlX API calls.
+
+        	fputs (dlerror(), stderr);
+
+	   - See dlopen.c for more details.
+
+
+	6: How to close a dynamic library.
+
+		dlclose(handle);
+
+	   - See dlopen.c for more details.
+
+
+Building:
+
+    At the shell prompt with your PATH environment variable pointing to the
+    Hexagon Tools type, "make" to compile the example or, "make run" to compile
+    and run the example.
+
+
+
+
+
+Man pages for dl routines from, "NetBSD 4.0":
+
+NAME
+     dlopen, dlclose, dlsym, dladdr, dlerror -- dynamic link interface
+ 
+LIBRARY
+     Dynamic Linking Library (libdl.a)     
+ 
+SYNOPSIS
+     #include <dlfcn.h>
+ 
+     void *
+     dlopen(const char *path, int mode);
+ 
+     int
+     dlclose(void *handle);
+ 
+     void *
+     dlsym(void * restrict handle, const char * restrict symbol);
+ 
+     int
+     dladdr(void * restrict addr, Dl_info * restrict dli);
+ 
+     char *
+     dlerror(void);
+ 
+DESCRIPTION
+     They allow new shared objects to be loaded into the process' address
+     space under program control.  The dlopen() function takes a name of a
+     shared object as the first argument.  The shared object is mapped into
+     the address space, relocated and its external references are resolved.
+     The argument should be an absolute pathname.  If the first argument is
+     NULL, dlopen() returns a NULL handle.
+ 
+     The second argument can be set to RTLD_LAZY or RTLD_NOW for lazy or
+     immediate relocation respectively.  dlopen() returns a handle to be used
+     in calls to dlclose(), dlsym().  If the named shared object has
+     already been loaded by a previous call to dlopen() (and not yet unloaded
+     by dlclose()), a handle referring to the resident copy is returned.
+ 
+     dlclose() unlinks and removes the object referred to by handle from the
+     process address space.  If multiple calls to dlopen() have been done on
+     this object (or the object was one loaded at startup time) the object is
+     removed when its reference count drops to zero.
+ 
+     dlsym() looks for a definition of symbol in the shared object designated
+     by handle.  The symbols address is returned.  If the symbol cannot be
+     resolved, NULL is returned.
+ 
+     dladdr() examines all currently mapped shared objects for a symbol whose
+     address -- as mapped in the process address space -- is closest to but
+     not exceeding the value passed in the first argument addr.  The symbols
+     of a shared object are only eligible if addr is between the base address
+     of the shared object and the value of the symbol ``_end'' in the same
+     shared object. If no object for which this condition holds true can be
+     found, dladdr() will return 0. Otherwise, a non-zero value is returned
+     and the dli argument will be used to provide information on the selected
+     symbol and the shared object it is contained in.  The dli argument points
+     at a caller-provided Dl_info structure defined as follows:
+ 
+           typedef struct {
+                   const char  *dli_fname;     /* File defining the symbol */
+                   void        *dli_fbase;     /* Base address */
+                   const char  *dli_sname;     /* Symbol name */
+                   const void  *dli_saddr;     /* Symbol address */
+           } Dl_info;
+ 
+     The member dli_sname points at the nul-terminated name of the selected
+     symbol, and dli_saddr is the actual address (as it appears in the process
+     address space) of the symbol.  The member dli_fname points at the file
+     name corresponding to the shared object in which the symbol was found,
+     while dli_fbase is the base address at which this shared object is loaded
+     in the process address space.  dli_fname and dli_fbase may be zero if the
+     symbol was found in the internally generated ``copy'' section (see
+     link(5)) which is not associated with a file.  Note: both strings pointed
+     at by dli_fname and dli_sname reside in memory private to the run-time
+     linker module and should not be modified by the caller.
+ 
+     dlerror() returns a character string representing the most recent error
+     that has occurred while processing one of the other functions described
+     here.  If no dynamic linking errors have occurred since the last invoca-
+     tion of dlerror(), dlerror() returns NULL.  Thus, invoking dlerror() a
+     second time, immediately following a prior invocation, will result in
+     NULL being returned.
+ 
+BUGS
+     An error that occurs while processing a dlopen() request results in the
+     termination of the program.
+ 
+
+

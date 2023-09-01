@@ -1,0 +1,15 @@
+BUILD_LIBS += asyncdspq
+asyncdspq_QAICIDLS += inc/asyncdspq_rpc
+asyncdspq_C_SRCS += src/asyncdspq
+DEFINES += __LE__
+INCDIRS += inc
+
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+    inc/asyncdspq_rpc.idl \
+    inc/asyncdspq.h \
+    $(DLLS) \
+    $(EXES) \
+    $(LIBS) \
+    $(SHIP_DIR)/ ;

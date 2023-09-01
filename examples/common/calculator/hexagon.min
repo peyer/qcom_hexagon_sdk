@@ -1,0 +1,25 @@
+
+# This builds the skel library
+BUILD_LIBS += libcalculator_skel
+
+# only build the shared object if dynamic option specified in the variant
+ifeq (1,$(V_dynamic))
+BUILD_DLLS = libcalculator_skel
+endif
+
+libcalculator_skel_QAICIDLS = inc/calculator
+libcalculator_skel_C_SRCS += $V/calculator_skel
+libcalculator_skel.C_SRCS = src/calculator_imp.c
+
+# quality test
+BUILD_QEXES += calculator_q
+
+calculator_q_C_SRCS = src/calculator_test_main src/calculator_test src/calculator_imp
+calculator_q_LIBS = rtld rpcmem test_util atomic
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

@@ -1,0 +1,21 @@
+/**=============================================================================
+Copyright (c) 2014-2015 QUALCOMM Technologies Incorporated.
+All Rights Reserved Qualcomm Proprietary
+=============================================================================**/
+#ifndef HISTOGRAM_APP_IDL
+#define HISTOGRAM_APP_IDL
+
+#include "AEEStdDef.idl"
+
+interface histogram{
+
+AEEResult histogram(
+    in sequence<octet> inp,       // input buffer of unsigned 8-bit values
+    in long stride,               // stride of src image
+    in long width,                // width of rsrc image
+    in long height,               // height of rsrc image
+	rout sequence<long> hist      // output buffer of 32-bit values
+	);
+};
+
+#endif //HISTOGRAM_APP_IDL

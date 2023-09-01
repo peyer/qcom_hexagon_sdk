@@ -1,0 +1,1590 @@
+block   0 OK bestX     6 bestY    12 bestNCC   102
+block   1 NOT FOUND 
+block   2 OK bestX    60 bestY    11 bestNCC    88
+block   3 OK bestX    88 bestY    14 bestNCC    86
+block   4 OK bestX   104 bestY    15 bestNCC   115
+block   5 OK bestX   128 bestY    15 bestNCC    96
+block   6 OK bestX   151 bestY     9 bestNCC    67
+block   7 OK bestX   176 bestY    12 bestNCC   101
+block   8 OK bestX   198 bestY    16 bestNCC    81
+block   9 OK bestX   225 bestY    16 bestNCC   108
+block  10 OK bestX   253 bestY    16 bestNCC    81
+block  11 OK bestX   270 bestY    12 bestNCC    11
+block  12 OK bestX   294 bestY    10 bestNCC    71
+block  13 OK bestX   320 bestY    16 bestNCC    60
+block  14 OK bestX   352 bestY    14 bestNCC    40
+block  15 OK bestX   371 bestY     6 bestNCC    92
+block  16 OK bestX   390 bestY     8 bestNCC   117
+block  17 OK bestX   424 bestY    16 bestNCC    87
+block  18 OK bestX   442 bestY    11 bestNCC    77
+block  19 OK bestX   467 bestY    16 bestNCC   119
+block  20 OK bestX   486 bestY     8 bestNCC    57
+block  21 OK bestX   510 bestY    13 bestNCC    96
+block  22 OK bestX   535 bestY     6 bestNCC    42
+block  23 OK bestX   558 bestY     6 bestNCC    24
+block  24 OK bestX   584 bestY     6 bestNCC    94
+block  25 OK bestX   606 bestY    13 bestNCC    47
+block  26 OK bestX   636 bestY     7 bestNCC    59
+block  27 OK bestX   663 bestY    13 bestNCC    62
+block  28 OK bestX   678 bestY     6 bestNCC    11
+block  29 OK bestX   710 bestY     7 bestNCC   108
+block  30 OK bestX   728 bestY     7 bestNCC    94
+block  31 OK bestX   750 bestY    10 bestNCC    95
+block  32 OK bestX   774 bestY    16 bestNCC    85
+block  33 OK bestX   798 bestY    16 bestNCC    57
+block  34 OK bestX   822 bestY    14 bestNCC   117
+block  35 NOT FOUND 
+block  36 OK bestX   878 bestY     7 bestNCC   115
+block  37 OK bestX   904 bestY    11 bestNCC    86
+block  38 OK bestX   918 bestY    13 bestNCC    99
+block  39 OK bestX   952 bestY    16 bestNCC    26
+block  40 OK bestX   976 bestY    16 bestNCC    21
+block  41 OK bestX   998 bestY     9 bestNCC    87
+block  42 NOT FOUND 
+block  43 OK bestX  1039 bestY     7 bestNCC   117
+block  44 OK bestX  1072 bestY    16 bestNCC   126
+block  45 OK bestX  1096 bestY    16 bestNCC   105
+block  46 OK bestX  1120 bestY    16 bestNCC   123
+block  47 OK bestX  1141 bestY    13 bestNCC   106
+block  48 OK bestX  1168 bestY    16 bestNCC   120
+block  49 OK bestX  1192 bestY    16 bestNCC   111
+block  50 OK bestX  1216 bestY    16 bestNCC   124
+block  51 OK bestX  1240 bestY    12 bestNCC   120
+block  52 OK bestX  1264 bestY    16 bestNCC   118
+block  53 OK bestX    14 bestY    39 bestNCC    92
+block  54 OK bestX    31 bestY    32 bestNCC   107
+block  55 OK bestX    54 bestY    39 bestNCC    81
+block  56 NOT FOUND 
+block  57 OK bestX   111 bestY    30 bestNCC    36
+block  58 OK bestX   126 bestY    32 bestNCC   103
+block  59 NOT FOUND 
+block  60 OK bestX   184 bestY    39 bestNCC    93
+block  61 OK bestX   198 bestY    38 bestNCC   100
+block  62 OK bestX   232 bestY    30 bestNCC    45
+block  63 NOT FOUND 
+block  64 OK bestX   270 bestY    40 bestNCC    93
+block  65 OK bestX   304 bestY    39 bestNCC    28
+block  66 OK bestX   318 bestY    37 bestNCC    90
+block  67 OK bestX   342 bestY    38 bestNCC    96
+block  68 OK bestX   366 bestY    37 bestNCC    34
+block  69 OK bestX   400 bestY    33 bestNCC    78
+block  70 OK bestX   418 bestY    30 bestNCC    99
+block  71 OK bestX   441 bestY    32 bestNCC    38
+block  72 OK bestX   472 bestY    32 bestNCC   116
+block  73 OK bestX   496 bestY    31 bestNCC    50
+block  74 OK bestX   520 bestY    38 bestNCC   102
+block  75 OK bestX   544 bestY    37 bestNCC    92
+block  76 OK bestX   560 bestY    40 bestNCC    93
+block  77 OK bestX   586 bestY    32 bestNCC   108
+block  78 OK bestX   615 bestY    39 bestNCC    85
+block  79 OK bestX   630 bestY    38 bestNCC    65
+block  80 OK bestX   664 bestY    36 bestNCC    60
+block  81 OK bestX   679 bestY    38 bestNCC    60
+block  82 OK bestX   702 bestY    36 bestNCC    58
+block  83 OK bestX   735 bestY    34 bestNCC    36
+block  84 OK bestX   757 bestY    32 bestNCC    31
+block  85 OK bestX   774 bestY    36 bestNCC    74
+block  86 OK bestX   804 bestY    35 bestNCC    95
+block  87 OK bestX   822 bestY    38 bestNCC    58
+block  88 NOT FOUND 
+block  89 OK bestX   877 bestY    40 bestNCC   111
+block  90 OK bestX   904 bestY    30 bestNCC   116
+block  91 OK bestX   928 bestY    40 bestNCC    99
+block  92 OK bestX   952 bestY    40 bestNCC   127
+block  93 OK bestX   976 bestY    40 bestNCC   119
+block  94 OK bestX   999 bestY    40 bestNCC   127
+block  95 OK bestX  1014 bestY    30 bestNCC    65
+block  96 OK bestX  1046 bestY    40 bestNCC   116
+block  97 OK bestX  1072 bestY    40 bestNCC   127
+block  98 OK bestX  1096 bestY    40 bestNCC   124
+block  99 OK bestX  1120 bestY    40 bestNCC   124
+block 100 OK bestX  1144 bestY    40 bestNCC   125
+block 101 OK bestX  1159 bestY    40 bestNCC   120
+block 102 OK bestX  1186 bestY    32 bestNCC   120
+block 103 OK bestX  1213 bestY    31 bestNCC   113
+block 104 OK bestX  1236 bestY    32 bestNCC   104
+block 105 OK bestX  1260 bestY    33 bestNCC   109
+block 106 OK bestX     7 bestY    54 bestNCC   102
+block 107 OK bestX    30 bestY    63 bestNCC    51
+block 108 OK bestX    59 bestY    61 bestNCC    60
+block 109 OK bestX    78 bestY    63 bestNCC   106
+block 110 NOT FOUND 
+block 111 OK bestX   130 bestY    55 bestNCC    59
+block 112 OK bestX   156 bestY    60 bestNCC    97
+block 113 OK bestX   174 bestY    56 bestNCC    69
+block 114 OK bestX   200 bestY    58 bestNCC   103
+block 115 OK bestX   228 bestY    64 bestNCC    56
+block 116 OK bestX   250 bestY    55 bestNCC    98
+block 117 OK bestX   273 bestY    64 bestNCC    80
+block 118 OK bestX   294 bestY    54 bestNCC   102
+block 119 OK bestX   328 bestY    56 bestNCC    78
+block 120 OK bestX   352 bestY    64 bestNCC    51
+block 121 OK bestX   366 bestY    62 bestNCC    92
+block 122 OK bestX   400 bestY    58 bestNCC    25
+block 123 OK bestX   420 bestY    57 bestNCC    61
+block 124 OK bestX   447 bestY    64 bestNCC    39
+block 125 OK bestX   470 bestY    54 bestNCC    47
+block 126 OK bestX   493 bestY    56 bestNCC    81
+block 127 OK bestX   510 bestY    56 bestNCC    71
+block 128 OK bestX   541 bestY    64 bestNCC    87
+block 129 OK bestX   559 bestY    54 bestNCC    80
+block 130 OK bestX   586 bestY    64 bestNCC   111
+block 131 OK bestX   606 bestY    63 bestNCC    83
+block 132 OK bestX   630 bestY    63 bestNCC    60
+block 133 OK bestX   661 bestY    57 bestNCC    93
+block 134 OK bestX   679 bestY    59 bestNCC    93
+block 135 NOT FOUND 
+block 136 OK bestX   733 bestY    63 bestNCC    90
+block 137 OK bestX   758 bestY    62 bestNCC   110
+block 138 OK bestX   776 bestY    56 bestNCC   100
+block 139 OK bestX   798 bestY    64 bestNCC   117
+block 140 OK bestX   832 bestY    57 bestNCC    71
+block 141 OK bestX   846 bestY    64 bestNCC   124
+block 142 OK bestX   880 bestY    64 bestNCC   120
+block 143 OK bestX   903 bestY    64 bestNCC   125
+block 144 OK bestX   920 bestY    64 bestNCC   120
+block 145 OK bestX   948 bestY    64 bestNCC   118
+block 146 OK bestX   974 bestY    64 bestNCC   128
+block 147 OK bestX   999 bestY    64 bestNCC   127
+block 148 OK bestX  1022 bestY    64 bestNCC   126
+block 149 OK bestX  1044 bestY    56 bestNCC   124
+block 150 OK bestX  1064 bestY    54 bestNCC    94
+block 151 OK bestX  1089 bestY    59 bestNCC    66
+block 152 OK bestX  1113 bestY    62 bestNCC    60
+block 153 OK bestX  1138 bestY    64 bestNCC    84
+block 154 OK bestX  1158 bestY    64 bestNCC    90
+block 155 OK bestX  1182 bestY    64 bestNCC    54
+block 156 OK bestX  1206 bestY    61 bestNCC   112
+block 157 OK bestX  1230 bestY    62 bestNCC   112
+block 158 OK bestX  1256 bestY    55 bestNCC   110
+block 159 OK bestX    16 bestY    79 bestNCC    93
+block 160 OK bestX    40 bestY    83 bestNCC    97
+block 161 OK bestX    54 bestY    84 bestNCC    67
+block 162 OK bestX    88 bestY    79 bestNCC    71
+block 163 OK bestX   110 bestY    78 bestNCC    56
+block 164 OK bestX   126 bestY    83 bestNCC    97
+block 165 OK bestX   154 bestY    84 bestNCC   106
+block 166 OK bestX   182 bestY    88 bestNCC    99
+block 167 OK bestX   207 bestY    78 bestNCC    30
+block 168 OK bestX   222 bestY    78 bestNCC    35
+block 169 OK bestX   248 bestY    78 bestNCC    83
+block 170 OK bestX   270 bestY    81 bestNCC    29
+block 171 OK bestX   295 bestY    86 bestNCC    51
+block 172 OK bestX   328 bestY    78 bestNCC    85
+block 173 OK bestX   351 bestY    87 bestNCC    72
+block 174 OK bestX   369 bestY    79 bestNCC    97
+block 175 OK bestX   400 bestY    80 bestNCC    12
+block 176 OK bestX   416 bestY    87 bestNCC    73
+block 177 OK bestX   448 bestY    88 bestNCC    18
+block 178 OK bestX   472 bestY    83 bestNCC    94
+block 179 OK bestX   495 bestY    88 bestNCC    71
+block 180 OK bestX   516 bestY    88 bestNCC    58
+block 181 OK bestX   544 bestY    83 bestNCC    77
+block 182 OK bestX   558 bestY    82 bestNCC   101
+block 183 OK bestX   588 bestY    80 bestNCC    80
+block 184 OK bestX   616 bestY    79 bestNCC    64
+block 185 NOT FOUND 
+block 186 OK bestX   654 bestY    88 bestNCC   109
+block 187 OK bestX   681 bestY    88 bestNCC    20
+block 188 OK bestX   705 bestY    82 bestNCC    98
+block 189 OK bestX   733 bestY    88 bestNCC   120
+block 190 OK bestX   755 bestY    88 bestNCC   126
+block 191 OK bestX   777 bestY    87 bestNCC   122
+block 192 OK bestX   798 bestY    87 bestNCC    86
+block 193 OK bestX   832 bestY    81 bestNCC    12
+block 194 OK bestX   856 bestY    88 bestNCC   115
+block 195 OK bestX   875 bestY    81 bestNCC   124
+block 196 OK bestX   903 bestY    87 bestNCC   126
+block 197 OK bestX   923 bestY    88 bestNCC   127
+block 198 OK bestX   952 bestY    84 bestNCC   109
+block 199 OK bestX   966 bestY    83 bestNCC    93
+block 200 OK bestX  1000 bestY    81 bestNCC    15
+block 201 OK bestX  1016 bestY    88 bestNCC    57
+block 202 OK bestX  1039 bestY    87 bestNCC    75
+block 203 OK bestX  1072 bestY    88 bestNCC   123
+block 204 OK bestX  1093 bestY    88 bestNCC   125
+block 205 OK bestX  1119 bestY    88 bestNCC   122
+block 206 OK bestX  1135 bestY    86 bestNCC    35
+block 207 OK bestX  1158 bestY    78 bestNCC    66
+block 208 OK bestX  1192 bestY    79 bestNCC    78
+block 209 OK bestX  1216 bestY    88 bestNCC    92
+block 210 OK bestX  1230 bestY    86 bestNCC    72
+block 211 OK bestX  1260 bestY    80 bestNCC    65
+block 212 OK bestX    11 bestY   106 bestNCC    85
+block 213 OK bestX    30 bestY   112 bestNCC    80
+block 214 OK bestX    59 bestY   110 bestNCC    44
+block 215 OK bestX    78 bestY   102 bestNCC    74
+block 216 OK bestX   112 bestY   102 bestNCC    40
+block 217 OK bestX   136 bestY   103 bestNCC   117
+block 218 OK bestX   160 bestY   106 bestNCC    55
+block 219 OK bestX   181 bestY   108 bestNCC    96
+block 220 OK bestX   204 bestY   102 bestNCC   101
+block 221 OK bestX   223 bestY   108 bestNCC   106
+block 222 OK bestX   249 bestY   112 bestNCC   106
+block 223 OK bestX   278 bestY   112 bestNCC    15
+block 224 OK bestX   304 bestY   102 bestNCC    48
+block 225 OK bestX   318 bestY   103 bestNCC    45
+block 226 OK bestX   342 bestY   108 bestNCC    84
+block 227 OK bestX   375 bestY   105 bestNCC    78
+block 228 OK bestX   400 bestY   102 bestNCC    35
+block 229 OK bestX   419 bestY   103 bestNCC    69
+block 230 OK bestX   438 bestY   102 bestNCC    67
+block 231 OK bestX   472 bestY   104 bestNCC    67
+block 232 OK bestX   491 bestY   102 bestNCC    72
+block 233 OK bestX   510 bestY   102 bestNCC    35
+block 234 OK bestX   543 bestY   108 bestNCC    30
+block 235 OK bestX   564 bestY   109 bestNCC   113
+block 236 OK bestX   590 bestY   103 bestNCC    69
+block 237 OK bestX   611 bestY   112 bestNCC    99
+block 238 OK bestX   640 bestY   109 bestNCC    92
+block 239 OK bestX   655 bestY   108 bestNCC    97
+block 240 OK bestX   688 bestY   107 bestNCC   126
+block 241 OK bestX   712 bestY   109 bestNCC   112
+block 242 OK bestX   736 bestY   111 bestNCC    76
+block 243 OK bestX   758 bestY   108 bestNCC    78
+block 244 OK bestX   775 bestY   104 bestNCC   112
+block 245 OK bestX   800 bestY   103 bestNCC    63
+block 246 OK bestX   832 bestY   109 bestNCC   128
+block 247 OK bestX   855 bestY   110 bestNCC   127
+block 248 OK bestX   876 bestY   102 bestNCC   113
+block 249 OK bestX   897 bestY   110 bestNCC    79
+block 250 OK bestX   920 bestY   104 bestNCC    90
+block 251 OK bestX   942 bestY   111 bestNCC   123
+block 252 OK bestX   967 bestY   112 bestNCC   113
+block 253 OK bestX  1000 bestY   112 bestNCC    52
+block 254 OK bestX  1014 bestY   111 bestNCC   120
+block 255 OK bestX  1048 bestY   112 bestNCC    84
+block 256 OK bestX  1072 bestY   112 bestNCC   118
+block 257 OK bestX  1096 bestY   112 bestNCC    64
+block 258 OK bestX  1120 bestY   109 bestNCC    99
+block 259 OK bestX  1136 bestY   108 bestNCC    94
+block 260 OK bestX  1160 bestY   104 bestNCC   117
+block 261 OK bestX  1190 bestY   112 bestNCC   123
+block 262 OK bestX  1206 bestY   102 bestNCC     2
+block 263 OK bestX  1238 bestY   111 bestNCC    69
+block 264 NOT FOUND 
+block 265 OK bestX     6 bestY   136 bestNCC    78
+block 266 OK bestX    39 bestY   130 bestNCC    54
+block 267 OK bestX    56 bestY   129 bestNCC    59
+block 268 OK bestX    81 bestY   132 bestNCC   104
+block 269 OK bestX   102 bestY   135 bestNCC    75
+block 270 OK bestX   136 bestY   133 bestNCC   101
+block 271 OK bestX   151 bestY   127 bestNCC    54
+block 272 OK bestX   184 bestY   136 bestNCC   104
+block 273 OK bestX   208 bestY   134 bestNCC    71
+block 274 OK bestX   222 bestY   136 bestNCC    78
+block 275 OK bestX   248 bestY   132 bestNCC   109
+block 276 NOT FOUND 
+block 277 OK bestX   301 bestY   134 bestNCC    70
+block 278 OK bestX   318 bestY   134 bestNCC    47
+block 279 OK bestX   342 bestY   126 bestNCC    71
+block 280 OK bestX   370 bestY   129 bestNCC    61
+block 281 OK bestX   393 bestY   136 bestNCC    88
+block 282 OK bestX   414 bestY   130 bestNCC    50
+block 283 OK bestX   438 bestY   135 bestNCC    57
+block 284 OK bestX   462 bestY   135 bestNCC    98
+block 285 OK bestX   486 bestY   131 bestNCC    55
+block 286 OK bestX   520 bestY   136 bestNCC    63
+block 287 OK bestX   534 bestY   133 bestNCC   109
+block 288 OK bestX   559 bestY   127 bestNCC    87
+block 289 OK bestX   585 bestY   134 bestNCC    92
+block 290 OK bestX   612 bestY   134 bestNCC   117
+block 291 OK bestX   635 bestY   126 bestNCC   123
+block 292 OK bestX   655 bestY   135 bestNCC    93
+block 293 OK bestX   678 bestY   136 bestNCC    66
+block 294 OK bestX   709 bestY   133 bestNCC   122
+block 295 OK bestX   732 bestY   127 bestNCC   103
+block 296 OK bestX   752 bestY   136 bestNCC    92
+block 297 OK bestX   780 bestY   134 bestNCC   127
+block 298 OK bestX   808 bestY   126 bestNCC   114
+block 299 OK bestX   822 bestY   131 bestNCC    84
+block 300 OK bestX   853 bestY   133 bestNCC    80
+block 301 OK bestX   880 bestY   134 bestNCC   112
+block 302 OK bestX   898 bestY   135 bestNCC   124
+block 303 OK bestX   926 bestY   130 bestNCC   110
+block 304 OK bestX   952 bestY   136 bestNCC    73
+block 305 OK bestX   974 bestY   136 bestNCC   117
+block 306 OK bestX   995 bestY   136 bestNCC    64
+block 307 OK bestX  1020 bestY   133 bestNCC   119
+block 308 OK bestX  1038 bestY   131 bestNCC    97
+block 309 OK bestX  1072 bestY   136 bestNCC   122
+block 310 OK bestX  1096 bestY   136 bestNCC   110
+block 311 OK bestX  1118 bestY   136 bestNCC   119
+block 312 OK bestX  1136 bestY   131 bestNCC   106
+block 313 OK bestX  1164 bestY   135 bestNCC    89
+block 314 OK bestX  1184 bestY   136 bestNCC   101
+block 315 OK bestX  1206 bestY   136 bestNCC   107
+block 316 OK bestX  1234 bestY   128 bestNCC   108
+block 317 OK bestX  1254 bestY   129 bestNCC    90
+block 318 OK bestX    10 bestY   160 bestNCC    71
+block 319 OK bestX    30 bestY   155 bestNCC    77
+block 320 OK bestX    56 bestY   150 bestNCC    41
+block 321 OK bestX    83 bestY   155 bestNCC    29
+block 322 OK bestX   110 bestY   160 bestNCC    34
+block 323 OK bestX   134 bestY   154 bestNCC   114
+block 324 OK bestX   156 bestY   159 bestNCC    79
+block 325 OK bestX   174 bestY   160 bestNCC   103
+block 326 OK bestX   199 bestY   150 bestNCC   103
+block 327 OK bestX   222 bestY   159 bestNCC    15
+block 328 OK bestX   246 bestY   150 bestNCC     7
+block 329 OK bestX   277 bestY   160 bestNCC     3
+block 330 OK bestX   303 bestY   152 bestNCC   107
+block 331 OK bestX   324 bestY   157 bestNCC    74
+block 332 OK bestX   342 bestY   150 bestNCC    77
+block 333 OK bestX   375 bestY   156 bestNCC    98
+block 334 OK bestX   391 bestY   160 bestNCC   101
+block 335 OK bestX   420 bestY   150 bestNCC    69
+block 336 OK bestX   438 bestY   150 bestNCC    84
+block 337 OK bestX   465 bestY   150 bestNCC    95
+block 338 OK bestX   487 bestY   150 bestNCC    85
+block 339 OK bestX   520 bestY   156 bestNCC   100
+block 340 OK bestX   538 bestY   155 bestNCC    72
+block 341 OK bestX   561 bestY   160 bestNCC    54
+block 342 OK bestX   589 bestY   150 bestNCC   119
+block 343 OK bestX   606 bestY   155 bestNCC   113
+block 344 OK bestX   640 bestY   160 bestNCC    94
+block 345 OK bestX   663 bestY   159 bestNCC   109
+block 346 OK bestX   679 bestY   160 bestNCC   122
+block 347 OK bestX   703 bestY   159 bestNCC    94
+block 348 OK bestX   728 bestY   159 bestNCC   127
+block 349 OK bestX   752 bestY   155 bestNCC    69
+block 350 OK bestX   783 bestY   157 bestNCC    50
+block 351 OK bestX   803 bestY   158 bestNCC    88
+block 352 OK bestX   825 bestY   160 bestNCC   115
+block 353 OK bestX   849 bestY   160 bestNCC   127
+block 354 OK bestX   872 bestY   155 bestNCC    87
+block 355 OK bestX   899 bestY   159 bestNCC   118
+block 356 OK bestX   921 bestY   160 bestNCC    98
+block 357 OK bestX   942 bestY   158 bestNCC   120
+block 358 OK bestX   967 bestY   160 bestNCC    79
+block 359 OK bestX   996 bestY   160 bestNCC   107
+block 360 OK bestX  1023 bestY   159 bestNCC   120
+block 361 OK bestX  1044 bestY   155 bestNCC   115
+block 362 OK bestX  1062 bestY   151 bestNCC    54
+block 363 OK bestX  1090 bestY   152 bestNCC    69
+block 364 OK bestX  1111 bestY   159 bestNCC    38
+block 365 OK bestX  1136 bestY   158 bestNCC    57
+block 366 OK bestX  1168 bestY   156 bestNCC   108
+block 367 NOT FOUND 
+block 368 OK bestX  1210 bestY   150 bestNCC    98
+block 369 OK bestX  1240 bestY   160 bestNCC   108
+block 370 OK bestX  1264 bestY   160 bestNCC   117
+block 371 OK bestX     6 bestY   184 bestNCC    80
+block 372 OK bestX    30 bestY   180 bestNCC   108
+block 373 OK bestX    61 bestY   179 bestNCC    88
+block 374 OK bestX    88 bestY   182 bestNCC    25
+block 375 OK bestX   111 bestY   179 bestNCC    53
+block 376 OK bestX   136 bestY   184 bestNCC    86
+block 377 OK bestX   152 bestY   179 bestNCC   116
+block 378 OK bestX   175 bestY   182 bestNCC   108
+block 379 OK bestX   200 bestY   180 bestNCC   108
+block 380 OK bestX   224 bestY   184 bestNCC    48
+block 381 OK bestX   246 bestY   179 bestNCC    85
+block 382 OK bestX   270 bestY   181 bestNCC    75
+block 383 OK bestX   294 bestY   177 bestNCC   115
+block 384 OK bestX   328 bestY   184 bestNCC    67
+block 385 OK bestX   342 bestY   178 bestNCC    99
+block 386 OK bestX   370 bestY   175 bestNCC    82
+block 387 OK bestX   400 bestY   177 bestNCC    45
+block 388 OK bestX   423 bestY   184 bestNCC    82
+block 389 OK bestX   448 bestY   183 bestNCC    95
+block 390 OK bestX   466 bestY   174 bestNCC    98
+block 391 OK bestX   496 bestY   181 bestNCC   109
+block 392 OK bestX   519 bestY   184 bestNCC    78
+block 393 OK bestX   544 bestY   182 bestNCC   120
+block 394 OK bestX   558 bestY   182 bestNCC   108
+block 395 OK bestX   586 bestY   175 bestNCC    35
+block 396 OK bestX   612 bestY   182 bestNCC   121
+block 397 OK bestX   633 bestY   179 bestNCC    67
+block 398 OK bestX   656 bestY   183 bestNCC   106
+block 399 OK bestX   687 bestY   179 bestNCC   127
+block 400 OK bestX   709 bestY   182 bestNCC    90
+block 401 OK bestX   727 bestY   184 bestNCC    83
+block 402 OK bestX   754 bestY   183 bestNCC    97
+block 403 OK bestX   781 bestY   182 bestNCC   127
+block 404 OK bestX   808 bestY   182 bestNCC   123
+block 405 OK bestX   822 bestY   184 bestNCC    84
+block 406 OK bestX   854 bestY   182 bestNCC   122
+block 407 OK bestX   878 bestY   182 bestNCC   127
+block 408 OK bestX   894 bestY   181 bestNCC   116
+block 409 OK bestX   923 bestY   184 bestNCC   114
+block 410 OK bestX   952 bestY   182 bestNCC   120
+block 411 OK bestX   966 bestY   184 bestNCC   102
+block 412 OK bestX   997 bestY   180 bestNCC    67
+block 413 OK bestX  1024 bestY   184 bestNCC   106
+block 414 OK bestX  1048 bestY   184 bestNCC    35
+block 415 OK bestX  1063 bestY   181 bestNCC    44
+block 416 OK bestX  1096 bestY   184 bestNCC   123
+block 417 OK bestX  1120 bestY   184 bestNCC   126
+block 418 OK bestX  1144 bestY   184 bestNCC   125
+block 419 OK bestX  1168 bestY   184 bestNCC   123
+block 420 OK bestX  1191 bestY   184 bestNCC   109
+block 421 OK bestX  1216 bestY   184 bestNCC    99
+block 422 OK bestX  1230 bestY   174 bestNCC   117
+block 423 OK bestX  1255 bestY   182 bestNCC   120
+block 424 OK bestX     6 bestY   207 bestNCC    96
+block 425 OK bestX    33 bestY   205 bestNCC   102
+block 426 OK bestX    57 bestY   208 bestNCC   113
+block 427 OK bestX    87 bestY   202 bestNCC    95
+block 428 OK bestX   102 bestY   198 bestNCC    64
+block 429 OK bestX   131 bestY   198 bestNCC   105
+block 430 OK bestX   152 bestY   198 bestNCC    82
+block 431 OK bestX   177 bestY   204 bestNCC    23
+block 432 OK bestX   205 bestY   208 bestNCC   116
+block 433 OK bestX   227 bestY   198 bestNCC    69
+block 434 OK bestX   256 bestY   200 bestNCC   116
+block 435 OK bestX   270 bestY   198 bestNCC    84
+block 436 OK bestX   294 bestY   200 bestNCC    72
+block 437 OK bestX   323 bestY   198 bestNCC    73
+block 438 OK bestX   352 bestY   205 bestNCC    88
+block 439 NOT FOUND 
+block 440 OK bestX   392 bestY   204 bestNCC    78
+block 441 OK bestX   414 bestY   208 bestNCC   112
+block 442 OK bestX   438 bestY   208 bestNCC    69
+block 443 OK bestX   463 bestY   208 bestNCC    76
+block 444 OK bestX   491 bestY   208 bestNCC    94
+block 445 OK bestX   514 bestY   205 bestNCC    57
+block 446 OK bestX   534 bestY   208 bestNCC    99
+block 447 OK bestX   565 bestY   205 bestNCC    86
+block 448 OK bestX   582 bestY   200 bestNCC    73
+block 449 OK bestX   611 bestY   205 bestNCC   122
+block 450 OK bestX   639 bestY   202 bestNCC   128
+block 451 OK bestX   661 bestY   201 bestNCC   109
+block 452 OK bestX   678 bestY   206 bestNCC    87
+block 453 OK bestX   705 bestY   207 bestNCC    96
+block 454 OK bestX   735 bestY   204 bestNCC   125
+block 455 OK bestX   760 bestY   202 bestNCC   105
+block 456 OK bestX   775 bestY   208 bestNCC   100
+block 457 OK bestX   799 bestY   208 bestNCC   123
+block 458 OK bestX   831 bestY   204 bestNCC   120
+block 459 OK bestX   849 bestY   207 bestNCC   112
+block 460 OK bestX   874 bestY   208 bestNCC   123
+block 461 OK bestX   902 bestY   207 bestNCC    89
+block 462 OK bestX   921 bestY   208 bestNCC   101
+block 463 OK bestX   943 bestY   206 bestNCC   116
+block 464 OK bestX   974 bestY   207 bestNCC   122
+block 465 OK bestX   995 bestY   204 bestNCC    94
+block 466 OK bestX  1021 bestY   208 bestNCC   125
+block 467 OK bestX  1048 bestY   207 bestNCC   127
+block 468 OK bestX  1070 bestY   208 bestNCC   124
+block 469 OK bestX  1086 bestY   208 bestNCC    80
+block 470 OK bestX  1120 bestY   208 bestNCC   120
+block 471 OK bestX  1143 bestY   208 bestNCC   119
+block 472 OK bestX  1158 bestY   204 bestNCC   105
+block 473 OK bestX  1188 bestY   207 bestNCC   114
+block 474 OK bestX  1208 bestY   206 bestNCC    97
+block 475 OK bestX  1230 bestY   206 bestNCC    64
+block 476 OK bestX  1257 bestY   208 bestNCC    98
+block 477 OK bestX     9 bestY   222 bestNCC    69
+block 478 OK bestX    39 bestY   231 bestNCC    84
+block 479 OK bestX    54 bestY   229 bestNCC    77
+block 480 OK bestX    79 bestY   229 bestNCC   119
+block 481 OK bestX   104 bestY   229 bestNCC    55
+block 482 OK bestX   134 bestY   226 bestNCC    89
+block 483 OK bestX   152 bestY   222 bestNCC    10
+block 484 OK bestX   184 bestY   230 bestNCC    12
+block 485 OK bestX   199 bestY   224 bestNCC    70
+block 486 OK bestX   223 bestY   222 bestNCC    85
+block 487 OK bestX   250 bestY   223 bestNCC   109
+block 488 OK bestX   280 bestY   229 bestNCC    33
+block 489 OK bestX   294 bestY   222 bestNCC    50
+block 490 OK bestX   326 bestY   225 bestNCC   113
+block 491 OK bestX   344 bestY   227 bestNCC    97
+block 492 OK bestX   375 bestY   227 bestNCC    50
+block 493 OK bestX   396 bestY   228 bestNCC    39
+block 494 OK bestX   424 bestY   232 bestNCC   105
+block 495 OK bestX   448 bestY   225 bestNCC   109
+block 496 OK bestX   463 bestY   222 bestNCC    68
+block 497 OK bestX   486 bestY   232 bestNCC   113
+block 498 NOT FOUND 
+block 499 OK bestX   541 bestY   226 bestNCC   105
+block 500 OK bestX   558 bestY   222 bestNCC    62
+block 501 OK bestX   587 bestY   231 bestNCC    80
+block 502 OK bestX   611 bestY   228 bestNCC   128
+block 503 OK bestX   632 bestY   226 bestNCC    44
+block 504 OK bestX   660 bestY   229 bestNCC    99
+block 505 OK bestX   680 bestY   230 bestNCC   126
+block 506 OK bestX   702 bestY   232 bestNCC   121
+block 507 OK bestX   728 bestY   232 bestNCC   103
+block 508 OK bestX   759 bestY   227 bestNCC   126
+block 509 OK bestX   775 bestY   231 bestNCC    94
+block 510 OK bestX   801 bestY   232 bestNCC   119
+block 511 OK bestX   822 bestY   232 bestNCC   123
+block 512 OK bestX   853 bestY   228 bestNCC    98
+block 513 OK bestX   870 bestY   231 bestNCC   123
+block 514 OK bestX   904 bestY   232 bestNCC   107
+block 515 OK bestX   924 bestY   230 bestNCC   126
+block 516 OK bestX   948 bestY   231 bestNCC   127
+block 517 OK bestX   973 bestY   231 bestNCC   128
+block 518 OK bestX  1000 bestY   232 bestNCC    85
+block 519 OK bestX  1024 bestY   229 bestNCC   122
+block 520 OK bestX  1040 bestY   223 bestNCC    71
+block 521 OK bestX  1065 bestY   230 bestNCC   106
+block 522 OK bestX  1094 bestY   232 bestNCC    93
+block 523 OK bestX  1110 bestY   232 bestNCC   104
+block 524 OK bestX  1134 bestY   232 bestNCC    69
+block 525 OK bestX  1159 bestY   225 bestNCC   110
+block 526 OK bestX  1183 bestY   226 bestNCC    86
+block 527 OK bestX  1208 bestY   228 bestNCC    37
+block 528 OK bestX  1237 bestY   222 bestNCC    66
+block 529 OK bestX  1256 bestY   230 bestNCC    68
+block 530 OK bestX     8 bestY   256 bestNCC    74
+block 531 OK bestX    40 bestY   256 bestNCC    28
+block 532 OK bestX    63 bestY   246 bestNCC    59
+block 533 OK bestX    79 bestY   253 bestNCC    93
+block 534 OK bestX   108 bestY   251 bestNCC    71
+block 535 OK bestX   136 bestY   256 bestNCC    90
+block 536 OK bestX   150 bestY   248 bestNCC   121
+block 537 OK bestX   174 bestY   254 bestNCC    95
+block 538 OK bestX   200 bestY   248 bestNCC   104
+block 539 OK bestX   223 bestY   252 bestNCC   112
+block 540 OK bestX   250 bestY   246 bestNCC    75
+block 541 NOT FOUND 
+block 542 OK bestX   294 bestY   250 bestNCC    99
+block 543 OK bestX   323 bestY   247 bestNCC   108
+block 544 OK bestX   342 bestY   252 bestNCC    93
+block 545 OK bestX   376 bestY   248 bestNCC    97
+block 546 NOT FOUND 
+block 547 OK bestX   414 bestY   251 bestNCC    60
+block 548 OK bestX   447 bestY   254 bestNCC    69
+block 549 OK bestX   462 bestY   251 bestNCC    40
+block 550 OK bestX   496 bestY   250 bestNCC    93
+block 551 OK bestX   514 bestY   255 bestNCC    83
+block 552 OK bestX   537 bestY   252 bestNCC   116
+block 553 OK bestX   563 bestY   251 bestNCC   128
+block 554 OK bestX   582 bestY   246 bestNCC   107
+block 555 OK bestX   616 bestY   251 bestNCC   101
+block 556 OK bestX   634 bestY   253 bestNCC    51
+block 557 OK bestX   654 bestY   256 bestNCC   128
+block 558 OK bestX   685 bestY   250 bestNCC    76
+block 559 OK bestX   709 bestY   251 bestNCC   125
+block 560 OK bestX   727 bestY   255 bestNCC   124
+block 561 OK bestX   759 bestY   253 bestNCC   115
+block 562 OK bestX   783 bestY   251 bestNCC   124
+block 563 OK bestX   802 bestY   250 bestNCC    65
+block 564 OK bestX   829 bestY   251 bestNCC   124
+block 565 OK bestX   853 bestY   246 bestNCC   113
+block 566 OK bestX   878 bestY   255 bestNCC   111
+block 567 OK bestX   896 bestY   256 bestNCC   127
+block 568 OK bestX   921 bestY   255 bestNCC   118
+block 569 OK bestX   950 bestY   256 bestNCC    97
+block 570 OK bestX   974 bestY   253 bestNCC   126
+block 571 OK bestX  1000 bestY   251 bestNCC    94
+block 572 OK bestX  1020 bestY   250 bestNCC   117
+block 573 OK bestX  1047 bestY   254 bestNCC   117
+block 574 OK bestX  1064 bestY   254 bestNCC   120
+block 575 OK bestX  1086 bestY   253 bestNCC    67
+block 576 OK bestX  1112 bestY   246 bestNCC    27
+block 577 OK bestX  1144 bestY   249 bestNCC    68
+block 578 OK bestX  1168 bestY   246 bestNCC   101
+block 579 OK bestX  1192 bestY   251 bestNCC    62
+block 580 OK bestX  1216 bestY   256 bestNCC    55
+block 581 OK bestX  1237 bestY   246 bestNCC   103
+block 582 OK bestX  1262 bestY   256 bestNCC    99
+block 583 OK bestX    16 bestY   279 bestNCC    34
+block 584 OK bestX    35 bestY   270 bestNCC    82
+block 585 OK bestX    64 bestY   270 bestNCC    80
+block 586 OK bestX    78 bestY   270 bestNCC    39
+block 587 OK bestX   103 bestY   278 bestNCC    81
+block 588 OK bestX   134 bestY   271 bestNCC    99
+block 589 OK bestX   155 bestY   277 bestNCC    95
+block 590 OK bestX   175 bestY   280 bestNCC    98
+block 591 OK bestX   200 bestY   272 bestNCC    65
+block 592 OK bestX   230 bestY   280 bestNCC    76
+block 593 OK bestX   249 bestY   276 bestNCC    83
+block 594 OK bestX   280 bestY   273 bestNCC    89
+block 595 OK bestX   296 bestY   270 bestNCC   117
+block 596 OK bestX   318 bestY   274 bestNCC    73
+block 597 OK bestX   351 bestY   280 bestNCC   122
+block 598 OK bestX   367 bestY   271 bestNCC    35
+block 599 OK bestX   390 bestY   280 bestNCC   102
+block 600 OK bestX   415 bestY   280 bestNCC   108
+block 601 OK bestX   440 bestY   280 bestNCC   120
+block 602 OK bestX   470 bestY   270 bestNCC    52
+block 603 OK bestX   496 bestY   278 bestNCC    68
+block 604 OK bestX   511 bestY   273 bestNCC   108
+block 605 OK bestX   543 bestY   272 bestNCC   126
+block 606 OK bestX   560 bestY   271 bestNCC    86
+block 607 OK bestX   585 bestY   277 bestNCC    93
+block 608 OK bestX   615 bestY   272 bestNCC   127
+block 609 OK bestX   633 bestY   276 bestNCC    66
+block 610 OK bestX   663 bestY   273 bestNCC   109
+block 611 OK bestX   686 bestY   274 bestNCC    94
+block 612 OK bestX   702 bestY   277 bestNCC    86
+block 613 OK bestX   726 bestY   279 bestNCC   117
+block 614 OK bestX   751 bestY   272 bestNCC    91
+block 615 OK bestX   776 bestY   279 bestNCC   123
+block 616 OK bestX   803 bestY   271 bestNCC   107
+block 617 OK bestX   824 bestY   278 bestNCC   119
+block 618 OK bestX   847 bestY   280 bestNCC   127
+block 619 OK bestX   880 bestY   280 bestNCC    24
+block 620 OK bestX   897 bestY   270 bestNCC    60
+block 621 OK bestX   924 bestY   279 bestNCC   124
+block 622 OK bestX   942 bestY   280 bestNCC   117
+block 623 OK bestX   966 bestY   278 bestNCC    87
+block 624 OK bestX   990 bestY   279 bestNCC    96
+block 625 OK bestX  1020 bestY   279 bestNCC   111
+block 626 OK bestX  1039 bestY   270 bestNCC    70
+block 627 OK bestX  1071 bestY   272 bestNCC    96
+block 628 OK bestX  1086 bestY   278 bestNCC   106
+block 629 OK bestX  1120 bestY   280 bestNCC    82
+block 630 OK bestX  1143 bestY   280 bestNCC   111
+block 631 OK bestX  1168 bestY   279 bestNCC    95
+block 632 OK bestX  1186 bestY   280 bestNCC    93
+block 633 OK bestX  1216 bestY   275 bestNCC    89
+block 634 OK bestX  1230 bestY   278 bestNCC    86
+block 635 OK bestX  1260 bestY   272 bestNCC   112
+block 636 OK bestX     8 bestY   302 bestNCC    80
+block 637 OK bestX    40 bestY   297 bestNCC    58
+block 638 OK bestX    55 bestY   303 bestNCC    61
+block 639 OK bestX    78 bestY   294 bestNCC   100
+block 640 OK bestX   103 bestY   294 bestNCC    59
+block 641 OK bestX   136 bestY   297 bestNCC   100
+block 642 OK bestX   160 bestY   304 bestNCC    28
+block 643 OK bestX   184 bestY   302 bestNCC    11
+block 644 OK bestX   198 bestY   301 bestNCC    69
+block 645 OK bestX   222 bestY   303 bestNCC   100
+block 646 OK bestX   246 bestY   296 bestNCC    81
+block 647 NOT FOUND 
+block 648 OK bestX   304 bestY   304 bestNCC    90
+block 649 OK bestX   319 bestY   296 bestNCC    88
+block 650 OK bestX   348 bestY   297 bestNCC    98
+block 651 OK bestX   366 bestY   302 bestNCC    43
+block 652 OK bestX   390 bestY   302 bestNCC   110
+block 653 OK bestX   415 bestY   304 bestNCC    93
+block 654 OK bestX   438 bestY   303 bestNCC   108
+block 655 OK bestX   462 bestY   301 bestNCC    99
+block 656 OK bestX   496 bestY   304 bestNCC    96
+block 657 OK bestX   516 bestY   296 bestNCC   126
+block 658 OK bestX   534 bestY   295 bestNCC    75
+block 659 OK bestX   561 bestY   304 bestNCC    86
+block 660 OK bestX   582 bestY   302 bestNCC   124
+block 661 OK bestX   612 bestY   295 bestNCC   111
+block 662 OK bestX   635 bestY   299 bestNCC   126
+block 663 OK bestX   655 bestY   302 bestNCC   127
+block 664 OK bestX   685 bestY   299 bestNCC   124
+block 665 OK bestX   710 bestY   300 bestNCC   125
+block 666 OK bestX   731 bestY   299 bestNCC    88
+block 667 OK bestX   750 bestY   303 bestNCC   105
+block 668 OK bestX   778 bestY   298 bestNCC   125
+block 669 OK bestX   807 bestY   299 bestNCC   127
+block 670 OK bestX   825 bestY   303 bestNCC    75
+block 671 OK bestX   852 bestY   301 bestNCC   114
+block 672 OK bestX   879 bestY   297 bestNCC   125
+block 673 OK bestX   894 bestY   301 bestNCC    47
+block 674 OK bestX   923 bestY   299 bestNCC   116
+block 675 OK bestX   950 bestY   298 bestNCC   122
+block 676 OK bestX   974 bestY   301 bestNCC   107
+block 677 OK bestX   998 bestY   304 bestNCC    67
+block 678 OK bestX  1020 bestY   302 bestNCC    86
+block 679 OK bestX  1042 bestY   294 bestNCC    80
+block 680 NOT FOUND 
+block 681 OK bestX  1096 bestY   298 bestNCC    35
+block 682 OK bestX  1110 bestY   297 bestNCC     5
+block 683 OK bestX  1134 bestY   302 bestNCC   106
+block 684 OK bestX  1168 bestY   295 bestNCC    91
+block 685 OK bestX  1182 bestY   299 bestNCC    39
+block 686 OK bestX  1209 bestY   295 bestNCC    74
+block 687 OK bestX  1240 bestY   304 bestNCC    86
+block 688 OK bestX  1254 bestY   301 bestNCC   107
+block 689 OK bestX     8 bestY   324 bestNCC    77
+block 690 OK bestX    36 bestY   320 bestNCC    37
+block 691 OK bestX    59 bestY   322 bestNCC    84
+block 692 OK bestX    88 bestY   326 bestNCC   107
+block 693 OK bestX   107 bestY   326 bestNCC    85
+block 694 OK bestX   135 bestY   318 bestNCC    67
+block 695 OK bestX   152 bestY   318 bestNCC    63
+block 696 OK bestX   174 bestY   322 bestNCC    94
+block 697 OK bestX   206 bestY   328 bestNCC   100
+block 698 OK bestX   223 bestY   322 bestNCC    78
+block 699 NOT FOUND 
+block 700 OK bestX   270 bestY   328 bestNCC    95
+block 701 OK bestX   294 bestY   318 bestNCC    63
+block 702 OK bestX   318 bestY   318 bestNCC    18
+block 703 OK bestX   349 bestY   321 bestNCC    75
+block 704 OK bestX   366 bestY   327 bestNCC   117
+block 705 OK bestX   390 bestY   326 bestNCC    41
+block 706 OK bestX   414 bestY   327 bestNCC   107
+block 707 OK bestX   438 bestY   325 bestNCC   113
+block 708 OK bestX   463 bestY   324 bestNCC   118
+block 709 OK bestX   490 bestY   321 bestNCC   106
+block 710 OK bestX   510 bestY   323 bestNCC    31
+block 711 OK bestX   539 bestY   323 bestNCC   103
+block 712 OK bestX   559 bestY   326 bestNCC   126
+block 713 OK bestX   586 bestY   321 bestNCC    11
+block 714 OK bestX   609 bestY   324 bestNCC   120
+block 715 OK bestX   632 bestY   326 bestNCC    77
+block 716 OK bestX   654 bestY   327 bestNCC   109
+block 717 OK bestX   679 bestY   319 bestNCC   111
+block 718 OK bestX   706 bestY   325 bestNCC    70
+block 719 OK bestX   729 bestY   323 bestNCC    97
+block 720 OK bestX   754 bestY   325 bestNCC   125
+block 721 OK bestX   778 bestY   325 bestNCC   122
+block 722 OK bestX   806 bestY   322 bestNCC    85
+block 723 OK bestX   829 bestY   323 bestNCC   117
+block 724 OK bestX   846 bestY   327 bestNCC    68
+block 725 OK bestX   878 bestY   323 bestNCC    82
+block 726 OK bestX   895 bestY   325 bestNCC   109
+block 727 OK bestX   927 bestY   323 bestNCC    26
+block 728 OK bestX   942 bestY   324 bestNCC    82
+block 729 OK bestX   966 bestY   328 bestNCC    60
+block 730 OK bestX   993 bestY   320 bestNCC   102
+block 731 OK bestX  1021 bestY   318 bestNCC    86
+block 732 OK bestX  1041 bestY   328 bestNCC   110
+block 733 OK bestX  1069 bestY   328 bestNCC   119
+block 734 NOT FOUND 
+block 735 OK bestX  1116 bestY   321 bestNCC    85
+block 736 OK bestX  1144 bestY   328 bestNCC    33
+block 737 OK bestX  1160 bestY   319 bestNCC   103
+block 738 OK bestX  1182 bestY   318 bestNCC    48
+block 739 OK bestX  1208 bestY   320 bestNCC    49
+block 740 OK bestX  1240 bestY   322 bestNCC    72
+block 741 OK bestX  1264 bestY   320 bestNCC    46
+block 742 OK bestX    16 bestY   343 bestNCC   105
+block 743 OK bestX    39 bestY   351 bestNCC    83
+block 744 OK bestX    64 bestY   352 bestNCC   105
+block 745 OK bestX    88 bestY   350 bestNCC    53
+block 746 OK bestX   105 bestY   351 bestNCC   104
+block 747 OK bestX   136 bestY   352 bestNCC   110
+block 748 OK bestX   153 bestY   342 bestNCC   111
+block 749 OK bestX   179 bestY   348 bestNCC   108
+block 750 OK bestX   208 bestY   350 bestNCC    53
+block 751 OK bestX   222 bestY   351 bestNCC   110
+block 752 OK bestX   247 bestY   350 bestNCC    29
+block 753 OK bestX   275 bestY   342 bestNCC   117
+block 754 OK bestX   294 bestY   350 bestNCC    96
+block 755 OK bestX   320 bestY   352 bestNCC    96
+block 756 OK bestX   346 bestY   342 bestNCC   112
+block 757 OK bestX   368 bestY   342 bestNCC   102
+block 758 OK bestX   396 bestY   345 bestNCC    69
+block 759 OK bestX   424 bestY   352 bestNCC    95
+block 760 OK bestX   438 bestY   348 bestNCC   125
+block 761 OK bestX   469 bestY   342 bestNCC   110
+block 762 OK bestX   486 bestY   346 bestNCC    95
+block 763 OK bestX   516 bestY   344 bestNCC   121
+block 764 OK bestX   535 bestY   344 bestNCC   114
+block 765 OK bestX   560 bestY   346 bestNCC   114
+block 766 OK bestX   587 bestY   345 bestNCC   125
+block 767 OK bestX   612 bestY   352 bestNCC    98
+block 768 OK bestX   640 bestY   343 bestNCC    97
+block 769 OK bestX   654 bestY   351 bestNCC    41
+block 770 OK bestX   687 bestY   352 bestNCC    87
+block 771 OK bestX   702 bestY   349 bestNCC    87
+block 772 OK bestX   729 bestY   349 bestNCC   127
+block 773 OK bestX   756 bestY   347 bestNCC   114
+block 774 OK bestX   779 bestY   348 bestNCC   113
+block 775 OK bestX   803 bestY   350 bestNCC   119
+block 776 OK bestX   830 bestY   344 bestNCC    64
+block 777 OK bestX   850 bestY   342 bestNCC   107
+block 778 OK bestX   875 bestY   352 bestNCC   104
+block 779 OK bestX   897 bestY   343 bestNCC    83
+block 780 OK bestX   924 bestY   348 bestNCC   108
+block 781 OK bestX   942 bestY   345 bestNCC    42
+block 782 OK bestX   966 bestY   352 bestNCC    46
+block 783 OK bestX   991 bestY   344 bestNCC   110
+block 784 OK bestX  1014 bestY   345 bestNCC   118
+block 785 OK bestX  1046 bestY   351 bestNCC    80
+block 786 OK bestX  1072 bestY   352 bestNCC    73
+block 787 OK bestX  1086 bestY   344 bestNCC   118
+block 788 OK bestX  1110 bestY   342 bestNCC    61
+block 789 OK bestX  1134 bestY   346 bestNCC    76
+block 790 OK bestX  1168 bestY   347 bestNCC    88
+block 791 OK bestX  1192 bestY   352 bestNCC    56
+block 792 OK bestX  1215 bestY   343 bestNCC   114
+block 793 OK bestX  1232 bestY   348 bestNCC    98
+block 794 OK bestX  1254 bestY   348 bestNCC    81
+block 795 OK bestX    14 bestY   369 bestNCC    18
+block 796 OK bestX    30 bestY   368 bestNCC    83
+block 797 NOT FOUND 
+block 798 OK bestX    85 bestY   366 bestNCC   113
+block 799 OK bestX   102 bestY   372 bestNCC   100
+block 800 OK bestX   135 bestY   376 bestNCC    97
+block 801 OK bestX   155 bestY   366 bestNCC    68
+block 802 OK bestX   184 bestY   376 bestNCC    84
+block 803 OK bestX   205 bestY   376 bestNCC    86
+block 804 OK bestX   232 bestY   373 bestNCC    63
+block 805 OK bestX   246 bestY   375 bestNCC    34
+block 806 OK bestX   276 bestY   374 bestNCC   122
+block 807 OK bestX   304 bestY   376 bestNCC    35
+block 808 OK bestX   318 bestY   370 bestNCC   112
+block 809 OK bestX   348 bestY   366 bestNCC    84
+block 810 OK bestX   371 bestY   372 bestNCC    84
+block 811 OK bestX   390 bestY   372 bestNCC   109
+block 812 OK bestX   420 bestY   366 bestNCC   126
+block 813 OK bestX   444 bestY   366 bestNCC   103
+block 814 OK bestX   467 bestY   366 bestNCC    70
+block 815 OK bestX   496 bestY   376 bestNCC   112
+block 816 OK bestX   510 bestY   373 bestNCC    96
+block 817 OK bestX   534 bestY   374 bestNCC   113
+block 818 OK bestX   558 bestY   372 bestNCC   105
+block 819 OK bestX   591 bestY   367 bestNCC   122
+block 820 OK bestX   608 bestY   372 bestNCC   122
+block 821 OK bestX   632 bestY   372 bestNCC   124
+block 822 OK bestX   658 bestY   368 bestNCC    93
+block 823 OK bestX   684 bestY   370 bestNCC    48
+block 824 OK bestX   706 bestY   372 bestNCC   126
+block 825 OK bestX   736 bestY   376 bestNCC    47
+block 826 OK bestX   750 bestY   375 bestNCC   119
+block 827 NOT FOUND 
+block 828 OK bestX   798 bestY   374 bestNCC   102
+block 829 OK bestX   826 bestY   369 bestNCC   100
+block 830 OK bestX   847 bestY   375 bestNCC    95
+block 831 OK bestX   870 bestY   375 bestNCC   113
+block 832 OK bestX   902 bestY   375 bestNCC    78
+block 833 OK bestX   928 bestY   371 bestNCC    94
+block 834 OK bestX   945 bestY   366 bestNCC   103
+block 835 OK bestX   966 bestY   368 bestNCC    78
+block 836 OK bestX   991 bestY   366 bestNCC    92
+block 837 OK bestX  1020 bestY   376 bestNCC    66
+block 838 OK bestX  1038 bestY   371 bestNCC   109
+block 839 OK bestX  1063 bestY   367 bestNCC   114
+block 840 OK bestX  1088 bestY   366 bestNCC   102
+block 841 OK bestX  1110 bestY   375 bestNCC     8
+block 842 OK bestX  1143 bestY   367 bestNCC   106
+block 843 OK bestX  1168 bestY   370 bestNCC   109
+block 844 OK bestX  1185 bestY   373 bestNCC    98
+block 845 OK bestX  1206 bestY   373 bestNCC    52
+block 846 OK bestX  1240 bestY   376 bestNCC    71
+block 847 OK bestX  1254 bestY   366 bestNCC    75
+block 848 OK bestX     7 bestY   399 bestNCC    68
+block 849 OK bestX    40 bestY   392 bestNCC   122
+block 850 OK bestX    60 bestY   390 bestNCC    61
+block 851 OK bestX    83 bestY   390 bestNCC    14
+block 852 OK bestX   112 bestY   397 bestNCC    38
+block 853 OK bestX   136 bestY   396 bestNCC   125
+block 854 OK bestX   150 bestY   395 bestNCC   101
+block 855 OK bestX   174 bestY   397 bestNCC   107
+block 856 OK bestX   198 bestY   390 bestNCC   110
+block 857 OK bestX   232 bestY   390 bestNCC     1
+block 858 OK bestX   251 bestY   394 bestNCC   109
+block 859 OK bestX   270 bestY   400 bestNCC    45
+block 860 OK bestX   294 bestY   391 bestNCC   114
+block 861 OK bestX   318 bestY   390 bestNCC    85
+block 862 OK bestX   342 bestY   394 bestNCC    76
+block 863 OK bestX   372 bestY   391 bestNCC   106
+block 864 OK bestX   394 bestY   392 bestNCC   124
+block 865 OK bestX   419 bestY   390 bestNCC    87
+block 866 OK bestX   438 bestY   397 bestNCC    83
+block 867 OK bestX   468 bestY   392 bestNCC    81
+block 868 OK bestX   486 bestY   396 bestNCC   102
+block 869 OK bestX   516 bestY   390 bestNCC   101
+block 870 OK bestX   534 bestY   398 bestNCC   127
+block 871 OK bestX   564 bestY   392 bestNCC   126
+block 872 OK bestX   584 bestY   397 bestNCC    97
+block 873 OK bestX   608 bestY   396 bestNCC   114
+block 874 OK bestX   636 bestY   394 bestNCC   106
+block 875 OK bestX   662 bestY   392 bestNCC   127
+block 876 OK bestX   679 bestY   396 bestNCC    68
+block 877 OK bestX   711 bestY   391 bestNCC   104
+block 878 OK bestX   730 bestY   393 bestNCC   117
+block 879 OK bestX   754 bestY   393 bestNCC    67
+block 880 OK bestX   775 bestY   393 bestNCC    89
+block 881 OK bestX   805 bestY   390 bestNCC    54
+block 882 OK bestX   827 bestY   399 bestNCC    74
+block 883 OK bestX   856 bestY   400 bestNCC    45
+block 884 NOT FOUND 
+block 885 OK bestX   902 bestY   400 bestNCC    43
+block 886 OK bestX   919 bestY   400 bestNCC   102
+block 887 OK bestX   951 bestY   397 bestNCC   110
+block 888 OK bestX   966 bestY   396 bestNCC    98
+block 889 OK bestX  1000 bestY   400 bestNCC    25
+block 890 OK bestX  1024 bestY   391 bestNCC    88
+block 891 OK bestX  1044 bestY   390 bestNCC    89
+block 892 OK bestX  1072 bestY   400 bestNCC    80
+block 893 OK bestX  1092 bestY   390 bestNCC   115
+block 894 OK bestX  1111 bestY   390 bestNCC    93
+block 895 OK bestX  1136 bestY   392 bestNCC    79
+block 896 OK bestX  1158 bestY   400 bestNCC    69
+block 897 OK bestX  1190 bestY   396 bestNCC    95
+block 898 OK bestX  1215 bestY   397 bestNCC    40
+block 899 OK bestX  1234 bestY   399 bestNCC    98
+block 900 OK bestX  1257 bestY   390 bestNCC    92
+block 901 OK bestX     6 bestY   414 bestNCC    66
+block 902 OK bestX    39 bestY   424 bestNCC    83
+block 903 OK bestX    64 bestY   423 bestNCC    90
+block 904 OK bestX    81 bestY   418 bestNCC    36
+block 905 OK bestX   108 bestY   424 bestNCC   103
+block 906 OK bestX   127 bestY   419 bestNCC    96
+block 907 OK bestX   156 bestY   423 bestNCC    59
+block 908 OK bestX   174 bestY   423 bestNCC    72
+block 909 OK bestX   200 bestY   423 bestNCC    64
+block 910 OK bestX   223 bestY   420 bestNCC    92
+block 911 OK bestX   248 bestY   424 bestNCC    62
+block 912 OK bestX   275 bestY   415 bestNCC   109
+block 913 OK bestX   294 bestY   417 bestNCC   116
+block 914 OK bestX   320 bestY   418 bestNCC   109
+block 915 OK bestX   352 bestY   423 bestNCC   114
+block 916 OK bestX   366 bestY   420 bestNCC    79
+block 917 OK bestX   391 bestY   416 bestNCC   122
+block 918 OK bestX   417 bestY   416 bestNCC   102
+block 919 OK bestX   439 bestY   419 bestNCC    88
+block 920 OK bestX   462 bestY   418 bestNCC   106
+block 921 OK bestX   490 bestY   414 bestNCC    96
+block 922 OK bestX   512 bestY   417 bestNCC   121
+block 923 OK bestX   537 bestY   418 bestNCC   125
+block 924 OK bestX   560 bestY   416 bestNCC   100
+block 925 OK bestX   582 bestY   424 bestNCC    95
+block 926 OK bestX   606 bestY   414 bestNCC    97
+block 927 OK bestX   633 bestY   419 bestNCC   127
+block 928 OK bestX   658 bestY   419 bestNCC    91
+block 929 OK bestX   687 bestY   414 bestNCC   112
+block 930 OK bestX   707 bestY   419 bestNCC   119
+block 931 OK bestX   726 bestY   424 bestNCC    92
+block 932 OK bestX   760 bestY   421 bestNCC   117
+block 933 OK bestX   778 bestY   416 bestNCC    97
+block 934 NOT FOUND 
+block 935 OK bestX   822 bestY   423 bestNCC   106
+block 936 OK bestX   852 bestY   424 bestNCC    85
+block 937 OK bestX   871 bestY   417 bestNCC    18
+block 938 OK bestX   903 bestY   420 bestNCC   107
+block 939 OK bestX   928 bestY   424 bestNCC    63
+block 940 OK bestX   946 bestY   422 bestNCC   101
+block 941 OK bestX   976 bestY   424 bestNCC    89
+block 942 OK bestX   999 bestY   419 bestNCC   107
+block 943 OK bestX  1024 bestY   424 bestNCC    45
+block 944 OK bestX  1040 bestY   421 bestNCC    91
+block 945 OK bestX  1068 bestY   414 bestNCC    86
+block 946 OK bestX  1092 bestY   419 bestNCC   107
+block 947 OK bestX  1111 bestY   414 bestNCC    46
+block 948 OK bestX  1136 bestY   420 bestNCC   107
+block 949 OK bestX  1160 bestY   415 bestNCC    96
+block 950 OK bestX  1182 bestY   422 bestNCC    69
+block 951 OK bestX  1208 bestY   423 bestNCC    68
+block 952 OK bestX  1237 bestY   424 bestNCC    90
+block 953 OK bestX  1254 bestY   421 bestNCC    82
+block 954 OK bestX    13 bestY   445 bestNCC   102
+block 955 OK bestX    40 bestY   443 bestNCC    98
+block 956 OK bestX    54 bestY   447 bestNCC    75
+block 957 OK bestX    81 bestY   447 bestNCC    81
+block 958 OK bestX   105 bestY   438 bestNCC    64
+block 959 OK bestX   126 bestY   445 bestNCC    89
+block 960 OK bestX   160 bestY   438 bestNCC    40
+block 961 OK bestX   184 bestY   448 bestNCC    98
+block 962 OK bestX   200 bestY   438 bestNCC   107
+block 963 OK bestX   231 bestY   448 bestNCC   108
+block 964 OK bestX   251 bestY   438 bestNCC   114
+block 965 OK bestX   270 bestY   438 bestNCC    99
+block 966 OK bestX   296 bestY   444 bestNCC    92
+block 967 OK bestX   319 bestY   438 bestNCC    84
+block 968 OK bestX   352 bestY   448 bestNCC   117
+block 969 OK bestX   366 bestY   442 bestNCC   127
+block 970 OK bestX   392 bestY   445 bestNCC    96
+block 971 OK bestX   414 bestY   446 bestNCC   123
+block 972 OK bestX   439 bestY   447 bestNCC    84
+block 973 OK bestX   468 bestY   438 bestNCC    96
+block 974 OK bestX   486 bestY   443 bestNCC    97
+block 975 OK bestX   516 bestY   438 bestNCC   124
+block 976 OK bestX   534 bestY   446 bestNCC   108
+block 977 OK bestX   560 bestY   446 bestNCC    83
+block 978 OK bestX   592 bestY   439 bestNCC    77
+block 979 OK bestX   606 bestY   445 bestNCC   125
+block 980 OK bestX   637 bestY   438 bestNCC   117
+block 981 OK bestX   658 bestY   442 bestNCC    94
+block 982 OK bestX   688 bestY   444 bestNCC   118
+block 983 OK bestX   702 bestY   448 bestNCC    82
+block 984 OK bestX   726 bestY   438 bestNCC    32
+block 985 OK bestX   757 bestY   448 bestNCC    88
+block 986 OK bestX   782 bestY   443 bestNCC    95
+block 987 OK bestX   807 bestY   439 bestNCC    55
+block 988 OK bestX   822 bestY   438 bestNCC    75
+block 989 OK bestX   846 bestY   448 bestNCC    64
+block 990 OK bestX   870 bestY   446 bestNCC   106
+block 991 OK bestX   894 bestY   448 bestNCC    24
+block 992 NOT FOUND 
+block 993 OK bestX   948 bestY   448 bestNCC   108
+block 994 OK bestX   969 bestY   448 bestNCC    21
+block 995 OK bestX   990 bestY   443 bestNCC    91
+block 996 OK bestX  1021 bestY   441 bestNCC    94
+block 997 OK bestX  1048 bestY   443 bestNCC    72
+block 998 OK bestX  1064 bestY   446 bestNCC    75
+block 999 OK bestX  1089 bestY   445 bestNCC    74
+block1000 OK bestX  1111 bestY   438 bestNCC    96
+block1001 OK bestX  1137 bestY   438 bestNCC   116
+block1002 OK bestX  1158 bestY   438 bestNCC    93
+block1003 OK bestX  1185 bestY   438 bestNCC    90
+block1004 OK bestX  1209 bestY   441 bestNCC    60
+block1005 OK bestX  1233 bestY   439 bestNCC    58
+block1006 OK bestX  1256 bestY   441 bestNCC    91
+block1007 OK bestX    16 bestY   468 bestNCC    57
+block1008 OK bestX    36 bestY   462 bestNCC    48
+block1009 OK bestX    54 bestY   471 bestNCC    46
+block1010 OK bestX    78 bestY   467 bestNCC    28
+block1011 OK bestX   110 bestY   464 bestNCC   115
+block1012 OK bestX   126 bestY   471 bestNCC   106
+block1013 OK bestX   153 bestY   472 bestNCC   110
+block1014 OK bestX   174 bestY   467 bestNCC    38
+block1015 OK bestX   198 bestY   471 bestNCC    99
+block1016 OK bestX   229 bestY   471 bestNCC   110
+block1017 OK bestX   254 bestY   470 bestNCC   108
+block1018 OK bestX   270 bestY   472 bestNCC    99
+block1019 OK bestX   304 bestY   472 bestNCC    36
+block1020 OK bestX   318 bestY   464 bestNCC   124
+block1021 OK bestX   344 bestY   463 bestNCC   127
+block1022 OK bestX   366 bestY   472 bestNCC    71
+block1023 OK bestX   399 bestY   470 bestNCC   102
+block1024 OK bestX   414 bestY   469 bestNCC   125
+block1025 OK bestX   444 bestY   465 bestNCC    92
+block1026 OK bestX   462 bestY   468 bestNCC   108
+block1027 OK bestX   490 bestY   463 bestNCC   120
+block1028 OK bestX   510 bestY   466 bestNCC    56
+block1029 OK bestX   537 bestY   469 bestNCC    55
+block1030 OK bestX   566 bestY   472 bestNCC    66
+block1031 OK bestX   586 bestY   465 bestNCC   124
+block1032 OK bestX   607 bestY   468 bestNCC    86
+block1033 OK bestX   630 bestY   470 bestNCC    87
+block1034 OK bestX   663 bestY   468 bestNCC   102
+block1035 OK bestX   681 bestY   467 bestNCC   116
+block1036 OK bestX   710 bestY   471 bestNCC   116
+block1037 OK bestX   730 bestY   466 bestNCC   120
+block1038 OK bestX   760 bestY   469 bestNCC    72
+block1039 OK bestX   776 bestY   472 bestNCC    53
+block1040 OK bestX   798 bestY   463 bestNCC    82
+block1041 OK bestX   822 bestY   472 bestNCC   103
+block1042 OK bestX   852 bestY   463 bestNCC   112
+block1043 OK bestX   880 bestY   469 bestNCC   107
+block1044 OK bestX   895 bestY   468 bestNCC    83
+block1045 OK bestX   918 bestY   468 bestNCC   114
+block1046 OK bestX   942 bestY   472 bestNCC    67
+block1047 OK bestX   976 bestY   472 bestNCC    36
+block1048 OK bestX  1000 bestY   472 bestNCC    83
+block1049 OK bestX  1014 bestY   462 bestNCC    72
+block1050 OK bestX  1044 bestY   472 bestNCC   101
+block1051 OK bestX  1072 bestY   468 bestNCC    47
+block1052 OK bestX  1090 bestY   472 bestNCC    88
+block1053 OK bestX  1110 bestY   463 bestNCC    89
+block1054 OK bestX  1134 bestY   462 bestNCC    43
+block1055 OK bestX  1165 bestY   472 bestNCC   104
+block1056 OK bestX  1182 bestY   465 bestNCC    98
+block1057 OK bestX  1213 bestY   468 bestNCC    73
+block1058 OK bestX  1235 bestY   462 bestNCC    68
+block1059 OK bestX  1262 bestY   466 bestNCC    75
+block1060 OK bestX     6 bestY   491 bestNCC    54
+block1061 OK bestX    35 bestY   486 bestNCC    96
+block1062 OK bestX    64 bestY   494 bestNCC    82
+block1063 OK bestX    78 bestY   486 bestNCC   100
+block1064 OK bestX   103 bestY   496 bestNCC    93
+block1065 OK bestX   126 bestY   488 bestNCC   106
+block1066 OK bestX   160 bestY   494 bestNCC    78
+block1067 OK bestX   181 bestY   487 bestNCC   105
+block1068 OK bestX   199 bestY   491 bestNCC    84
+block1069 OK bestX   226 bestY   486 bestNCC    79
+block1070 OK bestX   247 bestY   486 bestNCC   122
+block1071 OK bestX   270 bestY   493 bestNCC    90
+block1072 OK bestX   294 bestY   490 bestNCC    84
+block1073 OK bestX   318 bestY   489 bestNCC   128
+block1074 OK bestX   345 bestY   488 bestNCC   111
+block1075 OK bestX   367 bestY   489 bestNCC    71
+block1076 OK bestX   394 bestY   486 bestNCC   121
+block1077 OK bestX   414 bestY   487 bestNCC    75
+block1078 OK bestX   440 bestY   489 bestNCC   117
+block1079 OK bestX   472 bestY   494 bestNCC    81
+block1080 OK bestX   494 bestY   491 bestNCC    57
+block1081 OK bestX   519 bestY   488 bestNCC    65
+block1082 OK bestX   537 bestY   486 bestNCC    41
+block1083 OK bestX   558 bestY   492 bestNCC   127
+block1084 OK bestX   583 bestY   492 bestNCC   102
+block1085 OK bestX   606 bestY   492 bestNCC   104
+block1086 OK bestX   630 bestY   486 bestNCC    92
+block1087 OK bestX   660 bestY   496 bestNCC    39
+block1088 OK bestX   678 bestY   496 bestNCC   104
+block1089 OK bestX   710 bestY   490 bestNCC    86
+block1090 OK bestX   726 bestY   486 bestNCC     3
+block1091 OK bestX   759 bestY   487 bestNCC    29
+block1092 OK bestX   784 bestY   487 bestNCC     4
+block1093 OK bestX   803 bestY   486 bestNCC   101
+block1094 OK bestX   822 bestY   486 bestNCC    31
+block1095 OK bestX   847 bestY   493 bestNCC    97
+block1096 OK bestX   870 bestY   486 bestNCC    23
+block1097 OK bestX   900 bestY   488 bestNCC    63
+block1098 OK bestX   926 bestY   486 bestNCC    66
+block1099 OK bestX   948 bestY   491 bestNCC   119
+block1100 OK bestX   975 bestY   493 bestNCC    48
+block1101 OK bestX   998 bestY   492 bestNCC    94
+block1102 OK bestX  1024 bestY   488 bestNCC    83
+block1103 OK bestX  1048 bestY   492 bestNCC    81
+block1104 OK bestX  1067 bestY   496 bestNCC   104
+block1105 OK bestX  1090 bestY   488 bestNCC    90
+block1106 OK bestX  1110 bestY   496 bestNCC    36
+block1107 OK bestX  1141 bestY   488 bestNCC    96
+block1108 OK bestX  1158 bestY   486 bestNCC    88
+block1109 OK bestX  1188 bestY   491 bestNCC    96
+block1110 OK bestX  1207 bestY   494 bestNCC    79
+block1111 OK bestX  1234 bestY   495 bestNCC   101
+block1112 OK bestX  1264 bestY   486 bestNCC    71
+block1113 OK bestX     6 bestY   510 bestNCC   101
+block1114 OK bestX    37 bestY   520 bestNCC    84
+block1115 OK bestX    64 bestY   514 bestNCC   116
+block1116 OK bestX    88 bestY   515 bestNCC    78
+block1117 OK bestX   102 bestY   519 bestNCC    61
+block1118 OK bestX   131 bestY   510 bestNCC    95
+block1119 OK bestX   151 bestY   519 bestNCC   102
+block1120 OK bestX   182 bestY   511 bestNCC    83
+block1121 OK bestX   206 bestY   511 bestNCC    82
+block1122 OK bestX   226 bestY   512 bestNCC    73
+block1123 OK bestX   246 bestY   510 bestNCC    90
+block1124 OK bestX   271 bestY   515 bestNCC    91
+block1125 OK bestX   295 bestY   510 bestNCC   119
+block1126 OK bestX   320 bestY   513 bestNCC    46
+block1127 OK bestX   342 bestY   514 bestNCC    77
+block1128 OK bestX   366 bestY   516 bestNCC   115
+block1129 OK bestX   390 bestY   516 bestNCC    51
+block1130 OK bestX   416 bestY   510 bestNCC    97
+block1131 OK bestX   438 bestY   513 bestNCC    97
+block1132 OK bestX   462 bestY   513 bestNCC   122
+block1133 OK bestX   489 bestY   510 bestNCC    51
+block1134 OK bestX   511 bestY   520 bestNCC    91
+block1135 OK bestX   538 bestY   510 bestNCC   127
+block1136 OK bestX   558 bestY   510 bestNCC    84
+block1137 OK bestX   590 bestY   517 bestNCC    94
+block1138 OK bestX   606 bestY   520 bestNCC    96
+block1139 OK bestX   630 bestY   517 bestNCC   114
+block1140 OK bestX   658 bestY   516 bestNCC   114
+block1141 OK bestX   688 bestY   519 bestNCC    26
+block1142 OK bestX   705 bestY   514 bestNCC   113
+block1143 OK bestX   726 bestY   510 bestNCC    41
+block1144 OK bestX   756 bestY   518 bestNCC   115
+block1145 OK bestX   774 bestY   520 bestNCC    85
+block1146 OK bestX   808 bestY   514 bestNCC    59
+block1147 OK bestX   832 bestY   514 bestNCC    70
+block1148 OK bestX   856 bestY   510 bestNCC   102
+block1149 OK bestX   873 bestY   512 bestNCC    18
+block1150 OK bestX   903 bestY   520 bestNCC    76
+block1151 OK bestX   918 bestY   515 bestNCC    41
+block1152 OK bestX   946 bestY   510 bestNCC    10
+block1153 OK bestX   974 bestY   519 bestNCC    85
+block1154 OK bestX   990 bestY   519 bestNCC    97
+block1155 OK bestX  1017 bestY   519 bestNCC    99
+block1156 OK bestX  1045 bestY   510 bestNCC    61
+block1157 OK bestX  1070 bestY   520 bestNCC   119
+block1158 OK bestX  1086 bestY   516 bestNCC    92
+block1159 OK bestX  1111 bestY   517 bestNCC    97
+block1160 OK bestX  1136 bestY   518 bestNCC    41
+block1161 OK bestX  1158 bestY   510 bestNCC    56
+block1162 OK bestX  1192 bestY   519 bestNCC    42
+block1163 OK bestX  1207 bestY   510 bestNCC    57
+block1164 OK bestX  1230 bestY   515 bestNCC    82
+block1165 OK bestX  1261 bestY   516 bestNCC    99
+block1166 OK bestX     7 bestY   544 bestNCC    18
+block1167 OK bestX    34 bestY   540 bestNCC    31
+block1168 OK bestX    61 bestY   541 bestNCC   114
+block1169 OK bestX    83 bestY   544 bestNCC   115
+block1170 OK bestX   105 bestY   534 bestNCC    70
+block1171 OK bestX   131 bestY   544 bestNCC    55
+block1172 OK bestX   160 bestY   534 bestNCC    18
+block1173 OK bestX   174 bestY   544 bestNCC    60
+block1174 OK bestX   199 bestY   536 bestNCC    64
+block1175 OK bestX   231 bestY   540 bestNCC    41
+block1176 OK bestX   246 bestY   544 bestNCC    62
+block1177 OK bestX   277 bestY   544 bestNCC   125
+block1178 OK bestX   294 bestY   535 bestNCC   128
+block1179 OK bestX   321 bestY   534 bestNCC    90
+block1180 OK bestX   344 bestY   534 bestNCC   124
+block1181 OK bestX   368 bestY   534 bestNCC   113
+block1182 OK bestX   397 bestY   544 bestNCC   104
+block1183 OK bestX   424 bestY   544 bestNCC    13
+block1184 OK bestX   438 bestY   534 bestNCC   118
+block1185 OK bestX   462 bestY   538 bestNCC    86
+block1186 OK bestX   492 bestY   534 bestNCC    78
+block1187 OK bestX   513 bestY   535 bestNCC   117
+block1188 OK bestX   544 bestY   536 bestNCC    81
+block1189 OK bestX   560 bestY   537 bestNCC   114
+block1190 OK bestX   582 bestY   534 bestNCC   124
+block1191 OK bestX   606 bestY   540 bestNCC    77
+block1192 OK bestX   634 bestY   536 bestNCC    93
+block1193 OK bestX   664 bestY   535 bestNCC    97
+block1194 OK bestX   679 bestY   541 bestNCC    89
+block1195 OK bestX   712 bestY   542 bestNCC    54
+block1196 OK bestX   736 bestY   540 bestNCC    36
+block1197 OK bestX   751 bestY   535 bestNCC    48
+block1198 OK bestX   776 bestY   535 bestNCC    44
+block1199 OK bestX   808 bestY   543 bestNCC    84
+block1200 OK bestX   822 bestY   541 bestNCC    55
+block1201 OK bestX   846 bestY   543 bestNCC   103
+block1202 OK bestX   875 bestY   537 bestNCC    73
+block1203 OK bestX   895 bestY   544 bestNCC   104
+block1204 OK bestX   921 bestY   540 bestNCC   106
+block1205 OK bestX   942 bestY   543 bestNCC     9
+block1206 OK bestX   966 bestY   540 bestNCC    59
+block1207 OK bestX   992 bestY   543 bestNCC    52
+block1208 OK bestX  1015 bestY   544 bestNCC    99
+block1209 OK bestX  1038 bestY   540 bestNCC    91
+block1210 OK bestX  1064 bestY   534 bestNCC    85
+block1211 OK bestX  1086 bestY   534 bestNCC    66
+block1212 OK bestX  1116 bestY   534 bestNCC    91
+block1213 OK bestX  1142 bestY   540 bestNCC    92
+block1214 OK bestX  1160 bestY   535 bestNCC    97
+block1215 OK bestX  1184 bestY   544 bestNCC   112
+block1216 OK bestX  1216 bestY   544 bestNCC    86
+block1217 OK bestX  1230 bestY   534 bestNCC   107
+block1218 OK bestX  1260 bestY   534 bestNCC   100
+block1219 OK bestX    16 bestY   559 bestNCC    96
+block1220 OK bestX    30 bestY   567 bestNCC   115
+block1221 OK bestX    55 bestY   562 bestNCC   104
+block1222 OK bestX    78 bestY   568 bestNCC    66
+block1223 OK bestX   102 bestY   567 bestNCC    89
+block1224 OK bestX   133 bestY   562 bestNCC    20
+block1225 OK bestX   152 bestY   568 bestNCC   115
+block1226 OK bestX   177 bestY   560 bestNCC    96
+block1227 OK bestX   208 bestY   566 bestNCC   100
+block1228 OK bestX   222 bestY   562 bestNCC   114
+block1229 OK bestX   246 bestY   567 bestNCC    93
+block1230 OK bestX   270 bestY   558 bestNCC   127
+block1231 OK bestX   294 bestY   560 bestNCC   116
+block1232 OK bestX   320 bestY   562 bestNCC    45
+block1233 OK bestX   345 bestY   558 bestNCC   118
+block1234 OK bestX   366 bestY   559 bestNCC    83
+block1235 OK bestX   390 bestY   560 bestNCC   115
+block1236 OK bestX   424 bestY   568 bestNCC    79
+block1237 OK bestX   439 bestY   559 bestNCC    98
+block1238 OK bestX   470 bestY   563 bestNCC    65
+block1239 OK bestX   486 bestY   566 bestNCC    71
+block1240 OK bestX   513 bestY   558 bestNCC   127
+block1241 OK bestX   534 bestY   564 bestNCC   106
+block1242 OK bestX   558 bestY   563 bestNCC    92
+block1243 OK bestX   588 bestY   558 bestNCC    67
+block1244 OK bestX   606 bestY   566 bestNCC    60
+block1245 OK bestX   636 bestY   561 bestNCC    88
+block1246 OK bestX   657 bestY   558 bestNCC   102
+block1247 OK bestX   684 bestY   564 bestNCC    94
+block1248 OK bestX   702 bestY   568 bestNCC    72
+block1249 OK bestX   726 bestY   558 bestNCC   121
+block1250 OK bestX   758 bestY   558 bestNCC   105
+block1251 OK bestX   776 bestY   563 bestNCC    95
+block1252 OK bestX   802 bestY   565 bestNCC    98
+block1253 OK bestX   826 bestY   561 bestNCC   104
+block1254 OK bestX   846 bestY   567 bestNCC    33
+block1255 OK bestX   875 bestY   567 bestNCC    85
+block1256 OK bestX   904 bestY   564 bestNCC    90
+block1257 OK bestX   922 bestY   564 bestNCC   104
+block1258 OK bestX   942 bestY   567 bestNCC   108
+block1259 OK bestX   969 bestY   567 bestNCC    78
+block1260 OK bestX   994 bestY   567 bestNCC    79
+block1261 OK bestX  1023 bestY   560 bestNCC   106
+block1262 OK bestX  1045 bestY   567 bestNCC    41
+block1263 OK bestX  1071 bestY   568 bestNCC   101
+block1264 OK bestX  1086 bestY   562 bestNCC    22
+block1265 OK bestX  1120 bestY   568 bestNCC    42
+block1266 OK bestX  1134 bestY   561 bestNCC    73
+block1267 OK bestX  1164 bestY   565 bestNCC    78
+block1268 OK bestX  1184 bestY   566 bestNCC   120
+block1269 OK bestX  1206 bestY   568 bestNCC    88
+block1270 NOT FOUND 
+block1271 OK bestX  1260 bestY   568 bestNCC    98
+block1272 OK bestX     9 bestY   588 bestNCC   121
+block1273 OK bestX    36 bestY   591 bestNCC    78
+block1274 OK bestX    54 bestY   583 bestNCC    92
+block1275 OK bestX    84 bestY   588 bestNCC    78
+block1276 OK bestX   102 bestY   588 bestNCC    29
+block1277 OK bestX   126 bestY   592 bestNCC    65
+block1278 OK bestX   160 bestY   592 bestNCC   104
+block1279 OK bestX   174 bestY   582 bestNCC   113
+block1280 OK bestX   208 bestY   592 bestNCC    92
+block1281 OK bestX   222 bestY   588 bestNCC    78
+block1282 OK bestX   250 bestY   592 bestNCC   126
+block1283 OK bestX   270 bestY   582 bestNCC   116
+block1284 OK bestX   304 bestY   592 bestNCC    32
+block1285 OK bestX   319 bestY   583 bestNCC   126
+block1286 OK bestX   342 bestY   583 bestNCC    98
+block1287 OK bestX   376 bestY   586 bestNCC   115
+block1288 OK bestX   390 bestY   582 bestNCC   107
+block1289 OK bestX   414 bestY   582 bestNCC   110
+block1290 OK bestX   440 bestY   582 bestNCC    49
+block1291 OK bestX   462 bestY   584 bestNCC   107
+block1292 OK bestX   487 bestY   583 bestNCC   123
+block1293 OK bestX   510 bestY   585 bestNCC   118
+block1294 OK bestX   544 bestY   592 bestNCC   120
+block1295 OK bestX   558 bestY   583 bestNCC   114
+block1296 OK bestX   591 bestY   589 bestNCC    90
+block1297 OK bestX   616 bestY   586 bestNCC    99
+block1298 OK bestX   632 bestY   590 bestNCC   102
+block1299 OK bestX   655 bestY   588 bestNCC   121
+block1300 OK bestX   678 bestY   591 bestNCC    95
+block1301 OK bestX   712 bestY   589 bestNCC    46
+block1302 OK bestX   726 bestY   592 bestNCC   102
+block1303 OK bestX   750 bestY   591 bestNCC    69
+block1304 OK bestX   774 bestY   582 bestNCC    50
+block1305 OK bestX   803 bestY   590 bestNCC    68
+block1306 OK bestX   825 bestY   589 bestNCC    90
+block1307 OK bestX   856 bestY   592 bestNCC    99
+block1308 OK bestX   872 bestY   590 bestNCC   119
+block1309 OK bestX   903 bestY   585 bestNCC    62
+block1310 OK bestX   920 bestY   585 bestNCC    92
+block1311 OK bestX   942 bestY   586 bestNCC    23
+block1312 OK bestX   966 bestY   591 bestNCC    79
+block1313 OK bestX   990 bestY   591 bestNCC    64
+block1314 OK bestX  1014 bestY   591 bestNCC    85
+block1315 OK bestX  1039 bestY   582 bestNCC    76
+block1316 OK bestX  1070 bestY   591 bestNCC    95
+block1317 OK bestX  1086 bestY   590 bestNCC   108
+block1318 OK bestX  1112 bestY   582 bestNCC    97
+block1319 OK bestX  1136 bestY   591 bestNCC    74
+block1320 OK bestX  1158 bestY   583 bestNCC    20
+block1321 OK bestX  1182 bestY   586 bestNCC    95
+block1322 OK bestX  1212 bestY   582 bestNCC    59
+block1323 OK bestX  1239 bestY   583 bestNCC   105
+block1324 OK bestX  1264 bestY   591 bestNCC    50
+block1325 OK bestX    15 bestY   616 bestNCC    67
+block1326 OK bestX    36 bestY   606 bestNCC   106
+block1327 NOT FOUND 
+block1328 OK bestX    78 bestY   606 bestNCC   105
+block1329 OK bestX   106 bestY   608 bestNCC    83
+block1330 OK bestX   134 bestY   616 bestNCC    26
+block1331 OK bestX   152 bestY   609 bestNCC   103
+block1332 OK bestX   180 bestY   606 bestNCC    77
+block1333 OK bestX   208 bestY   608 bestNCC    72
+block1334 OK bestX   222 bestY   606 bestNCC    50
+block1335 OK bestX   246 bestY   606 bestNCC    96
+block1336 OK bestX   273 bestY   609 bestNCC   109
+block1337 OK bestX   296 bestY   606 bestNCC   126
+block1338 OK bestX   323 bestY   610 bestNCC   105
+block1339 OK bestX   342 bestY   609 bestNCC    98
+block1340 OK bestX   366 bestY   606 bestNCC   103
+block1341 OK bestX   391 bestY   606 bestNCC   116
+block1342 OK bestX   420 bestY   611 bestNCC    50
+block1343 OK bestX   439 bestY   609 bestNCC    75
+block1344 OK bestX   462 bestY   606 bestNCC   121
+block1345 OK bestX   495 bestY   608 bestNCC    84
+block1346 OK bestX   510 bestY   607 bestNCC   107
+block1347 OK bestX   540 bestY   608 bestNCC   106
+block1348 OK bestX   564 bestY   612 bestNCC   111
+block1349 OK bestX   582 bestY   616 bestNCC    83
+block1350 OK bestX   606 bestY   612 bestNCC    54
+block1351 OK bestX   631 bestY   615 bestNCC    85
+block1352 OK bestX   660 bestY   608 bestNCC   105
+block1353 OK bestX   678 bestY   612 bestNCC    70
+block1354 OK bestX   708 bestY   610 bestNCC    49
+block1355 OK bestX   730 bestY   606 bestNCC    44
+block1356 OK bestX   757 bestY   606 bestNCC    71
+block1357 OK bestX   775 bestY   608 bestNCC    77
+block1358 OK bestX   800 bestY   610 bestNCC    95
+block1359 OK bestX   831 bestY   607 bestNCC   110
+block1360 OK bestX   846 bestY   612 bestNCC    64
+block1361 OK bestX   872 bestY   610 bestNCC   114
+block1362 OK bestX   899 bestY   607 bestNCC    69
+block1363 OK bestX   918 bestY   614 bestNCC   109
+block1364 OK bestX   942 bestY   614 bestNCC    59
+block1365 OK bestX   967 bestY   610 bestNCC   117
+block1366 OK bestX   990 bestY   615 bestNCC    79
+block1367 OK bestX  1014 bestY   615 bestNCC   124
+block1368 OK bestX  1038 bestY   607 bestNCC    64
+block1369 OK bestX  1062 bestY   612 bestNCC    59
+block1370 OK bestX  1092 bestY   607 bestNCC   104
+block1371 OK bestX  1120 bestY   615 bestNCC   117
+block1372 OK bestX  1141 bestY   616 bestNCC    41
+block1373 OK bestX  1168 bestY   610 bestNCC    97
+block1374 OK bestX  1192 bestY   611 bestNCC   104
+block1375 OK bestX  1207 bestY   614 bestNCC    88
+block1376 NOT FOUND 
+block1377 OK bestX  1264 bestY   616 bestNCC    58
+block1378 OK bestX    11 bestY   635 bestNCC   103
+block1379 OK bestX    30 bestY   636 bestNCC   108
+block1380 OK bestX    64 bestY   637 bestNCC    97
+block1381 NOT FOUND 
+block1382 OK bestX   102 bestY   632 bestNCC    36
+block1383 OK bestX   127 bestY   630 bestNCC    76
+block1384 OK bestX   150 bestY   634 bestNCC    73
+block1385 OK bestX   184 bestY   637 bestNCC    28
+block1386 OK bestX   202 bestY   632 bestNCC    57
+block1387 OK bestX   230 bestY   630 bestNCC   125
+block1388 OK bestX   256 bestY   632 bestNCC    52
+block1389 OK bestX   270 bestY   636 bestNCC   104
+block1390 OK bestX   294 bestY   640 bestNCC   119
+block1391 OK bestX   328 bestY   640 bestNCC     3
+block1392 OK bestX   351 bestY   640 bestNCC    73
+block1393 OK bestX   366 bestY   636 bestNCC   114
+block1394 OK bestX   390 bestY   630 bestNCC   121
+block1395 OK bestX   421 bestY   640 bestNCC    77
+block1396 OK bestX   440 bestY   637 bestNCC    40
+block1397 OK bestX   462 bestY   630 bestNCC   126
+block1398 OK bestX   486 bestY   630 bestNCC   120
+block1399 OK bestX   510 bestY   636 bestNCC   124
+block1400 OK bestX   535 bestY   635 bestNCC    33
+block1401 OK bestX   560 bestY   640 bestNCC    29
+block1402 OK bestX   588 bestY   640 bestNCC    25
+block1403 OK bestX   606 bestY   637 bestNCC   112
+block1404 OK bestX   637 bestY   630 bestNCC   102
+block1405 OK bestX   660 bestY   640 bestNCC    92
+block1406 OK bestX   678 bestY   630 bestNCC   112
+block1407 OK bestX   704 bestY   636 bestNCC    26
+block1408 OK bestX   734 bestY   640 bestNCC    88
+block1409 OK bestX   759 bestY   630 bestNCC    84
+block1410 OK bestX   774 bestY   640 bestNCC    93
+block1411 OK bestX   798 bestY   638 bestNCC    85
+block1412 OK bestX   828 bestY   632 bestNCC    96
+block1413 OK bestX   852 bestY   636 bestNCC   102
+block1414 OK bestX   874 bestY   632 bestNCC    74
+block1415 OK bestX   894 bestY   631 bestNCC   119
+block1416 OK bestX   918 bestY   630 bestNCC    70
+block1417 OK bestX   942 bestY   639 bestNCC    95
+block1418 OK bestX   966 bestY   630 bestNCC    48
+block1419 OK bestX   990 bestY   630 bestNCC   106
+block1420 OK bestX  1015 bestY   637 bestNCC    97
+block1421 OK bestX  1038 bestY   630 bestNCC    51
+block1422 OK bestX  1062 bestY   634 bestNCC    64
+block1423 OK bestX  1090 bestY   639 bestNCC    98
+block1424 OK bestX  1111 bestY   638 bestNCC   101
+block1425 OK bestX  1137 bestY   632 bestNCC    67
+block1426 OK bestX  1168 bestY   632 bestNCC    86
+block1427 OK bestX  1184 bestY   631 bestNCC    96
+block1428 OK bestX  1208 bestY   635 bestNCC    60
+block1429 OK bestX  1240 bestY   635 bestNCC    77
+block1430 OK bestX  1255 bestY   640 bestNCC    37
+block1431 OK bestX    10 bestY   655 bestNCC   119
+block1432 OK bestX    30 bestY   664 bestNCC    55
+block1433 OK bestX    54 bestY   662 bestNCC    85
+block1434 OK bestX    78 bestY   664 bestNCC    98
+block1435 OK bestX   112 bestY   654 bestNCC    79
+block1436 OK bestX   126 bestY   654 bestNCC    73
+block1437 OK bestX   154 bestY   659 bestNCC    87
+block1438 OK bestX   174 bestY   659 bestNCC    70
+block1439 OK bestX   198 bestY   654 bestNCC    90
+block1440 OK bestX   231 bestY   664 bestNCC    94
+block1441 OK bestX   256 bestY   661 bestNCC   109
+block1442 OK bestX   271 bestY   656 bestNCC   125
+block1443 OK bestX   298 bestY   655 bestNCC   102
+block1444 OK bestX   328 bestY   664 bestNCC    90
+block1445 OK bestX   343 bestY   654 bestNCC   120
+block1446 OK bestX   366 bestY   654 bestNCC   119
+block1447 OK bestX   399 bestY   662 bestNCC    85
+block1448 OK bestX   415 bestY   658 bestNCC    77
+block1449 OK bestX   438 bestY   654 bestNCC   119
+block1450 OK bestX   465 bestY   654 bestNCC    53
+block1451 OK bestX   487 bestY   655 bestNCC   116
+block1452 OK bestX   520 bestY   661 bestNCC   104
+block1453 OK bestX   536 bestY   663 bestNCC   114
+block1454 OK bestX   560 bestY   654 bestNCC    91
+block1455 OK bestX   592 bestY   654 bestNCC    84
+block1456 OK bestX   606 bestY   664 bestNCC    95
+block1457 OK bestX   632 bestY   661 bestNCC    53
+block1458 OK bestX   664 bestY   654 bestNCC    37
+block1459 OK bestX   678 bestY   658 bestNCC    65
+block1460 OK bestX   712 bestY   656 bestNCC    90
+block1461 OK bestX   735 bestY   654 bestNCC    42
+block1462 OK bestX   750 bestY   659 bestNCC   102
+block1463 OK bestX   776 bestY   664 bestNCC    27
+block1464 OK bestX   807 bestY   657 bestNCC    26
+block1465 OK bestX   822 bestY   663 bestNCC   112
+block1466 OK bestX   849 bestY   654 bestNCC    86
+block1467 OK bestX   870 bestY   663 bestNCC    92
+block1468 OK bestX   902 bestY   661 bestNCC   113
+block1469 OK bestX   922 bestY   654 bestNCC    89
+block1470 OK bestX   950 bestY   662 bestNCC   115
+block1471 OK bestX   972 bestY   663 bestNCC    59
+block1472 OK bestX   996 bestY   657 bestNCC    60
+block1473 OK bestX  1014 bestY   659 bestNCC    86
+block1474 OK bestX  1038 bestY   654 bestNCC    92
+block1475 OK bestX  1062 bestY   664 bestNCC    69
+block1476 OK bestX  1092 bestY   654 bestNCC    95
+block1477 OK bestX  1117 bestY   654 bestNCC    60
+block1478 OK bestX  1134 bestY   654 bestNCC    88
+block1479 OK bestX  1158 bestY   662 bestNCC    55
+block1480 OK bestX  1186 bestY   660 bestNCC    35
+block1481 OK bestX  1206 bestY   657 bestNCC   108
+block1482 OK bestX  1236 bestY   659 bestNCC    88
+block1483 OK bestX  1255 bestY   654 bestNCC    68
+block1484 OK bestX    12 bestY   688 bestNCC   106
+block1485 OK bestX    30 bestY   686 bestNCC    67
+block1486 OK bestX    62 bestY   688 bestNCC   102
+block1487 OK bestX    88 bestY   688 bestNCC    58
+block1488 OK bestX   103 bestY   685 bestNCC   111
+block1489 OK bestX   134 bestY   685 bestNCC   100
+block1490 OK bestX   154 bestY   684 bestNCC   107
+block1491 OK bestX   184 bestY   685 bestNCC    83
+block1492 OK bestX   204 bestY   679 bestNCC   118
+block1493 OK bestX   222 bestY   678 bestNCC    96
+block1494 OK bestX   246 bestY   678 bestNCC   126
+block1495 OK bestX   272 bestY   687 bestNCC   106
+block1496 OK bestX   294 bestY   679 bestNCC    61
+block1497 OK bestX   319 bestY   682 bestNCC    86
+block1498 OK bestX   344 bestY   684 bestNCC    62
+block1499 OK bestX   366 bestY   686 bestNCC   101
+block1500 OK bestX   390 bestY   688 bestNCC    78
+block1501 OK bestX   424 bestY   680 bestNCC    98
+block1502 OK bestX   438 bestY   678 bestNCC   120
+block1503 OK bestX   462 bestY   678 bestNCC    87
+block1504 OK bestX   486 bestY   683 bestNCC   126
+block1505 OK bestX   511 bestY   678 bestNCC    99
+block1506 OK bestX   534 bestY   684 bestNCC    94
+block1507 OK bestX   560 bestY   688 bestNCC   112
+block1508 OK bestX   592 bestY   687 bestNCC    65
+block1509 OK bestX   608 bestY   678 bestNCC    97
+block1510 OK bestX   630 bestY   684 bestNCC   109
+block1511 OK bestX   654 bestY   687 bestNCC   102
+block1512 OK bestX   684 bestY   686 bestNCC    71
+block1513 OK bestX   712 bestY   679 bestNCC    55
+block1514 OK bestX   734 bestY   678 bestNCC    72
+block1515 OK bestX   759 bestY   687 bestNCC    92
+block1516 OK bestX   774 bestY   687 bestNCC   105
+block1517 OK bestX   798 bestY   687 bestNCC    24
+block1518 OK bestX   832 bestY   679 bestNCC    94
+block1519 OK bestX   849 bestY   687 bestNCC   106
+block1520 OK bestX   880 bestY   687 bestNCC    59
+block1521 OK bestX   894 bestY   678 bestNCC    98
+block1522 OK bestX   926 bestY   678 bestNCC    92
+block1523 OK bestX   946 bestY   687 bestNCC    34
+block1524 OK bestX   976 bestY   680 bestNCC    59
+block1525 OK bestX   994 bestY   684 bestNCC    36
+block1526 OK bestX  1022 bestY   683 bestNCC    75
+block1527 OK bestX  1038 bestY   687 bestNCC    95
+block1528 OK bestX  1062 bestY   684 bestNCC    75
+block1529 OK bestX  1088 bestY   679 bestNCC    71
+block1530 OK bestX  1118 bestY   686 bestNCC    97
+block1531 OK bestX  1141 bestY   688 bestNCC    88
+block1532 OK bestX  1158 bestY   678 bestNCC    71
+block1533 OK bestX  1192 bestY   685 bestNCC    92
+block1534 OK bestX  1216 bestY   682 bestNCC    87
+block1535 OK bestX  1240 bestY   686 bestNCC   101
+block1536 OK bestX  1254 bestY   688 bestNCC    53
+block1537 OK bestX     7 bestY   711 bestNCC   108
+block1538 OK bestX    33 bestY   710 bestNCC   110
+block1539 OK bestX    54 bestY   709 bestNCC    79
+block1540 OK bestX    80 bestY   711 bestNCC    92
+block1541 OK bestX   105 bestY   702 bestNCC    68
+block1542 OK bestX   135 bestY   704 bestNCC    99
+block1543 OK bestX   151 bestY   703 bestNCC   103
+block1544 OK bestX   184 bestY   710 bestNCC   114
+block1545 OK bestX   198 bestY   702 bestNCC   102
+block1546 OK bestX   230 bestY   704 bestNCC    22
+block1547 OK bestX   246 bestY   702 bestNCC   122
+block1548 OK bestX   276 bestY   705 bestNCC   102
+block1549 OK bestX   304 bestY   711 bestNCC    73
+block1550 OK bestX   318 bestY   705 bestNCC    77
+block1551 OK bestX   348 bestY   712 bestNCC    83
+block1552 OK bestX   366 bestY   702 bestNCC   106
+block1553 OK bestX   393 bestY   711 bestNCC    93
+block1554 OK bestX   414 bestY   702 bestNCC    88
+block1555 OK bestX   448 bestY   712 bestNCC    54
+block1556 OK bestX   465 bestY   712 bestNCC   107
+block1557 OK bestX   495 bestY   704 bestNCC   104
+block1558 OK bestX   520 bestY   708 bestNCC    66
+block1559 OK bestX   539 bestY   703 bestNCC    97
+block1560 OK bestX   564 bestY   712 bestNCC    73
+block1561 OK bestX   589 bestY   702 bestNCC   102
+block1562 OK bestX   606 bestY   708 bestNCC    89
+block1563 OK bestX   630 bestY   706 bestNCC    56
+block1564 OK bestX   654 bestY   709 bestNCC     7
+block1565 OK bestX   688 bestY   706 bestNCC    67
+block1566 OK bestX   703 bestY   707 bestNCC    43
+block1567 OK bestX   730 bestY   703 bestNCC     7
+block1568 OK bestX   750 bestY   710 bestNCC    62
+block1569 OK bestX   775 bestY   708 bestNCC   104
+block1570 OK bestX   800 bestY   702 bestNCC    75
+block1571 OK bestX   832 bestY   710 bestNCC    36
+block1572 OK bestX   846 bestY   708 bestNCC   105
+block1573 OK bestX   871 bestY   707 bestNCC    87
+block1574 OK bestX   904 bestY   712 bestNCC    38
+block1575 OK bestX   920 bestY   702 bestNCC    49
+block1576 OK bestX   944 bestY   708 bestNCC    76
+block1577 OK bestX   966 bestY   705 bestNCC   106
+block1578 OK bestX   991 bestY   707 bestNCC    84
+block1579 OK bestX  1014 bestY   710 bestNCC    99
+block1580 OK bestX  1048 bestY   709 bestNCC     2
+block1581 OK bestX  1067 bestY   709 bestNCC    68
+block1582 OK bestX  1095 bestY   703 bestNCC    81
+block1583 OK bestX  1110 bestY   712 bestNCC    71
+block1584 OK bestX  1136 bestY   703 bestNCC    99
+block1585 OK bestX  1167 bestY   702 bestNCC    88
+block1586 OK bestX  1182 bestY   702 bestNCC    47
+block1587 OK bestX  1213 bestY   710 bestNCC   111
+block1588 OK bestX  1230 bestY   712 bestNCC    99
+block1589 OK bestX  1255 bestY   708 bestNCC    94

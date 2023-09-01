@@ -1,0 +1,406 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <dlfcn.h>
+#include <stdarg.h>
+#include <string.h>
+
+#include "test_main.h"
+#include "test_capi_v2.h"
+
+#include "capi_v2_custom_dummy_ecns.h"
+
+#ifndef _DEBUG
+#define _DEBUG
+#endif
+#include "HAP_farf.h"
+
+#define TEST_SUCCESS 0
+#define TEST_FAILURE 1
+
+#define TRY(exception, func) \
+		if (TEST_SUCCESS != (exception = func)) {\
+			goto exception##bail; \
+		}
+
+#define THROW(exception, errno) \
+		exception = errno; \
+		goto exception##bail;
+
+#define CATCH(exception) exception##bail: if (exception != TEST_SUCCESS)
+
+
+
+typedef struct
+{
+	char* input_filename;
+	char* input_ref_filename;
+	char* output_filename;
+	char* config_filename;
+}
+args_t;
+
+void get_eargs(
+		int32_t argc,
+		char* argv[],
+		args_t* input_args
+);
+
+#ifdef __V_DYNAMIC__
+int dll_test(args_t* input_args, capi_v2_proplist_t* init_set_properties,
+		capi_v2_proplist_t* static_properties)
+{
+	void* h = 0;
+	//int (*pfn)(void) = 0;
+	const char* cpszmodname = "capi_v2_dummy_ecns.so";
+
+	const char* cpsz_sm_get_static_properties = "capi_v2_custom_dummy_sm_ecns_get_static_properties";
+	const char* cpsz_sm_init = "capi_v2_custom_dummy_sm_ecns_init";
+
+	const char* cpsz_dm_get_static_properties = "capi_v2_custom_dummy_dm_ecns_get_static_properties";
+	const char* cpsz_dm_init = "capi_v2_custom_dummy_dm_ecns_init";
+
+	const char* cpsz_qm_get_static_properties = "capi_v2_custom_dummy_qm_ecns_get_static_properties";
+	const char* cpsz_qm_init = "capi_v2_custom_dummy_qm_ecns_init";
+
+
+	capi_v2_get_static_properties_f sm_get_static_properties_f = 0;
+	capi_v2_init_f sm_init_f = 0;
+
+	capi_v2_get_static_properties_f dm_get_static_properties_f = 0;
+	capi_v2_init_f dm_init_f = 0;
+
+	capi_v2_get_static_properties_f qm_get_static_properties_f = 0;
+	capi_v2_init_f qm_init_f = 0;
+
+	int err = TEST_SUCCESS;
+
+	FARF(HIGH, "-- start dll test --                                                ");
+
+	FARF(HIGH, "attempt to load   %s                               ", cpszmodname);
+	h = dlopen(cpszmodname, RTLD_NOW);
+	if (0 == h)   {
+		FARF(HIGH, "dlopen %s failed %s                           ", cpszmodname, dlerror());
+		THROW(err, TEST_FAILURE);
+	}
+
+	sm_get_static_properties_f = (capi_v2_get_static_properties_f)dlsym(h, cpsz_sm_get_static_properties);
+	if (0 == sm_get_static_properties_f)   {
+		FARF(HIGH, "dlsym %s failed %s                              ", cpsz_sm_get_static_properties, dlerror());
+		THROW(err, TEST_FAILURE);
+	}
+	sm_init_f = (capi_v2_init_f)dlsym(h, cpsz_sm_init);
+	if (0 == sm_init_f)   {
+		FARF(HIGH, "dlsym %s failed %s                              ", cpsz_sm_init, dlerror());
+		THROW(err, TEST_FAILURE);
+	}
+
+	dm_get_static_properties_f = (capi_v2_get_static_properties_f)dlsym(h, cpsz_dm_get_static_properties);
+	if (0 == dm_get_static_properties_f)   {
+		FARF(HIGH, "dlsym %s failed %s                              ", cpsz_dm_get_static_properties, dlerror());
+		THROW(err, TEST_FAILURE);
+	}
+	dm_init_f = (capi_v2_init_f)dlsym(h, cpsz_dm_init);
+	if (0 == dm_init_f)   {
+		FARF(HIGH, "dlsym %s failed %s                              ", cpsz_dm_init, dlerror());
+		THROW(err, TEST_FAILURE);
+	}
+
+	qm_get_static_properties_f = (capi_v2_get_static_properties_f)dlsym(h, cpsz_qm_get_static_properties);
+	if (0 == qm_get_static_properties_f)   {
+		FARF(HIGH, "dlsym %s failed %s                              ", cpsz_qm_get_static_properties, dlerror());
+		THROW(err, TEST_FAILURE);
+	}
+	qm_init_f = (capi_v2_init_f)dlsym(h, cpsz_qm_init);
+	if (0 == qm_init_f)   {
+		FARF(HIGH, "dlsym %s failed %s                              ", cpsz_qm_init, dlerror());
+		THROW(err, TEST_FAILURE);
+	}
+
+#ifdef ENABLE_COMMAND_LINE_PARAMS
+	TRY(err, test_capi_v2_main_refport(sm_get_static_properties_f,
+			sm_init_f,
+			init_set_properties,
+			static_properties,
+			input_args->input_filename,
+			input_args->input_ref_filename,
+			input_args->output_filename,
+			input_args->config_filename));
+/*
+//Enable the below dualmic for compilation(with ENABLE_COMMAND_LINE_PARAMS), when being tested on eclipse using arguments from Run Configuration
+//Please note that the parameters would be different. See #else part
+	TRY(err, test_capi_v2_main_refport(dm_get_static_properties_f,
+			dm_init_f,
+			init_set_properties,
+			static_properties,
+			input_args->input_filename,
+			input_args->input_ref_filename,
+			input_args->output_filename,
+			input_args->config_filename));
+
+//Enable the below quadmic for compilation(with ENABLE_COMMAND_LINE_PARAMS), when being tested on eclipse using arguments from Run Configuration
+//Please note that the parameters would be different. See #else part
+	TRY(err, test_capi_v2_main_refport(qm_get_static_properties_f,
+			qm_init_f,
+			init_set_properties,
+			static_properties,
+			input_args->input_filename,
+			input_args->input_ref_filename,
+			input_args->output_filename,
+			input_args->config_filename));
+*/
+#else
+
+	FARF(HIGH, "------------------------------------------  ");
+	FARF(HIGH, "-- Running DUMMY ECNS for Single-Mic... --                                                ");
+	FARF(HIGH, "------------------------------------------  ");
+	TRY(err, test_capi_v2_main_refport(sm_get_static_properties_f,
+			sm_init_f,
+			init_set_properties,
+			static_properties,
+			"../data/input_8khz.raw",
+			"../data/input_ref_8khz.raw",
+			"../data/output_dummy_ecns_1mic.raw",
+			"../data/dummy_ecns_1mic.cfg"));
+
+    FARF(HIGH, "----------------------------------------  ");
+    FARF(HIGH, "-- Running DUMMY ECNS for Dual-Mic... --                                                ");
+    FARF(HIGH, "----------------------------------------  ");
+	TRY(err, test_capi_v2_main_refport(dm_get_static_properties_f,
+			dm_init_f,
+			init_set_properties,
+			static_properties,
+			"../data/input_8khz.raw",
+			"../data/input_ref_8khz.raw",
+			"../data/output_dummy_ecns_2mic.raw",
+			"../data/dummy_ecns_2mic.cfg"));
+
+    FARF(HIGH, "----------------------------------------  ");
+    FARF(HIGH, "-- Running DUMMY ECNS for Quad-Mic... --                                                ");
+    FARF(HIGH, "----------------------------------------  ");
+	TRY(err, test_capi_v2_main_refport(qm_get_static_properties_f,
+			qm_init_f,
+			init_set_properties,
+			static_properties,
+			"../data/input_8khz.raw",
+			"../data/input_ref_8khz.raw",
+			"../data/output_dummy_ecns_4mic.raw",
+			"../data/dummy_ecns_4mic.cfg"));
+
+#endif
+	FARF(HIGH, "closing %s                                                 ", cpszmodname);
+	dlclose(h);
+	h = 0;
+
+	FARF(HIGH, "Test Passed                                                         ");
+
+	CATCH(err){};
+	if (0 != h) {
+		dlclose(h);
+	}
+	FARF(HIGH, "-- end dll test --                                                  ");
+	return err;
+}
+#else
+int lib_test(args_t* input_args, capi_v2_proplist_t* init_set_properties,
+		capi_v2_proplist_t* static_properties)
+{
+
+	int err = TEST_SUCCESS;
+
+	FARF(HIGH, "   ");
+	FARF(HIGH, "   ");
+	FARF(HIGH, "-- start lib test --                                                ");
+
+#ifdef ENABLE_COMMAND_LINE_PARAMS
+	TRY(err, test_capi_v2_main_refport(capi_v2_custom_dummy_sm_ecns_get_static_properties,
+			capi_v2_custom_dummy_sm_ecns_init,
+			init_set_properties,
+			static_properties,
+			input_args->input_filename,
+			input_args->input_ref_filename,
+			input_args->output_filename,
+			input_args->config_filename));
+
+/*
+//Enable the below dualmic for compilation(with ENABLE_COMMAND_LINE_PARAMS), when being tested on eclipse using arguments from Run Configuration
+//Please note that the parameters would be different. See #else part
+	TRY(err, test_capi_v2_main_refport(capi_v2_custom_dummy_dm_ecns_get_static_properties,
+			capi_v2_custom_dummy_dm_ecns_init,
+			init_set_properties,
+			static_properties,
+			input_args->input_filename,
+			input_args->input_ref_filename,
+			input_args->output_filename,
+			input_args->config_filename));
+
+//Enable the below quadmic for compilation(with ENABLE_COMMAND_LINE_PARAMS), when being tested on eclipse using arguments from Run Configuration
+//Please note that the parameters would be different. See #else part
+	TRY(err, test_capi_v2_main_refport(capi_v2_custom_dummy_qm_ecns_get_static_properties,
+			capi_v2_custom_dummy_qm_ecns_init,
+			init_set_properties,
+			static_properties,
+			input_args->input_filename,
+			input_args->input_ref_filename,
+			input_args->output_filename,
+			input_args->config_filename));
+*/
+#else
+
+	FARF(HIGH, "------------------------------------------  ");
+	FARF(HIGH, "-- Running DUMMY ECNS for Single-Mic... --                                                ");
+	FARF(HIGH, "------------------------------------------  ");
+	TRY(err, test_capi_v2_main_refport(capi_v2_custom_dummy_sm_ecns_get_static_properties,
+			capi_v2_custom_dummy_sm_ecns_init,
+			init_set_properties,
+			static_properties,
+			"../data/input_8khz.raw",
+			"../data/input_ref_8khz.raw",
+			"../data/output_dummy_ecns_1mic.raw",
+			"../data/dummy_ecns_1mic.cfg"));
+
+    FARF(HIGH, "----------------------------------------  ");
+    FARF(HIGH, "-- Running DUMMY ECNS for Dual-Mic... --                                                ");
+    FARF(HIGH, "----------------------------------------  ");
+	TRY(err, test_capi_v2_main_refport(capi_v2_custom_dummy_dm_ecns_get_static_properties,
+			capi_v2_custom_dummy_dm_ecns_init,
+			init_set_properties,
+			static_properties,
+			"../data/input_8khz.raw",
+			"../data/input_ref_8khz.raw",
+			"../data/output_dummy_ecns_2mic.raw",
+			"../data/dummy_ecns_2mic.cfg"));
+
+    FARF(HIGH, "----------------------------------------  ");
+    FARF(HIGH, "-- Running DUMMY ECNS for Quad-Mic... --                                                ");
+    FARF(HIGH, "----------------------------------------  ");
+	TRY(err, test_capi_v2_main_refport(capi_v2_custom_dummy_qm_ecns_get_static_properties,
+			capi_v2_custom_dummy_qm_ecns_init,
+			init_set_properties,
+			static_properties,
+			"../data/input_8khz.raw",
+			"../data/input_ref_8khz.raw",
+			"../data/output_dummy_ecns_4mic.raw",
+			"../data/dummy_ecns_4mic.cfg"));
+
+#endif
+
+	FARF(HIGH, "Test Passed                                                         ");
+
+	CATCH(err){};
+	FARF(HIGH, "-- end lib test test --                                             ");
+	return err;
+}
+#endif
+
+/*------------------------------------------------------------------------
+  Function name: get_args
+  Description- Read input arguments
+ * -----------------------------------------------------------------------*/
+void get_eargs(
+		int32_t argc,
+		char* argv[],
+		args_t* input_args
+)
+{
+	int16_t input_option;
+
+	if (argc < 8) {
+		// usage(stdout, argv[0]);
+		fprintf(stderr, "%s: argc < 8.\n", argv[0]);
+		exit(-1);
+	} else {
+		input_args->input_filename = NULL;
+		input_args->input_ref_filename = NULL;
+		input_args->output_filename = NULL;
+		input_args->config_filename = NULL;
+		while ((input_option = getopt(argc, argv, "i:r:o:c:")) != -1) {
+			switch(input_option) {
+			case 'i':
+				input_args->input_filename = optarg;
+				break;
+
+			case 'r':
+				input_args->input_ref_filename = optarg;
+				break;
+
+			case 'o':
+				input_args->output_filename = optarg;
+				break;
+
+			case 'c':
+				input_args->config_filename = optarg;
+				break;
+			}
+		}
+	}
+}
+
+int test_main_start(int argc, char* argv[])
+{
+	int err = TEST_SUCCESS;
+	args_t* input_args = 0;
+
+	if (NULL == (input_args = (args_t*)malloc(sizeof(args_t)))) {
+		FARF(HIGH, "%s:  ERROR CODE 1 - Cannot malloc args\n", argv[0]);
+		exit(-1);
+	}
+
+#ifdef ENABLE_COMMAND_LINE_PARAMS
+	get_eargs(argc, argv, input_args);
+#endif
+	capi_v2_proplist_t init_set_properties;
+	capi_v2_proplist_t static_properties;
+	capi_v2_prop_t props[5];
+	capi_v2_init_memory_requirement_t init_memory_requirement;
+	capi_v2_stack_size_t stack_size;
+	///capi_v2_max_metadata_size_t max_metadata_size;
+	capi_v2_is_inplace_t is_inplace;
+	capi_v2_requires_data_buffering_t requires_data_buffering;
+	capi_v2_num_needed_framework_extensions_t num_needed_framework_extensions;
+
+
+	init_set_properties.props_num = 0;
+	static_properties.props_num = 5;
+	static_properties.prop_ptr = props;
+
+	props[0].id = CAPI_V2_INIT_MEMORY_REQUIREMENT;
+	props[0].payload.data_ptr = (int8_t*)&init_memory_requirement;
+	props[0].payload.max_data_len = sizeof(init_memory_requirement);
+
+	props[1].id = CAPI_V2_STACK_SIZE;
+	props[1].payload.data_ptr = (int8_t*)&stack_size;
+	props[1].payload.max_data_len = sizeof(stack_size);
+
+	///props[2].id = CAPI_V2_MAX_METADATA_SIZE;
+	///props[2].payload.data_ptr = (int8_t*)&max_metadata_size;
+	///props[2].payload.max_data_len = sizeof(max_metadata_size);
+
+	props[2].id = CAPI_V2_IS_INPLACE;
+	props[2].payload.data_ptr = (int8_t*)&is_inplace;
+	props[2].payload.max_data_len = sizeof(is_inplace);
+
+	props[3].id = CAPI_V2_REQUIRES_DATA_BUFFERING;
+	props[3].payload.data_ptr = (int8_t*)&requires_data_buffering;
+	props[3].payload.max_data_len = sizeof(requires_data_buffering);
+
+	props[4].id = CAPI_V2_NUM_NEEDED_FRAMEWORK_EXTENSIONS;
+	props[4].payload.data_ptr = (int8_t*)&num_needed_framework_extensions;
+	props[4].payload.max_data_len = sizeof(num_needed_framework_extensions);
+
+
+#ifdef __V_DYNAMIC__
+	TRY(err, dll_test(input_args, &init_set_properties, &static_properties));
+#else
+	TRY(err, lib_test(input_args, &init_set_properties, &static_properties));
+#endif
+
+	if (0 == input_args) {
+		free(input_args);
+	}
+
+	CATCH(err){};
+
+
+	return err;
+}
+

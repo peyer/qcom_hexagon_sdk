@@ -1,0 +1,23 @@
+#!/bin/bash
+
+basedir=`dirname $0`
+cd $basedir
+. ../setup-env.sh
+set -x
+
+rm -fr  pmu_statsfile.txt stats_dump.iss.0 pa_dump.core.0 ./bin sobel_hvx128_out.bin sobel_hvx64_out.bin
+mkdir bin
+
+${CXX} --std=c++11  -DLOG2VLEN=7 -DRUN=1 -DASSEMBLY=1 -DBITCODE=1 -I $HALIDE_ROOT/include -fno-rtti -O3 -g sobel_generator.cpp $HALIDE_ROOT/tools/GenGen.cpp -L$HALIDE_ROOT/lib  -lHalide -o bin/sobel_generator -ldl -lpthread -lz
+
+export LD_LIBRARY_PATH=$HALIDE_ROOT/lib:; ./bin/sobel_generator -o bin -g sobel -e o,h,assembly,bitcode -f sobel_hvx64 target=hexagon-32-noos-no_bounds_query-no_asserts-hvx_64
+export LD_LIBRARY_PATH=$HALIDE_ROOT/lib:; ./bin/sobel_generator -o bin -g sobel -e o,h,assembly,bitcode -f sobel_hvx128 target=hexagon-32-noos-no_bounds_query-no_asserts-hvx_128
+ar q bin/sobel_filters.a bin/sobel_hvx64.o bin/sobel_hvx128.o
+
+hexagon-clang++ --std=c++11 -c -mhvx -mhvx-length=128B -mv60 -DLOG2VLEN=7 -I $HALIDE_ROOT/include -I ./bin -I ./baseline sobel_run.cpp -o bin/sobel_run.o
+
+hexagon-clang++ -mhvx -mhvx-length=128B -mv60 -DLOG2VLEN=7 bin/sobel_run.o bin/sobel_filters.a -lhexagon -L$HALIDE_ROOT/lib -lsim_qurt $HALIDE_ROOT/Examples/support/stubs.c -o bin/sobel.out
+
+hexagon-sim bin/sobel.out --memfill 0x0 --simulated_returnval --timing --nullptr=2 -- 1920 1080 ../Images/football1920x1080.bin out.bin
+cmp  sobel_hvx128_out.bin golden_out.no_borders.bin
+cmp  sobel_hvx64_out.bin golden_out.no_borders.bin

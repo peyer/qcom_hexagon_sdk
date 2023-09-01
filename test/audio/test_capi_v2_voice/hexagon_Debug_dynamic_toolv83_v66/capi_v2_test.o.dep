@@ -1,0 +1,36 @@
+src/capi_v2_test.c:
+src/capi_v2_test.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_pcm_ch_defs.h:
+src/capi_v2_library_factory.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_farf.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_mem.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/a1std/AEEstd.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/adsp_error_codes.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2.h:
+src/capi_v2_profile.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/mmdefs.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2_types.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/stddef/AEEStdDef.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_debug.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/stddef/AEEVaList.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2_events.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2_properties.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/test/common/test_profile/hexagon_Debug_dynamic_toolv83_v66/ship/test_profile.h:
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_test.o: src/capi_v2_test.c
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_test.o: src/capi_v2_test.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_test.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_pcm_ch_defs.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_test.o: src/capi_v2_library_factory.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_test.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_farf.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_test.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_mem.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_test.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/a1std/AEEstd.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_test.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/adsp_error_codes.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_test.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_test.o: src/capi_v2_profile.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_test.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/mmdefs.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_test.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2_types.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_test.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/stddef/AEEStdDef.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_test.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_debug.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_test.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/stddef/AEEVaList.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_test.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2_events.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_test.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/audio/Elite_CAPI_V2_properties.h
+hexagon_Debug_dynamic_toolv83_v66/capi_v2_test.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/test/common/test_profile/hexagon_Debug_dynamic_toolv83_v66/ship/test_profile.h

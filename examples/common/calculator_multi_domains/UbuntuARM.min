@@ -1,0 +1,33 @@
+ifeq ($(CDSP_FLAG), 1) 
+	LIB_DSPRPC = libcdsprpc
+else ifeq ($(MDSP_FLAG), 1) 
+	LIB_DSPRPC = libmdsprpc
+else ifeq ($(SLPI_FLAG), 1) 
+	LIB_DSPRPC = libsdsprpc
+else
+	LIB_DSPRPC = libadsprpc
+endif
+$(info ************  LIB=$(LIB_DSPRPC) ************)
+# stub library
+BUILD_DLLS += libcalculator_multi_domains 
+
+libcalculator_multi_domains_QAICIDLS += inc/calculator_multi_domains 
+libcalculator_multi_domains_C_SRCS += $V/calculator_multi_domains_stub
+libcalculator_multi_domains_DLLS += $(LIB_DSPRPC)
+
+
+# stand-alone calculator executable
+BUILD_EXES+=calculator_multi_domains 
+calculator_multi_domains_QAICIDLS += inc/calculator_multi_domains
+calculator_multi_domains_C_SRCS += src/calculator_main src/calculator_test
+calculator_multi_domains_LIBS += rpcmem
+calculator_multi_domains_DLLS += libcalculator_multi_domains $(LIB_DSPRPC) 
+calculator_multi_domains_LD_FLAGS += -ldl -lpthread
+calculator_multi_domains_DEFINES += VERIFY_PRINT_ERROR
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

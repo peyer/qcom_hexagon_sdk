@@ -1,0 +1,1221 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><title>DSP DCVS v2 HAP interface</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="images/sidebar_top.jpg"></top><script src="scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, false)"><input id="searchButton" onclick="postFunction(false)" type="button" value="Search"></form><p>
+<a href="index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<p>
+<a href="sitemap.html">Sitemap</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="Audio/Applications.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="Voice/Applications.html">Voice</a>
+</p><p>
+<a href="Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="Audio/Examples.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="Examples_Common.html">Common</a>
+</p><p>
+<a href="Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="Tools_Signing.html">Signing</a>
+</p><p>
+<a href="Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="FAQ_Common.html">Common</a>
+</p><p>
+<a href="FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="Support_Contact.html">Contact</a>
+</p><center><img src="images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h1>
+<a name="DSP%20DCVS%20v2%20HAP%20interface"></a>DSP DCVS v2 HAP interface
+</h1><div class="toc"><div class="tocLevel"><a href="#Overview">Overview</a></div><div class="tocLevel"><a href="#HAP%20API%20Support">HAP API Support</a><div class="tocLevel"><a href="#DCVS%20Enable">DCVS Enable</a></div><div class="tocLevel"><a href="#DCVS%20Options">DCVS Options</a></div><div class="tocLevel"><a href="#Sleep%20latency">Sleep latency</a></div><div class="tocLevel"><a href="#DCVS%20params">DCVS params</a></div></div><div class="tocLevel"><a href="#Illustrations">Illustrations</a></div></div><h2>
+<a name="Overview"></a>Overview
+</h2><p>
+Based on user configuration, DCVS module in DSP (ADSP/CDSP) can adjust the core and bus clock frequencies based on core and bus usage metrics captured by SysMon. The existing DCVS interface via <code>HAP_power_set()</code> (type: <code>HAP_power_set_DCVS</code>) only allows users to vote for DCVS participation with 2 different options. DSP DCVS v2 algorithm exposes an enhanced set of DCVS options for diversified clients and a simplified voltage corner based voting scheme. On supported targets (8998 and latest), these new DCVS options and voting scheme are exposed to clients via <code>HAP_power_set()</code>(type: <code>HAP_power_set_DCVS_v2</code>). This document captures information on these new DCVS features and ways to use them.
+</p><h2>
+<a name="HAP%20API%20Support"></a>HAP API Support
+</h2><p>
+The HAP_power_set API is enhanced to support the new mode registrations with DSP DCVS logic. Following table illustrates the new <code>type</code> of request and the new <code>dcvs_v2</code> request structure associated with it.
+</p><pre><span style="color: blue">typedef</span> <span style="color: blue">struct</span> {
+HAP_Power_request_type type;
+<span style="color: blue">union</span>{
+    HAP_power_mips_bw_payload mips_bw;
+    HAP_power_hvx_payload hvx;
+    HAP_power_app_type_payload apptype;
+    HAP_power_linelock_payload linelock;
+    HAP_power_dcvs_payload dcvs;
+    HAP_power_dcvs_v2_payload dcvs_v2;
+    HAP_power_linelock_nothrottle_payload linelock_nothrottle;
+     };
+}HAP_power_request_t;
+...
+<span style="color: blue">typedef</span> <span style="color: blue">enum</span> {
+    HAP_power_set_mips_bw = 1,
+    HAP_power_set_HVX,
+    HAP_power_set_apptype,
+    HAP_power_set_linelock,
+    HAP_power_set_DCVS,
+    HAP_power_set_linelock_nothrottle,
+    HAP_power_set_DCVS_v2,
+}HAP_Power_request_type;
+...
+<span style="color: blue">typedef</span> <span style="color: blue">struct</span> {
+    boolean dcvs_enable;
+    <span style="color: blue">enum</span>
+    {
+        HAP_DCVS_V2_ADJUST_UP_DOWN =   0x1,
+        HAP_DCVS_V2_ADJUST_ONLY_UP =   0x2,
+        HAP_DCVS_V2_POWER_SAVER_MODE = 0x4,
+        HAP_DCVS_V2_POWER_SAVER_AGGRESSIVE_MODE = 0x8,
+        HAP_DCVS_V2_PERFORMANCE_MODE = 0x10,
+        HAP_DCVS_V2_DUTY_CYCLE_MODE = 0x20,
+    } dcvs_option;
+    boolean set_latency;
+    uint32 latency;
+    boolean set_dcvs_params;
+    HAP_dcvs_params_t dcvs_params;
+}HAP_power_dcvs_v2_payload;
+</pre><table><tr><th><p>
+API
+</p></th><td colspan="3"><p>
+<b>HAP_power_set</b> (void* <b>context</b>, HAP_power_request_t* <b>request</b>)
+</p></td></tr><tr><th><p>
+context
+</p></th><td colspan="3"><p>
+NULL - the default context per process. For multiple clients voting from the same process, use unique value per client. Votes across all contexts will be aggregated accordingly.
+</p></td></tr><tr><th rowspan="7"><p>
+request
+</p></th><td><p>
+<b>type</b>
+</p></td><td><p>
+<code>HAP_power_set_DCVS_v2</code>
+</p></td><td><p>
+This new request type allows user to request via the new <code>dcvs_v2</code> request structure
+</p></td></tr><tr><td rowspan="6"><p>
+<b>dcvs_v2</b>
+</p></td><td><p>
+<b>dcvs_enable</b>
+</p></td><td><p>
+DCVS participation flag
+</p></td></tr><tr><td><p>
+<b>dcvs_option</b>
+</p></td><td><p>
+These options instruct DCVS algorithm to use a pre-defined set of thresholds and operation logic based on the selected option.
+</p></td></tr><tr><td><p>
+<b>set_latency</b>
+</p></td><td><p>
+Latency vote validity flag.
+</p></td></tr><tr><td><p>
+<b>latency</b>
+</p></td><td><p>
+Sleep latency vote in micro seconds. Valid when the set_latency flag is set to TRUE
+</p></td></tr><tr><td><p>
+<b>set_dcvs_params</b>
+</p></td><td><p>
+DCVS params validity flag.
+</p></td></tr><tr><td><p>
+<b>dcvs_params</b>
+</p></td><td><p>
+DCVS params structure with flexibility to set upper and lower DCVS thresholds and also vote for core and bus clocks using a voltage corner.
+</p></td></tr></table><h3>
+<a name="DCVS%20Enable"></a>DCVS Enable
+</h3><p>
+<code>dcvs_enable</code> parameter of <code>dcvs_v2</code> structure enables user to vote for DCVS participation.
+</p><table><tr><th><p>
+Value
+</p></th><th><p>
+Description
+</p></th></tr><tr><td><p>
+TRUE
+</p></td><td><p>
+Enable DSP DCVS (if not already enabled). Using dcvs_option, based on the application demand, user can choose a particular option to guide DSP DCVS logic
+</p></td></tr><tr><td><p>
+FALSE
+</p></td><td><p>
+Don't enable DSP DCVS. Valid only when the client requesting is the only one actively voting for clocks or is one among the clients voting for this same option.
+</p></td></tr></table><p>
+When a DCVS participating client is active, DCVS logic would be enabled, but the aggregated clients vote requesting for DCVS disable will be considered as a FLOOR request in DCVS logic i.e, DCVS would't lower the clocks below the aggregated value.
+</p><h3>
+<a name="DCVS%20Options"></a>DCVS Options
+</h3><p>
+<code>dcvs_option</code> parameter of <code>dcvs_v2</code> structure enables user to request for a particular DCVS mode when <code>dcvs_enable</code> option is set to <b>TRUE</b>. Following table captures the gist of the available DCVS modes.
+</p><table><tr><th><p>
+Value
+</p></th><th><p>
+Description
+</p></th></tr><tr><td><p>
+<i>HAP_DCVS_V2_ADJUST_UP_DOWN</i>
+</p></td><td><p>
+<i>Legacy option</i>: For clients voting via <code>HAP_power_set_mips_bw</code> request type.
+</p><p>
+This mode allows DCVS to both increase and decrease core/bus clock speeds based on need. DCVS selects thresholds corresponding to a balanced mode (legacy) of operation with respect to power and performance.
+</p><p>
+<code>min_corner</code> and <code>max_corner</code> votes via <code>dcvs_params</code> are used as lower and
+</p><p>
+upper limit guidelines in DCVS.
+</p><p>
+<b>NOTE:</b> If client votes via <code>target_corner</code> under <code>dcvs_params</code> of this structure, both <code>HAP_DCVS_V2_ADJUST_ONLY_UP</code> and <code>HAP_DCVS_V2_ADJUST_UP_DOWN</code> modes are identical. <code>min_corner</code> and <code>max_corner</code> votes are used as lower and upper limit guidelines in DCVS while using balanced mode (legacy) thresholds.
+</p></td></tr><tr><td><p>
+<i>HAP_DCVS_V2_ADJUST_ONLY_UP</i>
+</p></td><td><p>
+<i>Legacy option</i>: For clients voting via <code>HAP_power_set_mips_bw</code> request type.
+</p><p>
+This mode restricts DCVS from lowering the clock below the values requested via <code>HAP_power_set_mips_bw</code> request. DCVS can only increase the clock above the requested levels. DCVS selects thresholds corresponding to a balanced mode(legacy) of operation with respect to power and performance. <code>max_corner</code> vote via <code>dcvs_params</code> is used as upper limit guideline in DCVS.
+</p><p>
+<b>NOTE:</b> If client votes via <code>target_corner</code> under <code>dcvs_params</code> of this structure, both <code>HAP_DCVS_V2_ADJUST_ONLY_UP</code> and <code>HAP_DCVS_V2_ADJUST_UP_DOWN</code> modes are identical. <code>min_corner</code> and <code>max_corner</code> votes are used as lower and upper limit guidelines in DCVS while using balanced mode (legacy) thresholds.
+</p></td></tr><tr><td><p>
+<i>HAP_DCVS_V2_POWER_SAVER_MODE</i>
+</p></td><td><p>
+<i>New option</i>:
+</p><p>
+Default for all clients participating in DCVS. DCVS can both increase and decrease the core/bus clock speeds while <code>min_corner</code> and <code>max_corner</code> votes are used as lower and upper limit guidelines. DCVS selects thresholds corresponding to power saving model. This mode is meant for applications where saving power is of higher priority than achieving fastest performance. Performance may be slower in this mode than in <code>HAP_DCVS_V2_PERFORMANCE_MODE</code> or the legacy modes i.e, <code>HAP_DCVS_V2_ADJUST_ONLY_UP</code> <code>HAP_DCVS_V2_ADJUST_UP_DOWN</code>
+</p></td></tr><tr><td><p>
+<i>HAP_DCVS_V2_POWER_SAVER_AGGRESSIVE_MODE</i>
+</p></td><td><p>
+<i>New option</i>:
+</p><p>
+DCVS can both increase and decrease the core/bus clock speeds while <code>min_corner</code> and <code>max_corner</code> votes are used as lower and upper limit guidelines. DCVS selects thresholds corresponding to a power saving model. Further, the DCVS monitoring durations in lowering the clocks is decreased for a faster ramp down and hence greater power saving compared to the power saver mode. This mode is meant for applications where saving power is of higher priority than achieving fastest performance. Performance may be slower in this mode than in <code>HAP_DCVS_V2_PERFORMANCE_MODE</code> <code>HAP_DCVS_V2_POWER_SAVER_MODE</code> or the legacy modes i.e, <code>HAP_DCVS_V2_ADJUST_ONLY_UP</code> <code>HAP_DCVS_V2_ADJUST_UP_DOWN</code>
+</p></td></tr><tr><td><p>
+<i>HAP_DCVS_V2_PERFORMANCE_MODE</i>
+</p></td><td><p>
+<i>New option</i>:
+</p><p>
+DCVS can both increase and decrease the core/bus clock speeds while <code>min_corner</code> and <code>max_corner</code> votes are used as lower and upper limit guidelines. DCVS selects a set of aggressive thresholds in terms of performance. DCVS can quickly bump up the clocks in this mode assisting higher performance at the cost of power.
+</p></td></tr><tr><td><p>
+<i>HAP_DCVS_V2_DUTY_CYCLE_MODE</i>
+</p></td><td><p>
+Currently not supported. Defaulted to <code>HAP_DCVS_V2_POWER_SAVER_MODE</code>.
+</p></td></tr></table><p>
+In cases where multiple clients have registered different DCVS options, following table depicts the DCVS policy aggregation logic.
+</p><table><tr><th><p>
+PERFORMANCE (Yes / No)
+</p></th><th><p>
+POWER SAVER (Yes / No)
+</p></th><th><p>
+POWER SAVER AGGRESSIVE (Yes / No)
+</p></th><th><p>
+BALANCED (UP ONLY/UP AND DOWN clients) (Yes / No)
+</p></th><th><p>
+Final DCVS thresholds
+</p></th></tr><tr><td><p>
+Y
+</p></td><td><p>
+Y / N
+</p></td><td><p>
+Y / N
+</p></td><td><p>
+Y / N
+</p></td><td><p>
+PERFORMANCE
+</p></td></tr><tr><td><p>
+N
+</p></td><td><p>
+Y
+</p></td><td><p>
+Y / N
+</p></td><td><p>
+Y / N
+</p></td><td><p>
+POWER SAVER
+</p></td></tr><tr><td><p>
+N
+</p></td><td><p>
+N
+</p></td><td><p>
+Y
+</p></td><td><p>
+Y
+</p></td><td><p>
+POWER SAVER
+</p></td></tr></table><h3>
+<a name="Sleep%20latency"></a>Sleep latency
+</h3><p>
+<code>set_latency</code> and <code>latency</code> parameters of structure <code>dcvs_v2</code> can be used to request for a sleep latency in micro seconds.
+</p><table><tr><th rowspan="2"><p>
+set_latency
+</p></th><td><p>
+<i>FALSE</i>
+</p></td><td><p>
+No sleep latency request from the client
+</p></td></tr><tr><td><p>
+<i>TRUE</i>
+</p></td><td><p>
+Client request for a sleep latency is valid and desired latency is provided in latency field.
+</p></td></tr><tr><th><p>
+latency
+</p></th><td colspan="2"><p>
+Sleep latency request in micro-seconds.
+</p></td></tr></table><p>
+<b>NOTE</b>: <code>HAP_power_set</code> provides 2 possible ways for voting for sleep latency:
+</p><ol type="1">
+<li>
+<p>
+via <code>HAP_power_set_mips_bw</code> request type:
+</p><pre><span style="color: darkgreen">/* For sleep latency */</span>                           
+mips_bw.set_latency = TRUE;                       
+mips_bw.latency = &lt;Sleep latency in micro seconds&gt;
+</pre>
+</li><li>
+<p>
+via <code>HAP_power_set_DCVS_v2</code> request type:
+</p><pre><span style="color: darkgreen">/* For sleep latency */</span>                                                                           
+dcvs_v2.set_latency = TRUE;                                                                       
+dcvs_v2.latency = &lt;Sleep latency in micro seconds&gt;                                                
+</pre>
+</li>
+</ol><p>
+Clients should use only 1 of the above methods to vote for latency i.e, either via <code>mips_bw</code> or via <code>dcvs_v2</code> but not both. Voting via <code>dcvs_v2</code> does <b>NOT</b> cancel any previous vote done via <code>mips_bw</code> and vice versa.
+</p><p>
+On SM8150, <code>dcvs_v2.latency</code> can be set to a minimum of 1 micro-second. The Application should vote for a latency that is tolerable. For latency critical applications, the latency can be set to its minimum value of 1 micro-second.
+</p><h3>
+<a name="DCVS%20params"></a>DCVS params
+</h3><p>
+<code>set_dcvs_params</code> and <code>dcvs_params</code> parameters of <code>dcvs_v2</code> can be used to update DCVS thresholds and target corner vote. This structure is valid irrespective of chosen <code>dcvs_enable</code> and <code>dcvs_option</code> values. Client can request for a <code>target_corner</code> even when the <code>dcvs_enable</code> option is set to <b>FALSE</b>.
+</p><p>
+When <code>set_dcvs_params</code> is <b>TRUE</b>, <code>target_corner</code>, <code>min_corner</code> and <code>max_corner</code> parameters of <code>dcvs_params</code> can take one of the following values:
+</p><pre><span style="color: darkgreen">/**
+ * Voltage corners for HAP DCVS V2 interface
+ */</span>
+<span style="color: blue">typedef</span> <span style="color: blue">enum</span> {
+    HAP_DCVS_VCORNER_DISABLE,
+    HAP_DCVS_VCORNER_SVS2,
+    HAP_DCVS_VCORNER_SVS,
+    HAP_DCVS_VCORNER_SVS_PLUS,
+    HAP_DCVS_VCORNER_NOM,
+    HAP_DCVS_VCORNER_NOM_PLUS,
+    HAP_DCVS_VCORNER_TURBO,
+    HAP_DCVS_VCORNER_TURBO_PLUS,
+    HAP_DCVS_VCORNER_MAX = 255,
+} HAP_dcvs_voltage_corner_t;
+</pre><table><tr><th><p>
+HAP_dcvs_voltage_corner_t
+</p></th><th><p>
+Description
+</p></th></tr><tr><td><p>
+<i>HAP_DCVS_VCORNER_DISABLE</i>
+</p></td><td><p>
+No specific corner request (No Vote)
+</p></td></tr><tr><td><p>
+<i>HAP_DCVS_VCORNER_SVS2</i>
+</p></td><td><p>
+SVS2 / LOW SVS corner
+</p><p>
+Note: On targets that don't support this voltage corner, this option will be interpreted as <code>HAP_DCVS_VCORNER_SVS</code>
+</p></td></tr><tr><td><p>
+<i>HAP_DCVS_VCORNER_SVS</i>
+</p></td><td><p>
+SVS corner
+</p></td></tr><tr><td><p>
+<i>HAP_DCVS_VCORNER_SVS_PLUS</i>
+</p></td><td><p>
+SVS Plus corner
+</p><p>
+Note: On targets that don't support this voltage corner, this option will be interpreted as <code>HAP_DCVS_VCORNER_SVS</code>
+</p></td></tr><tr><td><p>
+<i>HAP_DCVS_VCORNER_NOM</i>
+</p></td><td><p>
+NOMINAL corner
+</p></td></tr><tr><td><p>
+<i>HAP_DCVS_VCORNER_NOM_PLUS</i>
+</p></td><td><p>
+NOMINAL Plus corner
+</p><p>
+Note: On targets that don't support this voltage corner, this option will be interpreted as <code>HAP_DCVS_VCORNER_NOM</code>
+</p></td></tr><tr><td><p>
+<i>HAP_DCVS_VCORNER_TURBO</i>
+</p></td><td><p>
+TURBO corner
+</p></td></tr><tr><td><p>
+<i>HAP_DCVS_VCORNER_TURBO_PLUS</i>
+</p></td><td><p>
+TURBO Plus corner
+</p><p>
+Note: Valid only on SM8150, maps to TURBO frequency for SM6150, QCS405. <b>Returns error on earlier targets</b> (SDM845, SDM710 and prior ones)
+</p></td></tr><tr><td><p>
+<i>HAP_DCVS_VCORNER_MAX</i>
+</p></td><td><p>
+MAX possible corner defined for maximum performance.
+</p><p>
+Note: Supported only on SM8150, SM6150, QCS405 and later chipsets. <b>Returns error on earlier targets</b> (SDM845, SDM710 and prior ones)
+</p></td></tr></table><table><tr><th rowspan="2"><p>
+set_dcvs_params
+</p></th><td><p>
+FALSE
+</p></td><td><p>
+DCVS parameters are not updated. Client doesn't have any request for a voltage corner and the min and max voltage corner limits for DCVS.
+</p></td></tr><tr><td><p>
+TRUE
+</p></td><td><p>
+DCVS parameters are valid and should be considered by DCVS.
+</p></td></tr><tr><th rowspan="6"><p>
+dcvs_params
+</p></th><td><p>
+<b>target_corner</b>
+</p></td><td><p>
+Type: <code>HAP_dcvs_voltage_corner_t</code>.
+</p><p>
+Alternative to <code>HAP_power_set_mips_bw</code> MIPS and Bandwidth request. <code>HAP_power_set</code> provides 2 possible ways for voting for sleep latency and core/bus clocks.
+</p><ol type="1">
+<li>
+<p>
+via <code>HAP_power_set_mips_bw</code> request type:
+</p><pre><span style="color: darkgreen">/* For core clock */</span>                                                                                                                     
+mips_bw.set_mips = TRUE;                                                                                                                 
+mips_bw.mipsPerThread = &lt;MIPS per thread request&gt;                                                                                        
+mips_bw.mipsTotal = &lt;Total MIPS request&gt;                                                                                                 
+<span style="color: darkgreen">/* For bus clock */</span>                                                                                                                      
+mips_bw.set_bus_bw = TRUE;                                                                                                               
+mips_bw.bwBytePerSec = &lt;bandwidth request in bytes per second (Instantaneous)&gt;                                                           
+mips_bw.busbwUsagePercentage = &lt;Usage percentage (Average)&gt;                                                                              
+<span style="color: darkgreen">/* For sleep latency */</span>                                                                                                                  
+mips_bw.set_latency = TRUE;                                                                                                              
+mips_bw.latency = &lt;Sleep latency in micro seconds&gt;                                                                                       
+</pre>
+</li><li>
+<p>
+via <code>HAP_power_set_DCVS_v2</code> request type:
+</p><pre><span style="color: darkgreen">/* For core and bus clock */</span>                                                                                                             
+dcvs_v2.set_dcvs_params = TRUE;                                                                                                          
+dcvs_v2.dcvs_params.target_corner = &lt;Desired vote in terms of voltage corner <span style="color: blue">for</span> core, bus clocks&gt;                                       
+<span style="color: darkgreen">/* For sleep latency */</span>                                                                                                                  
+dcvs_v2.set_latency = TRUE;                                                                                                              
+dcvs_v2.latency = &lt;Sleep latency in micro seconds&gt;                                                                                       
+</pre>
+</li>
+</ol><p>
+Client can request core and bus clock to run at at a particular voltage corner instead of providing MIPS and Bandwidth (bytes per second) requests. DCVS will convert the requested voltage corner value to appropriate core clock and bus clock votes and forwards the request to the power manager on client's behalf. Clients should use only 1 of the above methods to vote i.e, either via <code>mips_bw</code> or via <code>dcvs_v2</code> but not both. Voting via <code>dcvs_v2</code> does <b>NOT</b> cancel any previous vote done via <code>mips_bw</code> and vice versa. If one would like to switch between these 2 methods, cancel any previous vote done via the other method before requesting.
+</p><p>
+When <code>target_corner = HAP_DCVS_VCORNER_DISABLE</code> (No vote), DSP DCVS doesn't request for any core or bus clocks at the time of API call and it's client's responsibility to vote for core and bus clocks using <code>HAP_power_set_mips_bw type</code> request type.
+</p><p>
+If enabled <code>&gt; HAP_DCVS_VCORNER_DISABLE</code>, DSP DCVS logic will pick the highest available frequency plan for both core and bus clocks at the given voltage corner and requests for these clock frequencies synchronously in the API context on client's behalf. When the <code>HAP_power_set</code> API returns with success, core and bus clock frequencies would be set by DSP DCVS on a valid <code>target_corner</code> request.
+</p></td></tr><tr><td><p>
+<b>min_corner</b>
+</p></td><td><p>
+Type: <code>HAP_dcvs_voltage_corner_t</code>.
+</p><p>
+If disabled, <code>min_corner == HAP_DCVS_VCORNER_DISABLE</code>, the lower threshold/minimum value that DCVS can correct the clock will remain unchanged. If enabled <code>&gt; HAP_DCVS_VCORNER_DISABLE</code>, DSP DCVS picks the lowest core clock frequency at the given voltage corner and uses it as the lower threshold/minimum value that DCVS can correct the clock to, irrespective of the <code>dcvs_option</code> selected.
+</p><p>
+Client can vote for a <code>min_corner</code> irrespective of a <code>target_corner</code> i.e, client can have <code>target_corner = HAP_DCVS_VCORNER_DISABLE</code> (no vote) but can set a minimum corner threshold for DCVS.
+</p><p>
+min_corner should always be less than or equal to <code>target_corner</code> and <code>max_corner</code> unless they are disabled <code>HAP_DCVS_VCORNER_DISABLE</code>.
+</p><p>
+For clients requesting <code>dcvs_enable</code> as <b>FALSE</b> and using <code>target_corner</code>, <code>min_corner</code> should be equal to <code>target_corner</code>.
+</p></td></tr><tr><td><p>
+<b>max_corner</b>
+</p></td><td><p>
+Type: <code>HAP_dcvs_voltage_corner_t</code>.
+</p><p>
+If disabled, <code>max_corner == HAP_DCVS_VCORNER_DISABLE</code>, the upper threshold/maximum value that DCVS can correct the clock will remain unchanged. Typically, that would be <code>HAP_DCVS_VCORNER_MAX</code> in this case. If enabled <code>&gt; HAP_DCVS_VCORNER_DISABLE</code>, DSP DCVS picks the highest core and bus clock frequencies at the given voltage corner and uses it as the upper threshold/maximum value that DCVS can correct the clocks to, irrespective of the <code>dcvs_option</code> selected.
+</p><p>
+DSP DCVS logic overrides the <code>max_corner vote</code> from a client to MAX in presence of a concurrency. Concurrency is defined as a scenario where 2 or more FastRPC dynamic loaded clients are active or active Audio/Voice sessions with MPPS load greater than a pre-defined threshold.
+</p><p>
+Client can vote for a <code>max_corner</code> irrespective of a <code>target_corner</code> vote i.e,client can have <code>target_corner = HAP_DCVS_VCORNER_DISABLE</code>(no vote) but can set a maximum corner threshold for DCVS using this param.
+</p><p>
+<code>max_corner</code> should always be greater than or equal to <code>target_corner</code> and <code>min_corner</code> votes, or, should be disabled <code>HAP_DCVS_VCORNER_DISABLE</code>.
+</p></td></tr><tr><td><p>
+<b>param1</b>
+</p></td><td><p>
+Type: <code>HAP_dcvs_voltage_corner_t</code>.
+</p><p>
+NOTE: Set this option to HAP_DCVS_VCORNER_DISABLE unless required.
+</p><p>
+This parameter allows user to set CPU L3 clock frequency to the requested corner. Valid only on CDSP subsystem in targets with CPU L3 cache and IO-coherency enabled (SDM845, SDM710, SM8150...), ignored elsewhere. On CDSP, based on the requested target_corner, CPU L3 clock vote from CDSP is set to a balanced level (with minimal power impact) to start with and DCVS (if enabled) increases the vote based on need to attain higher performance. This option is useful to peg CPU L3 clock at a higher level (at the cost of higher power) than that of the default balanced vote and that of the DCVS algorithm votes. <b>This option is for advanced users and should be configured to default (HAP_DCVS_VCORNER_DISABLE) unless there is a need to explicitly set CPU L3 clock frequency based on performance and power analysis/characterization</b>
+</p></td></tr><tr><td><p>
+<b>param2</b>
+</p></td><td><p>
+Reserved.
+</p></td></tr><tr><td><p>
+<b>param3</b>
+</p></td><td><p>
+Reserved.
+</p></td></tr></table><p>
+<b>DCVS vote aggregation logic in case of concurrency</b>
+</p><p>
+Following logic explains the aggregation logic for min and target corner votes when there are multiple requesting clients:
+</p><div class="indent"><pre>DCVS min_corner vote = MAX (min_corner vote client 1, client 2, ...)
+DCVS target_corner vote = MAX (target_corner vote client 1, client 2, ...)
+</pre></div><p>
+The following scenarios are treated as a concurrency in DCVS vote aggregation logic where DCVS max corner vote is set to TURBO by DCVS:
+</p><ul type="circle">
+<li>
+<p>
+More than 1 active HAP client with or without active Audio/Voice clients.
+</p>
+</li><li>
+<p>
+One active HAP client and active Audio/Voice clients with MPPS load greater than a pre-defined threshold.
+</p><pre>DCVS max_corner vote = HAP_DCVS_VCORNER_MAX
+</pre>
+</li>
+</ul><p>
+Note that DCVS overrides client's MAX corner vote to MAX to accommodate any concurrency requirement. DCVS MAX vote of MAX doesn't necessarily mean that DCVS will push the vote to MAX corner; MAX corner vote just sets the upper threshold for DCVS vote logic. DCVS will only bump up the clocks on need basis based on selected DCVS option.
+</p><h2>
+<a name="Illustrations"></a>Illustrations
+</h2><p>
+<b>NOTE:</b> For working example, refer <code>&lt;SDK_DIR&gt;\examples\common\benchmark_v65</code> application; See <code>benchmark_setClocks() in src_dsp\benchmark_imp.c</code>
+</p><ol type="1">
+<li>
+<p>
+Requirement: Enable DCVS in PERFORMANCE mode, set sleep latency to 1000 micro-seconds, vote NOM in Target with SVS as Min and TURBO as Max.
+</p><pre><span style="color: darkgreen">//Vote</span>
+
+<span style="color: darkgreen">/* Populate request structure */</span>
+<span style="color: blue">int</span> retVal;
+HAP_power_request_t request;
+memset(&amp;request, 0, <span style="color: blue">sizeof</span>(HAP_power_request_t)); <span style="color: darkgreen">//Important to clear the structure if only selected fields are updated.</span>
+request.type = HAP_power_set_DCVS_v2;
+request.dcvs_v2.dcvs_enable = TRUE;
+request.dcvs_v2.dcvs_option = HAP_DCVS_V2_PERFORMANCE_MODE;
+request.dcvs_v2.set_latency = TRUE;
+request.dcvs_v2.latency = 1000;
+request.dcvs_v2.set_dcvs_params = TRUE;
+request.dcvs_v2.dcvs_params.min_corner = HAP_DCVS_VCORNER_SVS;
+request.dcvs_v2.dcvs_params.max_corner = HAP_DCVS_VCORNER_TURBO;
+request.dcvs_v2.dcvs_params.target_corner = HAP_DCVS_VCORNER_NOM;
+<span style="color: darkgreen">/* Call HAP_power_set API with the updated request structure */</span>
+retVal = HAP_power_set(NULL, &amp;request);
+...
+<span style="color: darkgreen">/* 
+ * Processing block 
+ */</span>
+...
+<span style="color: darkgreen">//To remove the vote keeping DCVS enabled.</span>
+memset(&amp;request, 0, <span style="color: blue">sizeof</span>(HAP_power_request_t)); <span style="color: darkgreen">//Remove all votes.</span>
+request.type = HAP_power_set_DCVS_v2;
+request.dcvs_v2.dcvs_enable = TRUE;
+request.dcvs_v2.dcvs_option = HAP_DCVS_V2_PERFORMANCE_MODE; <span style="color: darkgreen">//Enable DCVS</span>
+retVal = HAP_power_set(NULL, &amp;request);
+</pre>
+</li><li>
+<p>
+Requirement: Disable DCVS; do NOT vote for any corners/latency.
+</p><pre><span style="color: darkgreen">//Vote</span>
+
+<span style="color: darkgreen">/* Populate request structure */</span>
+<span style="color: blue">int</span> retVal;
+HAP_power_request_t request;
+memset(&amp;request, 0, <span style="color: blue">sizeof</span>(HAP_power_request_t)); <span style="color: darkgreen">//Important to clear the structure if only selected fields are updated.</span>
+request.type = HAP_power_set_DCVS_v2;
+request.dcvs_v2.dcvs_enable = FALSE;
+<span style="color: darkgreen">/* Call HAP_power_set API with the updated request structure */</span>
+retVal = HAP_power_set(NULL, &amp;request);
+</pre>
+</li><li>
+<p>
+Requirement: Enable DCVS in Power saver mode. Do NOT vote for any target corner/latency, but set MIN and MAX thresholds to DCVS to SVS and TURBO respectively. Clock voting will be done via <code>HAP_power_set_mips_bw</code> request.
+</p><pre><span style="color: darkgreen">//Vote</span>
+
+<span style="color: darkgreen">/* Populate request structure with dcvs_v2 request*/</span>
+<span style="color: blue">int</span> retVal;
+HAP_power_request_t request;
+memset(&amp;request, 0, <span style="color: blue">sizeof</span>(HAP_power_request_t)); <span style="color: darkgreen">//Important to clear the structure if only selected fields are updated.</span>
+request.type = HAP_power_set_DCVS_v2;
+request.dcvs_v2.dcvs_enable = TRUE;
+request.dcvs_v2.dcvs_option = HAP_DCVS_V2_POWER_SAVER_MODE;
+request.dcvs_v2.set_dcvs_params = TRUE;
+request.dcvs_v2.dcvs_params.min_corner = HAP_DCVS_VCORNER_SVS;
+request.dcvs_v2.dcvs_params.max_corner = HAP_DCVS_VCORNER_TURBO;
+request.dcvs_v2.dcvs_params.target_corner = HAP_DCVS_VCORNER_DISABLE; <span style="color: darkgreen">//no vote</span>
+<span style="color: darkgreen">/* Call HAP_power_set API with the updated request structure */</span>
+retVal = HAP_power_set(NULL, &amp;request);
+<span style="color: darkgreen">/* Populate request structure with mips_bw request */</span>
+HAP_power_request_t request;
+memset(&amp;request, 0, <span style="color: blue">sizeof</span>(HAP_power_request_t));
+request.type = HAP_power_set_mips_bw;
+request.mips_bw.set_mips = TRUE;
+request.mips_bw.mipsPerThread = 150; 
+request.mips_bw.mipsTotal = 600;
+request.mips_bw.set_bus_bw = TRUE;
+request.mips_bw.bwBytesPerSec = 10*1000*1000;
+request.mips_bw.busbwUsagePercentage = 50;
+request.mips_bw.set_latency = TRUE;
+request.mips_bw.latency = 1000;
+<span style="color: darkgreen">/* Call HAP_power_set API with the updated request structure */</span>
+retVal = HAP_power_set(NULL, &amp;request); <span style="color: darkgreen">// Core and bus clocks will be set by this request.</span>
+...
+<span style="color: darkgreen">/* 
+ * Processing block 
+ */</span>
+...
+<span style="color: darkgreen">//To remove the dcvs_v2 vote keeping DCVS enabled.</span>
+memset(&amp;request, 0, <span style="color: blue">sizeof</span>(HAP_power_request_t)); <span style="color: darkgreen">//Remove all votes.</span>
+request.type = HAP_power_set_DCVS_v2;
+request.dcvs_v2.dcvs_enable = TRUE;
+request.dcvs_v2.dcvs_option = HAP_DCVS_V2_POWER_SAVER_MODE; <span style="color: darkgreen">//Enable DCVS</span>
+retVal = HAP_power_set(NULL, &amp;request);
+<span style="color: darkgreen">//To remove the mips_bw vote </span>
+memset(&amp;request, 0, <span style="color: blue">sizeof</span>(HAP_power_request_t)); <span style="color: darkgreen">//Remove all votes</span>
+request.type = HAP_power_set_mips_bw;
+request.mips_bw.set_mips = TRUE;
+request.mips_bw.set_bus_bw = TRUE;
+request.mips_bw.set_latency = TRUE;
+request.mips_bw.latency = 65535;
+retVal = HAP_power_set(NULL, &amp;request);
+</pre>
+</li>
+</ol><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

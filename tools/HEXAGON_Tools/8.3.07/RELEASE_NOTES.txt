@@ -1,0 +1,391 @@
+
+[*======================= COPYRIGHT NOTICE ======================*]
+[* Copyright 2019 QUALCOMM Incorporated.                         *]
+[* All rights reserved.                                          *]
+[*                                                               *]
+[* All data and information contained in or disclosed by this    *]
+[* document is confidential and proprietary information of        *]
+[* QUALCOMM Incorporated and all rights therein are expressly    *]
+[* reserved. By accepting this material the recipient agrees     *]
+[* that this material and the information contained therein is   *]
+[* held in confidence and in trust and will not be used, copied, *]
+[* reproduced in whole or in part, nor its contents revealed in  *]
+[* any manner to others without the express written permission   *]
+[* of QUALCOMM.                                                  *]
+[*===============================================================*]
+
+Hexagon LLVM Tools Release version 8.3.07 - Release Notes
+
+----------------------------------------------------------------------
+
+#### Overview ####
+- Overview
+- General
+- Requirements
+- Known Issues
+- Changes
+- Notices
+
+#### General ####
+
+The Hexagon LLVM Tools Release version 8.3 is the first release with
+support for Hexagon v67 and v67t architecture. Hexagon Architectures
+supported in this release include v55, v56, v60, v60-HVX, v61, v62,
+v62-HVX, v65, v65-HVX, v66, v67, and v67t.
+
+This release is based on LLVM.org enhanced with optimizations from the
+Qualcomm LLVM team.  As a cross compiler, it runs on x86-64 Linux or
+Windows host and generates code for Hexagon targets.
+
+Notes:
+
+LLDB:
+- Linux LLDB is built with Python 2.7.8.
+- Windows LLDB is built with Python 3.5.1.
+- LLDB will ignore the PYTHONHOME variable, and use PYTHONPATH as expected.
+- To use LLDB with booter, define the environment variable
+  LLDB_HEXAGON_BOOTER_PATH with the path to the booter (bootimg.pbn,
+  runelf.pbn, etc.) executable. Load the
+  target to debug in LLDB. When you run the program, LLDB will launch
+  hexagon-sim with the correct flags to run your target under booter.
+- By default, LLDB launches hexagon-sim from <install>/Tools/bin. If you wish
+  to use a different hexagon-sim, define LLDB_HEXAGON_SIM_PATH with the path
+  to the simulator binary you wish to use.
+
+Please send all support questions and bug reports to your local
+Qualcomm Hexagon Customer Support office.
+
+#### Requirements ####
+  Minimum memory requirement: 16Gbytes RAM
+
+Windows:
+- Microsoft Windows Server 2008 R2 or newer, Windows 8, and Windows 10.
+- 64 bit versions are required.
+- If you are compiling cosims, you should use MSVC 2015 to ensure
+  compatibility with the simulator.
+
+Linux:
+
+- 64 bit installation of SuSe Linux Enterprise 11 SP3 or newer, or Ubuntu
+  14.04 or newer.
+- Ubuntu 14.04 requires updates. These commands will
+  normally be adequate to install them:
+    sudo apt-get install python-software-properties
+    sudo apt-get update
+    sudo apt-get install gcc-4.8
+    sudo apt-get install g++-4.8
+    sudo apt-get install libc6 libc6-dev
+
+#### Known Issues / Limitations ####
+
+LLDB:
+- Windows command line editing is not as advanced due to absence of
+  libedit.  It is on par with a cmd shell.
+- Windows interactive scripting doesn't display the Python prompt correctly.
+  It won't display when initially entering script mode, and may or may not
+  display before output from a command.
+
+C++11/14:
+- Full compliance for C++11/14 is dependent on support from QuRT.
+
+
+#### Changes ####
+
+
+---- 8.3.07 ----
+
+LLVM
+42620 Revert "aranges hack"
+43190 Improve batch mode for addr2struct
+43570 Add action field to sa_config file.
+43666 Create support for SA report coloring
+43697 Update expected PGO format.
+43718 CT modem crash due to missing label.
+43754 Update addr2struct to beter cover inline information.
+
+PROFTOOL
+41170 Change 'Insns' tab to 'Instructions' in Profiler's generated HTML files
+
+---- 8.3.06 ----
+
+LLVM
+42101 Handle no-warn correctly for backend
+42423 Pipeliner Fix an assertion caused by iterator invalidation.
+42558 Fix restoreLatency to look at the subregs of defs.
+42871 Add dependency between sections for a function and its jump table.
+43190 Improve batch mode for addr2struct
+43211 Fix condition for unaligned vector stack loads
+SimplifyCFG Put an alignment on generated switch tables
+cxx2a Fix warning triggered by r343285
+hexagon Add support for new system registers
+
+LLDB
+40823 Add QuRT debug stub support to lldb tests
+
+MCLINKER
+42441 Failure to find off_t on SLES
+42491 Update sort plugin with non-PGO mode of operation.
+42492 Fix windows build failure
+42897 Improve Linker error on Chunk removed by Plugin.
+42902 Strengthen sorting plugin chunk ID
+43020 Trampoline Map doesnot work if the symbol is absolute
+
+SIMULATOR
+42713 Change how simulator picks up thread count information
+42839 Fix simulator init sequence
+
+---- 8.3.05 ----
+
+LLVM
+38315 Don't consider DW_FORM_data4/8 to be section offsets.
+40241 Don't change alignment of an extern global array
+41683 hexagon: Fix immediates
+41700 Create IR based hot/cold partition.
+41959 Emit error for invalid CPU
+42075 Copy hot/cold attribute in CloneBasicBlock
+42122 Propagate cold attribute.
+42267 Do not error for hot/cold + exceptions.
+42311 Separate hot/cold and coldir features.
+42322 Do not replace implicit registers
+42368 IPO/DiffAndMerge add llvmint marker
+Hexagon Remove indeterministic traversal order
+Update scan-build/bin/post-process to add support for generating structure hitmap
+aranges hack
+llvm-addr2structAdded flag -pyetm to generate data to be used by pyetm tool
+
+LLDB
+Pause slightly before stopping a thread
+40823 Add QuRT wrapper support to 8.3 tests
+
+MCLINKER
+llvm-addr2struct Added supporting testcase for pyetm flag
+41660 Improve Linker diagnostics on Fatal error(s).
+41684 Get linker script rule from Chunk
+42124 Update sort plugin with HI features.
+42150 Allow note sections to be initialized properly.
+42222 Do not return stale Rule from Chunk
+42272 Add a way for the Plugin to check contents of a LinkerScriptRule.
+42274 Update plugin config parser
+42328 Enabling trampolines to be placed backwards shows a bug. Remove the feature
+42362 Set of parenthesis getting dropped
+42403 Populate data from plugin
+
+RESOURCEANALYZER
+41899 falsely reporting zero stack size
+
+SIMULATOR
+39911 Fix simulator API ConfigureAppCmdline behavior and tests
+42120 Follow arch-side fix to V67W_1536
+42327 Allows PC trace to be configured later
+
+---- 8.3.04 ----
+
+LLVM
+41164 Add options to enable and disable duplexes for Hexagon
+41448 Add path insensetive report mode to reduce number of duplicate reports.
+41459 Add variable location information to llvm-addr2struct.
+41519 Add batch mode to llvm-addr2struct.
+
+LLDB
+Revert "Fix Breakpoint::RemoveInvalidLocations to fix the exec testcase."
+
+LIBQDSP
+41222 Add intrinsics for vmema and vmemb
+
+MCLINKER
+41541 Add shared library example with PHDRS.
+41684 Unload library only once.
+41702 Workaround to avoid kernel DLL bug.
+
+PROFTOOL
+40928 fix windows paths for elf arg, redux
+
+SIMULATOR
+41401 V67c_0 now has only one thread per YAML attributes
+41585 Fix err_user_fatal to remove bad variable-arg usage
+
+---- 8.3.03 ----
+
+LLVM
+39606 New feature to supress trampolines on output section basis.
+40520 Do not newify instructions with a late-predicate source
+40521 readobj -debug-dump=info generates huge output
+40581 Stack to Heap pass should emit a call to malloc wrapper instead of malloc.
+40590 Create YAML config file for SA
+40637 Add path suppression list in SA YAML config
+40651 Add per-checker option support in SA YAML config
+41007 Use CCC_SA_OVERRIDE_OPTIONS env var for SA config
+41068 InComing Argument Checker in Clang SA
+41131 Fix SA config file output dir.
+41165 Update scan-build/bin/post-process.
+41222 Add intrinsics for vmema and vmemb
+
+LIBCXX
+41116 Move static tests to physical address 0x50000000
+
+LLDB
+40823 Add support for QuRT, building tests statically
+40904 Fix rendezvous address for crashdump
+
+DINKUMWARE
+Add syncht after clade2 init
+41264 update clade2 hw fixes.
+
+MCLINKER
+Addition of test cases for Addr2Struct
+add symbol plugin
+Fix linux testcase due to buildbot changes
+40321 Dont show section and dont print same records
+40404 Fix linker script error reported.
+40492 Compressed YAML output is supported only if ZLIB is enabled.
+40512 Reorganize Linker LTO to enable timing output.
+40518 Implement --warn-common
+40553 Need after layout symbol address
+40611 fix windows build failure
+40650 Add plugin capability to support adding chunks
+40661 Add more plugin context to LinkerWrapper.
+40678 Add summary and custom config file to sorting plugin.
+40703 Reverse order of hot/cold/unprofiled in sorting plugin
+40754 Need symbols for "To" in trampoline map
+40757 Add markers for hot/cold/unprofiled in sorting plugin
+40824 Update YAML parser to handle new trampoline info
+40880 Fix the reuse name in YAML parser
+40888 Need output section info for trampolines
+41034 Update YAML parser to handle to/from tramp mapping
+41055 Plugin should be able to inspect symbols added by it
+41058 Add layout support to sorting plugin
+41070 Align segment offset before aligning sections in the segment.
+41107 Update hot/cold markers for pyetm.
+41154 Assign CLADE compress sections PROGBITS property.
+41158 Remove deprecated plugin types ChunkIterator.
+41188 Gracefully exit when there is a plugin failure
+
+PROFTOOL
+38363 Omit derived stats if empty
+
+SIMULATOR
+38162 Porting simulator to clang on Linux
+40635 Simulator -h hides an internal-only flag
+40752 Simulator API adds internal data space
+40822 simulator FIRST_SUPPORTED_CPU now keyed to LAST_ARCH
+
+TRACE32
+40806 Re-oder t32_mcd memory spaces enumeration
+
+---- 8.3.02 ----
+
+LLVM
+addr2struct Support global offsets for type attribute
+Hexagon Do not promote terminator instructions in Hexagon loop idioms
+llvm-addr2structEmit filepath and line number for each symbol type
+llvm-addr2struct Fixed corner case for union-type declared without typedef but having first member with typedef. Included Python script for running llvm-addr2struct.
+Revert "38315 llvm-readobj falsely reports 'decoding errors'"
+33496 Emit explicit section globals in unique sections with -ffunction-sections/-fdata-sections
+35342 Add functionality to create BB profile summary.
+35796 Add ability to use frequency info for sorting plugin.
+36391 Disambiguate local symbols in sorting plugin.
+39731 Create test infrastructure for addr2struct
+39799 Fix type tracking in addr2struct.
+39871 Fix bug in Vector Loop Carried Reuse
+39885 Use UnknownSize when updating MemOperand
+40098 Implement Stack to Heap promotion optimization.
+40302 Align cold stubs and give them appropriate elf attributes.
+
+LIBCXX
+424 failure in HITE on kona-tools
+448 failure in HITE on lahaina-tools
+
+LLDB
+39635 Changes to get lldb lit tests running on Hexagon
+40135 Add SIGSTOP signal to QuRT signal definitions
+40253 Slide rtld_debug address by process load address
+40369 Fix module search paths on Hexagon
+
+DINKUMWARE
+40092 Update CLADE2 initialization code.
+
+MCLINKER
+39500 Linker should warn on functions with reloc in -copy-farcalls-from-file list
+39880 Need separate file for Trampoline Map.
+39988 Update Output section iterator for Sorting sections by rules.
+40157 Trampolines to PLT entries for TLS symbols not handled properly.
+40195 Fix PCREL overflow errors with EhFrame sections.
+40199 Initialize variables discovered by UBSAN
+40243 QCLD Subalign doesnot work like how GNU linker does.
+40303 Linker needs to support moving chunks across output section
+40320  Allow hot/cold splitting in sorting plugin.
+40321 Emit List of symbols for trampoline.
+
+SIMULATOR
+Remove a symlibnk check in Makefile
+39336 fix simulator nightly integration build on windows
+39861 Fix l2vic warning messages to SOFT_INT
+39968 part.1 and 2: Simulator adds support to more revid's
+40080 Simulator bypasses DWARF info when loading ELF
+40185 Fix guest register offsets for v67/v68
+40207 Create tmp directory inside arch for CLANG port
+40390 HEX_CPU_FIRST_SUPPORTED is v55 in BRANCH_8_3
+
+---- 8.3.01 ----
+
+LLVM
+38946 hex-dis: check arch rules instead of subarch
+39181 Remove experimental v67 instructions
+39207 add support for new v67 regs
+39398 Fix PGO assert during hot/cold partitioning.
+39654 Hexagon Remove the deprecated file HexagonVarargsCallingConvention.h
+Check structure padding in global data structures
+
+LIBCXX
+361 Increase timeouts for static libcxx tests
+37987 Libcxx static debug improvements
+39403 Add argv/c test to libcxx testsuite
+39725 LIBCXX_ENABLE_STATIC_ABI_LIBRARY off
+Temporary upadate of v67 wrapper with v66 wrapper
+
+LLDB
+39371 Walk link map when loading Hexagon core dumps
+39477 Add tests for HVX and tlb/pagetable
+39635 Get LLDB tests green on 8.3 linux builder
+
+LIBNATIVE
+37951 additional fix for V6_vS32b_qpred_ai
+bring in changes from master
+
+MCLINKER
+39187 Create PIC trampolines when building shared object
+39213 Plugin not found should be a fatal error, not a trace error
+39481 Fix NONE relocation being applied
+39501 Show trampoline reuses
+
+SIMULATOR
+39108 Simulator/Makefile adds check for arch-side symbolic link
+39218 Simulator makefile change to match new github based arch repo
+39277 New API constructor to specify library path
+39322 Simulator does not recognize the form -flag=x
+39499 L2vic problem removed by using HEX_PCYCLE for latency
+39629 (maint) allow DEBUG=1 with make install
+39631 Simulator allow vr/vw commands to specify host thread_id
+39644 Allow HEX_PCYCLE used as latency description
+39644 part.2 further clean up of l2vic.cpp messages
+39767 Change simulator interactive mode prompt for v60+
+
+---- 8.3 ----
+
+-Support for Hexagon v67 and v67 Small Core: Performance optimized code generation
+ for v67 and v67 Small Core
+-Auto-vectorization for HVX
+-5G modem optimizations
+-additional bug fixes
+
+
+#### Notices ####
+This product includes software developed by John Polstra.
+
+This product includes software developed by the NetBSD
+Foundation, Inc. and its contributors.
+
+This product includes software developed for the
+NetBSD Project.  See http://www.NetBSD.org/ for
+information about NetBSD.
+

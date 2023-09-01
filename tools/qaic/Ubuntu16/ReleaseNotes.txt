@@ -1,0 +1,134 @@
+QAIC Release Notes
+##################
+
+.toc
+1.0.38.x
+========
+* add support for passing handles using the new dmahandle type
+
+1.0.37.x
+========
+* use remote_handle64 for multi domain modules
+
+1.0.36.x
+========
+* update docs
+
+1.0.35.x
+========
+* fixed bug in derived interfaces missing strlen and wstrlen definitions
+
+1.0.34.x
+========
+* fixed bug in skels modifying input strings
+
+1.0.33.x
+========
+* remove whitespace from end of lines
+* propagate top level comments to all generated files
+* fixed aarch64 bug in sequences of complex structures
+
+1.0.32.x
+========
+* fixed bugs in aarch64 marshaing of complex sequences and structures
+
+1.0.31.x
+========
+* fixed unused function warnings
+
+1.0.30.x
+========
+* fixed inrout buffer marshalling bugs
+
+1.0.29.x
+========
+* fixed memmove compiler errors
+
+1.0.28.x
+========
+* llvm pragmas warning
+
+1.0.27.x
+========
+* initial support for non complex inrout types
+* cleanuped generated headers
+
+1.0.26.x
+========
+* fixed aarch64 warnings
+
+1.0.25.x
+========
+* Support for aarch64
+
+1.0.24.x
+========
+* Fixed warnings in generated code.
+
+1.0.23.x
+========
+* Fixed compiler error for hexagon targets.
+
+1.0.22.x
+========
+* Fixed align macro.
+* Support HAP_pls and adsp_pls in generated stubs for hexagon targets.
+
+1.0.21.x
+========
+* Fixed syntax check IQI error.
+
+1.0.20.x
+========
+* Fixed InterlockedCompareExchange call for win32 compilers.
+
+1.0.19.x
+========
+* enum typedefs appear after the enum to make some c++ compilers happy.
+
+1.0.18.x
+========
+* Fixed bug in marshalling of rout sequences of complex structures containing scalars and sequences.
+
+1.0.17.x
+========
+* added support for __hexagon__ 
+* warnings in generated code
+
+1.0.16.x
+========
+* doc fixes
+* warnings in generated code
+
+1.0.15.x
+========
+* docs fixes
+* fixed definition of local _atomic_ComareAndExchange function in stub to be static to avoid linker conflicts
+
+1.0.14.x
+========
+* fixed signed/unsigned comparison warnings in generated code
+* fixed bug in how forward slashes are treated in windows paths
+* constructors for stubs that do not depend on static initlaizers
+* fixed header preprocessor guard to use only valid characters
+
+1.0.13.x
+========
+* fixed bug in C code generator for in and rout complex structures containing sequences of sequences
+
+1.0.12.x
+========
+* fixed bug in C code generator for rout complex structures
+
+1.0.11.x
+========
+* added ifdef cplusplus
+* made stubs and skels self contained apart from remote.h, AEEStdDef.h and AEEStdErr.h
+
+1.0.10.x
+========
+
+* stubs that can be loaded on the dsp to support reverse invoke
+
+.qccopyright
+

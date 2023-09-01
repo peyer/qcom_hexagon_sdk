@@ -1,0 +1,1360 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><title>Asynchronous DSP Message Queue</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="images/sidebar_top.jpg"></top><script src="scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, false)"><input id="searchButton" onclick="postFunction(false)" type="button" value="Search"></form><p>
+<a href="index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<p>
+<a href="sitemap.html">Sitemap</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="Audio/Applications.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="Voice/Applications.html">Voice</a>
+</p><p>
+<a href="Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="Audio/Examples.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="Examples_Common.html">Common</a>
+</p><p>
+<a href="Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="Tools_Signing.html">Signing</a>
+</p><p>
+<a href="Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="FAQ_Common.html">Common</a>
+</p><p>
+<a href="FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="Support_Contact.html">Contact</a>
+</p><center><img src="images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h1>
+<a name="Asynchronous%20DSP%20Message%20Queue"></a>Asynchronous DSP Message Queue
+</h1><div class="toc"><div class="tocLevel"><a href="#Introduction">Introduction</a><div class="tocLevel"><a href="#Message%20Queue%20Library">Message Queue Library</a></div><div class="tocLevel"><a href="#Use%20Cases">Use Cases</a></div><div class="tocLevel"><a href="#Getting%20Started">Getting Started</a></div></div><div class="tocLevel"><a href="#API">API</a><div class="tocLevel"><a href="#Data%20Types">Data Types</a><div class="tocLevel"><a href="#asyncdspq_endpoint_t">asyncdspq_endpoint_t</a></div></div><div class="tocLevel"><a href="#Callback%20Functions">Callback Functions</a><div class="tocLevel"><a href="#asyncdspq_callback_t">asyncdspq_callback_t</a></div><div class="tocLevel"><a href="#asyncdspq_error_callback_t">asyncdspq_error_callback_t</a></div></div><div class="tocLevel"><a href="#Main%20API%20Functions">Main API Functions</a><div class="tocLevel"><a href="#asyncdspq_create">asyncdspq_create</a></div><div class="tocLevel"><a href="#asyncdspq_destroy">asyncdspq_destroy</a></div><div class="tocLevel"><a href="#asyncdspq_attach">asyncdspq_attach</a></div><div class="tocLevel"><a href="#asyncdspq_detach">asyncdspq_detach</a></div><div class="tocLevel"><a href="#asyncdspq_write">asyncdspq_write</a></div><div class="tocLevel"><a href="#asyncdspq_write_noblock">asyncdspq_write_noblock</a></div><div class="tocLevel"><a href="#asyncdspq_read">asyncdspq_read</a></div><div class="tocLevel"><a href="#asyncdspq_read_noblock">asyncdspq_read_noblock</a></div><div class="tocLevel"><a href="#asyncdspq_cancel">asyncdspq_cancel</a></div></div></div><div class="tocLevel"><a href="#Usage%20Model:%20Polling%20vs.%20Blocking">Usage Model: Polling vs. Blocking</a></div><div class="tocLevel"><a href="#Call%20Flows">Call Flows</a><div class="tocLevel"><a href="#Initialization">Initialization</a></div><div class="tocLevel"><a href="#Unitialization">Unitialization</a></div><div class="tocLevel"><a href="#Simpe%20Messages">Simpe Messages</a></div></div><div class="tocLevel"><a href="#Example%20Projects">Example Projects</a><div class="tocLevel"><a href="#Basic%20Messaging">Basic Messaging</a><div class="tocLevel"><a href="#Simple%20Messages">Simple Messages</a></div><div class="tocLevel"><a href="#Tests%20with%20Multiple%20Queues">Tests with Multiple Queues</a></div><div class="tocLevel"><a href="#Canceling%20Operations">Canceling Operations</a></div><div class="tocLevel"><a href="#Threading">Threading</a></div></div><div class="tocLevel"><a href="#Image%20Processing%20Queue">Image Processing Queue</a><div class="tocLevel"><a href="#Initialization%20and%20Uninitialization">Initialization and Uninitialization</a></div><div class="tocLevel"><a href="#Memory%20Allocation%20and%20Deallocation">Memory Allocation and Deallocation</a></div><div class="tocLevel"><a href="#Synchronization">Synchronization</a></div><div class="tocLevel"><a href="#Cache%20Maintenance">Cache Maintenance</a></div><div class="tocLevel"><a href="#Image%20Processing%20Operations">Image Processing Operations</a></div><div class="tocLevel"><a href="#Basic%20Usage%20Sequence">Basic Usage Sequence</a></div><div class="tocLevel"><a href="#Performance">Performance</a></div><div class="tocLevel"><a href="#Queue%20Performance">Queue Performance</a></div></div></div></div><h2>
+<a name="Introduction"></a>Introduction
+</h2><p>
+This document describes the new asynchronous message queue library introduced in Hexagon SDK 3.3.1. The queue codebase works on SDM845 and later; attempting to use it on earlier devices will fail from missing symbols.
+</p><p>
+The queue is designed to provide a utility library for asynchronous communication between the application CPU and DSP. Typically the CPU communicates with the DSP using FastRPC, and the SDK contains a number of examples on how to use FastRPC. FastRPC can have relatively high latency and is by design synchronous. Applications that use synchronous FastRPC calls can suffer from long idle times while waiting for calls to complete; the DSP is effectively idle while the RPC messages are passed between the CPU and the DSP.
+</p><p>
+An asynchronous communication approach resolves this by letting the CPU queue up multiple requests without waiting for the DSP to complete. This can help decouple throughput from latency: Even if there are delays in communicating between the two processors, the DSP can continue to process requests from its input queue without waiting for the CPU to make new RPC calls.
+</p><p>
+The asynchronous message queue library also lets the client manage its own buffer management and cache maintenance. This can make sophisticated clients more efficient since they can avoid unnecessary map/unmap operations and defer cache maintenance operations to a point when they're truly necessary.
+</p><p>
+The downside of using the message queue library is that it is just that: A method to asynchronously send opaque messages between the DSP and the CPU. The client must marshal its own messages to byte arrays, manage buffer mappings and handle cache maintenance, and maintain separate queues for requests and responses if necessary.
+</p><p>
+Note that the queue library does not replace FastRPC: Clients must still use FastRPC to load and initialize their DSP-side library and map buffers to the DSP. The queue also uses FastRPC internally for signaling.
+</p><h3>
+<a name="Message%20Queue%20Library"></a>Message Queue Library
+</h3><p>
+The asynchronous message queue is included in the Hexagon SDK as &#8220;asyncdspq&#8221;. The queue has a number of key properties and features:
+</p><ul>
+<li>
+<p>
+Asynchronous: Read and write operations are asynchronous, and communication with the other endpoint is done in parallel
+</p>
+</li><li>
+<p>
+In-order: The queue is ordered; messages are delivered to the other endpoint in the same order they are written in Asynchronous DSP Message Queue Application Note Introduction
+</p>
+</li><li>
+<p>
+Userspace: The queue is implemented as a userspace library and does not require system-level changes on SDM845 or later. It uses FastRPC internally to communicate between the DSP and the application CPU.
+</p>
+</li><li>
+<p>
+Simple messages: Messages are arrays of bytes without any further structure.
+</p>
+</li>
+</ul><h3>
+<a name="Use%20Cases"></a>Use Cases
+</h3><p>
+Using the message queue can be more complex than simply making FastRPC calls to the DSP, so all developers must consider whether their application benefits from switching to an asynchronous communication model before using the queue. Each application is different, but there are a number of use cases that can benefit from asynchronous messaging:
+</p><ul>
+<li>
+<p>
+Multiple operations on the same data, e.g. processing different regions of the same image
+</p>
+</li><li>
+<p>
+Multi-step operations with intermediate data that stays on the DSP such as sequences of image processing filters
+</p>
+</li><li>
+<p>
+Executing neural networks processing one layer at a time
+</p>
+</li><li>
+<p>
+Queueing multiple images on the DSP for image processing
+</p>
+</li>
+</ul><p>
+Generally the asynchronous queue model benefits applications that can queue multiple requests to the DSP before expecting results back, keeping the DSP busy even if there are delays on the application CPU.
+</p><p>
+Use cases that may not show benefits include:
+</p><ul>
+<li>
+<p>
+Latency-sensitive control: The queue model does not improve worst-case latency.
+</p>
+</li><li>
+<p>
+Single-shot image/video processing algorithms: Sending just one request to the DSP and waiting for a response with the queue is not any more efficient than using FastRPC directly.
+</p>
+</li><li>
+<p>
+Fundamentally synchronous applications: If the application needs the results from each operation back on the CPU before it can issue the next request it will not be able to maintain a queue of tasks for the DSP to process.
+</p>
+</li>
+</ul><h3>
+<a name="Getting%20Started"></a>Getting Started
+</h3><p>
+The best way to get started with the asynchronous message queue is probably the &#8220;asyncdspq_sample&#8221; example. Build it, run it on target hardware, and start following the call sequences from <code>fcvqueuetest.c</code>. For more information see <a href="#Image%20Processing%20Queue">Image Processing Queue</a>
+</p><h2>
+<a name="API"></a>API
+</h2><p>
+This section documents the message queue API. For detailed function definitions see the header file <code>asyncdspq.h</code>. All API functions return an error code, with zero (<code>AEE_SUCCESS</code>) representing success.
+</p><h3>
+<a name="Data%20Types"></a>Data Types
+</h3><h4>
+<a name="asyncdspq_endpoint_t"></a>asyncdspq_endpoint_t
+</h4><p>
+Identifies the queue endpoint
+</p><table><tr><th><p>
+Value
+</p></th><th><p>
+Description
+</p></th></tr><tr><td><p>
+<code>ASYNCDSPQ_ENDPOINT_APP_CPU</code>
+</p></td><td><p>
+Main application CPU
+</p></td></tr><tr><td><p>
+<code>ASYNCDSPQ_ENDPOINT_CDSP</code>
+</p></td><td><p>
+Compute DSP, or the ADSP used for compute workloads
+</p></td></tr></table><h3>
+<a name="Callback%20Functions"></a>Callback Functions
+</h3><h4>
+<a name="asyncdspq_callback_t"></a>asyncdspq_callback_t
+</h4><pre>void asyncdspq_callback(asyncdspq_t queue, void *context);
+</pre><p>
+Data/space available callback. The callback signals there is a new message available to read or more space available in the queue depending on where it is used.
+</p><p>
+Note that a read/write operation can still fail or block after the callback is received - there may not be enough space for the given message or another thread may have consumed the message already. Clients must be prepared to handle a <code>AEE_NOMORE</code> response or be prepared to block. There may also be more than one message available or space for multiple messages in the queue. Clients are expected to drain all the messages from the queue after each callback, and should not wait for a new callback until the queue is completely empty or full.
+</p><table><tr><th><p>
+Parameter
+</p></th><th><p>
+Description
+</p></th></tr><tr><td><p>
+<code>queue</code>
+</p></td><td><p>
+The queue this callback refers to
+</p></td></tr><tr><td><p>
+<code>context</code>
+</p></td><td><p>
+Callback context from <code>asyncdspq_create()/asyncdspq_attach()</code>
+</p></td></tr></table><h4>
+<a name="asyncdspq_error_callback_t"></a>asyncdspq_error_callback_t
+</h4><pre style="font-size: 87%">void asyncdspq_error_callback(asyncdspq_t queue, void *context, AEEResult error);
+</pre><p>
+Error callback. Called from different thread contexts.
+</p><table><tr><th><p>
+Parameter
+</p></th><th><p>
+Description
+</p></th></tr><tr><td><p>
+<code>queue</code>
+</p></td><td><p>
+The queue this callback refers to
+</p></td></tr><tr><td><p>
+<code>context</code>
+</p></td><td><p>
+Callback context from <code>asyncdspq_create()/asyncdspq_attach()</code>
+</p></td></tr><tr><td><p>
+<code>error</code>
+</p></td><td><p>
+Error code
+</p></td></tr></table><h3>
+<a name="Main%20API%20Functions"></a>Main API Functions
+</h3><h4>
+<a name="asyncdspq_create"></a>asyncdspq_create
+</h4><pre>AEEResult asyncdspq_create(asyncdspq_t *queue,
+                           asyncdspq_attach_handle_t *attach_handle,
+                           asyncdspq_endpoint_t writer,
+                           asyncdspq_endpoint_t reader,
+                           unsigned queue_length,
+                           asyncdspq_error_callback_t error_callback,
+                           asyncdspq_callback_t message_callback,
+                           asyncdspq_callback_t space_callback,
+                           void *callback_context,
+                           uint32_t flags);
+</pre><p>
+Creates a new queue, allocating the queue and creating threads as necessary. Queues can currently be created on the application CPU only. Valid writer/reader endpoint combinations are CPU/CDSP and CDSP/CPU.
+</p><table><tr><th><p>
+Parameter
+</p></th><th><p>
+Description
+</p></th></tr><tr><td><p>
+<code>queue</code>
+</p></td><td><p>
+Output: Queue handle
+</p></td></tr><tr><td><p>
+<code>attach_handle</code>
+</p></td><td><p>
+Output: Queue handle used with <code>asyncdspq_attach()</code> at the other endpoint
+</p></td></tr><tr><td><p>
+<code>writer</code>
+</p></td><td><p>
+Queue writer endpoint, See <code>asyncdspq_endpoint_t</code>
+</p></td></tr><tr><td><p>
+<code>reader</code>
+</p></td><td><p>
+Queue reader endpoint, See <code>asyncdspq_endpoint_t</code>
+</p></td></tr><tr><td><p>
+<code>queue_length</code>
+</p></td><td><p>
+Queue length in bytes. Must be a multiple of 4 and a minimum of 256 bytes
+</p></td></tr><tr><td><p>
+<code>error_callback</code>
+</p></td><td><p>
+Error callback. Called from different thread contexts
+</p></td></tr><tr><td><p>
+<code>message_callback</code>
+</p></td><td><p>
+Message callback or NULL. Called when there is new data available in the message queue. Called from a message handler thread contexts
+</p></td></tr><tr><td><p>
+<code>space_callback</code>
+</p></td><td><p>
+Queue space available callback or NULL. Called when there is more space available in the queue to write data. Called from a message handler thread context
+</p></td></tr><tr><td><p>
+<code>callback_context</code>
+</p></td><td><p>
+Context pointer passed to callbacks
+</p></td></tr><tr><td><p>
+<code>flags</code>
+</p></td><td><p>
+Queue creation flags; 0 for default configuration
+</p></td></tr></table><h4>
+<a name="asyncdspq_destroy"></a>asyncdspq_destroy
+</h4><pre>AEEResult asyncdspq_destroy(asyncdspq_t queue);
+</pre><p>
+Destroys a queue. Deallocates queue memory and terminates threads. Must be called from the same processor where the queue was created. The other endpoint must detach from the queue before it is destroyed.
+</p><p>
+There must be no outstanding blocking read or write requests in progress when this function is called. Clients can use asyncdspq_cancel() to cancel requests before destroying the queue.
+</p><table><tr><th><p>
+Parameter
+</p></th><th><p>
+Description
+</p></th></tr><tr><td><p>
+<code>queue</code>
+</p></td><td><p>
+Output: Queue handle from <code>asyncdspq_create()</code>
+</p></td></tr></table><h4>
+<a name="asyncdspq_attach"></a>asyncdspq_attach
+</h4><pre>AEEResult asyncdspq_attach(asyncdspq_t *queue,
+                           asyncdspq_attach_handle_t attach_handle,
+                           asyncdspq_error_callback_t error_callback,
+                           asyncdspq_callback_t message_callback,
+                           asyncdspq_callback_t space_callback,
+                           void *callback_context);
+</pre><p>
+Attachs to a queue created at the other endpoint.
+</p><table><tr><th><p>
+Parameter
+</p></th><th><p>
+Description
+</p></th></tr><tr><td><p>
+<code>queue</code>
+</p></td><td><p>
+Output: Queue handle
+</p></td></tr><tr><td><p>
+<code>attach_handle</code>
+</p></td><td><p>
+Output: Queue handle used with <code>asyncdspq_attach()</code> at the other endpoint
+</p></td></tr><tr><td><p>
+<code>error_callback</code>
+</p></td><td><p>
+Error callback. Called from different thread contexts
+</p></td></tr><tr><td><p>
+<code>message_callback</code>
+</p></td><td><p>
+Message callback or NULL. Called when there is new data available in the message queue. Called from a message handler thread contexts
+</p></td></tr><tr><td><p>
+<code>space_callback</code>
+</p></td><td><p>
+Queue space available callback or NULL. Called when there is more space available in the queue to write data. Called from a message handler thread context
+</p></td></tr><tr><td><p>
+<code>callback_context</code>
+</p></td><td><p>
+Context pointer passed to callbacks
+</p></td></tr></table><h4>
+<a name="asyncdspq_detach"></a>asyncdspq_detach
+</h4><pre>AEEResult asyncdspq_detach(asyncdspq_t queue);
+</pre><p>
+Detach from a queue; the reverse of asyncdspq_attach(). Must be called before the other endpoint destroys the queue. There must be no outstanding blocking read or write requests in progress when this function is called. Clients can use asyncdspq_cancel() to cancel requests before detaching from the queue.
+</p><table><tr><th><p>
+Parameter
+</p></th><th><p>
+Description
+</p></th></tr><tr><td><p>
+<code>queue</code>
+</p></td><td><p>
+Queue handle from <code>asyncdspq_create()</code> or <code>asyncdspq_attach()</code>
+</p></td></tr></table><h4>
+<a name="asyncdspq_write"></a>asyncdspq_write
+</h4><pre style="font-size: 86%">AEEResult asyncdspq_write(asyncdspq_t queue, const uint8_t *msg, unsigned length);
+</pre><p>
+Writes a message to the queue. Blocks if there is no space in the queue. This function can only be called at the writer endpoint of the queue. This function must not be called from a asyncdspq
+</p><table><tr><th><p>
+Parameter
+</p></th><th><p>
+Description
+</p></th></tr><tr><td><p>
+<code>queue</code>
+</p></td><td><p>
+Queue handle from <code>asyncdspq_create()</code> or <code>asyncdspq_attach()</code>
+</p></td></tr><tr><td><p>
+<code>msg</code>
+</p></td><td><p>
+Pointer to the message. Must be 32-bit aligned. This function will copy the data to the queue and the buffer can be rewritten once this function returns.
+</p></td></tr><tr><td><p>
+<code>length</code>
+</p></td><td><p>
+Message length in bytes. Must be a multiple of 4.
+</p></td></tr></table><p>
+Common error codes:
+</p><ul>
+<li>
+<p>
+<code>AEE_EEXPIRED</code>: The request was cancelled
+</p>
+</li><li>
+<p>
+<code>AEE_EBUFFERTOOSMALL</code>: The queue is too small to fit the message (even if empty)
+</p>
+</li><li>
+<p>
+<code>AEE_EUNSUPPORTED</code>: The queue has a space available callback set
+</p>
+</li>
+</ul><h4>
+<a name="asyncdspq_write_noblock"></a>asyncdspq_write_noblock
+</h4><pre style="font-size: 79%">AEEResult asyncdspq_write_noblock(asyncdspq_t queue, const uint8_t *msg, unsigned length);
+</pre><p>
+Writes a message to the queue. Non-blocking; fails with AEE_ENOMORE if there is no space in the queue. This function can only be called at the writer endpoint of the queue.
+</p><table><tr><th><p>
+Parameter
+</p></th><th><p>
+Description
+</p></th></tr><tr><td><p>
+<code>queue</code>
+</p></td><td><p>
+Queue handle from <code>asyncdspq_create()</code> or <code>asyncdspq_attach()</code>
+</p></td></tr><tr><td><p>
+<code>msg</code>
+</p></td><td><p>
+Pointer to the message. Must be 32-bit aligned. This function will copy the data to the queue and the buffer can be rewritten once this function returns.
+</p></td></tr><tr><td><p>
+<code>length</code>
+</p></td><td><p>
+Message length in bytes. Must be a multiple of 4.
+</p></td></tr></table><p>
+Common error codes:
+</p><ul>
+<li>
+<p>
+<code>AEE_ENOMORE</code>: If there isn't enough space in the queue
+</p>
+</li><li>
+<p>
+<code>AEE_EBUFFERTOOSMALL</code>: The queue is too small to fit the message (even if empty)
+</p>
+</li>
+</ul><h4>
+<a name="asyncdspq_read"></a>asyncdspq_read
+</h4><pre style="font-size: 70%">AEEResult asyncdspq_read(asyncdspq_t queue, uint8_t *buf, unsigned buf_length, unsigned *msg_length);
+</pre><p>
+Reads a message from the queue. Blocks if there is no message available. This function can only be called from the reader endpoint of the queue. This function must not be called from a asyncdspq callback, and cannot be used if a message callback has been set.
+</p><table><tr><th><p>
+Parameter
+</p></th><th><p>
+Description
+</p></th></tr><tr><td><p>
+<code>queue</code>
+</p></td><td><p>
+Queue handle from <code>asyncdspq_create()</code> or <code>asyncdspq_attach()</code>
+</p></td></tr><tr><td><p>
+<code>buf</code>
+</p></td><td><p>
+Pointer to the message buffer. Must be 32-bit aligned
+</p></td></tr><tr><td><p>
+<code>buf_length</code>
+</p></td><td><p>
+Buffer length in bytes. Must be a multiple of 4.
+</p></td></tr><tr><td><p>
+<code>msg_length</code>
+</p></td><td><p>
+Output: Message length in bytes
+</p></td></tr></table><p>
+Common error codes:
+</p><ul>
+<li>
+<p>
+<code>AEE_ENOMEMORY</code>: The buffer is too small for the next message
+</p>
+</li><li>
+<p>
+<code>AEE_EEXPIRED</code>: The request was cancelled.
+</p>
+</li><li>
+<p>
+<code>AEE_EUNSUPPORTED</code>: The queue has a message callback set
+</p>
+</li>
+</ul><h4>
+<a name="asyncdspq_read_noblock"></a>asyncdspq_read_noblock
+</h4><pre>AEEResult asyncdspq_read_noblock(asyncdspq_t queue,
+                                 uint8_t *buf,
+                                 unsigned buf_length,
+                                 unsigned *msg_length);
+</pre><p>
+Reads a message from the queue. Non-blocking; returns AEE_ENOMORE if the queue is empty. This function can only be called from the reader endpoint of the queue.
+</p><table><tr><th><p>
+Parameter
+</p></th><th><p>
+Description
+</p></th></tr><tr><td><p>
+<code>queue</code>
+</p></td><td><p>
+Queue handle from <code>asyncdspq_create()</code> or <code>asyncdspq_attach()</code>
+</p></td></tr><tr><td><p>
+<code>buf</code>
+</p></td><td><p>
+Pointer to the message buffer. Must be 32-bit aligned
+</p></td></tr><tr><td><p>
+<code>buf_length</code>
+</p></td><td><p>
+Buffer length in bytes. Must be a multiple of 4.
+</p></td></tr><tr><td><p>
+<code>msg_length</code>
+</p></td><td><p>
+Output: Message length in bytes
+</p></td></tr></table><p>
+Common error codes:
+</p><ul>
+<li>
+<p>
+<code>AEE_ENOMEMORY</code>: The buffer is too small for the next message
+</p>
+</li><li>
+<p>
+<code>AEE_ENOMORE</code>: There is no message currently in the queue
+</p>
+</li>
+</ul><h4>
+<a name="asyncdspq_cancel"></a>asyncdspq_cancel
+</h4><pre>AEEResult asyncdspq_cancel(asyncdspq_t queue);
+</pre><p>
+Starts canceling any outstanding synchronous read or write requests at this queue endpoint. This function can be used to cancel requests before destroying the queue or detaching from it. This function will only cancel requests from the current endpoint - calling it on the application CPU will only cancel application CPU requests.
+</p><p>
+<b>Note that this function will not wait for all requests to be canceled</b>, but will rather return immediately after the cancel request has been sent. The client must wait for requests to complete, typically by joining any read/write threads relatedto the queue.
+</p><p>
+Also note that detaching the queue on the DSP side will effectively cancel any outstanding read/write requests on the application CPU.
+</p><table><tr><th><p>
+Parameter
+</p></th><th><p>
+Description
+</p></th></tr><tr><td><p>
+<code>queue</code>
+</p></td><td><p>
+Queue handle from <code>asyncdspq_create()</code> or <code>asyncdspq_attach()</code>
+</p></td></tr></table><h2>
+<a name="Usage%20Model:%20Polling%20vs.%20Blocking"></a>Usage Model: Polling vs. Blocking
+</h2><p>
+The queue can be used in two different mode: Polling or blocking.
+</p><ul>
+<li>
+<p>
+Polling reader: Set a message callback in <code>asyncdspq_create()/asyncdspq_attach()</code>, use non-blocking <code>asyncdspq_read_noblock()</code> in the callback. The callback must drain all messages from the queue by calling <code>asyncdspq_read_noblock()</code> repeatedly until it returns <code>AEE_ENOMORE</code>.
+</p>
+</li><li>
+<p>
+Polling writer: Set a space available callback in <code>asyncdspq_create()/asyncdspq_attach()</code>, use non-blocking <code>asyncdspq_write_noblock()</code> in the callback. This is not a common configuration.
+</p>
+</li><li>
+<p>
+Blocking reader: Do not set a message callback. Use a blocking <code>asyncdspq_read()</code> call to wait for and read a message, typically in a different thread.
+</p>
+</li><li>
+<p>
+Blocking writer: Do not set a space available callback. Use a blocking <code>asyncdspq_write()</code> call. This a common configuration, and often creating a separate thread is not necessary.
+</p>
+</li>
+</ul><p>
+Most clients are best off using non-blocking reads with message callbacks and blocking writes. This works well for scenarios where the application CPU offloads tasks to the DSP, and the DSP is typically the slow part - blocking writes cause the CPU to wait for the DSP while it is busy and the queue is full, and responses coming back from the DSP typically do not block since the CPU is able to drain the queue fast enough. The &#8220;fcvqueue&#8221; example demonstrates this.
+</p><h2>
+<a name="Call%20Flows"></a>Call Flows
+</h2><h3>
+<a name="Initialization"></a>Initialization
+</h3><center><img src="images/asyncdspq_initialize.png"></center><p>
+The above shows a typical message queue initialization sequence. The client creates the queue on the application CPU, passes the attach handle to its DSP side, and attaches to the queue on the DSP. Note that the client needs to use FastRPC to communicate with its DSP side for initialization purposes - the queue library does not completely replace FastRPC.
+</p><p>
+Each queue is unidirectional. Clients that send requests to the DSP and require responses back must either create two queues or use another mechanism for responses.
+</p><h3>
+<a name="Unitialization"></a>Unitialization
+</h3><center><img src="images/asyncdspq_teardown.png"></center><p>
+The above illustrates message queue uninitialization. The client must detach the queue on the DSP side first before destroying it on the application CPU.
+</p><h3>
+<a name="Simpe%20Messages"></a>Simpe Messages
+</h3><center><img src="images/asyncdspq_message.png"></center><p>
+The above shows how a CPU client send messages to the DSP using synchronous writes and a message callback; a DSP client can similarly send messages to the CPU. Two important features to note:
+</p><ul>
+<li>
+<p>
+The writer can continue to write more messages to the queue before the reader has received any. Eventually the queue will fill up and the write operations will block or fail.
+</p>
+</li><li>
+<p>
+When the reader receives a message callback it must call <code>read_noblock()</code> repeatedly until it returns <code>AEE_ENOMORE</code> to indicate the queue is empty. The client may not get a separate callback for each message.
+</p>
+</li>
+</ul><h2>
+<a name="Example%20Projects"></a>Example Projects
+</h2><h3>
+<a name="Basic%20Messaging"></a>Basic Messaging
+</h3><p>
+The &#8220;queuetest&#8221; example application contains a number of basic message queue tests and examples. In all cases the application CPU sends two integers to the DSP, the DSP adds them together, and delivers a result back.
+</p><p>
+The following tests are located in the function <code>test_asyncdspq()</code>.
+</p><h4>
+<a name="Simple%20Messages"></a>Simple Messages
+</h4><p>
+The first two tests send a single message from the application CPU to the DSP and vice versa. The basic sequence is as follows:
+</p><ol type="1">
+<li>
+<p>
+The application CPU creates a queue with <code>asyncdspq_create()</code>
+</p>
+</li><li>
+<p>
+For read tests the CPU writes a message to the queue with <code>asyncdspq_write()</code>
+</p>
+</li><li>
+<p>
+The CPU passes the queue attach handle from <code>asyncdspq_create()</code> to the DSP over a regular FastRPC call
+</p>
+</li><li>
+<p>
+The DSP attaches to the queue with <code>asyncdspq_attach()</code>
+</p>
+</li><li>
+<p>
+The DSP either reads the message from the queue or writes one
+</p>
+</li><li>
+<p>
+The DSP detaches from the queue with <code>asyncdspq_detach()</code>
+</p>
+</li><li>
+<p>
+The application CPU verifies the result
+</p>
+</li><li>
+<p>
+The application CPU destroys the queue with <code>asyncdspq_destroy()</code>
+</p>
+</li>
+</ol><p>
+Note that both tests use only a single queue, and use other mechanisms to verify the response. This is a valid configuration and can be useful for some clients that mostly only send messages in one direction.
+</p><p>
+The third tests simply sends multiple messages from the DSP to the application CPU.
+</p><h4>
+<a name="Tests%20with%20Multiple%20Queues"></a>Tests with Multiple Queues
+</h4><p>
+The following tests in <code>test_asyncdspq()</code> send messages between the CPU and the DSP using multiple queues, both using blocking read/write operations and using callbacks.
+</p><h4>
+<a name="Canceling%20Operations"></a>Canceling Operations
+</h4><p>
+The tests in <code>test_asyncdspq_cancel()</code> test canceling synchronous read/write operations under different circumstances. Many clients may not need to use <code>asyncdspq_cancel()</code> if they have another mechanism to ensure queues are empty before destroying them; typically this is done by sending an explicit &#8220;close&#8221; message and waiting for a response.
+</p><h4>
+<a name="Threading"></a>Threading
+</h4><p>
+<code>test_asyncdspq_threads()</code> tests different threading scenarios. The message queue library is designed to be thread-safe for read and write operations, but queues should be created and destroyed from the same thread. Most clients will use a single thread for reading and writing the queue, either from their own thread or callbacks from the queue library.
+</p><h3>
+<a name="Image%20Processing%20Queue"></a>Image Processing Queue
+</h3><p>
+The &#8220;fcvqueue&#8221; example implements a queue of image processing operations using FastCV. It illustrates a more complex message queue use case, and also shows how to handle buffer allocation, memory mapping, and cache management. The threading and callback model is typical for most message queue clients: fcvqueue uses blocking writes and non-blocking reads with message callbacks.
+</p><p>
+The fcvqueue example is split between three main files:
+</p><ul>
+<li>
+<p>
+<code>fcvqueue.c</code>: Application CPU side library. The rest of this section refers primarily to functions in this file
+</p>
+</li><li>
+<p>
+<code>fcvqueue_dsp_imp.c</code>: DSP-side implementation for the example. Contains FastRPC methods called from fcvqueue.c and message queue client code
+</p>
+</li><li>
+<p>
+<code>fcvqueuetest.c</code>: Test application. Start here to follow calling sequences.
+</p>
+</li>
+</ul><p>
+This section briefly describes the key parts of the example. For more details refer to the source code, starting with the test application.
+</p><p>
+Note that &#8220;fcvqueue&#8221; is not thread-safe, and while the code checks for errors codes from all the functions it calls it does not attempt to recover from errors. The queue library generally does not return recoverable errors except where separately noted; errors result from either programming errors or running out of system resources such as memory.
+</p><h4>
+<a name="Initialization%20and%20Uninitialization"></a>Initialization and Uninitialization
+</h4><p>
+<code>fcvqueue_create()</code> allocates internal structures and creates two queues - one for requests and one for responses - and calls the DSP-side implementation to attach to them.
+</p><p>
+<code>fcvqueue_destroy()</code> ensures the queues are empty, cancels any operations on the DSP side, and detaches and destroys queues.
+</p><h4>
+<a name="Memory%20Allocation%20and%20Deallocation"></a>Memory Allocation and Deallocation
+</h4><p>
+<code>fcvqueue_alloc_buffer()</code> allocates shareable ION buffers using the rpcmem library and sends them to the DSP to be mapped. FastRPC handles mapping the buffer to the DSP's SMMU and internal MMU; as long as the DSP code keeps a mapping open (with <code>HAP_mmap()</code>) the buffers won't be unmapped.
+</p><p>
+Subsequent operations on the buffer refer to it by its file descriptor (FD). The DSP-side code maintains a mapping of FDs to buffer addresses. This avoids having to map/unmap buffers for each operation, but also requires explicit cache maintenance operations.
+</p><p>
+<code>fcvqueue_free_buffer()</code> is the reverse of allocation: It unmaps buffers from the DSP, releasing FastRPC MMU/SMMU mappings, and deallocates the memory.
+</p><h4>
+<a name="Synchronization"></a>Synchronization
+</h4><p>
+Most fcvqueue operations apart from initialization and memory allocation are asynchronous. The client queues requests which are processed by the DSP asynchronously without immediate feedback. To determine that processing has reached a specific point the client queue a synchronization request.
+</p><p>
+<code>fcvqueue_enqueue_sync()</code> sends a synchronization request to the DSP. The DSP simply responds to the request with the same token; when the application CPU receives the response it calls a callback function. This informs the client that all operations through the synchronization request have been completed.
+</p><p>
+<code>fcvqueue_sync()</code> is a synchronous variant of the same request. It simply calls <code>fcvqueue_enqueue_sync()</code> and waits for a callback before returning. Once <code>fcvqueue_sync()</code> returns both the request and response queues are empty.
+</p><h4>
+<a name="Cache%20Maintenance"></a>Cache Maintenance
+</h4><p>
+In addition to memory mapping FastRPC also handles cache maintenance on its clients' behalf. Message queue clients must handle this explicitly, which can be more complex but also gives the client an opportunity to determine when to manage the cache.
+</p><p>
+The fcvqueue example exposes cache maintenance through two operations: <code>fcvqueue_enqueue_buffer_in()</code> and <code>fcvqueue_enqueue_buffer_out()</code>, corresponding to cache invalidate and flush. After a buffer is allocated it is considered to be in application CPU ownership, and the CPU can place input data in the buffer.
+</p><p>
+Before the DSP can use the buffer it must be transferred to DSP ownership with <code>fcvqueue_enqueue_buffer_in()</code>. This invalidates the buffer on the DSP side to ensure there is no stale data in DSP caches. While the buffer is in DSP ownership the application CPU must not access it.
+</p><p>
+To make a buffer and its contents available to the application CPU again the client must call <code>fcvqueue_enqueue_buffer_out()</code>. This flushes DSP caches to ensure all data is written back to memory and is available to the CPU. Since this is an asynchronous operation the client must synchronize with the queue before accessing the buffer.
+</p><p>
+Note that the fcvqueue implementation does not perform cache maintenance operations on the application CPU side, but rather assumes buffers are cache coherent. SDM845 supports one-way cache coherency with the Compute DSP and buffers are allocated as coherent by default; to use non-coherent buffers the client must perform cache maintenance on the application CPU too.
+</p><h4>
+<a name="Image%20Processing%20Operations"></a>Image Processing Operations
+</h4><p>
+fcvqueue exposes four simple image processing operations: Copy, 3x3 Dilate, 3x3 Gaussian Blur, and 3x3 Median Filter. The copy operation is implemented as a simple <code>memcpy()</code>, while the other operations use the FastCV library.
+</p><p>
+<code>fcvqueue_enqueue_op()</code> enqueues an image processing operation. Both input and output buffers must be in DSP ownership, i.e. the client must first request cache invalidation with <code>fcvqueue_enqueue_buffer_in()</code>. Since fcvqueue does not automatically perform cache maintenance the output will not be available to the application CPU before the client calls <code>fcvqueue_enqueue_buffer_out()</code> and waits for its completion.
+</p><p>
+There is no need to perform cache maintenance operations on temporary buffers - if the output of one operation is just used as the input of another one on the DSP the buffers can stay local to the DSP. This is a common pattern for many use cases including chains of image processing filters or per-layer neural network processing.
+</p><h4>
+<a name="Basic%20Usage%20Sequence"></a>Basic Usage Sequence
+</h4><p>
+A basic fcvqueue sequence consists of 8 steps:
+</p><ol type="1">
+<li>
+<p>
+Initialize: <code>fcvqueue_create()</code>. See <a href="#Initialization%20and%20Uninitialization">Initialization and Uninitialization</a>
+</p>
+</li><li>
+<p>
+Allocate and map buffers: <code>fcvqueue_alloc_buffer()</code>, <code>fcvqueue_buffer_ptr()</code>. See <a href="#Memory%20Allocation%20and%20Deallocation">Memory Allocation and Deallocation</a>
+</p>
+</li><li>
+<p>
+Place input data in input buffers
+</p>
+</li><li>
+<p>
+Cache maintenance; move buffers to DSP ownership: <code>fcvqueue_enqueue_buffer_in()</code>. See <a href="#Cache%20Maintenance">Cache Maintenance</a>
+</p>
+</li><li>
+<p>
+Use the buffers for image processing operations: <code>fcvqueue_enqueue_op()</code>. See <a href="#Image%20Processing%20Operations">Image Processing Operations</a>
+</p>
+</li><li>
+<p>
+Cache maintenance to get output data back to the CPU: <code>fcvqueue_enqueue_buffer_out()</code>. See <a href="#Cache%20Maintenance">Cache Maintenance</a>
+</p>
+</li><li>
+<p>
+Use output data
+</p>
+</li><li>
+<p>
+Uninitialization
+</p>
+</li>
+</ol><p>
+<code>fcvqueuetest.c</code> illustrates several scenarios with additional documentation.
+</p><h4>
+<a name="Performance"></a>Performance
+</h4><p>
+<code>fcvqueuetest.c</code> contains a couple of simple performance benchmarks. They help illustrate when using the asynchronous message queue is beneficial over simple FastRPC calls: A single synchronous operation (dilate) is faster as a FastRPC call, but the queue shows benefit when the client can enqueue multiple operations before synchronizing.
+</p><h4>
+<a name="Queue%20Performance"></a>Queue Performance
+</h4><p>
+The &#8220;queueperf&#8221; example illustrates how message queue performance is affected by different queue depths and message sizes. Communication overhead grows when the queue can hold fewer messages; at the worst case when the queue only fits one message communication becomes synchronous and there is no benefit over using regular FastRPC calls.
+</p><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

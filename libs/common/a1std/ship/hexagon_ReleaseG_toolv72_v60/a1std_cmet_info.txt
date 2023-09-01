@@ -1,0 +1,33 @@
+ Lines   PLOC  iPLOC    ROM    RAM Name
+    32     13    265     72      0 AEEBase.c
+   204    123    435    592      0 BufBound.c
+    30     20    165    180      0 smath.c
+   584    413    413   2773      0 std.c
+   170    119    397    468      0 std_SwapBytes.c
+    26     23    394    128      0 std_bisect.c
+   479    316    631   1717      0 std_dtoa.c
+    51     32    394    136      0 std_mem.c
+    38     34    394    212      0 std_merge.c
+   142     85    435    592      0 std_path.c
+   139    107    500   1888      0 std_qsort.c
+   110     45    394    152      0 std_rand.c
+   461    289    462   1281      0 std_scand.c
+   277    137    394    668      0 std_scanul.c
+   740    463    675   2856      0 std_strlprintf.c
+    19      5      0     36      0 std_swapl.c
+    24     19    394    100      0 std_uniq.c
+   289     96    594   1036      0 stdtime.c
+  3815   2339   7336  14887      0 a1std: Total (18)
+   211    129    407    827      0 a1std: Average
+
+ Lines   PLOC  iPLOC    ROM    RAM Name
+  3815   2339   7336  14887      0 Overall Total (18)
+   211    129    407    827      0 Overall Average
+
+     Lines = File size in lines (simple line count)
+      PLOC = Program Lines of Code (ignores blank and comment lines)
+     iPLOC = PLOC in all included header files
+       ROM = ROM footprint
+       RAM = RAM footprint (static)
+      Name = Source file name
+

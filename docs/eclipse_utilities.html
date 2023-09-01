@@ -1,0 +1,1140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><title>&#65279;Utilities</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="images/sidebar_top.jpg"></top><script src="scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, false)"><input id="searchButton" onclick="postFunction(false)" type="button" value="Search"></form><p>
+<a href="index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<p>
+<a href="sitemap.html">Sitemap</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="Audio/Applications.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="Voice/Applications.html">Voice</a>
+</p><p>
+<a href="Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="Audio/Examples.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="Examples_Common.html">Common</a>
+</p><p>
+<a href="Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="Tools_Signing.html">Signing</a>
+</p><p>
+<a href="Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="FAQ_Common.html">Common</a>
+</p><p>
+<a href="FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="Support_Contact.html">Contact</a>
+</p><center><img src="images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h1>
+<a name="﻿Utilities"></a>&#65279;Utilities
+</h1><div class="toc"><div class="tocLevel"><a href="#Overview">Overview</a></div><div class="tocLevel"><a href="#Profiling%20library">Profiling library</a><div class="tocLevel"><a href="#Audio%20profiling">Audio profiling</a></div></div><div class="tocLevel"><a href="#Mini%20diagnostic%20monitor">Mini diagnostic monitor</a><div class="tocLevel"><a href="#Mini%20DM%20view">Mini DM view</a></div><div class="tocLevel"><a href="#QuRT%20Monitor%20view">QuRT Monitor view</a></div><div class="tocLevel"><a href="#Monitor%20configuration">Monitor configuration</a><div class="tocLevel"><a href="#Hardware%20configuration">Hardware configuration</a></div><div class="tocLevel"><a href="#QuRT%20Monitor%20configuration">QuRT Monitor configuration</a></div></div></div><div class="tocLevel"><a href="#Flash%20binary">Flash binary</a></div><div class="tocLevel"><a href="#Quick%20profile%20viewer">Quick profile viewer</a><div class="tocLevel"><a href="#Library%20projects">Library projects</a></div><div class="tocLevel"><a href="#Unit%20test%20projects">Unit test projects</a></div></div><div class="tocLevel"><a href="#Device%20viewer">Device viewer</a></div><div class="tocLevel"><a href="#RTOS%20viewer">RTOS viewer</a><div class="tocLevel"><a href="#Signals">Signals</a></div><div class="tocLevel"><a href="#Interrupt%20map">Interrupt map</a></div><div class="tocLevel"><a href="#Page%20table">Page table</a></div><div class="tocLevel"><a href="#RTOS%20variables">RTOS variables</a></div></div></div><h2>
+<a name="Overview"></a>Overview
+</h2><p>
+The Hexagon IDE includes several utilities which are specifically designed to support Hexagon program development:
+</p><p>
+<b>Profiling library</b> &#8211; Provides a set of library functions for collecting runtime profiling information on specific parts of a simulated Hexagon program.
+</p><p>
+<b>Mini diagnostic monitor</b> &#8211; Displays execution information generated by the target. The real-time information of the target is displayed, and includes diagnostic messages along with information on tasks and system performance.
+</p><p>
+<b>Flash binary</b> &#8211; Flashes executable files onto the target system.
+</p><p>
+<b>Quick profile viewer</b> &#8211; Displays profiling information on a project, including both static information and the runtime information collected by the profiling library.
+</p><p>
+<b>Device viewer</b> &#8211; Lists the target devices currently connected to the host system.
+</p><p>
+<b>RTOS viewer</b> &#8211; Displays information on the Hexagon RTOS, including signals, interrupt maps, page tables, and RTOS debug variables.
+</p><p>
+All of these utilities are fully integrated into the IDE, and display their information in the IDE main window.
+</p><p>
+NOTE - Many of these utilities are based on the corresponding stand-alone tools provided with the Hexagon software development tools. Except for minor IDE-related differences, they operate in the same way as the stand-alone tools.
+</p><h2>
+<a name="Profiling%20library"></a>Profiling library
+</h2><p>
+The Hexagon SDK provides a library which enables users to collect runtime performance data on specific parts of the Hexagon program being simulated. The data is collected by inserting profiling library function calls directly into the program source code.
+</p><p>
+The library generates the following runtime profiling information:
+</p><ul type="circle">
+<li>
+<p>
+Cycle counts
+</p>
+</li><li>
+<p>
+Heap usage (total and peak)
+</p>
+</li><li>
+<p>
+Memory leaks (if any)
+</p>
+</li><li>
+<p>
+Power usage
+</p>
+</li>
+</ul><p>
+More details are present <a href="profiling_library.html">here</a>
+</p><h3>
+<a name="Audio%20profiling"></a>Audio profiling
+</h3><p>
+The Hexagon SDK provides the <a href="#Profiling%20library">profiling library</a> to support the profiling of audio modules.
+</p><p>
+To simplify audio profiling, the profiling library supports several macros that are specific to audio profiling &#8211; these are used in the support library <code>test_appi</code> (audio unit test infrastructure). The macros are defined in the header file <code>appi_profile.h</code>.
+</p><p>
+Each command executed by the audio unit test infrastructure is profiled by default. The audio modules are profiled during different command executions such as <code>setParam</code>, <code>getParam</code>, <code>Process</code>, etc., and the reports are printed to the standard output at every stage.
+</p><p>
+The following audio-specific profiling macros are defined in the profiling library:
+</p><table><tr><th><div class="indent"><p>
+Profiling Macros
+</p></div></th></tr><tr><td><p>
+<code>START_PROCESS_PROFILE()</code>
+</p></td></tr><tr><td><p>
+<code>STOP_PROCESS_PROFILE()</code>
+</p></td></tr><tr><td><p>
+<code>START_INIT_PROFILE()</code>
+</p></td></tr><tr><td><p>
+<code>STOP_INIT_PROFILE()</code>
+</p></td></tr><tr><td><p>
+<code>START_GETPARAM_PROFILE()</code>
+</p></td></tr><tr><td><p>
+<code>STOP_GETPARAM_PROFILE()</code>
+</p></td></tr><tr><td><p>
+<code>START_SETPARAM_PROFILE()</code>
+</p></td></tr><tr><td><p>
+<code>STOP_SETPARAM_PROFILE()</code>
+</p></td></tr><tr><td><p>
+<code>RESET_PROFILE_RESULT(session_id)</code>
+</p></td></tr><tr><td><p>
+<code>PRINT_PROFILE_RESULT(session_id)</code>
+</p></td></tr><tr><td><p>
+<code>GET_PROFILE_CYCLES(session_id)</code>
+</p></td></tr><tr><td><p>
+<code>ADD_SESSION_ATTRIBUTES(session_id, name, value)</code>
+</p></td></tr></table><p>
+The macro <code>ADD_SESSION_ATTRIBUTES</code> is used to add session-specific information during audio profiling. Information such as <code>NumBuffers</code> and <code>ParamID</code> adds value to the result during process commands or <code>getParam</code>/<code>setParam</code>, so this type of information can be added to the audio profiling sessions as session attributes.
+</p><p>
+The following default session IDs are used for audio profiling:
+</p><table><tr><th><div class="indent"><p>
+Session Name
+</p></div></th><th><p>
+Session ID
+</p></th></tr><tr><td><p>
+<code>SESSION_INIT</code>
+</p></td><td><div class="indent"><p>
+1
+</p></div></td></tr><tr><td><p>
+<code>SESSION_SETPARAM</code>
+</p></td><td><div class="indent"><p>
+2
+</p></div></td></tr><tr><td><p>
+<code>SESSION_GETPARAM</code>
+</p></td><td><div class="indent"><p>
+3
+</p></div></td></tr><tr><td><p>
+<code>SESSION_PROCESS</code>
+</p></td><td><div class="indent"><p>
+4
+</p></div></td></tr></table><h2>
+<a name="Mini%20diagnostic%20monitor"></a>Mini diagnostic monitor
+</h2><p>
+The mini diagnostic monitor (known as <i>Mini DM</i>) displays execution information that is generated by an ADSP image as it executes.
+</p><p>
+The monitor can work with images executing on either the Hexagon simulator or the target development system (with the latter requiring a USB cable to transfer the execution information).
+</p><p>
+The monitor operates as a pane within the IDE main window, with dedicated views for displaying each type of execution information:
+</p><ul type="circle">
+<li>
+<p>
+Log messages (for various execution events)
+</p>
+</li><li>
+<p>
+Task information (CPU%, stack usage, etc.)
+</p>
+</li><li>
+<p>
+System performance (MIPS, thread, cache, bus, etc.)
+</p>
+</li>
+</ul><p>
+The monitor displays its information in two views: the Mini DM view displays the log messages, while the QuRT Monitor view displays both the task and system performance information. These views appear as tabs in the IDE main window.
+</p><left><img src="images/utilities_monitor_views.png"></left><p>
+NOTE - The monitor must first be <a href="#Monitor%20configuration">configured</a> before it is used.
+</p><h3>
+<a name="Mini%20DM%20view"></a>Mini DM view
+</h3><p>
+The Mini DM view displays log messages as they are generated by the ADSP image.
+</p><p>
+To open the view choose <code>Show View -&gt; Other... -&gt; Hexagon -&gt; Mini DM</code> from the <code>Window</code> menu.
+</p><left><img src="images/utilities_monitor_mini_dm_view.png"></left><p>
+No start or stop controls are provided to control the generation of log messages &#8211; as soon as the Mini DM view is opened, the messages start appearing in it as they are generated.
+</p><p>
+To clear all the messages, use the <code>Clear</code> command which appears in the upper right-hand corner of the Mini DM view.
+</p><p>
+To restart the underlying Mini DM utility, use the Restart command which appears in the upper right-hand corner of the Mini DM view.
+</p><p>
+NOTE - If the ADSP is not processing audio data, the processor will go to sleep, no messages will be generated, and thus no new messages will appear in the Mini DM view.
+</p><p>
+NOTE - The underlying Mini DM utility is typically restarted in order to change the serial port that is used communicate with the target platform.
+</p><p>
+The Mini DM view allows you to filter the generated log messages, so that only the messages containing a specific keyword will appear in the view.
+</p><left><img src="images/utilities_monitor_mini_dm_view_filter.png"></left><p>
+To limit the displayed log messages to only those containing a specific keyword, enter the keyword into the search field at the top of the view (in this case, the keyword is <code>AudioStream</code>).
+</p><p>
+Each log message contains the following information:
+</p><ul type="circle">
+<li>
+<p>
+Sub-system ID
+</p>
+</li><li>
+<p>
+Message-level mask
+</p>
+</li><li>
+<p>
+Message string
+</p>
+</li><li>
+<p>
+Line number in source file
+</p>
+</li><li>
+<p>
+Source file name
+</p>
+</li>
+</ul><p>
+NOTE - The Mini DM view can store only a fixed number of log messages, with the oldest messages being discarded once the view becomes full.
+</p><p>
+Log messages are generated in the ADSP source code using a set of predefined macros named <code>MSG*</code>.
+</p><p>
+<b><code>MSG (xx_ss_id, xx_ss_mask, xx_fmt)</code></b>
+</p><p>
+Message containing literal string, with no printf() style arguments allowed.
+</p><p>
+<code>xx_ss_id</code> &#8211; Sub-system ID assigned to message
+</p><p>
+<code>xx_ss_mask</code> &#8211; Message-level mask
+</p><p>
+<code>xx_fmt</code> &#8211; Message string
+</p><p>
+<b><code>MSG_N (xx_ss_id, xx_ss_mask, xx_fmt, xx_arg1, ...)</code></b>
+</p><p>
+Message containing one or more printf() arguments.
+</p><p>
+<code>N</code> &#8211; Number of printf() style arguments in message string (= 1, 2, ...)
+</p><p>
+<b><code>MSG_SPRINTF_N (xx_ss_id, xx_ss_mask, xx_fmt, xx_arg1)</code></b>
+</p><p>
+Message containing one or more sprintf() arguments.
+</p><p>
+<code>N</code> &#8211; Number of sprintf() style arguments in message string (= 1, 2, ...)
+</p><p>
+NOTE - sprintf() is called in the caller's context, which is costly but allows the expansion of data types such as string and float.
+</p><h3>
+<a name="QuRT%20Monitor%20view"></a>QuRT Monitor view
+</h3><p>
+The QuRT Monitor view displays both task and system performance information as it is generated by the ADSP image.
+</p><p>
+To open the view choose <code>Show View -&gt; Other... -&gt; Hexagon -&gt; QuRT Monitor</code> from the <code>Window</code> menu.
+</p><p>
+The QuRT Monitor view has two subviews:
+</p><ul type="circle">
+<li>
+<p>
+<code>TaskProfile</code> &#8211; Task information
+</p>
+</li><li>
+<p>
+<code>PerfMeter</code> &#8211; System performance information
+</p>
+</li>
+</ul><p>
+The subviews are selectable by a drop-down list in the upper right-hand corner of the QuRT Monitor view.
+</p><p>
+<b>TaskProfile subview</b>
+</p><p>
+The TaskProfile subview displays information on all threads that are currently executing in the ADSP image.
+</p><left><img src="images/utilities_monitor_qurt_view_task.png"></left><p>
+Controls are provided to start or stop the generation of task information, or to clear the current display. These controls appear in the upper right-hand corner of the QuRT Monitor view.
+</p><p>
+NOTE - To sort the thread information displayed in a given column of the TaskProfile subview, click on the corresponding column label.
+</p><p>
+<b>PerfMeter subview</b>
+</p><p>
+The PerfMeter subview displays various metrics on the system performance of the ADSP image.
+</p><left><img src="images/utilities_monitor_qurt_view_perf.png"></left><p>
+Controls are provided to start or stop the generation of system performance information, or to clear the current display. These controls appear in the upper right-hand corner of the QuRT Monitor view.
+</p><p>
+NOTE - The PerfMeter subview can be <a href="#QuRT%20Monitor%20configuration">configured</a> to display only a subset of the listed performance metrics.
+</p><h3>
+<a name="Monitor%20configuration"></a>Monitor configuration
+</h3><p>
+To configure the mini diagnostic monitor, choose <code>Preferences -&gt; Hexagon -&gt; Mini DM</code> from the <code>Window</code> menu. The following dialog box appears:
+</p><left><img src="images/utilities_monitor_mini_dm_config_dialog.png"></left><p>
+In the <code>Mini DM Path</code> field, specify the location of the executable file for the Mini DM utility. (This field is auto-filled if the IDE was launched from the Hexagon SDK.)
+</p><p>
+In the <code>Architecture</code> field, select the processor version of the target Hexagon processor. The default value is V5.
+</p><p>
+In the <code>COM Port</code> field, specify the serial port that the monitor will use to communicate with the hardware target platform. If this field is left blank, the monitor will instead communicate with the simulator that is running on the host development system.
+</p><p>
+In the <code>Sampling period</code> field, specify the sampling period that the monitor will use to collect task and system performance information. The sampling period varies inversely with the accuracy of the collected information.
+</p><p>
+In the <code>PerfMon log count</code> field, specify the number of data points (i.e., <i>logs</i>) that must be collected to display the system performance information. Value 0 for <code>PerfMon log count</code> generates logs till <b>TaskProfile subview</b> is stopped and no logs are generated in case of <code>PerfMeter subview</code>.
+</p><p>
+Click on the <code>OK</code> button to save the specified configuration.
+</p><h4>
+<a name="Hardware%20configuration"></a>Hardware configuration
+</h4><p>
+When configuring the monitor to work with a hardware target platform, some additional configuration is necessary:
+</p><ul type="circle">
+<li>
+<p>
+The Qualcomm USB drivers must be installed on the host development system
+</p>
+</li><li>
+<p>
+The host development system must be connected to the target platform with a USB cable
+</p>
+</li>
+</ul><p>
+To identify the hardware port name to be entered in the <a href="#Monitor%20configuration"><code>COM Port</code> field</a>, select <code>Control Panel -&gt; Device manager -&gt; Ports</code> from the <code>Windows</code> desktop.
+</p><left><img src="images/utilities_monitor_mini_dm_config_port.png"></left><p>
+NOTE - For more information on installing the Qualcomm USB drivers, see the Hexagon IDE release notes.
+</p><h4>
+<a name="QuRT%20Monitor%20configuration"></a>QuRT Monitor configuration
+</h4><p>
+The PerfMeter subview of the <a href="#QuRT%20Monitor%20view">QuRT Monitor view</a> can be configured to display only a subset of the default performance metrics.
+</p><p>
+To configure the display of performance metrics, choose <code>Preferences -&gt; Hexagon -&gt; Mini DM -&gt; Performance Monitor</code> from the <code>Window</code> menu. The following dialog box appears:
+</p><left><img src="images/utilities_monitor_qurt_config_dialog.png"></left><p>
+To select or deselect a performance metric, click on the checkbox next to the corresponding metric name. The <code>Restore Defaults</code> button reselects all the listed metrics.
+</p><p>
+Click on the <code>Apply</code> button to save the changes, then click on <code>OK</code> to close the dialog box.
+</p><h2>
+<a name="Flash%20binary"></a>Flash binary
+</h2><p>
+The flash binary utility is used to flash executable files onto the (LA) target.
+</p><p>
+To flash one or more files, click on the <code>Flash Image</code> icon on the toolbar:
+</p><left><img src="images/utilities_flash_icon.png"></left><p>
+The following dialog box appears:
+</p><left><img src="images/utilities_flash_dialog.png"></left><p>
+Specify the parameters for the flash operation:
+</p><ul type="circle">
+<li>
+<p>
+<b>Target</b> &#8211; Device that the files will be flashed onto. The drop-down list displays the serial numbers of all device connected to the host development system.
+</p>
+</li><li>
+<p>
+<b>Files to be flashed</b> &#8211; List of files to be flashed.
+</p><ul type="circle">
+<li>
+<p>
+Files can be added to the list from either the workspace using the Workspace button, or the file system using the <code>File system</code> button.
+</p>
+</li><li>
+<p>
+The ADSP image files can be added to the list using the <code>Load ADSP image</code> button. Note that the ADSP project must be selected in Project Explorer.
+</p>
+</li><li>
+<p>
+Files can be deleted from the list using the <code>Delete</code> button.
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+<b>Target location</b> &#8211; The location on the device where the files must be copied. The default location is <code>/firmware/image</code>.
+</p>
+</li><li>
+<p>
+<b>Restart the target</b> &#8211; Select this checkbox if the device must be restarted after the files are flashed to it.
+</p>
+</li>
+</ul><p>
+To flash the selected files onto the specified device, click on the <code>Finish</code> button.
+</p><h2>
+<a name="Quick%20profile%20viewer"></a>Quick profile viewer
+</h2><p>
+The quick profile viewer is used to display profiling information on a project, including both static profiling information and the runtime profiling information collected by the <a href="#Profiling%20library">profiling library</a>.
+</p><p>
+To view the profiling information for a unit test project in the IDE, you must first import the corresponding projects into the IDE:
+</p><ul type="circle">
+<li>
+<p>
+Import the profiling library project as a Common library project
+</p>
+</li><li>
+<p>
+Import the corresponding unit test project as an Executable project
+</p>
+</li>
+</ul><p>
+To open the quick profile viewer, choose <code>Show View -&gt; Other -&gt; Quick Profile</code> from the <code>Window</code> menu.
+</p><p>
+NOTE - Selecting a project in Project Explorer triggers the Quick Profile view to display the profiling information.
+</p><p>
+The following types of profiling information are displayed in the Quick Profile view:
+</p><table><tr><th><p>
+Profiling Information
+</p></th><th><div class="indent"><p>
+Description
+</p></div></th></tr><tr><td rowspan="2"><div class="indent"><p>
+Static
+</p></div></td><td><p>
+Library project size
+</p></td></tr><tr><td><p>
+Library stack size
+</p></td></tr><tr><td rowspan="5"><div class="indent"><p>
+Runtime
+</p></div></td><td><p>
+Cycle counts (in certain use cases)
+</p></td></tr><tr><td><p>
+Total heap usage
+</p></td></tr><tr><td><p>
+Peak heap usage
+</p></td></tr><tr><td><p>
+Memory leaks (if any)
+</p></td></tr><tr></tr></table><p>
+NOTE - Runtime profiling is possible for a library project only when it has been integrated with a unit test project, and successfully tested for a use case. A successful unit test is necessary because the unit test uses a profile library, which is responsible for collecting all the required statistics.
+</p><h3>
+<a name="Library%20projects"></a>Library projects
+</h3><p>
+When a library project <code>appi_fir</code> is selected in Project Explorer, the Quick Profile view displays the static profiling information.
+</p><left><img src="images/utilities_quickprof_static_view.png"></left><h3>
+<a name="Unit%20test%20projects"></a>Unit test projects
+</h3><p>
+When a unit test project <code>test_appi_fir</code> is selected (after a successful unit testing), the Quick Profile view changes to display the runtime profiling information during different stages of unit testing.
+</p><left><img src="images/utilities_quickprof_runtime_view.png"></left><p>
+NOTE - The power numbers are valid only for comparison &#8211; they cannot be assumed to indicate the exact power consumed by the library.
+</p><h2>
+<a name="Device%20viewer"></a>Device viewer
+</h2><p>
+The target device viewer is used to determine what devices are currently connected to the host development system. The Hexagon simulator is always shown as a connected device.
+</p><p>
+To open the target device viewer, choose <code>Show View -&gt; Other -&gt; Hexagon -&gt; Device List</code> from the <code>Window</code> menu.
+</p><left><img src="images/utilities_device_view.png"></left><p>
+Selecting the <code>Force device database refresh</code> checkbox causes the IDE to detect any devices that are subsequently connected, even if errors occur with the devices that are already connected.
+</p><p>
+NOTE - The Device List view currently supports only Android devices.
+</p><h2>
+<a name="RTOS%20viewer"></a>RTOS viewer
+</h2><p>
+The RTOS viewer displays the following information on the Hexagon RTOS:
+</p><ul type="circle">
+<li>
+<p>
+<b>Signals</b> &#8211; All signals used in the project
+</p>
+</li><li>
+<p>
+<b>Interrupt map</b> &#8211; All interrupt mappings available for the project
+</p>
+</li><li>
+<p>
+<b>Page table</b> &#8211; All page table mappings made during a debug session
+</p>
+</li><li>
+<p>
+<b>RTOS variables</b> &#8211; RTOS variables typically used for debugging
+</p>
+</li>
+</ul><p>
+Each of these information types is displayed in a separate view.
+</p><p>
+The interrupt map and page table displays include some extra icons in the upper right-hand corner of their views.
+</p><p>
+If the <code>M</code> icon (<code>Manual</code>) appears, it indicates that these views will not be refreshed after debug events such as breakpoint hit, step in, or step out.
+</p><left><img src="images/utilities_rtos_manual_icon.png"></left><p>
+If the <code>A</code> icon (<code>Automatic</code>) appears, it indicates that these views <i>will</i> be refreshed automatically after such debug events.
+</p><left><img src="images/utilities_rtos_auto_icon.png"></left><p>
+The <code>Refresh</code> icon is used to refresh the view when it is in &#8220;manual&#8221; mode.
+</p><left><img src="images/utilities_rtos_refresh_icon.png"></left><p>
+NOTE - Clicking on the <code>M</code> icon changes it to <code>A</code>, and vice versa.
+</p><p>
+NOTE - The manual refresh option is used to reduce the load on the debugger.
+</p><h3>
+<a name="Signals"></a>Signals
+</h3><p>
+To open the RTOS signals viewer, choose <code>Show View -&gt; Other -&gt; Hexagon -&gt; Signals</code> from the <code>Window</code> menu.
+</p><left><img src="images/utilities_rtos_signals_view.png"></left><h3>
+<a name="Interrupt%20map"></a>Interrupt map
+</h3><p>
+To open the RTOS interrupt map viewer, choose <code>Show View -&gt; Other -&gt; Hexagon -&gt; Interrupt Map</code> from the <code>Window</code> menu.
+</p><left><img src="images/utilities_rtos_interrupt_view.png"></left><h3>
+<a name="Page%20table"></a>Page table
+</h3><p>
+To open the RTOS page table viewer, choose <code>Show View -&gt; Other -&gt; Hexagon -&gt; Page Table</code> from the <code>Window</code> menu.
+</p><left><img src="images/utilities_rtos_page_view.png"></left><h3>
+<a name="RTOS%20variables"></a>RTOS variables
+</h3><p>
+To open the RTOS variables viewer, choose <code>Show View -&gt; Other -&gt; Hexagon -&gt; RTOS Variables</code> from the <code>Window</code> menu.
+</p><left><img src="images/utilities_rtos_variables_view.png"></left><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

@@ -1,0 +1,85 @@
+#!/bin/bash
+
+basedir=`dirname $0`
+cd $basedir
+. ../setup-env.sh
+declare -i result=0
+set -x
+
+INCLUDES="-I $HALIDE_ROOT/include -I $HALIDE_ROOT/support"
+HL_LIBS="$HALIDE_ROOT/lib/libHalide.a"
+
+#############################################################################
+cat <<EOT
+=== Build Android ARM-64/Hexagon executable for device ===
+EOT
+
+rm -fr ./bin
+mkdir -p bin/arm-64-android
+
+${CXX} -std=c++11 $INCLUDES  -g -fno-rtti halide_blur_generator.cpp $HALIDE_ROOT/tools/GenGen.cpp -g $HL_LIBS -o bin/halide_blur.generator -ldl -lpthread -lz
+export LD_LIBRARY_PATH=$HALIDE_ROOT/lib/host:${HL_HEXAGON_TOOLS_SIM}/lib/iss/:.
+
+bin/halide_blur.generator -g halide_blur -o ./bin/arm-64-android target=arm-64-android-hvx_128
+$ANDROID_ARM64_TOOLCHAIN/bin/aarch64-linux-android21-clang++ -std=c++11 -fopenmp $INCLUDES -I ./bin/arm-64-android -Wall -O3 test.cpp bin/arm-64-android/halide_blur.a -o bin/arm-64-android/test-hvx128 -llog -fPIE -pie
+if [ "z$RUNDROID" = "z" ]; then
+	set +x
+	export PREF=echo
+	export STR="To run this example on an Android device, do:"
+else
+    num_device_lines=`adb devices -l | sed '/^$/d' | wc -l`
+    if [ $num_device_lines -gt 2 ]; then
+        if [ "z$ANDROID_SERIAL" == "z" ];  then
+            echo "Error: RUNDROID set to 1, but found more than one device. Set ANDROID_SERIAL"
+            exit 1
+        else
+            echo "Running tests on Device:$ANDROID_SERIAL"
+            set +x
+        fi
+    fi
+fi
+$PREF $STR
+$PREF    adb push bin/arm-64-android/test-hvx128 /data/
+$PREF    adb shell chmod +x /data/test-hvx128
+$PREF    adb shell /data/test-hvx128 10
+$PREF
+
+set -x
+bin/halide_blur.generator -g halide_blur -o ./bin/arm-64-android target=arm-64-android-hvx_64
+$ANDROID_ARM64_TOOLCHAIN/bin/aarch64-linux-android21-clang++ -std=c++11 -fopenmp $INCLUDES -I ./bin/arm-64-android -Wall -O3 test.cpp bin/arm-64-android/halide_blur.a -o bin/arm-64-android/test-hvx64 -llog -fPIE -pie
+if [ "z$RUNDROID" = "z" ]; then
+    set +x
+    export PREF=echo
+    export STR="To run this example on an Android device, do:"
+else
+    echo "Running tests on Device:$ANDROID_SERIAL"
+    set +x
+fi
+$PREF $STR
+$PREF    adb push bin/arm-64-android/test-hvx64 /data/
+$PREF    adb shell chmod +x /data/test-hvx64
+$PREF    adb shell /data/test-hvx64 10
+$PREF
+
+set -x
+bin/halide_blur.generator -g halide_blur -o ./bin/arm-64-android target=arm-64-android
+$ANDROID_ARM64_TOOLCHAIN/bin/aarch64-linux-android21-clang++ -std=c++11 -fopenmp $INCLUDES -I ./bin/arm-64-android -Wall -O3 test.cpp bin/arm-64-android/halide_blur.a -o bin/arm-64-android/test -llog -fPIE -pie
+if [ "z$RUNDROID" = "z" ]; then
+    set +x
+    export PREF=echo
+    export STR="To run this example on an Android device, do:"
+else
+    echo "Running tests on Device:$ANDROID_SERIAL"
+    set +x
+fi
+$PREF $STR
+$PREF    adb push bin/arm-64-android/test /data/
+$PREF    adb shell chmod +x /data/test
+$PREF    adb shell /data/test 10
+$PREF
+
+
+
+result=$?
+
+exit $result

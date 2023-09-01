@@ -1,0 +1,349 @@
+// bitset standard header
+#ifndef _BITSET_
+#define _BITSET_
+#include <string>
+_STD_BEGIN
+
+		// TEMPLATE CLASS bitset
+export
+template<size_t _Bits>
+	class bitset
+	{	// store fixed-length sequence of Boolean elements
+	typedef unsigned short _Ty;	// base type for a storage word
+	enum {digits = _Bits};	// extension: compile-time size()
+
+public:
+	typedef bool element_type;	// retained
+
+		// CLASS reference
+	class reference
+		{	// proxy for an element
+		friend class bitset<_Bits>;
+
+	public:
+		reference& operator=(bool _Val)
+			{	// assign Boolean to element
+			_Pbitset->set(_Mypos, _Val);
+			return (*this);
+			}
+
+		reference& operator=(const reference& _Bitref)
+			{	// assign reference to element
+			_Pbitset->set(_Mypos, bool(_Bitref));
+			return (*this);
+			}
+
+		reference& flip()
+			{	// complement stored element
+			_Pbitset->flip(_Mypos);
+			return (*this);
+			}
+
+		bool operator~() const
+			{	// return complemented element
+			return (!_Pbitset->test(_Mypos));
+			}
+
+		operator bool() const
+			{	// return element
+			return (_Pbitset->test(_Mypos));
+			}
+
+	private:
+		reference(bitset<_Bits>& _Bitset, size_t _Pos)
+			: _Pbitset(&_Bitset), _Mypos(_Pos)
+			{	// construct from bitset reference and position
+			}
+
+		bitset<_Bits> *_Pbitset;	// pointer to the bitset
+		size_t _Mypos;	// position of element in bitset
+		};
+
+	bool at(size_t _Pos) const	// retained
+		{	// subscript nonmutable sequence with checking
+		return (test(_Pos));
+		}
+
+	reference at(size_t _Pos)	// retained
+		{	// subscript mutable sequence with checking
+		return (reference(*this, _Pos));
+		}
+
+	bool operator[](size_t _Pos) const
+		{	// subscript nonmutable sequence
+		return (test(_Pos));
+		}
+
+	reference operator[](size_t _Pos)
+		{	// subscript mutable sequence
+
+ #if _HAS_ITERATOR_DEBUGGING
+		if (_Bits <= _Pos)
+			_DEBUG_ERROR("bitset index outside range");
+ #endif /* _HAS_ITERATOR_DEBUGGING */
+
+		return (reference(*this, _Pos));
+		}
+
+	bitset()
+		{	// construct with all false values
+		_Tidy();
+		}
+
+	bitset(unsigned long _Val);
+
+ #define _BITSET_SIZE_TYPE	\
+	typename basic_string<_Elem, _Tr, _Alloc>::size_type
+
+	template<class _Elem,
+		class _Tr,
+		class _Alloc>
+		explicit bitset(const basic_string<_Elem, _Tr, _Alloc>& _Str,
+			_BITSET_SIZE_TYPE _Pos = 0)
+		{	// construct from [_Pos, ...) elements in string
+		_Construct(_Str, _Pos,
+			basic_string<_Elem, _Tr, _Alloc>::npos, (_Elem)'0');
+		}
+
+	template<class _Elem,
+		class _Tr,
+		class _Alloc>
+		explicit bitset(const basic_string<_Elem, _Tr, _Alloc>& _Str,
+			_BITSET_SIZE_TYPE _Pos,
+			_BITSET_SIZE_TYPE _Count,
+			_Elem _E0 = (_Elem)'0')
+		{	// construct from [_Pos, _Pos + _Count) elements in string
+		_Construct(_Str, _Pos, _Count, _E0);
+		}
+
+	template<class _Elem,
+		class _Tr,
+		class _Alloc>
+		void _Construct(
+			const basic_string<_Elem, _Tr, _Alloc>& _Str,
+			_BITSET_SIZE_TYPE _Pos,
+			_BITSET_SIZE_TYPE _Count,
+			_Elem _E0);
+
+	bitset<_Bits>& operator&=(const bitset<_Bits>& _Right)
+		{	// AND in _Right
+		for (int _Wpos = _Words; 0 <= _Wpos; --_Wpos)
+			_Array[_Wpos] &= _Right._Getword(_Wpos);
+		return (*this);
+		}
+
+	bitset<_Bits>& operator|=(const bitset<_Bits>& _Right)
+		{	// OR in _Right
+		for (int _Wpos = _Words; 0 <= _Wpos; --_Wpos)
+			_Array[_Wpos] |= _Right._Getword(_Wpos);
+		return (*this);
+		}
+
+	bitset<_Bits>& operator^=(const bitset<_Bits>& _Right)
+		{	// XOR in _Right
+		for (int _Wpos = _Words; 0 <= _Wpos; --_Wpos)
+			_Array[_Wpos] ^= _Right._Getword(_Wpos);
+		return (*this);
+		}
+
+	bitset<_Bits>& operator<<=(size_t _Pos);
+
+	bitset<_Bits>& operator>>=(size_t _Pos);
+
+	bitset<_Bits>& set()
+		{	// set all bits true
+		_Tidy((_Ty)~0);
+		return (*this);
+		}
+
+	bitset<_Bits>& set(size_t _Pos,
+		bool _Val = true);
+
+	bitset<_Bits>& reset()
+		{	// set all bits false
+		_Tidy();
+		return (*this);
+		}
+
+	bitset<_Bits>& reset(size_t _Pos)
+		{	// set bit at _Pos to false
+		return (set(_Pos, false));
+		}
+
+	bitset<_Bits> operator~() const
+		{	// flip all bits
+		return (bitset<_Bits>(*this).flip());
+		}
+
+	bitset<_Bits>& flip();
+
+	bitset<_Bits>& flip(size_t _Pos)
+		{	// flip bit at _Pos
+		if (_Bits <= _Pos)
+			_Xran();	// _Pos off end
+		_Array[_Pos / _Bitsperword] ^= (_Ty)1 << _Pos % _Bitsperword;
+		return (*this);
+		}
+
+	unsigned long to_ulong() const;
+
+	template<class _Elem,
+		class _Tr,
+		class _Alloc>
+		basic_string<_Elem, _Tr, _Alloc>
+			to_string(_Elem _E0 = (_Elem)'0') const;
+
+ #if defined(__GNUC__)	/* compiler test */
+
+ #else /* defined(__GNUC__) */
+	template<class _Elem,
+		class _Tr>
+		basic_string<_Elem, _Tr, allocator<_Elem> >
+			to_string(_Elem _E0 = (_Elem)'0') const
+		{	// convert bitset to string
+		return (to_string<_Elem, _Tr, allocator<_Elem> >(_E0));
+		}
+
+	template<class _Elem>
+		basic_string<_Elem, char_traits<_Elem>, allocator<_Elem> >
+			to_string(_Elem _E0 = (_Elem)'0') const
+		{	// convert bitset to string
+		return (to_string<_Elem, char_traits<_Elem>,
+			allocator<_Elem> >(_E0));
+		}
+
+		string to_string(char _E0 = (char)'0') const
+		{	// convert bitset to string
+		return (to_string<char, char_traits<char>, allocator<char> >(_E0));
+		}
+ #endif /* defined(__GNUC__) */
+
+	size_t count() const;
+
+	size_t size() const
+		{	// return size of bitset
+		return (_Bits);
+		}
+
+	bool operator==(const bitset<_Bits>& _Right) const;
+
+	bool operator!=(const bitset<_Bits>& _Right) const
+		{	// test for bitset inequality
+		return (!(*this == _Right));
+		}
+
+	bool test(size_t _Pos) const
+		{	// test if bit at _Pos is set
+		if (_Bits <= _Pos)
+			_Xran();	// _Pos off end
+		return ((_Array[_Pos / _Bitsperword]
+			& ((_Ty)1 << _Pos % _Bitsperword)) != 0);
+		}
+
+	bool any() const;
+
+	bool none() const
+		{	// test if no bits are set
+		return (!any());
+		}
+
+	bitset<_Bits> operator<<(size_t _Pos) const
+		{	// return bitset shifted left by _Pos
+		return (bitset<_Bits>(*this) <<= _Pos);
+		}
+
+	bitset<_Bits> operator>>(size_t _Pos) const
+		{	// return bitset shifted right by _Pos
+		return (bitset<_Bits>(*this) >>= _Pos);
+		}
+
+	_Ty _Getword(size_t _Wpos) const
+		{	// get word at _Wpos
+		return (_Array[_Wpos]);
+		}
+
+private:
+	enum
+		{	// parameters for packing bits into words
+		_Bitsperword = (int)(CHAR_BIT * sizeof (_Ty)),	// bits in each word
+		_Words = (int)(_Bits == 0
+			? 0 : (_Bits - 1) / _Bitsperword)};	// NB: number of words - 1
+
+	void _Tidy(_Ty _Wordval = 0);
+
+	void _Trim()
+		{	// clear any trailing bits in last word
+		if (_Bits % _Bitsperword != 0)
+			_Array[_Words] &= ((_Ty)1 << _Bits % _Bitsperword) - 1;
+		}
+
+	void _Xinv() const
+		{	// report invalid string element in bitset conversion
+		_THROW(invalid_argument, "invalid bitset<N> char");
+		}
+
+	void _Xoflo() const
+		{	// report converted value too big to represent
+		_THROW(overflow_error, "bitset<N> overflow");
+		}
+
+	void _Xran() const
+		{	// report bit index out of range
+		_THROW(out_of_range, "invalid bitset<N> position");
+		}
+
+	_Ty _Array[_Words + 1];	// the set of bits
+	};
+
+		// bitset TEMPLATE FUNCTIONS
+template<size_t _Bits> inline
+	bitset<_Bits> operator&(const bitset<_Bits>& _Left,
+		const bitset<_Bits>& _Right)
+		{	// return bitset _Left AND _Right
+		bitset<_Bits> _Ans = _Left;
+		return (_Ans &= _Right);
+		}
+
+template<size_t _Bits> inline
+	bitset<_Bits> operator|(const bitset<_Bits>& _Left,
+		const bitset<_Bits>& _Right)
+		{	// return bitset _Left OR _Right
+		bitset<_Bits> _Ans = _Left;
+		return (_Ans |= _Right);
+		}
+
+template<size_t _Bits> inline
+	bitset<_Bits> operator^(const bitset<_Bits>& _Left,
+		const bitset<_Bits>& _Right)
+		{	// return bitset _Left XOR _Right
+		bitset<_Bits> _Ans = _Left;
+		return (_Ans ^= _Right);
+		}
+
+template<class _Elem,
+	class _Tr,
+	size_t _Bits> inline
+	basic_ostream<_Elem, _Tr>& operator<<(
+		basic_ostream<_Elem, _Tr>& _Ostr, const bitset<_Bits>& _Right)
+	{	// insert bitset as a string
+	const ctype<_Elem>& _Ctype_fac = use_facet< ctype<_Elem> >(_Ostr.getloc());
+	const _Elem _E0 = _Ctype_fac.widen('0');
+
+	return (_Ostr
+		<< _Right.template to_string<_Elem, _Tr, allocator<_Elem> >(_E0));
+	}
+
+		// TEMPLATE operator>>
+export
+template<class _Elem,
+	class _Tr,
+	size_t _Bits>
+	basic_istream<_Elem, _Tr>& operator>>(
+		basic_istream<_Elem, _Tr>& _Istr, bitset<_Bits>& _Right);
+_STD_END
+#endif /* _BITSET */
+
+/*
+ * Copyright (c) 1992-2006 by P.J. Plauger.  ALL RIGHTS RESERVED.
+ * Consult your license regarding permissions and restrictions.
+V5.01:1566 */

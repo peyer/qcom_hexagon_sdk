@@ -1,0 +1,30 @@
+ifeq ($(CDSP_FLAG), 1) 
+	LIB_DSPRPC = libcdsprpc
+else ifeq ($(MDSP_FLAG), 1) 
+	LIB_DSPRPC = libmdsprpc
+else ifeq ($(SLPI_FLAG), 1) 
+	LIB_DSPRPC = libsdsprpc
+else
+	LIB_DSPRPC = libadsprpc
+endif
+
+$(info ************  LIB=$(LIB_DSPRPC) ************) 
+
+# stand-alone conv3x3a32_v60 executable
+BUILD_EXES+=conv3x3a32_v60
+conv3x3a32_v60_QAICIDLS += inc/conv3x3a32_v60 \
+                        $(DSPCV_DIR)/inc/dspCV
+conv3x3a32_v60_C_SRCS += src/conv3x3a32_v60 \
+                       $V/conv3x3a32_v60_stub \
+                       $V/dspCV_stub
+conv3x3a32_v60_DLLS += $(LIB_DSPRPC) 
+conv3x3a32_v60_LIBS += rpcmem
+conv3x3a32_v60_DEFINES += VERIFY_PRINT_ERROR
+conv3x3a32_v60_LD_FLAGS += -lpthread
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

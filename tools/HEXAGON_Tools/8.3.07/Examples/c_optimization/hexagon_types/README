@@ -1,0 +1,61 @@
+##################################################################
+# Copyright (c) $Date$ QUALCOMM INCORPORATED.
+# All Rights Reserved.
+# Modified by QUALCOMM INCORPORATED on $Date$
+##################################################################
+This example is just a small introduction to the various HEXAGON
+specific data types that are defined in <hexagon_types.h>.  Mainly, this
+includes vector data types:
+
+    HEXAGON_Vect64:  64-bit vector, represents HEXAGON register pair
+    HEXAGON_Vect32:  32-bit vector, represents HEXAGON single register
+
+Additionally, HEXAGON_Vect aliases to HEXAGON_Vect64.  Each data type also has
+several helper macros for creating vectors and accessing the
+individual elements.  These vectors all define a packing factor that
+determines how the 64-bits are treated.
+
+    D:  single double-word element (64*1 bits)
+    W:  2 single-word elements (32*2 bits)
+    H:  4 half-word elements (16*4 bits)
+    B:  8 single-byte elements (8*8 bits)
+
+Also, each access macro allows reading a signed or unsigned value from
+an individual element.  Thus, the following macros are defined:
+
+    HEXAGON_V64_CREATE_[D|W|H|B]
+    HEXAGON_V64_GET_[D|UD|W|UW|H|UH|UB][0-7]
+    HEXAGON_V64_PUT_[D|W|H|B][0-7]
+
+    HEXAGON_V32_CREATE_[W|H|B]
+    HEXAGON_V32_GET_[W|UW|H|UH|UB][0-3]
+    HEXAGON_V32_PUT_[W|H|B][0-3]
+
+For convenience, the following macros are aliased with the 64-bit
+macros:
+
+    HEXAGON_V_CREATE_[D|W|H|B]
+    HEXAGON_V_GET_[D|UD|W|UW|H|UH|UB][0-7]
+    HEXAGON_V_PUT_[D|W|H|B][0-7]
+
+
+Additionally, these vector data types can be used as pointers and
+arrays.  Any c-pointer can be cast into a (HEXAGON_Vect64 *) and used for
+accessing array elements 8-bytes at a time.  CAUTION: dereferencing a
+HEXAGON_Vect64 pointer will result in an 8-byte load or store operation at
+the assembly level.  All 8-byte memory operations are required to be
+8-byte aligned, however; otherwise, an exception will be thrown.
+Thus, the programmer must take care to align all pointers that will be
+used as vector pointers.  The align keyword can be used to force a
+particular n-byte alignment:
+
+    int in[] __attribute__((aligned(8))) = {...};
+
+The file hexagon_types.c contains some small examples of how to use the
+data types defined in <hexagon_types.h>.
+
+Running Example:
+1) make
+
+Default compiler and options can be modified on the make command line
+using the CC and CFLAGS make variables, respectively.

@@ -1,0 +1,968 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><title>Remote Debugger Command-line Interface Guide</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="images/sidebar_top.jpg"></top><script src="scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, false)"><input id="searchButton" onclick="postFunction(false)" type="button" value="Search"></form><p>
+<a href="index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<p>
+<a href="sitemap.html">Sitemap</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="Audio/Applications.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="Voice/Applications.html">Voice</a>
+</p><p>
+<a href="Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="Audio/Examples.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="Examples_Common.html">Common</a>
+</p><p>
+<a href="Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="Tools_Signing.html">Signing</a>
+</p><p>
+<a href="Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="FAQ_Common.html">Common</a>
+</p><p>
+<a href="FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="Support_Contact.html">Contact</a>
+</p><center><img src="images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h1>
+<a name="Remote%20Debugger%20Command-line%20Interface%20Guide"></a>Remote Debugger Command-line Interface Guide
+</h1><div class="toc"><div class="tocLevel"><a href="#Overview">Overview</a></div><div class="tocLevel"><a href="#Steps%20for%20debugging">Steps for debugging</a></div><div class="tocLevel"><a href="#Debugging%20the%20calculator%20example">Debugging the calculator example</a></div><div class="tocLevel"><a href="#Debugging%20using%20Eclipse%20plugin">Debugging using Eclipse plugin</a></div><div class="tocLevel"><a href="#References">References</a></div></div><h2>
+<a name="Overview"></a>Overview
+</h2><p>
+This document provides steps to use the remote debugger command-line interface. Refer to <a href="Debugging_Target.html">Debugger User Guide</a> to get an overview of the debugger framework and to ensure the hardware and software requirements are met. Run the <a href="debugger_verification_script_user_guide.html">Debugger Verification Script</a> to ensure that the device being debugged has all the necessary software on it.
+</p><h2>
+<a name="Steps%20for%20debugging"></a>Steps for debugging
+</h2><ul type="circle">
+<li>
+<p>
+Connect a USB cable from the host machine to the device.
+</p>
+</li><li>
+<p>
+Ensure you have adb in your path and its able to recognize the device
+</p>
+</li><li>
+<p>
+Launch LLDB
+</p>
+</li><li>
+<p>
+issue the target_connect command
+</p>
+</li><li>
+<p>
+follow the prompts
+</p>
+</li>
+</ul><p>
+The following section goes into much more detail and walks you through debugging the calculator example
+</p><h2>
+<a name="Debugging%20the%20calculator%20example"></a>Debugging the calculator example
+</h2><ul type="circle">
+<li>
+<p>
+Connect a USB cable from the host machine to the device.
+</p>
+</li><li>
+<p>
+In this example we debug calculator. First step is to run the calculator walkthrough to push it's binaries and verify it is working properly
+</p><p>
+Open a new Windows cmd shell and run the calculator walkthrough script. Note that it is required to run setup_sdk_env.cmd in the shell before running your example. Make sure to pass the device model you are using and subsystem to run your application on to the walkthrough script.
+</p><pre style="font-size: 62%">cd &lt;HEXAGON_SDK_ROOT&gt;
+setup_sdk_env.cmd (For Windows) and source setup_sdk_env.source (For Linux). See [Setup Instructions] (readme.html)
+cd examples/common/calculator
+python calculator_walkthrough.py -T sdm845
+</pre><p>
+calculator_walkthrough.py builds for CDSP by default. If you want to build calculator for ADSP, please pass -D adsp to the walkthrough.
+</p><pre>python calculator_walkthrough.py -T sdm845 -D adsp 
+</pre><p>
+You should see something like the following at the end:
+</p><pre>- starting calculator test
+- allocate 4000 bytes from ION heap
+- creating sequence of numbers from 0 to 999
+- compute sum on the DSP
+- sum = 499500
+- success
+
+Done
+</pre><p>
+Note that the walkthrough script opens an additional window to show logcat output. It's ok to close this window whenever you want.
+</p>
+</li><li>
+<p>
+Open a second Windows cmd shell on the host machine and start LLDB. Note that it is required to run setup_sdk_env.cmd in the second CLI shell before starting LLDB.
+</p><pre>cd &lt;HEXAGON_SDK_ROOT&gt;
+setup_sdk_env.cmd
+&lt;Hexagon SDK Dir&gt;\tools\HEXAGON_Tools\8.3.x\Tools\bin\hexagon-lldb.exe
+</pre><p>
+You should see the following:
+</p><pre>Hexagon utilities (pagetable, tlb, pv, target_connect) loaded
+(lldb)
+</pre>
+</li><li>
+<p>
+Issue the <code>target_connect</code> command on the LLDB command line and follow the presented instructions
+</p><pre>(lldb) target_connect
+</pre><ul type="circle">
+<li>
+<p>
+When asked to choose which DSP, select the DSP you are debugging, in this case the calculator example runs on the CDSP
+</p>
+</li><li>
+<p>
+LLDB will eventually pause and ask you to run your program. LLDB has configured your device so that all new user processes will halt on start. This allows LLDB to connect to the process before calling your use code. It also allows you to configure your debug session before running any of your code (like set breakpoints, etc...). This also means you will have to reboot your device after you are done debugging in order to return the device back to the default (non-halting) configuration.
+</p><p>
+Run the calculator example on the first cmd shell. The calculator program should hang indefintelty waiting for the debugger to attach.
+</p><pre>adb shell
+sdm845:/ # /vendor/bin/calculator 0 1000
+</pre>
+</li><li>
+<p>
+After you run your program, press ENTER on the LLDB prompt. LLDB will present you a list of processes you can connect to. There will be a few processes there, choose the one that matches your program's name. In this case the calculator process. Your list should looks something like this, you would choose #3 to debug calculator
+</p><div class="indent"><pre>Reading list of active user processes ...
+</pre><pre style="font-size: 70%">Please select the process to debug (if you don't see your process ensure you application is running):
+</pre></div><pre>1       _ASID0_
+2       audio_process
+3       /frpc/f049fd50 calculato
+&gt;
+</pre>
+</li><li>
+<p>
+LLDB will then set a breakpoint in the user process's exception handler so that if an exception occurs the debugger will stop in the exception so that you can determine the reason for the exception. Please refer to <a href="file:images/Hexagon_Document_Bundle.pdf#page=141">Hexagon exception handling</a> for more information on how to debug an exception.
+</p>
+</li><li>
+<p>
+Next LLDB will ask you for the search-path to your shared object. This step is optional but if you choose to enter nothing then you must set a search-path later using the following lldb command:
+</p><pre>(lldb) image search-paths add . &lt;local path to your shared objects&gt;  
+</pre><p>
+Take note that only one search-path mapping to '.' can Exist. If you have multiple search-paths the results are unpredictable.
+</p><p>
+In this example we are running calculator so enter the calculator's ship directory.
+</p><p>
+Be sure to replace &lt;HEXAGON_SDK_ROOT&gt; with the actual location of the SDK on your host machine.
+</p><pre style="font-size: 84%">&lt;HEXAGON_SDK_ROOT&gt;/examples/common/calculator/hexagon_Debug_dynamic_toolv82_v65/ship
+</pre><p>
+Take note that if you don't add a search-path or the search-path is incorrect, then LLDB won't be able to halt at any of the breakpoints in your code. It's good practice to check your search-path for accuracy if you are having trouble getting LLDB to hit breakpoints in your user code.
+</p>
+</li><li>
+<p>
+Last LLDB will connect to your user process on device and halt at the start of the process. This halt location is not your user code, it is early in the start up code of the process. You should see something like this:
+</p><pre>Process 8370 stopped
+* thread #1, stop reason = signal SIGTRAP
+    frame #0: 0x17224ff0 fastrpc_shell_0`qurt_ptrace + 4
+fastrpc_shell_0`qurt_ptrace:
+-&gt;  0x17224ff0 &lt;+4&gt;:    { jumpr r31 }
+
+fastrpc_shell_0`qurt_signal_wait:
+    0x17224ff4 &lt;+0&gt;:    { r28=#0 }
+    0x17224ff8 &lt;+4&gt;:    { p3=tstbit(r2,#0)
+    0x17224ffc &lt;+8&gt;:      r5:4=memd_locked(r0) }
+    0x17225000 &lt;+12&gt;:   { p1=!bitsclr(r4,r1)
+    0x17225004 &lt;+16&gt;:     p0=cmp.eq(r5,#0); if (!p0.new) jump:nt 0x1722508c
+    0x17225008 &lt;+20&gt;:     r8=memw(r0+#12) }        ; &lt;+152&gt;  
+</pre><p>
+This is a good place to set any user breakpoints you wish to set.
+</p><p>
+For this example, lets set a breakpoint in calculator_sum()
+</p><pre>(lldb) b calculator_sum
+</pre><p>
+You will see something like this:
+</p><pre>Breakpoint 2: no locations (pending).
+WARNING:  Unable to resolve breakpoint to any actual locations.
+</pre><p>
+This is normal and just means that LLDB has added a future breakpoint. Since the calculator shared object is not loaded yet LLDB has no idea where in memory to put that breakpoint. Once the calculator shared object is loaded LLDB will set the breakpoint in the correct location
+</p><p>
+To make it easier then entering each breakpoint every time you debug, you can instead put your breakpoints (and search path) in a file and have LLDB load and run each command. There must be one command per line.
+</p><p>
+An example file:
+</p><pre style="font-size: 58%">&gt; echo commands.txt
+&gt; image search-paths add . C:/Qualcomm/Hexagon_SDK/3.4.x/examples/common/calculator/hexagon_Debug_dynamic_toolv82_v65/ship/
+&gt; b calculator_sum
+</pre><p>
+Then in LLDB you can load and run these commands by issuing:
+</p><pre>(lldb) commands source commands.txt
+</pre>
+</li>
+</ul>
+</li><li>
+<p>
+Now its time to let calculator execute and for LLDB to stop at the breakpoint you set. Issue the continue command
+</p><pre>(lldb) c
+</pre><p>
+You should see something like this:
+</p><pre style="font-size: 55%">Process 8370 resuming
+1 location added to breakpoint 2
+Process 8370 stopped
+* thread #2, stop reason = breakpoint 2.1
+    frame #0: 0xe041a83c libcalculator_skel.so`calculator_sum(vec=0xe2efc000, vecLen=1000, res=0x2fab3e00) at calculator_imp.c:26
+   23
+   24   int calculator_sum(const int* vec, int vecLen, int64* res)
+   25   {
+-&gt; 26     int ii = 0;
+   27     *res = 0;
+</pre><p>
+You can see from the output that the calculator process has stopped and the reason was a breakpoint. LLDB will show you the line number and source code of the location where the breakpoint stopped.
+</p><p>
+If the breakpoint is not hit, check that you entered a correct search path
+</p>
+</li><li>
+<p>
+At this point you are free to use LLDB to debug the program. For a list of LLDB commands take a look at <a href="https://lldb.llvm.org/lldb-gdb.html">LLDB commands</a>
+</p><p>
+Here are some useful commands
+</p><ul type="circle">
+<li>
+<p>
+breakpoint list - list of breakpoints
+</p>
+</li><li>
+<p>
+registers read - list the registers
+</p>
+</li><li>
+<p>
+thread list - list the threads in the system at that instance of time
+</p>
+</li><li>
+<p>
+where - shows the current line number and which file you are in
+</p>
+</li><li>
+<p>
+bt - show trace of where you are currently. Prints stack backtrace
+</p>
+</li><li>
+<p>
+frame v - print values of local variables
+</p>
+</li><li>
+<p>
+fr v &lt;variable-name&gt; - print value stored in variable
+</p>
+</li><li>
+<p>
+fr v -f x variable-name&gt; - print variable in hex
+</p>
+</li><li>
+<p>
+finish - step out of the currently selected frame
+</p>
+</li><li>
+<p>
+quit - exit LLDB debugger
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+Its important to read the <a href="Debugging_Target.html#Known%20issues">Debugger Known Issues</a> section because there are a number of points you need to be aware of when debugging on target
+</p>
+</li>
+</ul><h2>
+<a name="Debugging%20using%20Eclipse%20plugin"></a>Debugging using Eclipse plugin
+</h2><p>
+There is an Eclipse plugin that will allow to debug the device using Eclipse. Please refer to the <a href="eclipse_target_debug.html">Eclipse Documentation</a> on how to do it.
+</p><h2>
+<a name="References"></a>References
+</h2><ul type="circle">
+<li>
+<p>
+<a href="Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p>
+</li><li>
+<p>
+<a href="file:images/Hexagon_Document_Bundle.pdf#page=6000">Hexagon LLDB Debugger</a>
+</p>
+</li><li>
+<p>
+<a href="file:images/Hexagon_Document_Bundle.pdf#page=141">Hexagon exception handling</a>
+</p>
+</li><li>
+<p>
+<a href="https://lldb.llvm.org/lldb-gdb.html">LLDB commands</a>
+</p>
+</li><li>
+<p>
+<a href="http://developer.android.com/tools/help/adb.html">ADB Commands</a>
+</p>
+</li><li>
+<p>
+<a href="debugger_verification_script_user_guide.html">Remote Debugger Verification</a>
+</p>
+</li><li>
+<p>
+<a href="eclipse_target_debug.html">Using Eclipse plugin for debugging</a>
+</p>
+</li><li>
+<p>
+<a href="Debugging_Target.html">Remote Debugger User Guide</a>
+</p>
+</li>
+</ul><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

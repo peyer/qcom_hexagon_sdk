@@ -1,0 +1,55 @@
+$(info ************  cdsp_present_flag=$(CDSP_PRESENT_FLAG) ************)
+
+# stub library
+BUILD_DLLS += libadspcalculator libmdspcalculator libsdspcalculator 
+
+libadspcalculator_QAICIDLS += inc/calculator_multi_legacy
+libadspcalculator_C_SRCS += $V/adsp_calculator_stub
+libadspcalculator_DLLS += libadsprpc
+
+libmdspcalculator_QAICIDLS += inc/calculator_multi_legacy
+libmdspcalculator_C_SRCS += $V/mdsp_calculator_stub
+libmdspcalculator_DLLS += libmdsprpc
+
+libsdspcalculator_QAICIDLS += inc/calculator_multi_legacy
+libsdspcalculator_C_SRCS += $V/sdsp_calculator_stub
+libsdspcalculator_DLLS += libsdsprpc
+
+ifeq ($(CDSP_PRESENT_FLAG), 1) 
+	libcdspcalculator_QAICIDLS += inc/calculator_multi_legacy_w_cdsp
+	libcdspcalculator_C_SRCS += $V/cdsp_calculator_stub
+	libcdspcalculator_DLLS += libcdsprpc
+endif
+
+# stand-alone calculator executable
+BUILD_EXES+=calculator_multi_legacy
+calculator_multi_legacy_C_SRCS += src/calculator_main src/calculator_test
+calculator_multi_legacy_LIBS += rpcmem 
+calculator_multi_legacy_DLLS += libadspcalculator    
+calculator_multi_legacy_LD_FLAGS += -llog -ldl
+calculator_multi_legacy_DEFINES += VERIFY_PRINT_ERROR
+
+ifeq ($(CDSP_PRESENT_FLAG), 1)  
+	DEFINES += CDSP_PRESENT_FLAG
+	calculator_multi_legacy_DLLS += libcdspcalculator
+	BUILD_DLLS += libcdspcalculator
+endif
+
+ifeq ($(SLPI_PRESENT_FLAG), 1)  
+	DEFINES += SLPI_PRESENT_FLAG
+	calculator_multi_legacy_DLLS += libsdspcalculator
+	BUILD_DLLS += libsdspcalculator
+endif
+
+ifeq ($(MDSP_PRESENT_FLAG), 1)  
+	DEFINES += MDSP_PRESENT_FLAG
+	calculator_multi_legacy_DLLS += libmdspcalculator   
+	BUILD_DLLS += libmdspcalculator
+endif
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

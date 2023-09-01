@@ -1,0 +1,1036 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><style type="text/css">
+.html2d { position: relative; }
+.html2d div { position: absolute; border-width: 0; border-style: solid; }
+.html2d div div { position: absolute; border-width: 0; border-style: solid; }
+
+</style><title>CAPIv2 Unit test framework</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="../images/sidebar_top.jpg"></top><script src="../scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, true)"><input id="searchButton" onclick="postFunction(true)" type="button" value="Search"></form><p>
+<a href="../index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="../feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="../hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="../images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="../hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="../images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="../images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="../Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="../Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="../Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="../Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="../Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="../Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="../HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="../Audio/Applications.html">Audio</a>
+</p><p>
+<a href="../Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="../Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="../FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="../Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="../Voice/Applications.html">Voice</a>
+</p><p>
+<a href="../Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="../APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="../APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="../APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="../APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="../Audio/Examples.html">Audio</a>
+</p><p>
+<a href="../Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="../Examples_Common.html">Common</a>
+</p><p>
+<a href="../Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="../Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="../Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="../Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="../CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="../Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="../Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="../Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="../Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="../Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="../Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="../Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="../Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="../Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="../Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="../Tools_Signing.html">Signing</a>
+</p><p>
+<a href="../Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="../Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="../FAQ_Common.html">Common</a>
+</p><p>
+<a href="../FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="../FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="../FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="../Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="../Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="../Support_Contact.html">Contact</a>
+</p><center><img src="../images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h1>
+<a name="CAPIv2%20Unit%20test%20framework"></a>CAPIv2 Unit test framework
+</h1><div class="toc"><div class="tocLevel"><a href="#Overview">Overview</a></div><div class="tocLevel"><a href="#Unit%20test%20framework">Unit test framework</a><div class="tocLevel"><a href="#Modules%20running%20in%20either%20TX%20or%20RX%20path%20-%20No%20Intermodule%20communication">Modules running in either TX or RX path - No Intermodule communication</a></div><div class="tocLevel"><a href="#Modules%20running%20in%20both%20TX%20and%20RX%20path%20-%20Intermodule%20communication">Modules running in both TX and RX path - Intermodule communication</a></div><div class="tocLevel"><a href="#Test%20configuration%20file">Test configuration file</a><div class="tocLevel"><a href="#ProcessData">ProcessData</a></div><div class="tocLevel"><a href="#SetMediaFormat">SetMediaFormat</a></div><div class="tocLevel"><a href="#SetOutputMediaFormat">SetOutputMediaFormat</a></div><div class="tocLevel"><a href="#SetParamInband">SetParamInband</a></div><div class="tocLevel"><a href="#GetParamInband">GetParamInband</a></div></div></div><div class="tocLevel"><a href="#Important%20Note%20for%20CAPIv2%20Decimate%20Example">Important Note for CAPIv2 Decimate Example</a></div><div class="tocLevel"><a href="#Moving%20ahead">Moving ahead</a></div></div><h2>
+<a name="Overview"></a>Overview
+</h2><p>
+The Hexagon SDK contains projects which are intended to serve as templates for creating new custom pp modules and topology definitions.
+</p><ol class="indent" type="1">
+<li>
+<p>
+CAPIv2 - Wrapper around a Post/Pre processing algorithm. These wrappers are used across different services like
+</p><div class="indent"><p>
+Audio front end(AFE), Audio processing services (COPP/POPP), Listen Stream manager(LSM)
+</p></div><div class=diagram>
+<div class="html2d art" style="width:208px;height:176px;white-space:nowrap;font-size:12.48px;line-height:16px">
+<div class="rect round" style="border-width:3px;left:3px;top:7px;right:2px;bottom:6px"></div>
+<div class="rect round" style="border-width:3px;left:35px;top:119px;right:18px;bottom:22px"></div>
+<div class="rect round" style="border-width:3px;left:51px;top:71px;right:34px;bottom:70px"></div>
+<div class="rect round" style="border-width:3px;left:27px;top:23px;right:18px;bottom:118px"></div>
+<div style="text-align:center;left:48px;top:32px;right:40px;bottom:128px">Elite Framework</div>
+<div style="text-align:center;left:56px;top:80px;right:40px;bottom:80px">CAPIv2 Wrapper</div>
+<div style="text-align:center;left:52px;top:128px;right:36px;bottom:32px">Core  Algorithm</div>
+</div>
+</div>
+
+</li>
+</ol><p>
+The SDK contains the following examples for audio PP processing chain:
+</p><ul class="indent" type="circle">
+<li>
+<p>
+capi_v2_decimate - Example CAPIv2 based audio processing module that decimates input signal depending on decimation factor set by client processor. This example speeds up audio using decimation. ( Similar to fast-forward functionality). The input and output sampling rates remain same but the input signal is decimated by decimation factor set by Client processor. This leads to playing out lesser number of samples at the same output sampling rate, thus speeding up the audio playback giving perceptual quality like fast-forward feature. As an example, refer <a href="Testing_CAPIv2%20Unit%20Tests.html#Important%20Note%20for%20CAPIv2%20Decimate%20Example">this</a>
+</p>
+</li><li>
+<p>
+capi_v2_sp - Example CAPIv2 based AFE algorithm to run across AFE TX and RX paths. This algoritm shows an important feature of CAPIv2 interface - Intermodule communication. There are two modules in this example - one running on TX path and the other running on RX path. The testing procedure for capi_v2_sp is same as other APPI/CAPIv2 modules. Please run the unit test for the example followed by on target verification. Please refer capi_v2_sp for implementation details.
+</p>
+</li>
+</ul><h2>
+<a name="Unit%20test%20framework"></a>Unit test framework
+</h2><h3>
+<a name="Modules%20running%20in%20either%20TX%20or%20RX%20path%20-%20No%20Intermodule%20communication"></a>Modules running in either TX or RX path - No Intermodule communication
+</h3><p>
+The support library test_capi_v2 contains an CAPIv2 specific test framework that allows for the verification of objects exporting the CAPIv2 interface. The framework is run by calling the framework's entry point from within a qtest's <a href="../Platforms_Simulator.html#Test%20sources">Test sources</a>. The signature of the entry point is as follows:
+</p><pre>
+capi_v2_err_t test_capi_v2_main(capi_v2_get_static_properties_f get_static_properties_f,
+                          capi_v2_init_f init_f,
+                          capi_v2_proplist_t* init_set_properties,
+                          capi_v2_proplist_t* static_properties,
+                          <span style="color: blue">const</span> <span style="color: blue">char</span>* filename_in, <span style="color: blue">const</span> <span style="color: blue">char</span>* filename_out,
+                          <span style="color: blue">const</span> <span style="color: blue">char</span>* filename_config)
+
+- get_static_properties_f and init_f should contain function pointers to the capi_v2 module's
+  get_static_properties and init functions.  These can be obtained by calling dlsym() in
+  the qtest's [[Test sources]].
+- init_set_properties is a structure of init properties that need to be set in the module
+- static_properties is meant to get <span style="color: blue">static</span> properties from the module.
+- filename_in is the name of an audio file that should be processed by the
+  test
+- filename_out is the name of the output file generated by processing
+  filename_in.
+- filename_config is the [[Test configuration file]] that determines how the
+  framework should verify the CAPIv2 module.
+</pre><p>
+The qtests for Hexagon SDK CAPIv2 example decimate use the CAPIv2 Test Framework. For more detailed information about how to call it see those example's qtest source files.
+</p><p>
+Currently the CAPIv2 Test Framework does not support verification of the output audio file vs a known reference audio file. Future versions of the Hexagon SDK hope to add support for this feature. Until then the verification of the output file is left to the user.
+</p><h3>
+<a name="Modules%20running%20in%20both%20TX%20and%20RX%20path%20-%20Intermodule%20communication"></a>Modules running in both TX and RX path - Intermodule communication
+</h3><p>
+The support library test_capi_v2 contains an CAPIv2 specific test framework that allows communication of two modules running seperately. This is mainly intended for the verification of objects exporting the CAPIv2 interface. The framework is run by calling the framework's entry point from within a qtest's <a href="../Platforms_Simulator.html#Test%20sources">Test sources</a>. The signature of the entry point is as follows:
+</p><pre>
+capi_v2_err_t test_capi_v2_main_feedback(capi_v2_get_static_properties_f get_static_properties_rx_f,
+                              capi_v2_init_f init_rx_f,
+                              capi_v2_get_static_properties_f get_static_properties_tx_f,
+                              capi_v2_init_f init_tx_f,
+                              capi_v2_proplist_t* init_set_properties,
+                              capi_v2_proplist_t* static_properties,
+                              <span style="color: blue">const</span> <span style="color: blue">char</span>* filename_rx_in,
+                              <span style="color: blue">const</span> <span style="color: blue">char</span>* filename_rx_out,
+                              <span style="color: blue">const</span> <span style="color: blue">char</span>* filename_rx_config,
+                              <span style="color: blue">const</span> <span style="color: blue">char</span>* filename_tx_in,
+                              <span style="color: blue">const</span> <span style="color: blue">char</span>* filename_tx_out,
+                              <span style="color: blue">const</span> <span style="color: blue">char</span>* filename_tx_config
+                              );
+
+
+- get_static_properties_rx_f and init_rx_f should contain function pointers to the RX capi_v2 module's
+  get_static_properties and init functions.  These can be obtained by calling dlsym() in
+  the qtest's [[Test sources]].
+- get_static_properties_tx_f and init_tx_f should contain function pointers to the RX capi_v2 module's
+  get_static_properties and init functions.  These can be obtained by calling dlsym() in
+  the qtest's [[Test sources]].
+- init_set_properties is a structure of init properties that need to be set in the module
+- static_properties is meant to get <span style="color: blue">static</span> properties from the module.
+- filename_rx_in is the name of an audio file that should be processed by the
+  RX module
+- filename_rx_out is the name of the output file generated by processing
+  filename_rx_in by RX module.
+- filename_rx_config is the [[Test configuration file]] that determines how the
+  framework should verify the CAPIv2 module.
+- filename_tx_in is the name of an audio file that should be processed by the
+  TX module
+- filename_tx_out is the name of the output file generated by processing
+  filename_tx_in by TX module.
+- filename_tx_config is the [[Test configuration file]] that determines how the
+  framework should verify the CAPIv2 module.
+</pre><p>
+The qtests for Hexagon SDK CAPIv2 example decimate use the CAPIv2 Test Framework. For more detailed information about how to call it see those example's qtest source files.
+</p><p>
+Currently the CAPIv2 Test Framework does not support verification of the output audio file vs a known reference audio file. Future versions of the Hexagon SDK hope to add support for this feature. Until then the verification of the output file is left to the user.
+</p><h3>
+<a name="Test%20configuration%20file"></a>Test configuration file
+</h3><p>
+Each test is configured using a configuration file. This file contains a list of commands to execute. The test framework reads and executes the commands from the config file sequentially. Note that the commands are case sensitive and should be entered exactly as they appear below.
+</p><p>
+The test framework supports the following commands and their parameters:
+</p><ul type="circle">
+<li>
+<p>
+<a href="#ProcessData">ProcessData</a>
+</p><ul type="circle">
+<li>
+<p>
+NumBuffers &lt;number&gt;
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+<a href="#SetMediaFormat">SetMediaFormat</a>
+</p><ul type="circle">
+<li>
+<p>
+SetBitstreamFormat &lt;number&gt;
+</p>
+</li><li>
+<p>
+SetDataFormat &lt;number&gt;
+</p>
+</li><li>
+<p>
+SetNumChannelsAndMapping &lt;number&gt;
+</p>
+</li><li>
+<p>
+SetBitsPerSample &lt;number&gt;
+</p>
+</li><li>
+<p>
+QFactor &lt;number&gt;
+</p>
+</li><li>
+<p>
+SetSamplingRate &lt;number&gt;
+</p>
+</li><li>
+<p>
+SetIsSigned &lt;number&gt;
+</p>
+</li><li>
+<p>
+SetInterleaving &lt;number&gt;
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+<a href="#SetOutputMediaFormat">SetOutputMediaFormat</a>
+</p><ul type="circle">
+<li>
+<p>
+SetBitstreamFormat &lt;number&gt;
+</p>
+</li><li>
+<p>
+SetDataFormat &lt;number&gt;
+</p>
+</li><li>
+<p>
+SetNumChannelsAndMapping &lt;number&gt;
+</p>
+</li><li>
+<p>
+SetBitsPerSample &lt;number&gt;
+</p>
+</li><li>
+<p>
+QFactor &lt;number&gt;
+</p>
+</li><li>
+<p>
+SetSamplingRate &lt;number&gt;
+</p>
+</li><li>
+<p>
+SetIsSigned &lt;number&gt;
+</p>
+</li><li>
+<p>
+SetInterleaving &lt;number&gt;
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+<a href="#SetParamInband">SetParamInband</a>
+</p><ul type="circle">
+<li>
+<p>
+PayloadSizeInBytes &lt;number&gt;
+</p>
+</li>
+</ul>
+</li><li>
+<p>
+<a href="#GetParamInband">GetParamInband</a>
+</p><ul type="circle">
+<li>
+<p>
+PayloadSizeInBytes &lt;number&gt;
+</p>
+</li><li>
+<p>
+&lt;payload&gt;
+</p>
+</li>
+</ul>
+</li>
+</ul><h4>
+<a name="ProcessData"></a>ProcessData
+</h4><p>
+Processes input buffers from the input file to the output file.
+</p><p>
+This command exercises the pp module's CAPIv2 methods get_input_required() and process().
+</p><p>
+e.g.
+</p><pre>ProcessData
+  NumBuffers 10
+</pre><h4>
+<a name="SetMediaFormat"></a>SetMediaFormat
+</h4><p>
+Sets the input media parameters. This should be done to verify the correct handling of specific media parameters and also before a call to <a href="#ProcessData">ProcessData</a> to set up the medial parameters to be used during the processing. It sets the CAPIv2 library with the specified parameters by calling the pp module function reinit().
+</p><p>
+This command exercises the pp module's CAPIv2 method reinit().
+</p><p>
+e.g.
+</p><pre>SetMediaFormat
+  SetBitstreamFormat         69029
+  SetDataFormat              0
+  SetNumChannelsAndMapping   2 0 1
+  SetBitsPerSample           16
+  QFactor                    0
+  SetSamplingRate            48000
+  SetIsSigned                1
+  SetInterleaving            2
+</pre><h4>
+<a name="SetOutputMediaFormat"></a>SetOutputMediaFormat
+</h4><p>
+Sets the output media parameters. This should be done to verify the correct handling of specific media parameters and also before a call to <a href="#ProcessData">ProcessData</a> to set up the medial parameters to be used during the processing. It sets the CAPIv2 library with the specified parameters by calling the pp module function reinit().
+</p><p>
+This command exercises the pp module's CAPIv2 method reinit().
+</p><p>
+e.g.
+</p><pre>SetOutputMediaFormat
+  SetBitstreamFormat         69029
+  SetDataFormat              0
+  SetNumChannelsAndMapping   2 0 1
+  SetBitsPerSample           16
+  QFactor                    0
+  SetSamplingRate            48000
+  SetIsSigned                1
+  SetInterleaving            2
+</pre><h4>
+<a name="SetParamInband"></a>SetParamInband
+</h4><p>
+Sets a parameter value. The information on the parameter and its payload are specified after the PayloadSizeInBytes parameter as illustrated in the example below.
+</p><p>
+This command exercises the pp module's CAPIv2 method set_param().
+</p><p>
+e.g.
+</p><pre>SetParamInband
+  PayloadSizeInBytes 32
+  00 00 00 00    # Data Payload address &lt;msw&gt;
+  00 00 00 00    # Data Payload address &lt;lsw&gt; 
+  00 00 00 00    # mem_map_handle
+  18 00 00 00    # Data payload size
+  11 11 11 11    # module_id 0x00010F17 CAPI_V2_DECIMATE
+  13 2D 01 00    # param_id 0x00012D13 CAPI_V2_PARAM_ID_DECIMATE_ENABLE
+  04 00 00 00    # param_size
+  01 00 00 00    # payload (Enable/Disable)
+</pre><h4>
+<a name="GetParamInband"></a>GetParamInband
+</h4><p>
+Gets a parameter value. The information on the parameter and its payload are specified after the PayloadSizeInBytes parameter as illustrated in the example below. Note that GetParamInband contains an additional parameter called RefPayloadSizeInBytes that specifies the expected binary value of the received parameter.
+</p><p>
+This command exercises the pp module's CAPIv2 method get_param().
+</p><p>
+e.g.
+</p><pre>GetParamInband
+   PayloadSizeInBytes 16
+   00 00 00 00    # Data Payload address &lt;msw&gt;
+   00 00 00 00    # Data Payload address &lt;lsw&gt; 
+   00 00 00 00    # mem_map_handle
+   0C 00 00 00    # Data payload size
+   11 11 11 11    # module_id 0x00010F17 CAPI_V2_DECIMATE
+   13 2D 01 00    # param_id 0x00012D13 CAPI_V2_PARAM_ID_DECIMATE_ENABLE
+   04 00 00 00    # Param Size and Padding
+   RefPayloadSizeInBytes 4
+   00 00 00 00
+</pre><h2>
+<a name="Important%20Note%20for%20CAPIv2%20Decimate%20Example"></a>Important Note for CAPIv2 Decimate Example
+</h2><p>
+CAPIv2 Decimate example performs decimation of input samples by the decimation factor set by Client processor. There are two parameters defined for Decimate module.
+</p><ol type="1">
+<li>
+<p>
+CAPI_V2_PARAM_ID_DECIMATE_ENABLE : 0x00012D13
+</p><p>
+Parameter ID to enable decimate module. Module is enabled by setting the flag to 1.
+</p>
+</li><li>
+<p>
+CAPI_V2_PARAM_ID_UPDATE_DECIMATION_FACTOR : 0x00012D15
+</p><p>
+Parameter ID to set decimation factor from APPS processor. The decimation factor has to be an integer. Based on the value of decimation factor, the input samples are discarded.
+</p><pre>Assume input samples are  : 0x81 0x34 0x23 0x56 0x82 0x68 0x39
+Assume bits per sample is 8. 
+Output when : 
+  a) Decimation factor is 1 : 0x81 0x34 0x23 0x56 0x82 0x68 0x39 ...
+  b) Decimation factor is 2 : 0x81 0x23 0x82 0x39 ...
+  c) Decimation factor is 3 : 0x81 0x56 0x39 ...
+  ...
+</pre><p>
+For more information, please refer capi_v2_decimate.h ( &lt;SDK_ROOT&gt;\examples\audio\capi_v2_decimate\inc)
+</p>
+</li>
+</ol><h2>
+<a name="Moving%20ahead"></a>Moving ahead
+</h2><p>
+See <a href="../Audio/TestingAudioUnitTests.html#Unit%20testing%20CAPI/APPI/CAPIv2%20modules">Unit testing</a> of CAPIv2 module
+</p><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

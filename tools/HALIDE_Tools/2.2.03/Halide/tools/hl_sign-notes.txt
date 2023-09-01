@@ -1,0 +1,70 @@
+Note: Do not call these scripts directly.  The Halide compiler will call
+these scripts if the HL_HEXAGON_CODE_SIGNER environment variable is set.
+
+-----------------------------------------------------------------------------
+If signing can be done during Halide compilation
+
+$ setenv HL_HEXAGON_CODE_SIGNER ~/halide/scripts/hl_signnow
+
+<build the app>
+hl_signnow: signing /tmp/hvx_unsignedy3t97n.so as /tmp/hvx_signedYkst0t.so
+hl_signnow: signing /tmp/hvx_unsignedFOHXXK.so as /tmp/hvx_signedCZksV1.so
+
+Note: The hl_signnow script should be first modified with the command
+      that is needed to perform signing.
+
+-----------------------------------------------------------------------------
+If signing must done separately from Halide compilation
+
+Two phase process:
+   1) select hl_signsav & build to save the shared objects
+   2) select hl_signuse & build to use the signed shared objects
+
+$ /bin/rm -rf /tmp/hl_sign_$USER
+$ setenv HL_HEXAGON_CODE_SIGNER ~/halide/scripts/hl_signsav
+
+<build the app>
+hl_signsav: saving /tmp/hvx_unsignedilzcjc.so as /tmp/hl_sign_$USER/lib000.so
+hl_signsav: saving /tmp/hvx_unsignedjAQVqB.so as /tmp/hl_sign_$USER/lib001.so
+
+$ ls /tmp/hl_sign_$USER
+lib000.so  lib001.so
+
+<sign the libraries>
+
+$ setenv HL_HEXAGON_CODE_SIGNER ~/halide/scripts/hl_signuse
+
+<build the app a second time>
+hl_signuse: copying /tmp/hl_sign_$USER/lib000.so to /tmp/hvx_signedSRbsjF.so
+hl_signuse: copying /tmp/hl_sign_$USER/lib001.so to /tmp/hvx_signedXLAWUD.so
+
+Note: The /tmp/hl_sign_$USER directory will be empty after the second
+      build step as the libraries are moved to a 'done' subdirectory
+      as they are used.  If you want to build again, move these back up.
+
+-----------------------------------------------------------------------------
+If signing must done statically separate from Halide compilation
+
+For static signing, the libraries are all signed after compilation using
+the same names that they will be referred to during runtime.
+
+$ /bin/rm -rf /tmp/hl_sign_$USER
+$ setenv HL_HEXAGON_CODE_SIGNER ~/halide/scripts/hl_signall
+
+<build the app>
+hl_signall: saving libhalide_hexagon_codeT2745851812332948.so as /tmp/hl_sign_dpalermo/libhalide_hexagon_codeT2745851812332948.so
+hl_signall: saving libhalide_shared_runtimeT2745856110911863.so as /tmp/hl_sign_dpalermo/libhalide_shared_runtimeT2745856110911863.so
+
+$ ls /tmp/hl_sign_$USER
+libhalide_hexagon_codeT2745851812332948.so
+libhalide_shared_runtimeT2745856110911863.so
+
+The static signatures can now be generated.  The executable should not be
+recompiled after signing as the static signatures are stored on the device.
+Unique names are used for the libraries to avoid conflicting with any other
+statically signed Halide application.
+
+This script can also be used to just capture the libraries if they are
+needed for other purposes.
+
+-----------------------------------------------------------------------------

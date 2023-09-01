@@ -1,0 +1,153 @@
+# builds the static/dynamic skel
+ifeq (1,$(V_dynamic))
+BUILD_DLLS += libbenchmark_skel
+BUILD_DLLS += benchmark_q
+else
+BUILD_LIBS += libbenchmark_skel
+endif
+
+C_FLAGS += $(MHVX_DOUBLE_FLAG)
+CPP_FLAGS += $(MHVX_DOUBLE_FLAG)
+ASM_FLAGS += $(MHVX_DOUBLE_FLAG)
+
+# Use -O0 temporarily when trying to debug C code.
+#_OPT = -O0
+
+# Whether to use the conv3x3a32_autovec.c instead of its assembly counterpart.
+# It is switched off by default.
+USE_CONV3x3_C=0
+
+# Whether to use the automatic vectorization flag for the conv3x3a32_autovec.c.
+USE_CONV3x3_AUTOVEC_FLAG=1
+
+libbenchmark_skel_QAICIDLS = inc/benchmark
+libbenchmark_skel_C_SRCS += $V/benchmark_skel \
+                                src_dsp/benchmark_imp \
+                                src_dsp/dilate5x5_imp \
+                                src_dsp/dilate3x3_imp \
+                                src_dsp/integrate_imp \
+                                src_dsp/epsilon_imp \
+                                src_dsp/bilateral_imp \
+                                src_dsp/fast9_imp \
+                                src_dsp/conv3x3a32_imp \
+                                src_dsp/gaussian7x7_imp \
+                                src_dsp/sobel3x3_imp \
+                                src_dsp/sobel3x3_C_intrinsics \
+                                src_dsp/fft_imp \
+                                src_dsp/scatter_gather_imp \
+                                src_dsp/crash10_imp
+                                
+
+libbenchmark_skel_CPP_SRCS += src_dsp/warp_imp
+
+libbenchmark_skel.ASM_SRCS += asm_src/dilate5x5_asm.S \
+                              asm_src/dilate3x3_asm.S \
+                              asm_src/integrate_asm.S \
+                              asm_src/epsilon.S \
+                              asm_src/bilateral.S \
+                              asm_src/bilateral_v65.S \
+                              asm_src/fast9_coarse.S \
+                              asm_src/fast9_fine.S \
+                              asm_src/gaussian7x7_asm.S
+
+ifeq (1,$(USE_CONV3x3_C))
+libbenchmark_skel_C_SRCS += src_dsp/conv3x3a32_autovec
+
+# Use the seperate compiler option for this file.
+ifeq (1,$(USE_CONV3x3_AUTOVEC_FLAG))
+conv3x3a32_autovec_CC_FLAGS += $(AUTOVEC_FLAG)
+endif
+
+else
+libbenchmark_skel.ASM_SRCS += asm_src/conv3x3a32_asm.S
+
+endif
+
+# Needs dspCV lib for worker pool
+libbenchmark_skel_DLLS+=libdspCV_skel
+
+libbenchmark_skel_LIBS+=libqprintf
+
+# Also build a stand-alone simulation environment executable unit test
+
+BUILD_QEXES += benchmark_q
+benchmark_q_OSTYPE = QURT
+# The following is needed to pull QuRT support into the executable for simulation
+
+benchmark_q_DLLS+= rpcmem 
+benchmark_q_DLLS+= libdspCV_skel
+benchmark_q_DLLS+= libqprintf
+
+benchmark_q_QAICIDLS = inc/benchmark
+
+benchmark_q_C_SRCS+= $V/benchmark_skel \
+                         src_dsp/benchmark_imp \
+                         src_app/benchmark \
+                         src_app/dilate5x5_ref \
+                         src_dsp/dilate5x5_imp \
+                         src_app/dilate3x3_ref \
+                         src_dsp/dilate3x3_imp \
+                         src_app/integrate_ref \
+                         src_dsp/integrate_imp \
+                         src_dsp/epsilon_imp \
+                         src_app/epsilon_ref \
+                         src_dsp/bilateral_imp \
+                         src_app/bilateral_ref \
+                         src_dsp/fast9_imp \
+                         src_app/fast9_ref \
+                         src_dsp/fast9_imp \
+                         src_app/fft_ref \
+                         src_dsp/fft_imp \
+                         src_app/scatter_gather_ref \
+                         src_dsp/scatter_gather_imp \
+                         src_app/conv3x3_ref \
+                         src_dsp/conv3x3a32_imp \
+                         src_app/gaussian7x7_ref \
+                         src_dsp/gaussian7x7_imp \
+                         src_app/sobel3x3_ref \
+                         src_dsp/sobel3x3_imp \
+                         src_dsp/sobel3x3_C_intrinsics \
+                         src_app/crash10_ref \
+                         src_dsp/crash10_imp
+
+benchmark_q_CPP_SRCS +=  src_app/warp_ref \
+                         src_dsp/warp_imp
+                        
+benchmark_q.ASM_SRCS += asm_src/dilate5x5_asm.S \
+                        asm_src/dilate3x3_asm.S \
+                        asm_src/integrate_asm.S \
+                        asm_src/epsilon.S \
+                        asm_src/bilateral.S \
+                        asm_src/bilateral_v65.S \
+                        asm_src/fast9_coarse.S \
+                        asm_src/fast9_fine.S \
+                        asm_src/gaussian7x7_asm.S
+
+ifeq (1,$(USE_CONV3x3_C))
+benchmark_q_C_SRCS+= src_dsp/conv3x3a32_autovec
+
+else
+benchmark_q.ASM_SRCS += asm_src/conv3x3a32_asm.S
+
+endif                        
+
+#Two new options are added for simulation run:
+#QEXE_SIM_OPTIONS is used for simulator options,
+#QEXE_CMD_OPTIONS is used for command line options for test executable
+#
+#Be noted that QEXE_EXEC variable can ONLY add to the end of whole command
+#line, which is NOW interpreted as user PD command line option. So if it
+#was used as simulator options, please change it to use QEXE_SIM_OPTIONS
+#
+# defining ahb address is a temporary workaround for 8.1.04 tools, to be fixed in 8.1.05. See HEXSUPPORT 1854.
+QEXE_SIM_OPTIONS +=--dsp_clock 1000 --ahb:lowaddr 0xc0000000 --ahb:highaddr 0xc0ffffff
+QEXE_CMD_OPTIONS +=-f epsilon -w 256 -h 64
+
+
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

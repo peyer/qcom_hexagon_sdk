@@ -1,0 +1,13 @@
+#ifndef FARF_RUNTIME_TEST_IDL
+#define FARF_RUNTIME_TEST_IDL
+
+#include "AEEStdDef.idl"
+
+interface farf_runtime_test{
+    uint32 run();
+    uint32 run_multiple(in uint32 num_iter);
+    uint32 setMask(in uint32 mask);
+    uint32 setMaskandFilename(in uint32 mask, in string filename);
+};
+
+#endif /*FARF_RUNTIME_TEST_IDL*/

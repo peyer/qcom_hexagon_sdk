@@ -1,0 +1,49 @@
+##################################################################
+# Copyright (c) $Date$ QUALCOMM INCORPORATED.
+# All Rights Reserved.
+# Modified by QUALCOMM INCORPORATED on $Date$
+##################################################################
+As the simple vectorization (vectoradd) shows, vectorization can offer
+a significant performance increase.  When writing code from scratch,
+it is often easy to design the code so that vectorization is easy (so
+that all of the vectorization conditions are met).  However, when
+vectorizing existing code, extra care must be taken to ensure that
+vectorization is safe.  Specifically, this example shows how to handle
+the case where data alignment is unknown at compile time.
+
+The Hexagon vector (8-byte) memory loads and stores must access memory
+addresses that are 8-byte aligned; otherwise, an exception is thrown.
+To safely vectorize memory accesses for an array of ints, shorts, or
+bytes, the programmer must ensure that the pointer is 8-byte aligned.
+Ideally, this should be enforced at the declaration of the data array.
+For example:
+
+    short int data[] __attribute__((aligned(8))) = {...};
+
+Often times, however, a function will accept a pointer as an argument,
+and that pointer doesn't necessarily point to the start of the data
+array.  In these cases, it may be necessary to use dynamic loop
+peeling before vectorization. Dynamic loop peeling simply executes the
+original loop a single iteration at a time, until the pointers are
+aligned to 8-byte boundaries.  Then, vectorization may be done safely.
+
+In addition, dynamic loop peeling often requires a cleanup loop after
+the vectorization to handle cases where the data length (remaining
+after the peeled iterations) is not a multiple of the vector length.
+
+Finally, while this example handles misalignment from 8-byte
+boundaries, it does not handle misalignment between the array accesses
+within the function.  That is, this example assumes that all arrays
+are misaligned by the same amount.  To handle cases where the
+misalignment differs among array accesses, please refer to the valignb
+example.
+
+The example in misalignment.c shows how to use dynamic loop peeling.
+Run the test program to see the performance impact of this technique.
+
+
+Running Example:
+1) make
+
+Default compiler and options can be modified on the make command line
+using the CC and CFLAGS make variables, respectively.

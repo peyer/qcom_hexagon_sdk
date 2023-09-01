@@ -1,0 +1,24 @@
+interface conv3x3a16
+{
+  // An image buffer.
+  long power_on_hvx();
+
+  long power_off_hvx();
+
+  long set_hvx_perf_mode_turbo();
+
+  long set_hvx_perf_mode_nominal();
+
+  long set_hvx_perf_mode_low();
+
+  typedef sequence<octet> u8_buffer;
+  typedef sequence<char> i8_buffer;
+
+  long run(in u8_buffer input_buffer,
+           in i8_buffer mask,
+           in long stride,
+           in long height,
+           in long width,
+           in long vlen,
+           rout u8_buffer output_buffer);
+};

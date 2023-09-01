@@ -1,0 +1,1190 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%; 
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; 
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+</style><title>QAIC IDL Reference</title>
+</head><body>
+<div class="smarkdoc"><h1>
+<a name="QAIC%20IDL%20Reference"></a>QAIC IDL Reference
+</h1><div class="toc"><div class="tocLevel"><a href="#Introduction">Introduction</a></div><div class="tocLevel"><a href="#Relationship%20to%20OMG%20IDL">Relationship to OMG IDL</a><div class="tocLevel"><a href="#Bounded%20output%20parameters">Bounded output parameters</a></div><div class="tocLevel"><a href="#NULL%20Argument%20Semantics">NULL Argument Semantics</a></div><div class="tocLevel"><a href="#Return%20Values">Return Values</a></div><div class="tocLevel"><a href="#Wire%20Format%20Limitations">Wire Format Limitations</a></div></div><div class="tocLevel"><a href="#Remote%20Handles">Remote Handles</a></div><div class="tocLevel"><a href="#Domains">Domains</a><div class="tocLevel"><div class="tocLevel"><a href="#Domain%20restart">Domain restart</a></div><div class="tocLevel"><a href="#Domain%20Routing">Domain Routing</a></div></div></div><div class="tocLevel"><a href="#Sample%20IDL">Sample IDL</a></div><div class="tocLevel"><a href="#Mapping%20for%20the%20C%20programming%20language">Mapping for the C programming language</a><div class="tocLevel"><a href="#Basic%20built-in%20types">Basic built-in types</a><div class="tocLevel"><a href="#in%20parameter%20of%20a%20method">in parameter of a method</a></div><div class="tocLevel"><a href="#rout%20parameter%20of%20a%20method">rout parameter of a method</a></div><div class="tocLevel"><a href="#Member%20of%20a%20structure">Member of a structure</a></div></div><div class="tocLevel"><a href="#Constant%20declarations">Constant declarations</a></div><div class="tocLevel"><a href="#Identifiers">Identifiers</a></div><div class="tocLevel"><a href="#Module">Module</a></div><div class="tocLevel"><a href="#Interface">Interface</a></div><div class="tocLevel"><a href="#Methods">Methods</a><div class="tocLevel"><a href="#in%20parameter">in parameter</a></div><div class="tocLevel"><a href="#rout%20parameter">rout parameter</a></div></div><div class="tocLevel"><a href="#Structure">Structure</a></div><div class="tocLevel"><a href="#Enum">Enum</a></div><div class="tocLevel"><a href="#Union">Union</a></div><div class="tocLevel"><a href="#Array">Array</a></div><div class="tocLevel"><a href="#Sequence">Sequence</a><div class="tocLevel"><a href="#_in%20parameter%20of%20a%20method">in parameter of a method</a></div><div class="tocLevel"><a href="#_rout%20parameter%20of%20a%20method">rout parameter of a method</a></div><div class="tocLevel"><a href="#_Member%20of%20a%20structure">Member of a structure</a></div><div class="tocLevel"><a href="#Within%20another%20sequence,%20or%20an%20array">Within another sequence, or an array</a></div></div><div class="tocLevel"><a href="#string%20and%20wstring">string and wstring</a><div class="tocLevel"><a href="#__in%20parameter%20of%20a%20method">in parameter of a method</a></div><div class="tocLevel"><a href="#__rout%20parameter%20of%20a%20method">rout parameter of a method</a></div><div class="tocLevel"><a href="#__Member%20of%20a%20structure">Member of a structure</a></div><div class="tocLevel"><a href="#Within%20a%20sequence">Within a sequence</a></div><div class="tocLevel"><a href="#NULL%20and%20empty%20strings">NULL and empty strings</a></div></div></div></div><h2>
+<a name="Introduction"></a>Introduction
+</h2><p>
+Interfaces for the aDSP platform are described in language called IDL, described here. IDL allows interface authors to expose only <i>what</i> their object does, and not <i>where</i> it resides or what programming language it is implemented in. Specifically, it allows developers expose a consistant interface to components without exposing that the implementation resides on the dsp instead of the application processor. This document describes the syntax and semantics of IDL.
+</p><h2>
+<a name="Relationship%20to%20OMG%20IDL"></a>Relationship to OMG IDL
+</h2><p>
+The IDL defined here is based on the <a href="http://www.omg.org/cgi-bin/doc?formal/08-01-04.pdf">OMG IDL specification</a> but differs in a few respects:
+</p><ul>
+<li>
+<p>
+All interface methods must have an IDL return a type equivalient to long. The value returned must be 0 if the method is successful, or an error code on failure. Standard error codes are defined in AEEStdErr.idl.
+</p><p>
+See <a href="#Return%20Values">Return Values</a> for details.
+</p>
+</li><li>
+<p>
+Interfaces may not directly inherit from more than one base <code>interface</code>.
+</p>
+</li><li>
+<p>
+The <code>rout</code> parameter modes are used instead of <code>out</code> and <code>inout</code> is unsupported. See <a href="#Bounded%20output%20parameters">Bounded output parameters</a> for details.
+</p>
+</li>
+</ul><h3>
+<a name="Bounded%20output%20parameters"></a>Bounded output parameters
+</h3><p>
+OMG IDL supports three parameter attributes or modes which specify the direction the data flows: in (caller to server), out (server to caller), and inout (both directions). In OMG IDL, the semantics of out and inout is such that the size of a variable-length parameter cannot be known to or bounded by the caller at run time. However, standard practice is for all buffers to be bounded by the caller.
+</p><p>
+The IDL compiler supports output semantics through the IDL keyword, <code>rout</code> which is the bounded analog of out. The &#8220;r&#8221; in each keyword refers to the UNIX read() system call, where the caller provides a buffer and specifies at run time the maximum amount of data to be read into the buffer.
+</p><p>
+For fixed-size types, there is no difference between the traditional out and the new <code>rout</code>, as the size is statically known and therefore need not be specified by the caller. However, for variable-size types, such as sequences and strings, <code>rout</code> and implies an upper bound that is passed as an in parameter from client to server. For example, read() could be defined in IDL as follows:
+</p><pre><span style="color: blue">typedef</span> <span style="color: blue">sequence</span>&lt;<span style="color: blue">octet</span>&gt; SeqOctet;
+<span style="color: blue">long</span> read(<span style="color: blue">rout</span> SeqOctet buffer);
+</pre><p>
+In IDL, only a single <code>rout</code> parameter is needed, as it implies the caller providing to the server the maximum number of octets to return. See <a href="#rout%20parameter%20of%20a%20method">rout parameter of a method</a> for details on how this parameter would be mapped to the remote bindings.
+</p><p>
+Note that the traditional OMG IDL out and inout parameter modes are not currently supported by the compiler. Support for out and inout may be added in the future.
+</p><h3>
+<a name="NULL%20Argument%20Semantics"></a>NULL Argument Semantics
+</h3><p>
+These are the current rules for when <code>NULL</code> can be passed for arguments
+</p><p>
+<code>in</code> parameters:
+</p><ul>
+<li>
+<p>
+Sequence pointers may be <code>NULL</code> when the associated length is 0.
+</p>
+</li>
+</ul><p>
+<code>rout</code> parameters:
+</p><ul>
+<li>
+<p>
+Sequence, string, and wstring pointers may be <code>NULL</code> when the associated length is 0.
+</p>
+</li>
+</ul><h3>
+<a name="Return%20Values"></a>Return Values
+</h3><ul>
+<li>
+<p>
+must be equivalent type to long, such as AEEResult from AEEStdDef.idl
+</p>
+</li><li>
+<p>
+value 0 indicates success
+</p>
+</li><li>
+<p>
+a non zero code indicates a failure. Any data in rout parameters is not propagated back.
+</p>
+</li>
+</ul><h3>
+<a name="Wire%20Format%20Limitations"></a>Wire Format Limitations
+</h3><p>
+<code>in</code> parameters:
+</p><ul>
+<li>
+<p>
+maximum of 255 in buffers. For example
+</p>
+</li>
+</ul><pre><span style="color: blue">typedef</span> <span style="color: blue">sequence</span>&lt;<span style="color: blue">octet</span>&gt; buf;
+<span style="color: blue">interface</span> foo
+{
+     <span style="color: blue">long</span> bar(<span style="color: blue">in</span> <span style="color: blue">sequence</span>&lt;buf&gt; bufs);
+};
+</pre><p>
+maps to C as
+</p><pre>
+<span style="color: blue">struct</span> __seq_unsigned_char {
+   <span style="color: blue">unsigned</span> <span style="color: blue">char</span>* data;
+   <span style="color: blue">int</span> dataLen;
+};
+<span style="color: blue">typedef</span> <span style="color: blue">struct</span> __seq_unsigned_char __seq_unsigned_char;
+<span style="color: blue">typedef</span> __seq_unsigned_char buf;
+<span style="color: blue">int</span> foo_bar(buf* bufs, <span style="color: blue">int</span> bufsLen);
+</pre><p>
+will fail for bufsLen &gt; 254. One input buffer is used to store the the length of the buffers. This limitation can be further restricted by the rpc implementation.
+</p><p>
+<code>rout</code> parameters:
+</p><ul>
+<li>
+<p>
+maximum of 255 rout buffers
+</p>
+</li>
+</ul><p>
+<code>in</code> handles:
+</p><ul>
+<li>
+<p>
+maximum of 15 in dmahandle handles
+</p>
+</li>
+</ul><p>
+<code>rout</code> handles:
+</p><ul>
+<li>
+<p>
+maximum of 15 rout dmahandle handles
+</p>
+</li>
+</ul><h2>
+<a name="Remote%20Handles"></a>Remote Handles
+</h2><p>
+As of version 1.0.35.x the idl compiler supports interfaces derived from <code>remote_handle64</code> which allow the user to maintain a context handle for the opened module.
+</p><pre><span style="color: blue">#include</span> <span style="color: darkred">"remote.idl"</span>  <span style="color: darkgreen">// Needed for remote_handle64 interface</span>
+
+<span style="color: blue">interface</span> calculator : remote_handle64 {
+
+  <span style="color: darkgreen">// Compute a*b, where a and b are both complex</span>
+  <span style="color: blue">long</span> fmult(<span style="color: blue">in</span> <span style="color: blue">float</span> a, <span style="color: blue">in</span> <span style="color: blue">float</span> b, <span style="color: blue">rout</span> <span style="color: blue">float</span> result);
+};
+</pre><p>
+This is a special interface that tells the compiler to do the following
+</p><ul>
+<li>
+<p>
+add a <code>remote_handle64</code> argument as the first argument of every function in the interface
+</p>
+</li><li>
+<p>
+add an &lt;interface&gt;_open method
+</p>
+</li><li>
+<p>
+add an &lt;interface&gt;_close method
+</p>
+</li><li>
+<p>
+add a <code>#define &lt;interface&gt;_URI</code> as a base URI that can be used to open interface instances
+</p>
+</li>
+</ul><p>
+For example:
+</p><pre><span style="color: darkgreen">/**
+ * Opens the handle in the specified domain.  If this is the first
+ * handle, this creates the session.  Typically this means opening
+ * the device, aka open("/dev/adsprpc-smd"), then calling ioctl
+ * device APIs to create a process on the DSP to execute our code in,
+ * then asking that process to dlopen the .so and dlsym the skel function.
+ *
+ * @param uri, &lt;interface&gt;_URI"&amp;_dom=aDSP"
+ *    &lt;interface&gt;_URI is a QAIC generated uri, or
+ *    "file:///&lt;sofilename&gt;?&lt;interface&gt;_skel_handle_invoke&amp;_modver=1.0"
+ *    If the _dom parameter is not present, _dom=DEFAULT is assumed
+ *    but not forwarded.
+ *    Reserved uri keys:
+ *      [0]: first unamed argument is the skel invoke function
+ *      _dom: execution domain name, _dom=mDSP/aDSP/DEFAULT
+ *      _modver: module version, _modver=1.0
+ *      _*: any other key name starting with an _ is reserved
+ *    Unknown uri keys/values are forwarded as is.
+ * @param h, resulting handle
+ * @retval, 0 on success
+ */</span>
+
+<span style="color: blue">int</span> calculator_open(<span style="color: blue">const</span> <span style="color: blue">char</span> *uri, remote_handle64 *h);
+
+<span style="color: darkgreen">/** 
+ * Closes a handle.  If this is the last handle to close, the session
+ * is closed as well, releasing all the allocated resources.
+
+ * @param h, the handle to close
+ * @retval, 0 on success, should always succeed
+ */</span>
+<span style="color: blue">int</span> calculator_close(remote_handle64 h);
+
+<span style="color: blue">long</span> calculator_fmult(remote_handle64 h, <span style="color: blue">const</span> <span style="color: blue">float</span> a, <span style="color: blue">const</span> <span style="color: blue">float</span> b, <span style="color: blue">float</span> *result);
+
+<span style="color: blue">#ifndef</span> calculator_URI
+<span style="color: blue">#define</span> calculator_URI <span style="color: darkred">"file:///libcalculator_skel.so?calculator_skel_handle_invoke&amp;_modver=1.0"</span>
+<span style="color: blue">#endif</span>
+</pre><p>
+Users can then open multiple instaces of the handle via
+</p><pre>remote_handle64 h1 = -1, h2 = -1;
+
+<span style="color: darkgreen">//open in the default compute domain</span>
+assert(0 == calculator_open(calculator_URI, &amp;h1));
+<span style="color: darkgreen">//upon success the value of h can be anything except -1</span>
+assert(h1 != -1);
+
+<span style="color: darkgreen">//open the same module on a specific domain</span>
+<span style="color: darkgreen">//REMOTE_DOM_MDSP and additional supported domains are defined in "remote.h"</span>
+assert(0 == calculator_open(calculator_URI REMOTE_DOM_MDSP, &amp;h2));
+<span style="color: darkgreen">//upon success the value of h2 can be anything except -1</span>
+assert(h2 != -1);
+
+<span style="color: darkgreen">//h1 and h2 are not equal to each other</span>
+assert(h1 != h2);
+<span style="color: darkgreen">//values for h1 and h2 are generated by the transport layer</span>
+</pre><p>
+Implementors of DSP modules can return any value for the remote handle
+</p><pre><span style="color: blue">int</span> calculator_open(<span style="color: blue">const</span> <span style="color: blue">char</span> *uri, remote_handle64 *h) {
+   <span style="color: darkgreen">//this value will NOT be returned to the caller</span>
+   *h = (remote_handle64)0xdeadc0de;
+   <span style="color: darkgreen">//but this value will be passed to close when the handle is closed</span>
+   <span style="color: darkgreen">//so its save store a pointer in the handle </span>
+   <span style="color: darkgreen">//*h = (remote_handle64)malloc(100);</span>
+   <span style="color: blue">return</span> 0;
+}
+<span style="color: blue">int</span> calculator_close(remote_handle64 h) {
+   <span style="color: darkgreen">//The value returned by open will be presented to the module on close</span>
+   assert(h == (remote_handle64)0xdead0cde);
+   <span style="color: blue">return</span> 0;
+}
+</pre><p>
+Implementors should not expect that value to be returned to the user from the DSP. A unique value to track module instances will be generated by the transport layer and presented to the user.
+</p><h2>
+<a name="Domains"></a>Domains
+</h2><p>
+Interfaces deriving from <code>remote_handle64</code> will allow the user explicit control over the module lifetime. A compute domain will be open as long as there is at least 1 handle reference to it.
+</p><pre>remote_handle64 h1 = -1, h2 = -1;
+<span style="color: blue">float</span> c1,c2,result;
+<span style="color: darkgreen">//open h1, if h1 is the first handle for the default domain it will instantiate the domain</span>
+assert(0 == calculator_open(calculator_URI, &amp;h1));
+
+<span style="color: darkgreen">//open h2, the domain is still open</span>
+assert(0 == calculator_open(calculator_URI, &amp;h2));
+
+<span style="color: darkgreen">//close h1, since we also opened h2, the domain is still open</span>
+assert(0 == calculator_close(h1));
+
+<span style="color: darkgreen">//calls using h1 will fail</span>
+assert(0 != calculator_fmult(h1, &amp;c1, &amp;c2, &amp;result));
+
+<span style="color: darkgreen">//calls using h2 will pass</span>
+assert(0 == calculator_fmult(h1, &amp;c1, &amp;c2, &amp;result));
+
+<span style="color: darkgreen">//close h2, this is the last handle to the domain</span>
+<span style="color: darkgreen">//it will shutdown the domain on the dsp side and free all its resources</span>
+(<span style="color: blue">void</span>)calculator_close(h2);
+</pre><h4>
+<a name="Domain%20restart"></a>Domain restart
+</h4><p>
+Since users have explicit control over the handle lifetimes they can now detect errors and re-open the handle.
+</p><pre>assert(0 == calculator_open(calculator_URI, &amp;h1));
+<span style="color: blue">if</span>(0 != calculator_fmult(h1, &amp;c1, &amp;c2, &amp;result)) {
+   <span style="color: darkgreen">//got an error, maybe the DSP is restarted</span>
+   (<span style="color: blue">void</span>)calculator_close(h1);
+   h1 = -1;
+   assert(0 == calculator_open(calculator_URI, &amp;h1));
+
+   <span style="color: darkgreen">//try fmult again</span>
+   assert(0 == calculator_fmult(h1, &amp;c1, &amp;c2, &amp;result));
+}
+</pre><p>
+Typically once a domain is killed methods should return <code>AEE_ENOSUCH</code> defined in <code>AEEStdErr.h</code>.
+</p><h4>
+<a name="Domain%20Routing"></a>Domain Routing
+</h4><p>
+Users can explicitly specify the domain on which they need to execute their code. The session on particular domain is opened by appending static string &#8220;&amp;_dom=(domain name)&#8221; to the autogenerated interface URI.
+</p><pre>remote_handle mdsp, adsp;
+assert(!calculator_open(calculator_URI <span style="color: darkred">"&amp;_dom=mdsp"</span>, &amp;mdsp));
+assert(!calculator_open(calculator_URI <span style="color: darkred">"&amp;_dom=adsp"</span>, &amp;adsp));
+assert(!calculator_sum(mdsp, buf, bufLen, &amp;val));
+assert(!calculator_sum(adsp, buf, bufLen, &amp;val));
+<span style="color: darkgreen">//if this is the last handle using aDSP in this process, the remote PD on aDSP is killed</span>
+assert(!calculator_close(adsp));
+<span style="color: darkgreen">//if this is the last handle using mDSP in this process, the remote PD on mDSP is killed</span>
+assert(!calculator_close(mdsp));
+</pre><p>
+Here we handle aDSP and mDSP domains by providing a libadsprpc.so and libmdsprpc.so which developers link against when they build their stubs. Similarly for other domains like cDSP, sDSP etc.
+</p><h2>
+<a name="Sample%20IDL"></a>Sample IDL
+</h2><p>
+A sample IDL file is shown below to illustrate the use of common IDL constructs.
+</p><pre><span style="color: blue">#include</span> <span style="color: darkred">"AEEStdDef.idl"</span>  <span style="color: darkgreen">// Needed for 'AEEResult'</span>
+
+<span style="color: blue">interface</span> calculator
+{
+  <span style="color: darkgreen">// This structure is specific to this interface, so we scope it within the</span>
+  <span style="color: darkgreen">// interface to avoid pollution of the global namespace.</span>
+  <span style="color: blue">struct</span> Complex
+  {
+     <span style="color: blue">float</span> real; <span style="color: darkgreen">// Real part</span>
+     <span style="color: blue">float</span> imag; <span style="color: darkgreen">// Imaginary part</span>
+  };
+
+  <span style="color: darkgreen">// A Vector, consisting of 0 or more Numbers.</span>
+  <span style="color: blue">typedef</span> <span style="color: blue">sequence</span>&lt;Complex&gt; Vector;
+
+  <span style="color: darkgreen">// Compute a*b, where a and b are both complex</span>
+  AEEResult Mult(<span style="color: blue">in</span> Complex a, <span style="color: blue">in</span> Complex b, <span style="color: blue">rout</span> Complex result);
+
+  <span style="color: darkgreen">// Add a and b.</span>
+  AEEResult Add(<span style="color: blue">in</span> Complex a, <span style="color: blue">in</span> Complex b, <span style="color: blue">rout</span> Complex result);
+
+  <span style="color: darkgreen">// Compute the sum of all elements in a vector</span>
+  AEEResult Sum(<span style="color: blue">in</span> Vector vec, <span style="color: blue">rout</span> Complex result);
+
+  <span style="color: darkgreen">// Compute the product of all elements in a vector</span>
+  AEEResult Product(<span style="color: blue">in</span> Vector vec, <span style="color: blue">rout</span> Complex result);
+
+};
+</pre><h2>
+<a name="Mapping%20for%20the%20C%20programming%20language"></a>Mapping for the C programming language
+</h2><p>
+This section details the mapping of IDL constructs to remoteable shared objects via the <code>C</code> programming language.
+</p><h3>
+<a name="Basic%20built-in%20types"></a>Basic built-in types
+</h3><p>
+The following table lists the mapping of IDL basic types to <code>C</code>.
+</p><table><tr><th><p>
+IDL Type
+</p></th><th><p>
+C Type
+</p></th></tr><tr><td><p>
+octet, uint8
+</p></td><td><p>
+unsigned char
+</p></td></tr><tr><td><p>
+char, int8
+</p></td><td><p>
+char
+</p></td></tr><tr><td><p>
+wchar
+</p></td><td><p>
+_wchar_t
+</p></td></tr><tr><td><p>
+short, int16
+</p></td><td><p>
+short int
+</p></td></tr><tr><td><p>
+long, int32
+</p></td><td><p>
+int
+</p></td></tr><tr><td><p>
+long long, int64
+</p></td><td><p>
+long long (int64)
+</p></td></tr><tr><td><p>
+unsigned short, uint16
+</p></td><td><p>
+unsigned short int
+</p></td></tr><tr><td><p>
+unsigned long, uint32
+</p></td><td><p>
+unsigned int
+</p></td></tr><tr><td><p>
+unsigned long long, uint64
+</p></td><td><p>
+unsigned long long (uint64)
+</p></td></tr><tr><td><p>
+int8_t
+</p></td><td><p>
+int8_t
+</p></td></tr><tr><td><p>
+uint8_t
+</p></td><td><p>
+uint8_t
+</p></td></tr><tr><td><p>
+int16_t
+</p></td><td><p>
+int16_t
+</p></td></tr><tr><td><p>
+uint16_t
+</p></td><td><p>
+uint16_t
+</p></td></tr><tr><td><p>
+int32_t
+</p></td><td><p>
+int32_t
+</p></td></tr><tr><td><p>
+uint32_t
+</p></td><td><p>
+uint32_t
+</p></td></tr><tr><td><p>
+int64_t
+</p></td><td><p>
+int64_t
+</p></td></tr><tr><td><p>
+uint64_t
+</p></td><td><p>
+uint64_t
+</p></td></tr><tr><td><p>
+float
+</p></td><td><p>
+float
+</p></td></tr><tr><td><p>
+double
+</p></td><td><p>
+double
+</p></td></tr><tr><td><p>
+boolean
+</p></td><td><p>
+boolean
+</p></td></tr><tr><td><p>
+dmahandle
+</p></td><td><p>
+unsigned long long (uint64), unsigned int, unsigned int
+</p></td></tr></table><p>
+Due to compiler differences in how 64-bit integers are handled, <code>long</code> <code>long</code> and unsigned <code>long</code> <code>long</code> are mapped to _int64_t and unsigned _int64_t, respectively, where _int64_t is <code>#defined</code> to be either <code>long</code> <code>long</code> or __int64 depending on the compiler.
+</p><p>
+Definitions for _wchar_t can be found in AEEStdDef.h
+</p><p>
+The dmahandle type takes in 3 parameters: handle to the buffer, offset into the buffer and size of the buffer.
+</p><h4>
+<a name="in%20parameter%20of%20a%20method"></a>in parameter of a method
+</h4><p>
+Basic types are passed by value as in parameters of a method.
+</p><table><tr><th><div class="indent"><p>
+IDL
+</p></div></th><th><div class="indent"><p>
+C
+</p></div></th></tr><tr><td><pre><span style="color: blue">interface</span> Basic {                                      
+   AEEResult BasicIn(<span style="color: blue">in</span> <span style="color: blue">octet</span> arg1,                    
+                     <span style="color: blue">in</span> <span style="color: blue">char</span> arg2,                     
+                     <span style="color: blue">in</span> wchar arg3,                    
+                     <span style="color: blue">in</span> <span style="color: blue">short</span> arg4,                    
+                     <span style="color: blue">in</span> <span style="color: blue">long</span> arg5,                     
+                     <span style="color: blue">in</span> <span style="color: blue">long</span> <span style="color: blue">long</span> arg6,                
+                     <span style="color: blue">in</span> <span style="color: blue">unsigned</span> <span style="color: blue">short</span> arg7,           
+                     <span style="color: blue">in</span> <span style="color: blue">unsigned</span> <span style="color: blue">long</span> arg8,            
+                     <span style="color: blue">in</span> <span style="color: blue">unsigned</span> <span style="color: blue">long</span> <span style="color: blue">long</span> arg9,       
+                     <span style="color: blue">in</span> <span style="color: blue">float</span> arg10,                   
+                     <span style="color: blue">in</span> <span style="color: blue">double</span> arg11,                  
+                     <span style="color: blue">in</span> <span style="color: blue">boolean</span> arg12,                 
+                     <span style="color: blue">in</span> uint8_t arg13,                 
+                     <span style="color: blue">in</span> int16_t arg14,                 
+                     <span style="color: blue">in</span> uint32_t arg15,                
+                     <span style="color: blue">in</span> int64_t arg16);                
+};                                                     
+</pre></td><td><pre>AEEResult Basic_BasicIn(<span style="color: blue">unsigned</span> <span style="color: blue">char</span> arg1,       
+                        <span style="color: blue">char</span> arg2,                
+                        _wchar_t arg3,            
+                        <span style="color: blue">short</span> arg4,               
+                        <span style="color: blue">int</span> arg5,                 
+                        int64 arg6,               
+                        <span style="color: blue">unsigned</span> <span style="color: blue">short</span> arg7,      
+                        <span style="color: blue">unsigned</span> <span style="color: blue">int</span> arg8,        
+                        uint64 arg9,              
+                        <span style="color: blue">float</span> arg10,              
+                        <span style="color: blue">double</span> arg11,             
+                        boolean arg12,            
+                        uint8_t arg13,            
+                        int16_t arg14,            
+                        uint32_t arg15,           
+                        int64_t arg16);           
+</pre></td></tr></table><h4>
+<a name="rout%20parameter%20of%20a%20method"></a>rout parameter of a method
+</h4><p>
+Basic types are passed by reference as a pointer in the <code>C</code> language when used as rout parameters of a method.
+</p><table><tr><th><div class="indent"><p>
+IDL
+</p></div></th><th><div class="indent"><p>
+C
+</p></div></th></tr><tr><td><pre><span style="color: blue">interface</span> Basic {                                      
+   AEEResult BasicROut(<span style="color: blue">rout</span> <span style="color: blue">octet</span> arg1,                
+                       <span style="color: blue">rout</span> <span style="color: blue">char</span> arg2,                 
+                       <span style="color: blue">rout</span> wchar arg3,                
+                       <span style="color: blue">rout</span> <span style="color: blue">short</span> arg4,                
+                       <span style="color: blue">rout</span> <span style="color: blue">long</span> arg5,                 
+                       <span style="color: blue">rout</span> <span style="color: blue">long</span> <span style="color: blue">long</span> arg6,            
+                       <span style="color: blue">rout</span> <span style="color: blue">unsigned</span> <span style="color: blue">short</span> arg7,       
+                       <span style="color: blue">rout</span> <span style="color: blue">unsigned</span> <span style="color: blue">long</span> arg8,        
+                       <span style="color: blue">rout</span> <span style="color: blue">unsigned</span> <span style="color: blue">long</span> <span style="color: blue">long</span> arg9,   
+                       <span style="color: blue">rout</span> <span style="color: blue">float</span> arg10,               
+                       <span style="color: blue">rout</span> <span style="color: blue">double</span> arg11,              
+                       <span style="color: blue">rout</span> <span style="color: blue">boolean</span> arg12,             
+                       <span style="color: blue">rout</span> uint8_t arg13,             
+                       <span style="color: blue">rout</span> int16_t arg14,             
+                       <span style="color: blue">rout</span> uint32_t arg15,            
+                       <span style="color: blue">rout</span> int64_t arg16);            
+};                                                     
+</pre></td><td><pre>
+AEEResult Basic_BasicROut(<span style="color: blue">unsigned</span> <span style="color: blue">char</span>* arg1,    
+                         <span style="color: blue">char</span>* arg2,              
+                         _wchar_t* arg3,          
+                         <span style="color: blue">short</span>* arg4,             
+                         <span style="color: blue">int</span>* arg5,               
+                         int64* arg6,             
+                         <span style="color: blue">unsigned</span> <span style="color: blue">short</span>* arg7,    
+                         <span style="color: blue">unsigned</span> <span style="color: blue">int</span>* arg8,      
+                         uint64* arg9,            
+                         <span style="color: blue">float</span>* arg10,            
+                         <span style="color: blue">double</span>* arg11,           
+                         boolean* arg12,          
+                         uint8_t* arg13,          
+                         int16_t* arg14,          
+                         uint32_t* arg15,         
+                         int64_t* arg16);         
+</pre></td></tr></table><h4>
+<a name="Member%20of%20a%20structure"></a>Member of a structure
+</h4><p>
+Basic types appear as values when used as members of a structure.
+</p><table><tr><th><div class="indent"><p>
+IDL
+</p></div></th><th><div class="indent"><p>
+C
+</p></div></th></tr><tr><td><pre><span style="color: blue">struct</span> BasicStruct {                    
+   <span style="color: blue">octet</span> mem1;                          
+   <span style="color: blue">char</span> mem2;                           
+   wchar mem3;                          
+   <span style="color: blue">short</span> mem4;                          
+   <span style="color: blue">long</span> mem5;                           
+   <span style="color: blue">long</span> <span style="color: blue">long</span> mem6;                      
+   <span style="color: blue">unsigned</span> <span style="color: blue">short</span> mem7;                 
+   <span style="color: blue">unsigned</span> <span style="color: blue">long</span> mem8;                  
+   <span style="color: blue">unsigned</span> <span style="color: blue">long</span> <span style="color: blue">long</span> mem9;             
+   <span style="color: blue">float</span> mem10;                         
+   <span style="color: blue">double</span> mem11;                        
+   <span style="color: blue">boolean</span> mem12;                       
+   uint8_t mem13;                       
+   int16_t mem14,                       
+   uint32_t mem15,                      
+   int64_t mem16);                      
+};                                      
+</pre></td><td><pre><span style="color: blue">typedef</span> <span style="color: blue">struct</span> BasicStruct BasicStruct; 
+<span style="color: blue">struct</span> BasicStruct {                    
+   <span style="color: blue">unsigned</span> <span style="color: blue">char</span> mem1;                  
+   <span style="color: blue">char</span> mem2;                           
+   _wchar_t mem3;                       
+   <span style="color: blue">short</span> mem4;                          
+   <span style="color: blue">int</span> mem5;                            
+   int64 mem6;                          
+   <span style="color: blue">unsigned</span> <span style="color: blue">short</span> mem7;                 
+   <span style="color: blue">unsigned</span> <span style="color: blue">int</span> mem8;                   
+   uint64 mem9;                         
+   <span style="color: blue">float</span> mem10;                         
+   <span style="color: blue">double</span> mem11;                        
+   boolean mem12;                       
+   uint8_t mem13;                       
+   int16_t mem14;                       
+   uint32_t mem15;                      
+   int64_t mem16;                       
+};                                      
+</pre></td></tr></table><h3>
+<a name="Constant%20declarations"></a>Constant declarations
+</h3><p>
+Constant declarations in IDL are mapped to <code>#defines</code> in <code>C</code>, with expressions evaluated.
+</p><table><tr><th><div class="indent"><p>
+IDL
+</p></div></th><th><div class="indent"><p>
+C
+</p></div></th></tr><tr><td><pre><span style="color: blue">const</span> <span style="color: blue">short</span> MAX_TRIES = 5 + 10 - 4; 
+</pre></td><td><pre><span style="color: blue">#define</span> MAX_TRIES 11                
+</pre></td></tr></table><h3>
+<a name="Identifiers"></a>Identifiers
+</h3><p>
+As with <code>C++</code>, it is recommended that <code>C</code> and <code>C++</code> keywords not be used as identifiers in IDL. However, if a keyword is used as an identifier, it will be prefixed with <code>_cxx_</code> in the generated output.
+</p><table><tr><th><div class="indent"><p>
+IDL
+</p></div></th><th><div class="indent"><p>
+C
+</p></div></th></tr><tr><td><pre><span style="color: blue">const</span> <span style="color: blue">short</span> break = 3;             
+</pre></td><td><pre><span style="color: blue">#define</span> _cxx_break 3                
+</pre></td></tr></table><h3>
+<a name="Module"></a>Module
+</h3><p>
+Due to the lack of a namespace-like construct in <code>C</code>, IDL modules are mapped by prepending each enclosed identifier with the module name, with an underscore separating the name of the module and the original identifier. Modules can nest, but <code>interface</code> methods, structure members, and union members do not change, since their names are local to that <code>interface</code>, struct, or union.
+</p><table><tr><th><div class="indent"><p>
+IDL
+</p></div></th><th><div class="indent"><p>
+C
+</p></div></th></tr><tr><td><pre><span style="color: blue">module</span> foo                         
+{                                  
+  <span style="color: blue">module</span> bar                       
+  {                                
+     <span style="color: blue">typedef</span> <span style="color: blue">long</span> int32;           
+  };                               
+};                                 
+</pre></td><td><pre><span style="color: blue">typedef</span> <span style="color: blue">int</span> foo_bar_int32;          
+</pre></td></tr></table><h3>
+<a name="Interface"></a>Interface
+</h3><p>
+Types and functions declared within an <code>interface</code> must be scoped within that <code>interface</code>, any such types are prepended with the name of the enclosing <code>interface</code> and an underscore, as is done with modules. If the <code>interface</code> is itself within a module, then any types within the <code>interface</code> will be prepended with the fully-qualified name of the <code>interface</code> &#8212; that is, the names of all enclosing modules, separated by underscores, along with the name of the <code>interface</code>. Any types defined within an <code>interface</code> will be extracted and defined before the corresponding structure in the mapping.
+</p><table><tr><th><div class="indent"><p>
+IDL
+</p></div></th><th><div class="indent"><p>
+C
+</p></div></th></tr><tr><td><pre><span style="color: blue">interface</span> IFoo                     
+{                                  
+  <span style="color: blue">struct</span> inner                     
+  {                                
+   <span style="color: darkgreen">/* ... */</span>                       
+  };                               
+
+  <span style="color: blue">long</span> process(<span style="color: blue">in</span> <span style="color: blue">short</span> a);        
+};                                 
+</pre></td><td><pre><span style="color: blue">typedef</span> <span style="color: blue">struct</span> IFoo_inner          
+{                                  
+  <span style="color: darkgreen">/* ... */</span>                        
+} IFoo_inner;                      
+
+<span style="color: blue">int</span> IFoo_process(<span style="color: blue">short</span> <span style="color: blue">int</span> a);     
+</pre></td></tr></table><h3>
+<a name="Methods"></a>Methods
+</h3><p>
+Each method of an <code>interface</code> is mapped as a function. See the <a href="#Interface">Interface</a> description.
+</p><h4>
+<a name="in%20parameter"></a><code>in</code> parameter
+</h4><p>
+Memory for the argument is allocated by the caller. These arguments are mapped as <code>const</code> unless the type is an <code>interface</code>. Otherwise, the user of the <code>interface</code> will be unable to invoke any of its methods since they are not <code>const</code> functions. All user defined types (struct, union) are passed as pointers to the defined type. Note that no <code>in</code> pointer may be <code>NULL</code>.
+</p><p>
+An in parameter example is shown below.
+</p><table><tr><th><div class="indent"><p>
+IDL
+</p></div></th><th><div class="indent"><p>
+C
+</p></div></th></tr><tr><td><pre><span style="color: blue">struct</span> point                       
+{                                  
+  <span style="color: blue">short</span> x;                         
+  <span style="color: blue">float</span> y;                         
+};                                 
+
+<span style="color: blue">interface</span> ITest                    
+{                                  
+};                                 
+
+<span style="color: blue">interface</span> IFoo                     
+{                                  
+
+  <span style="color: blue">long</span> process(<span style="color: blue">in</span> <span style="color: blue">short</span> id,        
+   <span style="color: blue">in</span> <span style="color: blue">string</span> name,                 
+   <span style="color: blue">in</span> point origin);               
+};                                 
+</pre></td><td><pre><span style="color: blue">typedef</span> <span style="color: blue">struct</span> point                
+{                                   
+  <span style="color: blue">short</span> <span style="color: blue">int</span> x;                      
+  <span style="color: blue">float</span> y;                          
+} point;                            
+
+<span style="color: blue">int</span> IFoo_process(<span style="color: blue">short</span> <span style="color: blue">int</span> id,      
+   <span style="color: blue">const</span> <span style="color: blue">char</span>* name,                
+   <span style="color: blue">const</span> point* origin);            
+</pre></td></tr></table><h4>
+<a name="rout%20parameter"></a><code>rout</code> parameter
+</h4><p>
+Memory for the argument is allocated by the caller. All parameters are passed as pointers to the defined type. For basic built-in types (<a href="#Basic%20built-in%20types">Basic built-in types</a>), Note that <code>sequence</code>, <code>string</code> and <code>wstring</code> parameters expand to two parameters in C: a pointer, and a size. For details of the mapping of strings and wstrings, see <a href="#Basic%20built-in%20types">Basic built-in types</a>.
+</p><table><tr><th><div class="indent"><p>
+IDL
+</p></div></th><th><div class="indent"><p>
+C
+</p></div></th></tr><tr><td><pre><span style="color: blue">interface</span> IFoo                     
+{                                  
+   <span style="color: blue">long</span> process(<span style="color: blue">rout</span> <span style="color: blue">short</span> id,     
+      <span style="color: blue">rout</span> <span style="color: blue">string</span> name,            
+      <span style="color: blue">rout</span> point origin);          
+};                                 
+</pre></td><td><pre><span style="color: blue">int</span> IFoo_process(<span style="color: blue">short</span> <span style="color: blue">int</span>* id,      
+     <span style="color: blue">char</span>* name,                     
+     <span style="color: blue">int</span> nameLen,                    
+     point* origin);                 
+</pre></td></tr></table><h3>
+<a name="Structure"></a>Structure
+</h3><p>
+IDL structures are mapped to <code>C</code> structures, with a typedef to allow the name of the structure to be used as a type. Note that types declared within a structure will have the name of the enclosing structure prepended to their names, as is done with definitions within modules and interfaces.
+</p><table><tr><th><div class="indent"><p>
+IDL
+</p></div></th><th><div class="indent"><p>
+C
+</p></div></th></tr><tr><td><pre><span style="color: blue">struct</span> extended_point             
+{                                 
+  <span style="color: blue">short</span> x;                        
+  <span style="color: blue">float</span> y;                        
+};                                
+</pre></td><td><pre><span style="color: blue">typedef</span> <span style="color: blue">struct</span> extended_point       
+{                                   
+  <span style="color: blue">short</span> <span style="color: blue">int</span> x;                      
+  <span style="color: blue">float</span> y;                          
+} extended_point;                   
+</pre></td></tr></table><h3>
+<a name="Enum"></a>Enum
+</h3><p>
+IDL enumerated types are mapped to <code>C</code> enumerated types, with a typedef to allow the name of the enum to be used as a type. A placeholder enumerator is added to each enum to ensure binary compatibility across compilers.
+</p><table><tr><th><div class="indent"><p>
+IDL
+</p></div></th><th><div class="indent"><p>
+C
+</p></div></th></tr><tr><td><pre><span style="color: blue">enum</span> color                         
+{                                  
+  RED,                             
+  ORANGE,                          
+  YELLOW,                          
+  GREEN,                           
+  BLUE                             
+};                                 
+</pre></td><td><pre><span style="color: blue">typedef</span> <span style="color: blue">enum</span> color                      
+{                                       
+  RED,                                  
+  ORANGE,                               
+  YELLOW,                               
+  GREEN,                                
+  BLUE,                                 
+  _32BIT_PLACEHOLDER_color = 0x7fffffff 
+} color;                                
+</pre></td></tr></table><p>
+The starting value for an <code>enum</code> is always 0.
+</p><h3>
+<a name="Union"></a>Union
+</h3><p>
+Unions are not supported at this time.
+</p><h3>
+<a name="Array"></a>Array
+</h3><p>
+IDL arrays are mapped to <code>C</code> arrays.
+</p><table><tr><th><div class="indent"><p>
+IDL
+</p></div></th><th><div class="indent"><p>
+C
+</p></div></th></tr><tr><td><pre><span style="color: blue">struct</span> foo                         
+{                                  
+  <span style="color: blue">long</span> sum[2];                     
+};                                 
+</pre></td><td><pre><span style="color: blue">typedef</span> <span style="color: blue">struct</span> foo                  
+{                                   
+  <span style="color: blue">int</span> sum[2];                       
+} foo;                              
+</pre></td></tr></table><h3>
+<a name="Sequence"></a>Sequence
+</h3><p>
+For each sequence type <code>sequence&lt;T&gt;</code>, a corresponding structure __seq_T is generated with two members:
+</p><pre>T* data; 
+<span style="color: blue">int</span> dataLen;
+</pre><p>
+The <code>dataLen</code> member specifies the number of elements in the array <code>data</code>. Note that sequence lengths are always in terms of the number of elements in the sequence, not the number of bytes required to store the sequence.
+</p><p>
+Consider the following mapping example for a sequence of <code>long</code> integers.
+</p><table><tr><th><div class="indent"><p>
+IDL
+</p></div></th><th><div class="indent"><p>
+C
+</p></div></th></tr><tr><td><pre><span style="color: blue">typedef</span> <span style="color: blue">sequence</span>&lt;<span style="color: blue">long</span>&gt; seqlong;    
+</pre></td><td><pre><span style="color: blue">struct</span> __seq_int                    
+{                                   
+  <span style="color: blue">int</span>* data;                        
+  <span style="color: blue">int</span> dataLen;                      
+};                                  
+
+<span style="color: blue">typedef</span> __seq_int seqlong;          
+</pre></td></tr></table><p>
+This structure is used when constructing sequences of sequence types.
+</p><h4>
+<a name="_in%20parameter%20of%20a%20method"></a>in parameter of a method
+</h4><p>
+When a <code>sequence&lt;T&gt;</code> is specified as an <code>in</code> parameter of a method of an <code>interface</code>, the mapping generates two arguments (assuming the name of the declarator is <code>dcl</code>):
+</p><pre><span style="color: blue">const</span> T* dcl, <span style="color: blue">int</span> dclLen
+</pre><p>
+The second argument specifies the total number of elements of the array <code>dcl</code>. The <code>dcl</code> pointer must be valid unless <code>dclLen</code> is 0, in which case the pointer may be <code>NULL</code>. The memory for the array is allocated by the caller. If the type is an <code>interface</code>, the <code>const</code> is omitted. Otherwise, the user of the <code>interface</code> will be unable to invoke any of its methods since they are not <code>const</code> functions.
+</p><table><tr><th><div class="indent"><p>
+IDL
+</p></div></th><th><div class="indent"><p>
+C
+</p></div></th></tr><tr><td><pre><span style="color: blue">typedef</span> <span style="color: blue">sequence</span>&lt;<span style="color: blue">long</span>&gt; seqlong;    
+
+<span style="color: blue">interface</span> IFoo                     
+{                                  
+  <span style="color: blue">long</span> process(<span style="color: blue">in</span> seqlong sums);   
+};                                 
+</pre></td><td><pre><span style="color: darkgreen">// see seqlong above                </span>
+<span style="color: blue">int</span> IFoo_process(                   
+     <span style="color: blue">const</span> <span style="color: blue">int</span>* sums,               
+     <span style="color: blue">int</span> sumsLen);                  
+</pre></td></tr></table><h4>
+<a name="_rout%20parameter%20of%20a%20method"></a>rout parameter of a method
+</h4><p>
+When a <code>sequence&lt;T&gt;</code> is specified as an <code>rout</code> parameter of a method of an <code>interface</code>, the mapping generates two arguments (assuming the name of the declarator is <code>dcl</code>):
+</p><pre>T* dcl, <span style="color: blue">int</span> dclLen
+</pre><p>
+The second argument <code>dclLen</code> specifies the total number of elements that the array <code>dcl</code> can hold &#8212; that is, the number of elements worth of memory the caller has allocated). The <code>dcl</code> parameter must be valid unless <code>dclLen</code> is 0, in which case <code>dcl</code> may be <code>NULL</code>. Note that all memory, namely the <code>dcl</code> array, is allocated by the caller. An example of an <code>rout</code> sequence parameter is as follows.
+</p><table><tr><th><div class="indent"><p>
+IDL
+</p></div></th><th><div class="indent"><p>
+C
+</p></div></th></tr><tr><td><pre><span style="color: blue">typedef</span> <span style="color: blue">sequence</span>&lt;<span style="color: blue">long</span>&gt; seqlong;    
+
+<span style="color: blue">interface</span> IFoo                     
+{                                  
+  <span style="color: blue">long</span> process(<span style="color: blue">rout</span> seqlong sums); 
+};                                 
+</pre></td><td><pre><span style="color: darkgreen">// see seqlong above                </span>
+ <span style="color: blue">int</span> IFoo_process(                  
+      <span style="color: blue">int</span>* sums,                    
+      <span style="color: blue">int</span> sumsLen);                 
+</pre></td></tr></table><h4>
+<a name="_Member%20of%20a%20structure"></a>Member of a structure
+</h4><p>
+When a sequence is declared as a member of a structure, the declarator (assuming the name as <code>dcl</code>) is mapped as two members of the <code>C</code> struct:
+</p><pre>T* dcl;
+<span style="color: blue">int</span> dclLen;
+</pre><p>
+The <code>dclLen</code> member specifies the number of elements of the array <code>dcl</code>.
+</p><table><tr><th><div class="indent"><p>
+IDL
+</p></div></th><th><div class="indent"><p>
+C
+</p></div></th></tr><tr><td><pre><span style="color: blue">typedef</span> <span style="color: blue">sequence</span>&lt;<span style="color: blue">long</span>&gt; seqlong;    
+
+<span style="color: blue">struct</span> Atm                         
+{                                  
+  seqlong sums;                    
+};                                 
+</pre></td><td><pre><span style="color: darkgreen">// see seqlong above                </span>
+<span style="color: blue">typedef</span> <span style="color: blue">struct</span> Atm Atm;             
+<span style="color: blue">struct</span> Atm                          
+{                                   
+  <span style="color: blue">int</span>* sums;                        
+  <span style="color: blue">int</span> sumsLen;                      
+};                                  
+</pre></td></tr></table><h4>
+<a name="Within%20another%20sequence,%20or%20an%20array"></a>Within another sequence, or an array
+</h4><p>
+When a sequence is used within another sequence, or as part of an array, the structure generated for the sequence is used. In unions, the structure type itself is used, but within other sequences, a pointer to the structure type is used.
+</p><table><tr><th><div class="indent"><p>
+IDL
+</p></div></th><th><div class="indent"><p>
+C
+</p></div></th></tr><tr><td><pre><span style="color: blue">typedef</span> <span style="color: blue">sequence</span>&lt;<span style="color: blue">long</span>&gt; seqlong;    
+
+<span style="color: blue">typedef</span> <span style="color: blue">sequence</span>&lt;seqlong&gt; long2d;  
+
+<span style="color: blue">struct</span> s                           
+{                                  
+  seqlong five_sequences[5];       
+};                                 
+</pre></td><td><pre><span style="color: blue">struct</span> __seq_int                    
+{                                   
+  <span style="color: blue">int</span>* data;                        
+  <span style="color: blue">int</span> dataLen;                      
+};                                  
+
+
+<span style="color: blue">typedef</span> __seq_int seqlong;          
+
+<span style="color: blue">struct</span> __seq_seqlong                
+{                                   
+  seqlong* data;                    
+  <span style="color: blue">int</span> dataLen;                      
+};                                  
+
+<span style="color: blue">typedef</span> __seq_seqlong long2d;       
+
+<span style="color: blue">typedef</span> <span style="color: blue">struct</span> s s;                 
+
+<span style="color: blue">struct</span> s                            
+{                                   
+  seqlong five_sequences[5];        
+};                                  
+</pre></td></tr></table><h3>
+<a name="string%20and%20wstring"></a>string and wstring
+</h3><p>
+The IDL string type is mapped as <code>char*</code>, and <code>wstring</code> as <code>_wchar_t*</code> (where <code>_wchar_t</code> is typedef-ed to <code>unsigned short</code>). When used anywhere other than an <code>in</code> parameter, the pointer is accompanied by a size, which allows the caller to specify the number of characters (<code>char</code> for <code>string</code>, <code>_wchar_t</code> for <code>wstring</code>) allocated for the string or wstring. This is the length of the buffer in characters, not the length of the string &#8212; since strings are null-terminated in <code>C</code>, the length of the string is computable. All length associated with a string or wstring include the null-terminator.
+</p><p>
+Note: In this section, characters should be interpreted as meaning one-byte chars for string types, and a two-byte _wchar_ts for wstring types. The term &#8220;character&#8221; is not used here in the lexical sense &#8212; when storing text, character set and encoding considerations are left to the application, and it is therefore possible for a lexical character to require more than one IDL character (non-zero byte) to represent it.
+</p><h4>
+<a name="__in%20parameter%20of%20a%20method"></a>in parameter of a method
+</h4><p>
+<code>string</code> is mapped as <code>const char*</code> and <code>wstring</code> as <code>const _wchar_t*</code>.
+</p><table><tr><th><div class="indent"><p>
+IDL
+</p></div></th><th><div class="indent"><p>
+C
+</p></div></th></tr><tr><td><pre><span style="color: blue">interface</span> IFoo                     
+{                                  
+  <span style="color: blue">long</span> process(<span style="color: blue">in</span> <span style="color: blue">string</span> name);    
+};                                 
+</pre></td><td><pre>
+
+<span style="color: blue">int</span> IFoo_process(<span style="color: blue">const</span> <span style="color: blue">char</span>* name);              
+</pre></td></tr><tr><td><pre><span style="color: blue">interface</span> IFoo                     
+{                                  
+  <span style="color: blue">long</span> process(<span style="color: blue">in</span> <span style="color: blue">wstring</span> name);   
+};                                 
+</pre></td><td><pre>
+
+<span style="color: blue">int</span> IFoo_process(<span style="color: blue">const</span> _wchar_t* name);          
+</pre></td></tr></table><h4>
+<a name="__rout%20parameter%20of%20a%20method"></a>rout parameter of a method
+</h4><p>
+The caller must provide a valid buffer, <code>dcl</code>, which can hold up to <code>dclLen</code> characters (including the null terminator). However, when <code>dclLen</code> is 0, <code>dcl</code> may be <code>NULL</code>. On successful return, the returned string <code>dcl</code> will always be null terminated at the <code>dclLen - 1</code> character.
+</p><p>
+An example of an <code>rout</code> string is shown below.
+</p><table><tr><th><div class="indent"><p>
+IDL
+</p></div></th><th><div class="indent"><p>
+C
+</p></div></th></tr><tr><td><pre><span style="color: blue">interface</span> IFoo                     
+{                                  
+  <span style="color: blue">long</span> process(<span style="color: blue">rout</span> <span style="color: blue">string</span> name);  
+};                                 
+</pre></td><td><pre><span style="color: blue">int</span> IFoo_process(<span style="color: blue">char</span>* name,        
+   <span style="color: blue">int</span> nameLen);                    
+</pre></td></tr></table><p>
+Note: For both types, the length parameters refer to the length of the buffer in characters (one-byte chars for strings, and two-byte _wchar_ts for wstrings), not the length of the string. The lengths are inclusive of a null terminator.
+</p><h4>
+<a name="__Member%20of%20a%20structure"></a>Member of a structure
+</h4><p>
+Within a structure, a string is mapped as though it were a <code>sequence&lt;char&gt;</code>, and a wstring as though it were a <code>sequence&lt;wchar&gt;</code>. However, as with strings and wstrings, the buffers are always required to be null terminated. The mapping for sequences within structures is detailed in <a href="#Sequence">Sequence</a>, part of which is duplicated here for clarity.
+</p><table><tr><th><div class="indent"><p>
+IDL
+</p></div></th><th><div class="indent"><p>
+C
+</p></div></th></tr><tr><td><pre>
+<span style="color: blue">struct</span> Atm                         
+{                                  
+  <span style="color: blue">string</span> ssn;                      
+};                                 
+</pre></td><td><pre><span style="color: blue">typedef</span> <span style="color: blue">struct</span> Atm Atm;             
+<span style="color: blue">struct</span> Atm                          
+{                                   
+  <span style="color: blue">char</span>* ssn;                        
+  <span style="color: blue">int</span> ssnLen;                       
+};                                  
+</pre></td></tr></table><p>
+The second field <code>ssnLen</code> specifies the total size of the buffer <code>ssn,</code> in characters.
+</p><h4>
+<a name="Within%20a%20sequence"></a>Within a sequence
+</h4><p>
+When a string or wstring is used within a union or a sequence, it is mapped as a _cstring_t or _wstring_t. Both of these types are structures containing a pointer to a buffer and a buffer length. This structure is the same as the structure that would be generated for a <code>sequence&lt;char&gt;</code> in the case of string, or <code>sequence&lt;wchar&gt;</code> in the case of wstring. See <a href="#Sequence">Sequence</a> for details on the structure generated for each sequence.
+</p><p>
+The semantics of the <code>dataLen</code> field are the same as those for a string when it used as the member of a structure; see <a href="#Member%20of%20a%20structure">Member of a structure</a> for details.
+</p><table><tr><th><div class="indent"><p>
+IDL
+</p></div></th><th><div class="indent"><p>
+C
+</p></div></th></tr><tr><td><pre><span style="color: blue">typedef</span> <span style="color: blue">sequence</span>&lt;<span style="color: blue">string</span>&gt; seqstring; 
+</pre></td><td><pre><span style="color: darkgreen">// Note: this struct is only defined </span>
+<span style="color: darkgreen">// once, at the top of each file     </span>
+<span style="color: blue">struct</span> _cstring_t                    
+{                                    
+  <span style="color: blue">char</span>* data;                        
+  <span style="color: blue">int</span> dataLen;                       
+};                                   
+
+<span style="color: blue">struct</span> __seq_string                  
+{                                    
+  _cstring_t* data;                  
+  <span style="color: blue">int</span> dataLen;                       
+};                                   
+
+<span style="color: blue">typedef</span> __seq_string seqstring;      
+</pre></td></tr></table><h4>
+<a name="NULL%20and%20empty%20strings"></a>NULL and empty strings
+</h4><p>
+Strings in IDL interfaces are never NULL pointers. Strings in IDL are never absent or omitted by being NULL because they can't be. They either have a value or they are the empty string.
+</p><p>
+An empty string is a valid pointer to a buffer with a single byte of value 0. (&#8220;&#8221; is an empty string)
+</p></div>
+</body>
+</html>

@@ -1,0 +1,158 @@
+The Hexagon Vector Extensions (HVX) provide gigantic performance increase for image processing applications at very low power. This enables a new class of programmable camera applications which would not otherwise be possible using the CPU and GPU.
+
+An HVX overview is here:
+http://sharepoint/qct/Modem-Tech/QDSP6/Shared%20Documents/QDSP6/QDSP6v6/QDSP6v6%20Architecture/HVX_overview.pptx
+
+To build/run these examples, you must:
+1. Set up your tools so hexagon-clang and hexagon-sim are in your path.
+2. Change directories to the example you want to investiagte.
+3a. 'make sim' to build with HVX in Assembly.
+3b. 'make sim SRC=I' to build with HVX in C Intrinsics. ("histogram" has no intrinsic version)
+3c. 'make sim QDSP6SS_PUB_BASE=0xDEADBEEF' Where DEADBEEF is the address of the susbsystem public base.  This allows you to run on emulation or hardware.
+
+These tests can utilize either 64 byte (single) vectors or 128 byte (double) vectors, you can pick by providing the LOG2VLEN variable to make.
+128byte (double): 'make sim LOG2VLEN=7' (default)
+64byte  (single): 'make sim LOG2VLEN=6'
+
+Each test uses an input file from "testvectors".
+Each test generates expected results by building the same code with gcc and running to generate a reference output file: "./test/ref_build/out.bin".
+
+The following examples are provided:
+
+bilateral
+/*[     This function applies a 9x9 bilateral filter to a image.           ]*/
+
+boxfilter11x11
+/*[     This function applies a 11x11 box filter to a image.               ]*/
+
+conv3x3a16
+/*[     This function applies a 3x3 kernel to filter a image.              ]*/
+/*[     During the computation, 16bit accumulator is assumed, therefore    ]*/
+/*[     The absolute value of the summation of all coefficients must be    ]*/
+/*[     no more than 128.
+
+conv3x3a32
+/*[     This function applies a 3x3 kernel to filter a image.              ]*/
+/*[     During the computation, the following assumptions are made:        ]*/
+/*[      - 32bit accumulator is used.                                      ]*/
+/*[      - The masks are stored in mask[3][4] and mask[i][3]=0             ]*/
+
+dilate3x3
+/*[     This function performs morphological dilation of an image using    ]*/
+/*[     3x3 mask
+
+fast9
+/*[     This function performs FAST feature detection                      ]*/
+
+gaussian
+/*[     This function performs Gaussian blur on an image with a 3x3 kernel ]*/
+/*[     or a 5x5 kernel or a 7x7 kernel                                    ]*/
+
+harriscorner
+/*[     This function performs Harris corner detection.                    ]*/
+
+histogram (Assembly only, no Intrinsic version) (Produces erroneous warnings)
+/*[     This function takes an 8-bit image block and returns the histogram ]*/
+/*[     of 256 32-bit bins.                                                ]*/
+
+integrate
+/*[     This function calculates a 2D integration of an image.             ]*/
+
+invsqrt
+/*[     This function computes 1 / squareroot(x) using interpolation.      ]*/
+
+median
+/*[     This function performs 3x3 median filter operation on a image.     ]*/
+/*[     The filter runs through the image pixel by pixel, replacing each   ]*/
+/*[     pixel with the median of 9 pixels including and surronding it.     ]*/
+
+ncc
+/*[     This function performs ncc using 8x8 template and 18x18 ROI        ]*/
+/*[     in an image. Total search points are 11x11.                        ]*/
+
+nv12torgb8888
+/*[     This function converts image from NV12 format to RGB8888 format.   ]*/
+
+reciprocal
+/*[     This function computes 1 / (x) using interpolation.                ]*/
+
+sigma3x3
+/*[     This function performs 3x3 sigma filtering on an image block       ]*/
+
+sigma9x9
+/*[     This function (epsilon) performs 9x9 sigma filtering on an image   ]*/
+/*[     block.                                                             ]*/
+
+sobel
+/*[     This function performs a soble operator on an image. The operator  ]*/
+/*[     convolves the following two 3x3 kernels with the original image    ]*/
+/*[     to calculate approximations of the derivatives for horizontal and  ]*/
+/*[     vertical changes.                                                  ]*/
+/*[         Horizontal:                                                    ]*/
+/*[              1  2  1                                                   ]*/
+/*[              0  0  0                                                   ]*/
+/*[             -1 -2 -1                                                   ]*/
+/*[                                                                        ]*/
+/*[         Vertical:                                                      ]*/
+/*[              1  0  -1                                                  ]*/
+/*[              2  0  -2                                                  ]*/
+/*[              1  0  -1                                                  ]*/
+/*[                                                                        ]*/
+/*[     At each point in the image, the resulting gradient is approximated ]*/
+/*[     by combining horizontal and vertical gradient magnitudes.          ]*/
+
+wiener9x9
+/*[     This function performs 9x9 wiener filtering on an image block      ]*/
+
+
+
+Expected Performance
+====================
+/*[------------------------------------------------------------------------]*/
+/*[          MODULES                     |    PACKET-COUNT (HVX-128B)      ]*/
+/*[------------------------------------------------------------------------]*/
+/*[ bilateral (9x9)                      |  6.2542 packets/pixel           ]*/
+/*[------------------------------------------------------------------------]*/
+/*[ boxfilter (11x11)                    |  0.0798 packets/pixel           ]*/
+/*[------------------------------------------------------------------------]*/
+/*[ conv3x3a16                           |  0.0440 packets/pixel           ]*/
+/*[------------------------------------------------------------------------]*/
+/*[ conv3x3a32                           |  0.0515 packets/pixel           ]*/
+/*[------------------------------------------------------------------------]*/
+/*[ dilate3x3                            |  0.0232 packets/pixel           ]*/
+/*[------------------------------------------------------------------------]*/
+/*[ epsilon (sigma9x9)                   |  1.1405 packets/pixel           ]*/
+/*[------------------------------------------------------------------------]*/
+/*[ fast9                                |  0.3835 packets/pixel           ]*/
+/*[------------------------------------------------------------------------]*/
+/*[ gaussian (3x3)                       |  0.0380 packets/pixel           ]*/
+/*[------------------------------------------------------------------------]*/
+/*[ gaussian (5x5)                       |  0.0654 packets/pixel           ]*/
+/*[------------------------------------------------------------------------]*/
+/*[ gaussian (7x7)                       |  0.1000 packets/pixel           ]*/
+/*[------------------------------------------------------------------------]*/
+/*[ harriscorner                         |  0.8266 packets/pixel           ]*/
+/*[------------------------------------------------------------------------]*/
+/*[ histogram                            |  0.0188 packets/pixel           ]*/
+/*[------------------------------------------------------------------------]*/
+/*[ integrate                            |  0.1467 packets/pixel           ]*/
+/*[------------------------------------------------------------------------]*/
+/*[ invsqrt                              |  0.0792 packets/pixel           ]*/
+/*[------------------------------------------------------------------------]*/
+/*[ median3x3                            |  0.0687 packets/pixel           ]*/
+/*[------------------------------------------------------------------------]*/
+/*[ mipi2raw16                           |  0.0918 packets/pixel           ]*/
+/*[------------------------------------------------------------------------]*/
+/*[ ncc (8x8 template on 18*18 ROI)      |  431.18 packets/search          ]*/
+/*[------------------------------------------------------------------------]*/
+/*[ nv12torgb                            |  0.0981 packets/pixel           ]*/
+/*[------------------------------------------------------------------------]*/
+/*[ reciprocal                           |  0.0703 packets/pixel           ]*/
+/*[------------------------------------------------------------------------]*/
+/*[ sigma3x3                             |  0.1331 packets/pixel           ]*/
+/*[------------------------------------------------------------------------]*/
+/*[ sobel3x3                             |  0.0551 packets/pixel           ]*/
+/*[------------------------------------------------------------------------]*/
+/*[ wiener9x9                            |  0.4313 packets/pixel           ]*/
+/*[------------------------------------------------------------------------]*/
+

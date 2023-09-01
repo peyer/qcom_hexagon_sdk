@@ -1,0 +1,18 @@
+# stand-alone qprintf_example executable
+BUILD_EXES+=qprintf_example
+qprintf_example_QAICIDLS += inc/qprintf_example
+
+qprintf_example_C_SRCS += src/qprintf_example \
+                       $V/qprintf_example_stub \
+
+qprintf_example_LIBS += rpcmem
+qprintf_example_DLLS += libadsprpc
+qprintf_example_DEFINES += VERIFY_PRINT_ERROR
+qprintf_example_LD_FLAGS += -lpthread
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

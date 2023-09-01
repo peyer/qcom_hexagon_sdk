@@ -1,0 +1,31 @@
+ENTRY &port &arch &elf &layout
+
+
+sys.CPU HexagonV&arch
+
+sys.mcdconfig port=&port
+
+sys.mode attach
+
+d.load.elf &elf
+
+d.s 0x30 1
+d.s 0x34 1
+d.s 0x38 1
+d.s 0x3c 1
+
+break.set event_handle_trap0 /onchip
+term.method angel event_handle_trap0
+term.scroll on
+term.size 100 500
+term.mode string
+TERM.scroll on
+TERM.gate
+
+do cmm/&layout.cmm
+
+b.s main
+break.set \Global\exit
+go
+
+enddo

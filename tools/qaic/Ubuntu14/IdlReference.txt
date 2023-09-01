@@ -1,0 +1,1002 @@
+QAIC IDL Reference
+##################
+
+.toc
+
+Introduction
+============
+
+Interfaces for the aDSP platform are described in language 
+called IDL, described here.  IDL allows interface authors to expose only *what*
+their object does, and not *where* it resides or what programming language it
+is implemented in.  Specifically, it allows developers expose a consistant interface
+to components without exposing that the implementation resides on the dsp instead of
+the application processor.  This document describes the syntax and semantics of IDL.
+
+
+Relationship to OMG IDL
+=======================
+
+The IDL defined here is based on the 
+[OMG IDL specification] (http://www.omg.org/cgi-bin/doc?formal/08-01-04.pdf)
+but differs in a few respects:
+
+* All interface methods must have an IDL return a type equivalient to long.  
+  The value returned must be 0 if the method is successful, or 
+  an error code on failure.  Standard error codes are defined in AEEStdErr.idl.
+   See [[Return Values]] for details.
+
+
+* Interfaces may not directly inherit from more than one base `interface`.
+
+* The `rout` parameter modes are used instead of `out` and 
+  `inout` is unsupported.  See [[Bounded output parameters]] for details.
+
+
+Bounded output parameters
+-------------------------
+
+OMG IDL supports three parameter attributes or modes which specify the direction
+the data flows: in (caller to server), out (server to caller), and inout (both
+directions).  In OMG IDL, the semantics of out and inout is such that the size of
+a variable-length parameter cannot be known to or bounded by the caller at run
+time.  However, standard practice is for all buffers to be bounded by the caller.
+
+The IDL compiler supports output semantics through the IDL keyword, `rout` 
+which is the bounded analog of out. The "r" in each keyword refers to 
+the UNIX read() system call, where the caller provides a buffer and specifies 
+at run time the maximum amount of data to be read into the buffer.  
+
+For fixed-size types, there is no difference between the traditional out and 
+the new `rout`, as the size is statically known and therefore need not be specified 
+by the caller.  However, for variable-size types, such as sequences and strings, `rout` 
+and implies an upper bound that is passed as an in parameter from client 
+to server.  For example, read() could be defined in IDL as follows:
+
+.idlcode
+  typedef sequence<octet> SeqOctet;
+  long read(rout SeqOctet buffer);
+
+In IDL, only a single `rout` parameter is needed, as it implies the caller 
+providing to the server the maximum number of octets to return.  See 
+[[rout parameter of a method]] for details on how this parameter would be mapped 
+to the remote bindings.
+
+Note that the traditional OMG IDL out and inout parameter modes are not 
+currently supported by the compiler.  Support for out and inout may be 
+added in the future.
+
+NULL Argument Semantics
+-----------------------
+
+These are the current rules for when `NULL` can be passed for arguments 
+
+`in` parameters:
+
+  * Sequence pointers may be `NULL` when the associated length is 0.  
+
+`rout` parameters:
+
+  * Sequence, string, and wstring pointers may be `NULL` when the associated length is 0.
+
+Return Values
+-------------
+
+* must be equivalent type to long, such as AEEResult from AEEStdDef.idl
+* value 0 indicates success
+* a non zero code indicates a failure.  Any data in rout parameters is not propagated back.
+
+Wire Format Limitations
+-----------------------
+
+`in` parameters:
+
+* maximum of 255 in buffers.  For example
+ 
+.idlcode
+    typedef sequence<octet> buf;
+    interface foo
+    {
+         long bar(in sequence<buf> bufs);
+    };
+
+maps to C as 
+
+.ccode
+   
+   struct __seq_unsigned_char {
+      unsigned char* data;
+      int dataLen;
+   };
+   typedef struct __seq_unsigned_char __seq_unsigned_char;
+   typedef __seq_unsigned_char buf;
+   int foo_bar(buf* bufs, int bufsLen);
+
+will fail for bufsLen > 254.  One input buffer is used to store the
+the length of the buffers.  This limitation can be further restricted
+by the rpc implementation.
+
+`rout` parameters:
+
+* maximum of 255 rout buffers
+
+`in` handles:
+
+* maximum of 15 in dmahandle handles
+
+`rout` handles:
+
+* maximum of 15 rout dmahandle handles
+
+Remote Handles
+==============
+
+As of version 1.0.35.x the idl compiler supports interfaces derived from
+`remote_handle64` which allow the user to maintain a context handle for
+the opened module.
+
+
+.idlcode
+    #include "remote.idl"  // Needed for remote_handle64 interface
+
+    interface calculator : remote_handle64 {
+    
+      // Compute a*b, where a and b are both complex
+      long fmult(in float a, in float b, rout float result);
+    };
+
+This is a special interface that tells the compiler to do the following
+
+* add a `remote_handle64` argument as the first argument of every function in the interface
+* add an <interface>_open method
+* add an <interface>_close method 
+* add a `#define <interface>_URI` as a base URI that can be used to open interface instances
+
+For example:
+
+.ccode
+   /**
+    * Opens the handle in the specified domain.  If this is the first
+    * handle, this creates the session.  Typically this means opening
+    * the device, aka open("/dev/adsprpc-smd"), then calling ioctl
+    * device APIs to create a process on the DSP to execute our code in,
+    * then asking that process to dlopen the .so and dlsym the skel function.
+    *
+    * @param uri, <interface>_URI"&_dom=aDSP"
+    *    <interface>_URI is a QAIC generated uri, or
+    *    "file:///<sofilename>?<interface>_skel_handle_invoke&_modver=1.0"
+    *    If the _dom parameter is not present, _dom=DEFAULT is assumed
+    *    but not forwarded.
+    *    Reserved uri keys:
+    *      [0]: first unamed argument is the skel invoke function
+    *      _dom: execution domain name, _dom=mDSP/aDSP/DEFAULT
+    *      _modver: module version, _modver=1.0
+    *      _*: any other key name starting with an _ is reserved
+    *    Unknown uri keys/values are forwarded as is.
+    * @param h, resulting handle
+    * @retval, 0 on success
+    */
+
+   int calculator_open(const char *uri, remote_handle64 *h);
+
+   /** 
+    * Closes a handle.  If this is the last handle to close, the session
+    * is closed as well, releasing all the allocated resources.
+
+    * @param h, the handle to close
+    * @retval, 0 on success, should always succeed
+    */
+   int calculator_close(remote_handle64 h);
+
+   long calculator_fmult(remote_handle64 h, const float a, const float b, float *result);
+
+   #ifndef calculator_URI
+   #define calculator_URI "file:///libcalculator_skel.so?calculator_skel_handle_invoke&_modver=1.0"
+   #endif
+
+
+Users can then open multiple instaces of the handle via
+
+.ccode
+   remote_handle64 h1 = -1, h2 = -1;
+
+   //open in the default compute domain
+   assert(0 == calculator_open(calculator_URI, &h1));
+   //upon success the value of h can be anything except -1
+   assert(h1 != -1);
+
+   //open the same module on a specific domain
+   //REMOTE_DOM_MDSP and additional supported domains are defined in "remote.h"
+   assert(0 == calculator_open(calculator_URI REMOTE_DOM_MDSP, &h2));
+   //upon success the value of h2 can be anything except -1
+   assert(h2 != -1);
+
+   //h1 and h2 are not equal to each other
+   assert(h1 != h2);
+   //values for h1 and h2 are generated by the transport layer
+
+Implementors of DSP modules can return any value for the remote handle 
+
+.ccode
+   int calculator_open(const char *uri, remote_handle64 *h) {
+      //this value will NOT be returned to the caller
+      *h = (remote_handle64)0xdeadc0de;
+      //but this value will be passed to close when the handle is closed
+      //so its save store a pointer in the handle 
+      //*h = (remote_handle64)malloc(100);
+      return 0;
+   }
+   int calculator_close(remote_handle64 h) {
+      //The value returned by open will be presented to the module on close
+      assert(h == (remote_handle64)0xdead0cde);
+      return 0;
+   }
+
+Implementors should not expect that value to be returned to the user from
+the DSP.  A unique value to track module instances will be generated by
+the transport layer and presented to the user.
+
+Domains
+=======
+
+Interfaces deriving from `remote_handle64` will allow the user explicit
+control over the module lifetime.  A compute domain will be open as long
+as there is at least 1 handle reference to it.
+
+.ccode
+   remote_handle64 h1 = -1, h2 = -1;
+   float c1,c2,result;
+   //open h1, if h1 is the first handle for the default domain it will instantiate the domain
+   assert(0 == calculator_open(calculator_URI, &h1));
+
+   //open h2, the domain is still open
+   assert(0 == calculator_open(calculator_URI, &h2));
+
+   //close h1, since we also opened h2, the domain is still open
+   assert(0 == calculator_close(h1));
+
+   //calls using h1 will fail
+   assert(0 != calculator_fmult(h1, &c1, &c2, &result));
+
+   //calls using h2 will pass
+   assert(0 == calculator_fmult(h1, &c1, &c2, &result));
+
+   //close h2, this is the last handle to the domain
+   //it will shutdown the domain on the dsp side and free all its resources
+   (void)calculator_close(h2);
+
+
+Domain restart
+..............
+
+Since users have explicit control over the handle lifetimes they can now detect errors and re-open the handle.
+
+.ccode
+   assert(0 == calculator_open(calculator_URI, &h1));
+   if(0 != calculator_fmult(h1, &c1, &c2, &result)) {
+      //got an error, maybe the DSP is restarted
+      (void)calculator_close(h1);
+      h1 = -1;
+      assert(0 == calculator_open(calculator_URI, &h1));
+
+      //try fmult again
+      assert(0 == calculator_fmult(h1, &c1, &c2, &result));
+   }
+
+Typically once a domain is killed methods should return `AEE_ENOSUCH` defined in `AEEStdErr.h`.
+
+
+Domain Routing
+..............
+
+Users can explicitly specify the domain on which they need to execute their code. The session on particular domain is opened by appending static string "&_dom=(domain name)" to the autogenerated interface URI.
+
+.ccode
+   remote_handle mdsp, adsp;
+   assert(!calculator_open(calculator_URI "&_dom=mdsp", &mdsp));
+   assert(!calculator_open(calculator_URI "&_dom=adsp", &adsp));
+   assert(!calculator_sum(mdsp, buf, bufLen, &val));
+   assert(!calculator_sum(adsp, buf, bufLen, &val));
+   //if this is the last handle using aDSP in this process, the remote PD on aDSP is killed
+   assert(!calculator_close(adsp));
+   //if this is the last handle using mDSP in this process, the remote PD on mDSP is killed
+   assert(!calculator_close(mdsp));
+   
+Here we handle aDSP and mDSP domains by providing a libadsprpc.so and libmdsprpc.so which developers link against when they build their stubs. Similarly for other domains like cDSP, sDSP etc.
+
+Sample IDL
+==========
+
+A sample IDL file is shown below to illustrate the use of common IDL constructs.
+
+.idlcode
+    #include "AEEStdDef.idl"  // Needed for 'AEEResult'
+    
+    interface calculator
+    {
+      // This structure is specific to this interface, so we scope it within the
+      // interface to avoid pollution of the global namespace.
+      struct Complex
+      {
+         float real; // Real part
+         float imag; // Imaginary part
+      };
+    
+      // A Vector, consisting of 0 or more Numbers.
+      typedef sequence<Complex> Vector;
+    
+      // Compute a*b, where a and b are both complex
+      AEEResult Mult(in Complex a, in Complex b, rout Complex result);
+    
+      // Add a and b.
+      AEEResult Add(in Complex a, in Complex b, rout Complex result);
+    
+      // Compute the sum of all elements in a vector
+      AEEResult Sum(in Vector vec, rout Complex result);
+
+      // Compute the product of all elements in a vector
+      AEEResult Product(in Vector vec, rout Complex result);
+    
+    };
+
+Mapping for the C programming language
+======================================
+
+This section details the mapping of IDL constructs to remoteable shared objects
+via the `C` programming language.
+
+Basic built-in types
+--------------------
+
+The following table lists the mapping of IDL basic types to `C`.
+
++--------------------+-----------------------------+
+| IDL Type           | C Type                      |
++====================+=============================+
+| octet, uint8       | unsigned char               |
++--------------------+-----------------------------+
+| char, int8         | char                        |
++--------------------+-----------------------------+
+| wchar              | _wchar_t                    |
++--------------------+-----------------------------+
+| short, int16       | short int                   |
++--------------------+-----------------------------+
+| long, int32        | int                         |
++--------------------+-----------------------------+
+| long long, int64   | long long (int64)           |
++--------------------+-----------------------------+
+| unsigned short,    |                             |
+| uint16             | unsigned short int          |
++--------------------+-----------------------------+
+| unsigned long,     |                             |
+| uint32             | unsigned int                |
++--------------------+-----------------------------+
+| unsigned long long,|                             |
+| uint64             | unsigned long long (uint64) |
++--------------------+-----------------------------+
+| int8_t             | int8_t                      |
++--------------------+-----------------------------+
+| uint8_t            | uint8_t                     |
++--------------------+-----------------------------+
+| int16_t            | int16_t                     |
++--------------------+-----------------------------+
+| uint16_t           | uint16_t                    |
++--------------------+-----------------------------+
+| int32_t            | int32_t                     |
++--------------------+-----------------------------+
+| uint32_t           | uint32_t                    |
++--------------------+-----------------------------+
+| int64_t            | int64_t                     |
++--------------------+-----------------------------+
+| uint64_t           | uint64_t                    |
++--------------------+-----------------------------+
+| float              | float                       |
++--------------------+-----------------------------+
+| double             | double                      |
++--------------------+-----------------------------+
+| boolean            | boolean                     |
++--------------------+-----------------------------+
+| dmahandle          | unsigned long long (uint64),|
+|                    | unsigned int, unsigned int  |
++--------------------+-----------------------------+
+
+Due to compiler differences in how 64-bit integers are handled, `long` `long` 
+and unsigned `long` `long` are mapped to _int64_t and unsigned _int64_t, 
+respectively, where _int64_t is `#defined` to be either `long` `long` 
+or __int64 depending on the compiler.
+
+Definitions for _wchar_t can be found in AEEStdDef.h
+
+The dmahandle type takes in 3 parameters: handle to the buffer, offset into
+the buffer and size of the buffer.
+
+in parameter of a method
+........................
+
+Basic types are passed by value as in parameters of a method.
+
++-----------------------------------------------------------+-----------------------------------------------------+
+|                           IDL                             |                         C                           |
++===========================================================+=====================================================+
+| .idlcode                                                  | .ccode                                              |
+|    interface Basic {                                      |   AEEResult Basic_BasicIn(unsigned char arg1,       |
+|       AEEResult BasicIn(in octet arg1,                    |                           char arg2,                |
+|                         in char arg2,                     |                           _wchar_t arg3,            |
+|                         in wchar arg3,                    |                           short arg4,               |
+|                         in short arg4,                    |                           int arg5,                 |
+|                         in long arg5,                     |                           int64 arg6,               |
+|                         in long long arg6,                |                           unsigned short arg7,      |
+|                         in unsigned short arg7,           |                           unsigned int arg8,        |
+|                         in unsigned long arg8,            |                           uint64 arg9,              |
+|                         in unsigned long long arg9,       |                           float arg10,              |
+|                         in float arg10,                   |                           double arg11,             |
+|                         in double arg11,                  |                           boolean arg12,            |
+|                         in boolean arg12,                 |                           uint8_t arg13,            |
+|                         in uint8_t arg13,                 |                           int16_t arg14,            |
+|                         in int16_t arg14,                 |                           uint32_t arg15,           |
+|                         in uint32_t arg15,                |                           int64_t arg16);           |
+|                         in int64_t arg16);                |                                                     |
+|    };                                                     |                                                     |
++-----------------------------------------------------------+-----------------------------------------------------+
+
+rout parameter of a method
+..........................
+
+Basic types are passed by reference as a pointer in the `C` language when used as
+rout parameters of a method.
+
++-----------------------------------------------------------+-----------------------------------------------------+
+|                           IDL                             |                         C                           |
++===========================================================+=====================================================+
+| .idlcode                                                  | .ccode                                              |
+|    interface Basic {                                      |                                                     |
+|       AEEResult BasicROut(rout octet arg1,                |   AEEResult Basic_BasicROut(unsigned char* arg1,    |
+|                           rout char arg2,                 |                            char* arg2,              |
+|                           rout wchar arg3,                |                            _wchar_t* arg3,          |
+|                           rout short arg4,                |                            short* arg4,             |
+|                           rout long arg5,                 |                            int* arg5,               |
+|                           rout long long arg6,            |                            int64* arg6,             |
+|                           rout unsigned short arg7,       |                            unsigned short* arg7,    |
+|                           rout unsigned long arg8,        |                            unsigned int* arg8,      |
+|                           rout unsigned long long arg9,   |                            uint64* arg9,            |
+|                           rout float arg10,               |                            float* arg10,            |
+|                           rout double arg11,              |                            double* arg11,           |
+|                           rout boolean arg12,             |                            boolean* arg12,          |
+|                           rout uint8_t arg13,             |                            uint8_t* arg13,          |
+|                           rout int16_t arg14,             |                            int16_t* arg14,          |
+|                           rout uint32_t arg15,            |                            uint32_t* arg15,         |
+|                           rout int64_t arg16);            |                            int64_t* arg16);         |
+|    };                                                     |                                                     |
++-----------------------------------------------------------+-----------------------------------------------------+
+
+Member of a structure
+.....................
+
+Basic types appear as values when used as members of a structure.
+
++--------------------------------------------+--------------------------------------------+
+|                   IDL                      |                    C                       |
++============================================+============================================+
+| .idlcode                                   | .ccode                                     |
+|    struct BasicStruct {                    |    typedef struct BasicStruct BasicStruct; |
+|       octet mem1;                          |    struct BasicStruct {                    |
+|       char mem2;                           |       unsigned char mem1;                  |
+|       wchar mem3;                          |       char mem2;                           |
+|       short mem4;                          |       _wchar_t mem3;                       |
+|       long mem5;                           |       short mem4;                          |
+|       long long mem6;                      |       int mem5;                            |
+|       unsigned short mem7;                 |       int64 mem6;                          |
+|       unsigned long mem8;                  |       unsigned short mem7;                 |
+|       unsigned long long mem9;             |       unsigned int mem8;                   |
+|       float mem10;                         |       uint64 mem9;                         |
+|       double mem11;                        |       float mem10;                         |
+|       boolean mem12;                       |       double mem11;                        |
+|       uint8_t mem13;                       |       boolean mem12;                       |
+|       int16_t mem14,                       |       uint8_t mem13;                       |
+|       uint32_t mem15,                      |       int16_t mem14;                       |
+|       int64_t mem16);                      |       uint32_t mem15;                      |
+|    };                                      |       int64_t mem16;                       |
+|                                            |    };                                      |
+|                                            |                                            |
++--------------------------------------------+--------------------------------------------+
+
+Constant declarations
+---------------------
+
+Constant declarations in IDL are mapped to `#defines` in `C`, with 
+expressions evaluated.
+
++---------------------------------------+---------------------------------------+
+|               IDL                     |                   C                   |
++=======================================+=======================================+
+| .idlcode                              | .ccode                                |
+|   const short MAX_TRIES = 5 + 10 - 4; |   #define MAX_TRIES 11                |
++---------------------------------------+---------------------------------------+
+
+Identifiers
+-----------
+
+As with `C++`, it is recommended that `C` and `C++` keywords not be used as
+identifiers in IDL.  However, if a keyword is used as an identifier, it will be
+prefixed with `_cxx_` in the generated output.
+
++--------------------------------------+---------------------------------------+
+|               IDL                    |                   C                   |
++======================================+=======================================+
+| .idlcode                             | .ccode                                |
+|   const short break = 3;             |   #define _cxx_break 3                |
++--------------------------------------+---------------------------------------+
+
+Module
+------
+
+Due to the lack of a namespace-like construct in `C`, IDL modules are 
+mapped by prepending each enclosed identifier with the module name, with 
+an underscore separating the name of the module and the original identifier. 
+Modules can nest, but `interface` methods, structure members, and 
+union members do not change, since their names are local to that 
+`interface`, struct, or union.
+
++--------------------------------------+---------------------------------------+
+|               IDL                    |                   C                   |
++======================================+=======================================+
+| .idlcode                             | .ccode                                |
+|   module foo                         |   typedef int foo_bar_int32;          |
+|   {                                  |                                       |
+|     module bar                       |                                       |
+|     {                                |                                       |
+|        typedef long int32;           |                                       |
+|     };                               |                                       |
+|   };                                 |                                       |
++--------------------------------------+---------------------------------------+
+
+
+Interface
+---------
+
+Types and functions declared within an `interface` must be scoped 
+within that `interface`, any such types are prepended with the name of 
+the enclosing `interface` and an underscore, as is done with modules. If 
+the `interface` is itself within a module, then any types within the 
+`interface` will be prepended with the fully-qualified name of the 
+`interface` -- that is, the names of all enclosing modules, separated by 
+underscores, along with the name of the `interface`. Any types defined 
+within an `interface` will be extracted and defined before the 
+corresponding structure in the mapping.
+
++--------------------------------------+--------------------------------------+
+|               IDL                    |                   C                  |
++======================================+======================================+
+| .idlcode                             | .ccode                               |
+|   interface IFoo                     |   typedef struct IFoo_inner          |
+|   {                                  |   {                                  |
+|     struct inner                     |     /* ... */                        |
+|     {                                |   } IFoo_inner;                      |
+|      /* ... */                       |                                      |
+|     };                               |   int IFoo_process(short int a);     |
+|                                      |                                      |
+|     long process(in short a);        |                                      |
+|   };                                 |                                      |
+|                                      |                                      |
+|                                      |                                      |
++--------------------------------------+--------------------------------------+
+
+
+Methods
+-------
+
+Each method of an `interface` is mapped as a function.  See the [[Interface]] description.
+
+
+`in` parameter
+..............
+
+Memory for the argument is allocated by the caller. These arguments are mapped as
+`const` unless the type is an `interface`.  Otherwise, the user of the `interface`
+will be unable to invoke any of its methods since they are not `const` functions.
+All user defined types (struct, union) are passed as pointers to the defined type.
+Note that no `in` pointer may be `NULL`.  
+
+An in parameter example is shown below.
+
++--------------------------------------+---------------------------------------+
+|               IDL                    |                   C                   |
++======================================+=======================================+
+| .idlcode                             | .ccode                                |
+|   struct point                       |   typedef struct point                |
+|   {                                  |   {                                   |
+|     short x;                         |     short int x;                      |
+|     float y;                         |     float y;                          |
+|   };                                 |   } point;                            |
+|                                      |                                       |
+|   interface ITest                    |   int IFoo_process(short int id,      |
+|   {                                  |      const char* name,                |
+|   };                                 |      const point* origin);            |
+|                                      |                                       |
+|   interface IFoo                     |                                       |
+|   {                                  |                                       |
+|                                      |                                       |
+|     long process(in short id,        |                                       |
+|      in string name,                 |                                       |
+|      in point origin);               |                                       |
+|   };                                 |                                       |
++--------------------------------------+---------------------------------------+
+
+
+`rout` parameter
+................
+
+Memory for the argument is allocated by the caller. All parameters are passed as
+pointers to the defined type. For basic built-in types ([[Basic built-in types]]),
+Note that `sequence`, `string` and `wstring` parameters expand to two parameters
+in C: a pointer, and a size. For details of the mapping of strings and wstrings,
+see [[Basic built-in types]].
+
++--------------------------------------+----------------------------------------+
+|               IDL                    |                   C                    |
++======================================+========================================+
+| .idlcode                             | .ccode                                 |
+|   interface IFoo                     |   int IFoo_process(short int* id,      |
+|   {                                  |        char* name,                     |
+|      long process(rout short id,     |        int nameLen,                    |
+|         rout string name,            |        point* origin);                 |
+|         rout point origin);          |                                        |
+|   };                                 |                                        |
++--------------------------------------+----------------------------------------+
+
+Structure
+---------
+
+IDL structures are mapped to `C` structures, with a typedef to allow the 
+name of the structure to be used as a type.  Note that types declared within 
+a structure will have the name of the enclosing structure prepended to their 
+names, as is done with definitions within modules and interfaces.
+
++--------------------------------------+---------------------------------------+
+|               IDL                    |                   C                   |
++======================================+=======================================+
+| .idlcode                             | .ccode                                |
+|    struct extended_point             |   typedef struct extended_point       |
+|    {                                 |   {                                   |
+|      short x;                        |     short int x;                      |
+|      float y;                        |     float y;                          |
+|    };                                |   } extended_point;                   |
++--------------------------------------+---------------------------------------+
+
+Enum
+----
+
+IDL enumerated types are mapped to `C` enumerated types, with a typedef to allow
+the name of the enum to be used as a type.  A placeholder enumerator is added to
+each enum to ensure binary compatibility across compilers.
+
++--------------------------------------+-------------------------------------------+
+|               IDL                    |                   C                       |
++======================================+===========================================+
+| .idlcode                             | .ccode                                    |
+|   enum color                         |   typedef enum color                      |
+|   {                                  |   {                                       |
+|     RED,                             |     RED,                                  |
+|     ORANGE,                          |     ORANGE,                               |
+|     YELLOW,                          |     YELLOW,                               |
+|     GREEN,                           |     GREEN,                                |
+|     BLUE                             |     BLUE,                                 |
+|   };                                 |     _32BIT_PLACEHOLDER_color = 0x7fffffff |
+|                                      |   } color;                                |
++--------------------------------------+-------------------------------------------+
+
+The starting value for an `enum` is always 0.
+
+Union
+-----
+
+Unions are not supported at this time.
+
+Array
+-----
+
+IDL arrays are mapped to `C` arrays.
+
++--------------------------------------+---------------------------------------+
+|               IDL                    |                   C                   |
++======================================+=======================================+
+| .idlcode                             | .ccode                                |
+|   struct foo                         |   typedef struct foo                  |
+|   {                                  |   {                                   |
+|     long sum[2];                     |     int sum[2];                       |
+|   };                                 |   } foo;                              |
++--------------------------------------+---------------------------------------+
+
+Sequence
+--------
+
+For each sequence type `sequence<T>`, a corresponding structure __seq_T 
+is generated with two members:
+
+.ccode
+    T* data; 
+    int dataLen;
+
+The `dataLen` member specifies the number of elements in the array `data`.  Note
+that sequence lengths are always in terms of the number of elements in the sequence,
+not the number of bytes required to store the sequence.
+
+Consider the following mapping example for a sequence of `long` integers.
+
++--------------------------------------+---------------------------------------+
+|               IDL                    |                   C                   |
++======================================+=======================================+
+| .idlcode                             | .ccode                                |
+|   typedef sequence<long> seqlong;    |   struct __seq_int                    |
+|                                      |   {                                   |
+|                                      |     int* data;                        |
+|                                      |     int dataLen;                      |
+|                                      |   };                                  |
+|                                      |                                       |
+|                                      |   typedef __seq_int seqlong;          |
++--------------------------------------+---------------------------------------+
+
+This structure is used when constructing sequences of sequence types.
+
+
+in parameter of a method
+........................
+
+When a `sequence<T>` is specified as an `in` parameter of a method of an 
+`interface`, the mapping generates two arguments (assuming the name of 
+the declarator is `dcl`):
+
+.ccode
+  const T* dcl, int dclLen
+
+The second argument specifies the total number of elements of the array 
+`dcl`.  The `dcl` pointer must be valid unless `dclLen` is 0, in which case 
+the pointer may be `NULL`.  The memory for the array is allocated by the 
+caller.  If the type is an `interface`, the `const` is omitted.  
+Otherwise, the user of the `interface` will be unable to invoke any of 
+its methods since they are not `const` functions.
+
++--------------------------------------+---------------------------------------+
+|               IDL                    |                   C                   |
++======================================+=======================================+
+| .idlcode                             | .ccode                                |
+|   typedef sequence<long> seqlong;    |   // see seqlong above                |
+|                                      |   int IFoo_process(                   |
+|   interface IFoo                     |        const int* sums,               |
+|   {                                  |        int sumsLen);                  |
+|     long process(in seqlong sums);   |                                       |
+|   };                                 |                                       |
++--------------------------------------+---------------------------------------+
+
+rout parameter of a method
+..........................
+
+When a `sequence<T>` is specified as an `rout` parameter of a method of an
+`interface`, the mapping generates two arguments (assuming the name of the declarator
+is `dcl`):
+
+.ccode
+  T* dcl, int dclLen
+
+The second argument `dclLen` specifies the total number of elements that the array
+`dcl` can hold -- that is, the number of elements worth of memory the caller has
+allocated). The `dcl` parameter must be valid unless `dclLen` is 0, in which case
+`dcl` may be `NULL`. Note that all memory, namely the `dcl` array, is allocated
+by the caller. An example of an `rout` sequence parameter is as follows.
+
++--------------------------------------+---------------------------------------+
+|               IDL                    |                   C                   |
++======================================+=======================================+
+| .idlcode                             | .ccode                                |
+|   typedef sequence<long> seqlong;    |   // see seqlong above                |
+|                                      |    int IFoo_process(                  |
+|   interface IFoo                     |         int* sums,                    |
+|   {                                  |         int sumsLen);                 |
+|     long process(rout seqlong sums); |                                       |
+|   };                                 |                                       |
++--------------------------------------+---------------------------------------+
+
+
+
+Member of a structure
+.....................
+
+When a sequence is declared as a member of a structure, the declarator 
+(assuming the name as `dcl`) is mapped as two members of the `C`
+struct: 
+
+.ccode
+    T* dcl;
+    int dclLen;
+
+The `dclLen` member specifies the number of elements of the array `dcl`. 
+
++--------------------------------------+---------------------------------------+
+|               IDL                    |                   C                   |
++======================================+=======================================+
+| .idlcode                             | .ccode                                |
+|   typedef sequence<long> seqlong;    |   // see seqlong above                |
+|                                      |   typedef struct Atm Atm;             |
+|   struct Atm                         |   struct Atm                          |
+|   {                                  |   {                                   |
+|     seqlong sums;                    |     int* sums;                        |
+|   };                                 |     int sumsLen;                      |
+|                                      |   };                                  |
++--------------------------------------+---------------------------------------+
+
+
+Within another sequence, or an array
+....................................
+
+When a sequence is used within another sequence, or as 
+part of an array, the structure generated for the sequence is used.  In 
+unions, the structure type itself is used, but within other sequences, a
+pointer to the structure type is used.
+
++--------------------------------------+---------------------------------------+
+|               IDL                    |                   C                   |
++======================================+=======================================+
+| .idlcode                             | .ccode                                |
+|   typedef sequence<long> seqlong;    |   struct __seq_int                    |
+|                                      |   {                                   |
+|   typedef sequence<seqlong> long2d;  |     int* data;                        |
+|                                      |     int dataLen;                      |
+|   struct s                           |   };                                  |
+|   {                                  |                                       |
+|     seqlong five_sequences[5];       |                                       |
+|   };                                 |   typedef __seq_int seqlong;          |
+|                                      |                                       |
+|                                      |   struct __seq_seqlong                |
+|                                      |   {                                   |
+|                                      |     seqlong* data;                    |
+|                                      |     int dataLen;                      |
+|                                      |   };                                  |
+|                                      |                                       |
+|                                      |   typedef __seq_seqlong long2d;       |
+|                                      |                                       |
+|                                      |   typedef struct s s;                 |
+|                                      |                                       |
+|                                      |   struct s                            |
+|                                      |   {                                   |
+|                                      |     seqlong five_sequences[5];        |
+|                                      |   };                                  |
++--------------------------------------+---------------------------------------+
+
+
+string and wstring
+------------------
+
+The IDL string type is mapped as `char*`, and `wstring` as `_wchar_t*`
+(where `_wchar_t` is typedef-ed to `unsigned short`).  When used anywhere other 
+than an `in` parameter, the pointer is accompanied by a size, which allows 
+the caller to specify the number of characters (`char` for `string`, `_wchar_t`
+for `wstring`) allocated for the string or wstring. This is the length of the 
+buffer in characters, not the length of the string -- since strings are 
+null-terminated in `C`, the length of the string is computable. 
+All length associated with a string or wstring include the null-terminator.
+
+Note: In this section, characters should be interpreted as meaning one-byte 
+chars for string types, and a two-byte _wchar_ts for wstring types.  The 
+term "character" is not used here in the lexical sense -- when storing 
+text, character set and encoding considerations are left to the application, 
+and it is therefore possible for a lexical character to require more than 
+one IDL character (non-zero byte) to represent it.
+
+
+in parameter of a method
+........................
+
+`string` is mapped as `const char*` and `wstring` as `const _wchar_t*`. 
+
++--------------------------------------+----------------------------------------------------+
+|               IDL                    |                   C                                |
++======================================+====================================================+
+| .idlcode                             | .ccode                                             |
+|   interface IFoo                     |                                                    |
+|   {                                  |                                                    |
+|     long process(in string name);    |   int IFoo_process(const char* name);              |
+|   };                                 |                                                    |
++--------------------------------------+----------------------------------------------------+
+| .idlcode                             | .ccode                                             |
+|   interface IFoo                     |                                                    |
+|   {                                  |                                                    |
+|     long process(in wstring name);   |   int IFoo_process(const _wchar_t* name);          |
+|   };                                 |                                                    |
++--------------------------------------+----------------------------------------------------+
+
+
+rout parameter of a method
+..........................
+
+The caller must provide a valid buffer, `dcl`, which can hold up to `dclLen`
+characters (including the null terminator). However, when `dclLen` is 0, `dcl` may
+be `NULL`. On successful return, the returned string `dcl` will always be null
+terminated at the `dclLen - 1` character. 
+
+An example of an `rout` string is shown below.
+
++--------------------------------------+---------------------------------------+
+|               IDL                    |                   C                   |
++======================================+=======================================+
+| .idlcode                             | .ccode                                |
+|   interface IFoo                     |   int IFoo_process(char* name,        |
+|   {                                  |      int nameLen);                    |
+|     long process(rout string name);  |                                       |
+|   };                                 |                                       |
++--------------------------------------+---------------------------------------+
+
+Note: For both types, the length parameters refer to the length of the buffer 
+in characters (one-byte chars for strings, and two-byte _wchar_ts for wstrings), 
+not the length of the string.  The lengths are inclusive of a null terminator.
+
+
+Member of a structure
+.....................
+
+Within a structure, a string is mapped as though it were a `sequence<char>`, and
+a wstring as though it were a `sequence<wchar>`.  However, as with strings and
+wstrings, the buffers are always required to be null terminated. The mapping for
+sequences within structures is detailed in [[Sequence]], part of which is duplicated
+here for clarity.
+
++--------------------------------------+---------------------------------------+
+|               IDL                    |                   C                   |
++======================================+=======================================+
+| .idlcode                             | .ccode                                |
+|                                      |   typedef struct Atm Atm;             |
+|   struct Atm                         |   struct Atm                          |
+|   {                                  |   {                                   |
+|     string ssn;                      |     char* ssn;                        |
+|   };                                 |     int ssnLen;                       |
+|                                      |   };                                  |
++--------------------------------------+---------------------------------------+
+
+The second field `ssnLen` specifies the total size of the buffer `ssn,` in 
+characters. 
+
+Within a sequence
+..........................
+
+When a string or wstring is used within a union or a sequence, it is mapped as a
+_cstring_t or _wstring_t.  Both of these types are structures containing a pointer
+to a buffer and a buffer length.  This structure is the same as the structure that
+would be generated for a `sequence<char>` in the case of string, or `sequence<wchar>`
+in the case of wstring.  See [[Sequence]] for details on the structure generated
+for each sequence.
+
+The semantics of the `dataLen` field are the same as those for a string when it
+used as the member of a structure; see [[Member of a structure]] for details.
+
++---------------------------------------+----------------------------------------+
+|               IDL                     |                   C                    |
++=======================================+========================================+
+| .idlcode                              | .ccode                                 |
+|   typedef sequence<string> seqstring; |   // Note: this struct is only defined |
+|                                       |   // once, at the top of each file     |
+|                                       |   struct _cstring_t                    |
+|                                       |   {                                    |
+|                                       |     char* data;                        |
+|                                       |     int dataLen;                       |
+|                                       |   };                                   |
+|                                       |                                        |
+|                                       |   struct __seq_string                  |
+|                                       |   {                                    |
+|                                       |     _cstring_t* data;                  |
+|                                       |     int dataLen;                       |
+|                                       |   };                                   |
+|                                       |                                        |
+|                                       |   typedef __seq_string seqstring;      |
+|                                       |                                        |
++---------------------------------------+----------------------------------------+
+
+
+NULL and empty strings
+......................
+
+Strings in IDL interfaces are never NULL pointers. Strings in IDL are never 
+absent or omitted by being NULL because they can't be. They either have a 
+value or they are the empty string.
+
+An empty string is a valid pointer to a buffer with a single byte of 
+value 0. ("" is an empty string)
+

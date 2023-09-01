@@ -1,0 +1,2 @@
+V_ARCH=v3
+include $(thisDir)/defines_hexagon.min

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="com.qualcomm.hexagon.launch.attachLaunchType">
+<booleanAttribute key="com.qualcomm.hexagon.gdb.launch.debuggerTab.DEFAULTS_SET" value="true"/>
+<stringAttribute key="com.qualcomm.hexagon.launch.COREDUMP" value=""/>
+<booleanAttribute key="com.qualcomm.hexagon.launch.COREDUMP_SELECTION" value="false"/>
+<stringAttribute key="com.qualcomm.hexagon.launch.DEBUG_PORT" value="37317"/>
+<stringAttribute key="com.qualcomm.hexagon.launch.PROCESS_NAME" value="/frpc/f04a4aa0 calculato"/>
+<stringAttribute key="com.qualcomm.hexagon.launch.SOLIB_FILE" value=""/>
+<stringAttribute key="com.qualcomm.hexagon.launch.SUB_SYSTEM" value="ADSP"/>
+<stringAttribute key="com.qualcomm.hexagon.launch.SYMBOL_FILES" value=""/>
+<stringAttribute key="com.qualcomm.hexagon.launch.TARGET_NAME" value="beb8c04"/>
+<stringAttribute key="defaultGdbCommand" value="hexagon-lldb-mi"/>
+<stringAttribute key="org.eclipse.cdt.debug.mi.core.DEBUG_NAME" value="gdb"/>
+<stringAttribute key="org.eclipse.cdt.debug.mi.core.DEV" value="/dev/ttyS0"/>
+<stringAttribute key="org.eclipse.cdt.debug.mi.core.DEV_SPEED" value="115200"/>
+<stringAttribute key="org.eclipse.cdt.debug.mi.core.GDB_INIT" value=".gdbinit"/>
+<stringAttribute key="org.eclipse.cdt.debug.mi.core.HOST" value="localhost"/>
+<stringAttribute key="org.eclipse.cdt.debug.mi.core.PORT" value="10000"/>
+<booleanAttribute key="org.eclipse.cdt.debug.mi.core.REMOTE_TCP" value="false"/>
+<stringAttribute key="org.eclipse.cdt.debug.mi.core.commandFactory" value="org.eclipse.cdt.debug.mi.core.standardCommandFactory"/>
+<booleanAttribute key="org.eclipse.cdt.debug.mi.core.verboseMode" value="false"/>
+<booleanAttribute key="org.eclipse.cdt.dsf.gdb.AUTO_SOLIB" value="true"/>
+<stringAttribute key="org.eclipse.cdt.dsf.gdb.DEBUG_NAME" value="hexagon-lldb-mi"/>
+<stringAttribute key="org.eclipse.cdt.dsf.gdb.GDB_INIT" value=""/>
+<stringAttribute key="org.eclipse.cdt.dsf.gdb.HOST" value="localhost"/>
+<booleanAttribute key="org.eclipse.cdt.dsf.gdb.NON_STOP" value="true"/>
+<stringAttribute key="org.eclipse.cdt.dsf.gdb.PORT" value="9000"/>
+<booleanAttribute key="org.eclipse.cdt.dsf.gdb.REMOTE_TCP" value="true"/>
+<listAttribute key="org.eclipse.cdt.dsf.gdb.SOLIB_PATH">
+<listEntry value="D:/Qualcomm/Hexagon_SDK/3.2/examples/common/calculator/eclipse/libcalculator_skel/LLVM_Shared-Debug"/>
+</listAttribute>
+<intAttribute key="org.eclipse.cdt.launch.ATTR_BUILD_BEFORE_LAUNCH_ATTR" value="0"/>
+<stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_ID" value="hexagon-lldb-mi"/>
+<stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_START_MODE" value="remote"/>
+<booleanAttribute key="org.eclipse.cdt.launch.DEBUGGER_STOP_AT_MAIN" value="true"/>
+<stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_STOP_AT_MAIN_SYMBOL" value="calculator_sum"/>
+<stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value="D:/Qualcomm/elfs/fastrpc_shell_0.unstripped"/>
+<stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value="libcalculator_skel"/>
+<stringAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_ID_ATTR" value=""/>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/libcalculator_skel"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="4"/>
+</listAttribute>
+<stringAttribute key="org.eclipse.dsf.launch.MEMORY_BLOCKS" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;memoryBlockExpressionList context=&quot;reserved-for-future-use&quot;/&gt;&#13;&#10;"/>
+<stringAttribute key="process_factory_id" value="org.eclipse.cdt.dsf.gdb.GdbProcessFactory"/>
+</launchConfiguration>

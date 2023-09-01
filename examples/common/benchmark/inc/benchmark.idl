@@ -1,0 +1,153 @@
+/**=============================================================================
+Copyright (c) 2016 QUALCOMM Technologies Incorporated.
+All Rights Reserved Qualcomm Proprietary
+=============================================================================**/
+#ifndef BENCHMARK_IDL
+#define BENCHMARK_IDL
+
+#include "AEEStdDef.idl"
+#include "remote.idl"
+
+interface benchmark : remote_handle64{
+
+AEEResult setClocks(
+    in int32 powerLevel,            // sets the clocks for a given voltage level (lower number is higher-power)
+    in int32 latency,               // latency tolerance for low-power states
+    in int32 dcvsEnable             // flag for enabling DCVS
+	);
+
+AEEResult dilate5x5(
+    in sequence<uint8> inp,        // input buffer of unsigned 8-bit values
+    in int32 stride_i,             // stride of src image
+    in int32 width,                // width of src image
+    in int32 height,               // height of src image
+	inrout sequence<uint8> outp,   // output buffer of unsigned 8-bit values
+    in int32 stride_o,              // stride of the dst image
+    in int32 LOOPS,                 // number of times to iterate
+    in int32 wakeupOnly,           // flag to skip processing
+    inrout int32 dspUsec,           // profiling result in uSec
+    inrout int32 dspCyc             // profiling result in cycles
+	);
+
+AEEResult dilate3x3(
+    in sequence<uint8> inp,        // input buffer of unsigned 8-bit values
+    in int32 stride_i,             // stride of src image
+    in int32 width,                // width of src image
+    in int32 height,               // height of src image
+	inrout sequence<uint8> outp,   // output buffer of unsigned 8-bit values
+    in int32 stride_o,              // stride of the dst image
+    in int32 LOOPS,                 // number of times to iterate
+    in int32 wakeupOnly,           // flag to skip processing
+    inrout int32 dspUsec,           // profiling result in uSec
+    inrout int32 dspCyc             // profiling result in cycles
+	);
+
+AEEResult sobel3x3(
+    in sequence<uint8> inp,        // input buffer of unsigned 8-bit values
+    in int32 stride_i,             // stride of src image
+    in int32 width,                // width of src image
+    in int32 height,               // height of src image
+	inrout sequence<uint8> outp,   // output buffer of unsigned 8-bit values
+    in int32 stride_o,              // stride of the dst image
+    in int32 LOOPS,                 // number of times to iterate
+    in int32 wakeupOnly,           // flag to skip processing
+    inrout int32 dspUsec,           // profiling result in uSec
+    inrout int32 dspCyc             // profiling result in cycles
+	);
+
+AEEResult integrate(
+    in sequence<octet> inp,       // input buffer of unsigned 8-bit values
+    in long stride_i,             // stride of src image
+    in long width,                // width of rsrc image
+    in long height,               // height of rsrc image
+	rout sequence<unsigned long> outp,     // output buffer of unsigned 32-bit values
+    in long stride_o,              // stride of the dst image
+    in int32 LOOPS,                 // number of times to iterate
+    in int32 wakeupOnly,           // flag to skip processing
+    inrout int32 dspUsec,           // profiling result in uSec
+    inrout int32 dspCyc             // profiling result in cycles
+	);
+    
+AEEResult epsilon(
+    in sequence<uint8> src,         // input buffer of unsigned 8-bit values
+    in int32 stride,                // stride of the src image
+    in int32 width,                 // width of region of interest contained in src image
+    in int32 height,                // height of region of interest contained in src image
+    in int32 threshold,             // threshold
+    inrout   sequence<uint8> dst,   // output buffer of unsigned 8-bit values
+    in int32 LOOPS,                 // number of times to iterate
+    in int32 wakeupOnly,            // flag to skip processing
+    inrout int32 dspUsec,           // profiling result in uSec
+    inrout int32 dspCyc             // profiling result in cycles
+	);
+    
+AEEResult fast9(
+    in sequence<octet> im,        // input buffer of unsigned 8-bit values
+    in unsigned long stride,      // stride of src image
+    in unsigned long xsize,       // xsize
+    in unsigned long ysize,       // ysize
+    in unsigned long barrier,     // barrier
+    in unsigned long border,      // border
+    rout sequence<short> xy,      // output buffer for coord of corners
+    in long maxnumcorners,        // maxnumcorners
+    rout long numcorners,         // num of cornes
+    in int32 LOOPS,               // number of times to iterate
+    in int32 wakeupOnly,          // flag to skip processing
+    inrout int32 dspUsec,           // profiling result in uSec
+    inrout int32 dspCyc             // profiling result in cycles
+    );
+    
+AEEResult conv3x3(
+    in sequence<uint8> inp,        // input buffer of unsigned 8-bit values
+    in int32 stride_i,             // stride of src image
+    in int32 width,                // width of src image
+    in int32 height,               // height of src image
+    in sequence<char> mask,        // filter mask
+    in int32 shift,                // filter shift
+	inrout sequence<uint8> outp,   // output buffer of unsigned 8-bit values
+    in int32 stride_o,             // stride of the dst image
+    in int32 LOOPS,                // number of times to iterate
+    in int32 wakeupOnly,           // flag to skip processing
+    inrout int32 dspUsec,           // profiling result in uSec
+    inrout int32 dspCyc             // profiling result in cycles
+	);
+    
+AEEResult gaussian7x7(
+    in sequence<uint8> src,        // input buffer of unsigned 8-bit values
+    in uint32 srcWidth,            // width of region of interest contained in src image
+    in uint32 srcHeight,           // height of region of interest contained in src image
+    in uint32 srcStride,           // stride of the src image
+    rout   sequence<uint8> dst,    // output buffer of unsigned 8-bit values
+    in uint32 dstStride,           // stride of the dst image
+    in int32 LOOPS,                // number of times to iterate
+    in int32 wakeupOnly,           // flag to skip processing
+    inrout int32 dspUsec,           // profiling result in uSec
+    inrout int32 dspCyc             // profiling result in cycles
+	);
+    
+AEEResult bilateral9x9(
+    in sequence<uint8> src,        // input buffer of unsigned 8-bit values
+    in int32 stride,               // stride of the src image
+    in int32 width,                // width of region of interest contained in src image
+    in int32 height,               // height of region of interest contained in src image
+    inrout   sequence<uint8> dst,  // output buffer of unsigned 8-bit values
+    in int32 LOOPS,                // number of times to iterate
+    in int32 wakeupOnly,           // flag to skip processing
+    inrout int32 dspUsec,           // profiling result in uSec
+    inrout int32 dspCyc             // profiling result in cycles
+    );
+
+AEEResult crash10(
+    in sequence<uint8> src,        // input buffer of unsigned 8-bit values
+    in int32 stride,               // stride of the src image
+    in int32 width,                // width of region of interest contained in src image
+    in int32 height,               // height of region of interest contained in src image
+    inrout   sequence<uint8> dst,  // output buffer of unsigned 8-bit values
+    in int32 LOOPS,                // number of times to iterate
+    in int32 wakeupOnly,           // flag to skip processing
+    inrout int32 dspUsec,           // profiling result in uSec
+    inrout int32 dspCyc             // profiling result in cycles
+    );
+};
+
+#endif //BENCHMARK_IDL

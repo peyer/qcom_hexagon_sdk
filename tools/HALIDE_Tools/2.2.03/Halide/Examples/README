@@ -1,0 +1,251 @@
+=============================================================================
+Halide Examples for Hexagon
+=============================================================================
+
+2.2 Setting up the Hexagon SDK
+------------------------------
+In addition to installing the Hexagon LLVM toolset that provides the Halide-HVX
+compiler, you will need to install the Hexagon SDK to run Halide code on a
+Snapdragon device. If you already have installed the SDK, please skip to
+section 2.2.3 Set up the environment.
+
+2.2.1 Minimum requirements
+--------------------------
+
+The minimum requirements for using Halide for HVX are:
+
+    -  Ubuntu 14.04 or later
+    -  Hexagon SDK 3.5.0 or later
+    -  Hexagon tools 8.3.04 or later
+    -  Snapdragon 820 MSM8996 processor or later
+
+The minimum requirements for using UBWCDMA in Halide for HVX are:
+    -  Ubuntu 14.04 or later
+    -  Hexagon SDK 3.5.0 or later
+    -  Hexagon tools 8.3.04 or later
+    -  Snapdragon SM8150 or later
+
+GCC C++ Dual ABI Notice
+************************
+libHalide.so in Halide 2.2.03 is built using g++ 4.8.4. We recommend using the same
+version of g++ when compiling your Halide generators. If, however, you are not able
+to move to this version, but have a version of g++ 5.1 or later then make sure your
+generator defines the following macro to 0 before incluing any header files.
+
+         #define _GLIBCXX_USE_CXX11_ABI 0
+
+************************************************************************************
+
+
+2.2.2 Download and install the Hexagon SDK
+------------------------------------------
+
+    Note: examples are given assuming SDK 3.5.0 and Hexagon Tools 8.3.04
+
+    1. Go to https://developer.qualcomm.com/software/hexagon-dsp-sdk/tools
+    2. Scroll to the Hexagon Series 600 Software section and download Hexagon
+       SDK v3.5.0 for Linux (Note: Use Hexagon SDK v3.5.0 for UBWCDMA)
+    3. Run the installer to perform the installation in graphical mode:
+         ./qualcomm_hexagon_sdk_3.5.0.bin
+       or in console mode:
+         ./qualcomm_hexagon_sdk_3.5.0.bin -i console -DDOWNLOAD_FULL_ANDROID=true
+    4. Accept the terms of the license agreement
+    5. Specify the SDK install folder: /<your location for SDK>/Hexagon_SDK/3.5.0
+    6. Select "Full Android NDK" & "Eclipse" (if in graphical mode)
+    7. Proceed with the installation
+
+2.2.3 Set up the environment
+----------------------------
+Please establish SDK_ROOT and HALIDE_ROOT before sourcing setup-env.*
+
+  export SDK_ROOT=/<location of directory containing Hexagon_SDK>
+  export HALIDE_ROOT=/<location where Halide 2.1.04 is installed>/Halide
+
+To setup the Halide environment for development & testing do:
+
+    source Halide/Examples/setup-env.sh
+
+To build Halide executables for Android, also create a standalone toolchain from
+the NDK using the make-standalone-toolchain.sh script:
+
+    $ANDROID_NDK_HOME/build/tools/make-standalone-toolchain.sh \
+      --arch=arm64 --platform=android-21 --install-dir=$ANDROID_ARM64_TOOLCHAIN
+
+To clear the environment do:
+
+    source Halide/Examples/unsetup-env.sh
+
+2.2.4 Example environment
+-------------------------
+
+The following environment variables are set by setup-env.* to point to the SDK
+installation locations:
+
+    export SDK_ROOT=<your location for SDK>
+    export HEXAGON_SDK_ROOT=$SDK_ROOT/Hexagon_SDK/3.5.0
+    export HL_HEXAGON_TOOLS=$HEXAGON_SDK_ROOT/tools/HEXAGON_Tools/8.3.04/Tools
+    export HALIDE_ROOT=$HL_HEXAGON_TOOLS/Halide
+    export ANDROID_NDK_HOME=$HEXAGON_SDK_ROOT/tools/android-ndk-r19c
+    export ANDROID_ARM64_TOOLCHAIN=$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64
+
+An example SDK installation tree containing Halide for Hexagon looks like:
+
+    $SDK_ROOT/Hexagon_SDK/3.5.0/
+    $SDK_ROOT/Hexagon_SDK/3.5.0/tools/HEXAGON_Tools/8.3.04/Tools
+    $SDK_ROOT/Hexagon_SDK/3.5.0/tools/HEXAGON_Tools/8.3.04/Tools/Halide
+    $SDK_ROOT/Hexagon_SDK/3.5.0/tools/android-ndk-r19c
+    $SDK_ROOT/Hexagon_SDK/3.5.0/tools/android-ndk-r19c/toolchains/llvm/prebuilt/linux-x86_64
+
+2.3 Build and run Halide Examples for HVX
+-----------------------------------------
+
+Within the HALIDE_ROOT directory, the Examples directory contains a number
+of runnable tests:
+
+    HALIDE_ROOT=<path/to/your/Halide/installation>
+    $HALIDE_ROOT/Examples/
+        test-all      Top level test script
+        setup-env.sh  Environment variable settings used for all tests
+        HelloHexagon/ test-Hello-app[-android]
+        camera_pipe/  test-camera-pipe[-android]
+        conv3x3a16/   test-conv3x3a16
+        conv3x3a32/   test-conv3x3a32
+        median/       test-median
+        sobel/        test-sobel
+        dilate3x3/    test-dilate3x3
+        gaussian5x5/  test-gaussian5x5
+	sg_histogram/
+                       test-sg-sim
+                       test-sg-android
+	sg_lookup/
+                       test-sg-sim
+                       test-sg-android
+        Images/       Input images for tests
+
+To run the Examples, first copy the directory to user writable location
+outside of the SDK:
+
+    cd /local/scratch/$USER
+    cp -r $HALIDE_ROOT/Examples .
+
+Then run the tests (which only need the SDK_ROOT environment variable set
+as it infers the remaining paths as specified above):
+
+    export SDK_ROOT=<your location for SDK>
+    cd Examples
+    ./test-all
+
+The test environment itself can also be checked without actually running
+the tests:
+
+    ./setup-env.sh
+
+If the revisions of the Hexagon_SDK and HL_HEXAGON_Tools need be overridden,
+they can be specified with the following environment variables:
+
+    env HEXAGON_SDK_REV=3.5.0 \
+        HL_HEXAGON_TOOLS_REV=8.3.04 \
+        ./test-all
+
+If alternate versions of the different tools are needed but are outside of
+the expected SDK installation tree structure, they can be explicitly
+overridden as follows:
+
+    env HEXAGON_SDK_ROOT=<path1> \
+        HL_HEXAGON_TOOLS=<path2> \
+        HALIDE_ROOT=<path3> \
+        ANDROID_NDK_HOME=<path4> \
+        ANDROID_ARM64_TOOLCHAIN=<path5> \
+        ./test-all
+
+Alternatively, the copied setup-env.sh script can be manually modified to point
+to the desired locations so they don't need to be given on the command line:
+
+    <edit setup-env.sh as needed>
+    ./test-all
+
+
+Some of the tests within test-all are designed to run on device. These will run on device if the following is set in the environment:
+    export RUNDROID=1
+If you have multiple devices connected, do set up the environment variable ANDROID_SERIAL with the device id of the device you want
+to run the tests on.
+    export ANDROID_SERIAL=<DEVICE_ID_OF_DEVICE_TO_RUN_DEVICE_BASED_TESTS>
+
+
+2.3.1 Running Examples on a Snapdragon device
+------------------------------------------
+
+The device needs to be prepared to run Halide Hexagon code. Halide uses a
+small runtime library that must be present on the device. The device must
+be signed as a debug device to run Hexagon code, or the
+libhalide_hexagon_remote_skel.so library must be signed. Refer to the
+Hexagon SDK documentation for more information about signing Hexagon
+binaries (see: Hexagon_SDK/3.5.0/docs/Tools_Signing.html).
+
+    adb root
+    adb remount
+    adb shell mkdir -p /system/lib/rfsa/adsp
+    adb push $HALIDE_ROOT/lib/arm-32-android/libhalide_hexagon_host.so /system/lib/
+    adb push $HALIDE_ROOT/lib/arm-64-android/libhalide_hexagon_host.so /system/lib64/
+    adb push $HALIDE_ROOT/lib/v60/libhalide_hexagon_remote_skel.so /system/lib/rfsa/adsp/
+    adb reboot
+
+If you are running on device for benchmarking purposes, for more repeatable
+results it is recommended that you disable DCVS (Dynamic Clock and Voltage
+Scaling) by running the following script:
+
+    Halide/Examples/bin/adb-dcvs-performance
+
+If you wish to re-enable DCVS, just reboot the device or run the following:
+
+    Halide/Examples/bin/adb-dcvs-default
+
+Note that DCVS settings will return to their defaults after a device reboot.
+
+If you have multiple devices, you can specify which device to use by either
+adding the device ID as "-s <device>" to the above commands or by first
+setting the device ID in your environment:
+
+    $ adb devices
+    List of devices attached
+    a93e3277         device
+    f0b02776         device
+    $ export ANDROID_SERIAL=a93e3477
+
+2.4 Build and Run UBWCDMA Examples
+-----------------------------------
+Within the HALIDE_ROOT directory, the Examples directory contains 3 UBWCDMA
+examples.
+
+    $> export HALIDE_ROOT=<path/to/your/Halide/installation>
+        $HALIDE_ROOT/Examples/ubwcdma
+        standalone/simulator/apps/dmatest
+        standalone/device/apps/dma_raw_blur_rw
+        standalone/device/apps/dma_nv12_rw
+
+   Each of these examples has a script that runs the example. The script is
+        test-[dma]
+
+        where dma is dma_raw_blur_rw or dma_nv12_rw or dma   
+
+   To run these examples, say dma_nv12_rw, do the following
+   $> export HALIDE_ROOT=<path/to/your/Halide/installation>
+   $> cd $HALIDE_ROOT/Examples
+   $> export SDK_ROOT=<your location for SDK>
+   $> source setup-env.sh
+   $> cd ubwcdma/standalone/device/apps/dma_nv12_rw
+
+The two tests in $HALIDE_ROOT/Examples/ubwcdma/standalone/device/apps are designed to run on device.
+These will run on device if the following is set in the environment:
+   $> export RUNDROID=1
+
+If you have multiple devices connected, do set up the environment variable ANDROID_SERIAL with the
+device id of the device you want to run the tests on.
+   $> export ANDROID_SERIAL=<DEVICE_ID_OF_DEVICE_TO_RUN_DEVICE_BASED_TESTS>
+
+   $> ./test-dma_nv12_rw
+
+Note that at the moment, there are no Windows based UBWCDMA example. Also,
+in this version of the Halide Tools, we have beta support for UBWCDMA.
+To run $HALIDE_ROOT/Examples/ubwcdma/standalone/simulator/apps/dmatest you'll need Hexagon SDK 3.5.0 or later
+installed.

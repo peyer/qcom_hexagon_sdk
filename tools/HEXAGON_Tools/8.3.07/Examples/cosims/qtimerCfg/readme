@@ -1,0 +1,72 @@
+In HexagonV60, the RTOS and User timer have been replaced by a single qtimer.
+
+In order to properly simulate RTOS applications, a cosim configuration 
+file must be created which specifies two timers (one for the RTOS and one
+for the User) in the qtimer cosim, parameterized for the platform for which
+the simulation is to be performed.
+
+This qtimer cosim is intended to be used in conjunction with the L2VIC
+cosim (Level-2 Vectored Interrupt Controller).
+
+Here is an example of a cosim config file that specifies a qtimer:
+
+  Windows:
+  --------
+    qtimer.dll --csr_base=0x7b000000 --irq_p=35,36 --freq=19200000 --cnttid=0x11
+    l2vic.dll 4 0x7b010000
+
+  Linux:
+  ------
+    qtimer.so --csr_base=0x7b000000 --irq_p=35,36 --freq=19200000 --cnttid=0x11
+    l2vic.so 4 0x7b010000
+
+  Note that an optional explicit path may be added to the front of each shared
+  object.
+
+
+
+QTimer Cosim Syntax:
+--------------------
+  Linux:   [path/]qtimer.so  [options]
+  Windows: [path\]qtimer.dll [options]
+
+Options:
+  --csr_base=<addr>                      Required
+  --irq_p=<irq_num>[,<irq_num>[,...]]]   Required
+  [--irq_v=<irq_num>[,<irq_num>[,...]]]] Optional (default=none)
+  [--freq=<freq>]                        Optional (default=XO_CLOCK_SOURCE_FREQ)
+  [--cnttid=<counterTimerID>]            Optional (default=COUNTER_TIMER_ID)
+
+  --csr_base - Specifies the base address of the Control Status Registers (CSR).
+
+  --irq_p    - Specifies the interrupt that will be triggered when the physical
+               timer pops.
+
+  --irq_v    - Specifies the interrupt that will be triggered when the virtual
+               timer pops.
+
+  --freq     - Specifies the base timer frequency in Hz.  All timers are based
+               off this frequency.
+
+  --cnttid   - Specifies the counter ID (0x1 = 1 frame, 0x11 = 2 frames).
+
+
+
+L2VIC Cosim Syntax:
+-------------------
+  Linux:   [path/]l2vic.so  <slices> <l2vic_base_addr>
+  Windows: [path\]l2vic.dll <slices> <l2vic_base_addr>
+
+Required Parameters:
+  <slices>          - Specifies the number of slices supported by the L2VIC
+                      cosim.  The L2VIC contains up to 32 slices of
+                      32 interrupts each, creating a pool of up to 1024
+                      interrupt numbers (0 to 1023).
+
+  <l2vic_base_addr> - Specifies the base address of the L2VIC registers.
+
+
+
+Usage:
+------
+>hexagon-sim --cosim_file qtimer.cfg <app.elf>

@@ -1,0 +1,233 @@
+# Linker from QuIC LLVM Hexagon Clang version Version 8.3.07
+# Linker based on LLVM version: 7.0
+# Notable linker command/script options:
+# CPU Architecture Version: hexagonv66
+# Target triple environment for the link: unknown
+# Maximum GP size: 0
+# Link type: Dynamic and Bsymbolic set
+# ABI Page Size: 0x1000
+# CommandLine : /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/tools/HEXAGON_Tools/8.3.07/Tools/bin/hexagon-link --hash-style=sysv -march=hexagon -mcpu=hexagonv66 -shared -call_shared -G0 -o hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.so /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/tools/HEXAGON_Tools/8.3.07/Tools/bin/../target/hexagon/lib/v66/G0/pic/initS.o -L/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/tools/HEXAGON_Tools/8.3.07/Tools/bin/../target/hexagon/lib/v66/G0/pic -L/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/tools/HEXAGON_Tools/8.3.07/Tools/bin/../target/hexagon/lib/v66/G0 -L/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/tools/HEXAGON_Tools/8.3.07/Tools/bin/../target/hexagon/lib/v66 -L/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/tools/HEXAGON_Tools/8.3.07/Tools/bin/../target/hexagon/lib --no-threads -Bsymbolic --wrap=malloc --wrap=calloc --wrap=free --wrap=realloc --wrap=memalign --wrap=__stack_chk_fail -lc -Map=hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.so.map -soname=capi_v2_gain.so --start-group hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/audio/capi_v2_utils_props/hexagon_Debug_dynamic_toolv83_v66/ship/capi_v2_utils_props.a --end-group --start-group -lgcc --end-group /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/tools/HEXAGON_Tools/8.3.07/Tools/bin/../target/hexagon/lib/v66/G0/pic/finiS.o 
+Archive member included because of file (symbol)
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/audio/capi_v2_utils_props/hexagon_Debug_dynamic_toolv83_v66/ship/capi_v2_utils_props.a(capi_v2_utils_props.o)
+		hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o (capi_v2_utils_props_process_properties)
+
+Linker Script and memory map
+LOAD /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/tools/HEXAGON_Tools/8.3.07/Tools/bin/../target/hexagon/lib/v66/G0/pic/initS.o[v66]
+LOAD /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/tools/HEXAGON_Tools/8.3.07/Tools/bin/../target/hexagon/lib/v66/G0/pic/libc.so[v66]
+START GROUP
+LOAD hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o[v66]
+LOAD /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/audio/capi_v2_utils_props/hexagon_Debug_dynamic_toolv83_v66/ship/capi_v2_utils_props.a(capi_v2_utils_props.o)[v66]
+END GROUP
+START GROUP
+LOAD /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/tools/HEXAGON_Tools/8.3.07/Tools/bin/../target/hexagon/lib/v66/G0/pic/libgcc.so[v66]
+END GROUP
+LOAD /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/tools/HEXAGON_Tools/8.3.07/Tools/bin/../target/hexagon/lib/v66/G0/pic/finiS.o[v66]
+
+.dynsym	0x94	0x200 # Offset: 0x94, LMA: 0x94, Alignment: 0x4
+
+.dynstr	0x294	0x377 # Offset: 0x294, LMA: 0x294, Alignment: 0x1
+
+.hash	0x60c	0x108 # Offset: 0x60c, LMA: 0x60c, Alignment: 0x4
+
+.rela.dyn	0x714	0x78 # Offset: 0x714, LMA: 0x714, Alignment: 0x4
+
+.rela.plt	0x78c	0x60 # Offset: 0x78c, LMA: 0x78c, Alignment: 0x4
+
+.init	0x800	0x6c # Offset: 0x800, LMA: 0x800, Alignment: 0x20
+.init	0x800	0x6c	/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/tools/HEXAGON_Tools/8.3.07/Tools/bin/../target/hexagon/lib/v66/G0/pic/initS.o	#SHT_PROGBITS,SHF_ALLOC|SHF_EXECINSTR,32
+	0x800		_init
+
+.plt	0x870	0xb0 # Offset: 0x870, LMA: 0x870, Alignment: 0x10
+
+.text	0x920	0x286c # Offset: 0x920, LMA: 0x920, Alignment: 0x20
+.text.__cxa_finalize_stub	0x920	0x30	/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/tools/HEXAGON_Tools/8.3.07/Tools/bin/../target/hexagon/lib/v66/G0/pic/initS.o	#SHT_PROGBITS,SHF_ALLOC|SHF_EXECINSTR,32
+	0x920		__cxa_finalize_stub
+	0x948		__dso_handle
+.text	0x950	0x23a8	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_EXECINSTR,16
+	0x950		pcm_gain
+	0x9ec		capi_v2_gain_set_props
+	0xb58		_HAP_debug_v2
+	0xbcc		capi_v2_gain_get_static_properties
+	0xc9c		capi_v2_gain_init
+	0xeac		capi_v2_gain_set_properties
+	0x171c		capi_v2_gain_process
+	0x1b20		capi_v2_gain_end
+	0x1b48		capi_v2_gain_set_param
+	0x1fc8		capi_v2_gain_get_param
+	0x2348		capi_v2_gain_get_properties
+	0x2648		is_supported_media_type
+	0x2b70		capi_v2_gain_raise_output_media_format_event
+PADDING_ALIGNMENT	0x2cf8	0x8	0x0
+.text	0x2d00	0x48c	/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/audio/capi_v2_utils_props/hexagon_Debug_dynamic_toolv83_v66/ship/capi_v2_utils_props.a(capi_v2_utils_props.o)	#SHT_PROGBITS,SHF_ALLOC|SHF_EXECINSTR,16
+	0x2d00		capi_v2_utils_props_get_init_memory_requirement
+	0x2d40		capi_v2_utils_props_set_init_memory_requirement
+	0x2d84		capi_v2_utils_props_get_stack_size
+	0x2dc4		capi_v2_utils_props_set_stack_size
+	0x2e08		capi_v2_utils_props_get_max_metadata_size
+	0x2e64		capi_v2_utils_props_set_max_metadata_size
+	0x2ec0		capi_v2_utils_props_get_is_inplace
+	0x2f00		capi_v2_utils_props_set_is_inplace
+	0x2f44		capi_v2_utils_props_get_requires_data_buffering
+	0x2f84		capi_v2_utils_props_set_requires_data_buffering
+	0x2fc8		capi_v2_utils_props_set_num_framework_extensions
+	0x3004		capi_v2_utils_props_set_framework_extensions
+	0x30a8		capi_v2_utils_props_process_properties
+
+.fini	0x31a0	0x44 # Offset: 0x31a0, LMA: 0x31a0, Alignment: 0x20
+.fini	0x31a0	0x44	/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/tools/HEXAGON_Tools/8.3.07/Tools/bin/../target/hexagon/lib/v66/G0/pic/finiS.o	#SHT_PROGBITS,SHF_ALLOC|SHF_EXECINSTR,32
+	0x31a0		_fini
+
+.rodata	0x31e4	0x8b7 # Offset: 0x31e4, LMA: 0x31e4, Alignment: 0x4
+.rodata	0x31e4	0x1c	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC,4
+.rodata.str1.1	0x3200	0xf	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x3200		.L.str
+.rodata.str1.1	0x320f	0x1f	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x320f		.L.str.1
+.rodata.str1.1	0x322e	0x1a	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x322e		.L.str.2
+.rodata.str1.1	0x3248	0x12	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x3248		.L.str.3
+.rodata.str1.1	0x325a	0x48	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x325a		.L.str.4
+.rodata.str1.1	0x32a2	0x1e	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x32a2		.L.str.6
+.rodata.str1.1	0x32c0	0x21	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x32c0		.L.str.7
+.rodata.str1.1	0x32e1	0x1e	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x32e1		.L.str.8
+.rodata.str1.1	0x32ff	0x2e	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x32ff		.L.str.9
+.rodata.str1.1	0x332d	0x24	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x332d		.L.str.10
+.rodata.str1.1	0x3351	0x4c	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x3351		.L.str.11
+.rodata.str1.1	0x339d	0x25	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x339d		.L.str.12
+.rodata.str1.1	0x33c2	0x3d	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x33c2		.L.str.13
+.rodata.str1.1	0x33ff	0x2e	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x33ff		.L.str.14
+.rodata.str1.1	0x342d	0x4c	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x342d		.L.str.15
+.rodata.str1.1	0x3479	0x3d	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x3479		.L.str.16
+.rodata.str1.1	0x34b6	0x47	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x34b6		.L.str.17
+.rodata.str1.1	0x34fd	0x25	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x34fd		.L.str.18
+.rodata.str1.1	0x3522	0x48	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x3522		.L.str.19
+.rodata.str1.1	0x356a	0x39	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x356a		.L.str.20
+.rodata.str1.1	0x35a3	0x5f	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x35a3		.L.str.21
+.rodata.str1.1	0x3602	0x34	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x3602		.L.str.22
+.rodata.str1.1	0x3636	0x4a	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x3636		.L.str.23
+.rodata.str1.1	0x3680	0x31	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x3680		.L.str.24
+.rodata.str1.1	0x36b1	0x2e	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x36b1		.L.str.25
+.rodata.str1.1	0x36df	0x39	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x36df		.L.str.26
+.rodata.str1.1	0x3718	0x3d	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x3718		.L.str.27
+.rodata.str1.1	0x3755	0x38	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x3755		.L.str.28
+.rodata.str1.1	0x378d	0x3b	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x378d		.L.str.29
+.rodata.str1.1	0x37c8	0x2d	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x37c8		.L.str.30
+.rodata.str1.1	0x37f5	0x4a	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x37f5		.L.str.31
+.rodata.str1.1	0x383f	0x45	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x383f		.L.str.32
+.rodata.str1.1	0x3884	0x3b	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x3884		.L.str.33
+.rodata.str1.1	0x38bf	0x38	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x38bf		.L.str.34
+.rodata.str1.1	0x38f7	0x31	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x38f7		.L.str.35
+.rodata.str1.1	0x3928	0x33	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x3928		.L.str.36
+.rodata.str1.1	0x395b	0x32	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x395b		.L.str.37
+.rodata.str1.1	0x398d	0x32	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x398d		.L.str.38
+.rodata.str1.1	0x39bf	0x4e	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x39bf		.L.str.39
+.rodata.str1.1	0x3a0d	0x47	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x3a0d		.L.str.40
+.rodata.str1.1	0x3a54	0x47	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_MERGE|SHF_STRINGS,1
+	0x3a54		.L.str.41
+
+.eh_frame	0x3aa0	0x4 # Offset: 0x3aa0, LMA: 0x3aa0, Alignment: 0x20
+.eh_frame	0x3aa0	0x4	/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/tools/HEXAGON_Tools/8.3.07/Tools/bin/../target/hexagon/lib/v66/G0/pic/finiS.o	#SHT_PROGBITS,SHF_ALLOC,1
+	0x3aa0		__EH_FRAME_END__
+
+.dynamic	0x4000	0xb0 # Offset: 0x4000, LMA: 0x4000, Alignment: 0x4
+
+.data.rel.ro	0x40b0	0x18 # Offset: 0x40b0, LMA: 0x40b0, Alignment: 0x4
+.data.rel.ro.vtbl	0x40b0	0x18	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_ALLOC|SHF_WRITE,4
+	0x40b0		vtbl
+
+.ctors	0x40c8	0x8 # Offset: 0x40c8, LMA: 0x40c8, Alignment: 0x4
+.ctors	0x40c8	0x4	/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/tools/HEXAGON_Tools/8.3.07/Tools/bin/../target/hexagon/lib/v66/G0/pic/initS.o	#SHT_PROGBITS,SHF_ALLOC|SHF_WRITE,4
+	0x40c8		__CTOR_LIST__
+.ctors	0x40cc	0x4	/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/tools/HEXAGON_Tools/8.3.07/Tools/bin/../target/hexagon/lib/v66/G0/pic/finiS.o	#SHT_PROGBITS,SHF_ALLOC|SHF_WRITE,1
+	0x40cc		__CTOR_END__
+
+.dtors	0x40d0	0xc # Offset: 0x40d0, LMA: 0x40d0, Alignment: 0x4
+.dtors	0x40d0	0x8	/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/tools/HEXAGON_Tools/8.3.07/Tools/bin/../target/hexagon/lib/v66/G0/pic/initS.o	#SHT_PROGBITS,SHF_ALLOC|SHF_WRITE,4
+	0x40d0		__DTOR_LIST__
+.dtors	0x40d8	0x4	/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/tools/HEXAGON_Tools/8.3.07/Tools/bin/../target/hexagon/lib/v66/G0/pic/finiS.o	#SHT_PROGBITS,SHF_ALLOC|SHF_WRITE,1
+	0x40d8		__DTOR_END__
+
+.got	0x40dc	0xc # Offset: 0x40dc, LMA: 0x40dc, Alignment: 0x4
+
+.got.plt	0x40e8	0x30 # Offset: 0x40e8, LMA: 0x40e8, Alignment: 0x8
+
+.debug_info	0x4118	0x1675 # Offset: 0x4118, Alignment: 0x1
+.debug_info	0x4118	0xf1a	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,,1
+.debug_info	0x5032	0x75b	/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/audio/capi_v2_utils_props/hexagon_Debug_dynamic_toolv83_v66/ship/capi_v2_utils_props.a(capi_v2_utils_props.o)	#SHT_PROGBITS,,1
+
+.debug_str	0x578d	0x1354 # Offset: 0x578d, Alignment: 0x1
+.debug_str	0x578d	0x3d	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,SHF_MERGE|SHF_STRINGS,1
+
+.debug_abbrev	0x6ae1	0x290 # Offset: 0x6ae1, Alignment: 0x1
+.debug_abbrev	0x6ae1	0x1aa	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,,1
+.debug_abbrev	0x6c8b	0xe6	/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/audio/capi_v2_utils_props/hexagon_Debug_dynamic_toolv83_v66/ship/capi_v2_utils_props.a(capi_v2_utils_props.o)	#SHT_PROGBITS,,1
+
+.debug_aranges	0x6d71	0x48 # Offset: 0x6d71, Alignment: 0x1
+.debug_aranges	0x6d71	0x28	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,,1
+.debug_aranges	0x6d99	0x20	/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/audio/capi_v2_utils_props/hexagon_Debug_dynamic_toolv83_v66/ship/capi_v2_utils_props.a(capi_v2_utils_props.o)	#SHT_PROGBITS,,1
+
+.debug_macinfo	0x6db9	0x2 # Offset: 0x6db9, Alignment: 0x1
+.debug_macinfo	0x6db9	0x1	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,,1
+.debug_macinfo	0x6dba	0x1	/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/audio/capi_v2_utils_props/hexagon_Debug_dynamic_toolv83_v66/ship/capi_v2_utils_props.a(capi_v2_utils_props.o)	#SHT_PROGBITS,,1
+
+.debug_pubnames	0x6dbb	0x3ee # Offset: 0x6dbb, Alignment: 0x1
+.debug_pubnames	0x6dbb	0x183	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,,1
+.debug_pubnames	0x6f3e	0x26b	/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/audio/capi_v2_utils_props/hexagon_Debug_dynamic_toolv83_v66/ship/capi_v2_utils_props.a(capi_v2_utils_props.o)	#SHT_PROGBITS,,1
+
+.debug_pubtypes	0x71a9	0x5d6 # Offset: 0x71a9, Alignment: 0x1
+.debug_pubtypes	0x71a9	0x3b7	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,,1
+.debug_pubtypes	0x7560	0x21f	/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/audio/capi_v2_utils_props/hexagon_Debug_dynamic_toolv83_v66/ship/capi_v2_utils_props.a(capi_v2_utils_props.o)	#SHT_PROGBITS,,1
+
+.comment	0x777f	0x69 # Offset: 0x777f, Alignment: 0x1
+.comment	0x77bd	0x2b	Linker Version	#SHT_PROGBITS,SHF_MERGE|SHF_STRINGS,1
+
+.debug_frame	0x77e8	0x298 # Offset: 0x77e8, Alignment: 0x4
+.debug_frame	0x77e8	0x14c	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,,4
+.debug_frame	0x7934	0x14c	/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/audio/capi_v2_utils_props/hexagon_Debug_dynamic_toolv83_v66/ship/capi_v2_utils_props.a(capi_v2_utils_props.o)	#SHT_PROGBITS,,4
+
+.debug_line	0x7a80	0x1452 # Offset: 0x7a80, Alignment: 0x1
+.debug_line	0x7a80	0x1074	hexagon_Debug_dynamic_toolv83_v66/capi_v2_gain.o	#SHT_PROGBITS,,1
+.debug_line	0x8af4	0x3de	/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/libs/audio/capi_v2_utils_props/hexagon_Debug_dynamic_toolv83_v66/ship/capi_v2_utils_props.a(capi_v2_utils_props.o)	#SHT_PROGBITS,,1
+
+.shstrtab	0x8ed2	0x125 # Offset: 0x8ed2, Alignment: 0x1
+
+.symtab	0x8ff8	0x710 # Offset: 0x8ff8, Alignment: 0x4
+
+.strtab	0x9708	0x724 # Offset: 0x9708, Alignment: 0x1

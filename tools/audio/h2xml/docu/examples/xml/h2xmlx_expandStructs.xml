@@ -1,0 +1,68 @@
+<DSP type="WDSP" versionMajor="0x2" versionMinor="0x8" versionBranch="0x10" versionSubBranch="0x20">
+  <MODULE_LIST>
+    <MODULE name="MODULE_1" id="0x11111111">
+      <MODULE_INFO pidFwk="0x20002">
+        <META_DATA/>
+        <PIN_INFO type="STATIC">
+          <INPUT_PINS/>
+          <OUTPUT_PINS/>
+        </PIN_INFO>
+      </MODULE_INFO>
+      <PARAMETER_LIST>
+        <PARAMETER name="Parameter1" pid="0x11111111" maxSize="0x2c">
+          <TOOL_POLICIES>
+            <POLICY name="RTC"/>
+            <POLICY name="CALIBRATION"/>
+          </TOOL_POLICIES>
+          <DEFAULT_DEPENDENCIES/>
+          <CONFIG_ELEMENT name="b" type="int" byteSize="0x4" byteOffset="0x0" min="0x80000000" max="0x7fffffff" default="0x55556666"/>
+          <CONFIG_ELEMENT name="p1a" type="sStruct1_t" byteSize="0xc" byteOffset="0x4" default="0x0"/>
+          <CONFIG_ELEMENT name="p1b" type="sStruct2_t" byteSize="0x1c" byteOffset="0x10" default="0x0"/>
+        </PARAMETER>
+        <PARAMETER name="Parameter2" pid="0x22222222" maxSize="0x28">
+          <TOOL_POLICIES>
+            <POLICY name="RTC"/>
+            <POLICY name="CALIBRATION"/>
+          </TOOL_POLICIES>
+          <DEFAULT_DEPENDENCIES/>
+          <CONFIG_ELEMENT name="p1a_s1a" type="int" byteSize="0x4" byteOffset="0x0" min="0x10000000" max="0x20000000" default="0x12345678"/>
+          <CONFIG_ELEMENT name="p1a_s1b" type="int" byteSize="0x4" byteOffset="0x4" min="0x80000000" max="0x7fffffff" default="0x11223344"/>
+          <CONFIG_ELEMENT name="p1a_s1c" type="int" byteSize="0x4" byteOffset="0x8" min="0x80000000" max="0x7fffffff" default="0x55667788"/>
+          <CONFIG_ELEMENT name="p1b_s2a" type="int" byteSize="0x4" byteOffset="0xc" min="0x80000000" max="0x7fffffff" default="0x77654321"/>
+          <CONFIG_ELEMENT name="p1b_s2b_s1a" type="int" byteSize="0x4" byteOffset="0x10" min="0x10000000" max="0x20000000" default="0x12345678"/>
+          <CONFIG_ELEMENT name="p1b_s2b_s1b" type="int" byteSize="0x4" byteOffset="0x14" min="0x80000000" max="0x7fffffff" default="0x11223344"/>
+          <CONFIG_ELEMENT name="p1b_s2b_s1c" type="int" byteSize="0x4" byteOffset="0x18" min="0x80000000" max="0x7fffffff" default="0x55667788"/>
+          <CONFIG_ELEMENT name="p1b_s2c_s1a" type="int" byteSize="0x4" byteOffset="0x1c" min="0x10000000" max="0x20000000" default="0x12345678"/>
+          <CONFIG_ELEMENT name="p1b_s2c_s1b" type="int" byteSize="0x4" byteOffset="0x20" min="0x80000000" max="0x7fffffff" default="0x11223344"/>
+          <CONFIG_ELEMENT name="p1b_s2c_s1c" type="int" byteSize="0x4" byteOffset="0x24" min="0x80000000" max="0x7fffffff" default="0x55667788"/>
+        </PARAMETER>
+        <PARAMETER name="Parameter3" pid="0x33333333" maxSize="0x28">
+          <TOOL_POLICIES>
+            <POLICY name="RTC"/>
+            <POLICY name="CALIBRATION"/>
+          </TOOL_POLICIES>
+          <DEFAULT_DEPENDENCIES/>
+          <CONFIG_ELEMENT name="p1a" type="sStruct1_t" byteSize="0xc" byteOffset="0x0" default="0x0"/>
+          <CONFIG_ELEMENT name="p1b" type="sStruct2_t" byteSize="0x1c" byteOffset="0xc" default="0x0"/>
+        </PARAMETER>
+        <PARAMETER name="Parameter4" pid="0x44444444" maxSize="0x28">
+          <TOOL_POLICIES>
+            <POLICY name="RTC"/>
+            <POLICY name="CALIBRATION"/>
+          </TOOL_POLICIES>
+          <DEFAULT_DEPENDENCIES/>
+          <CONFIG_ELEMENT name="p1a_s1a" type="int" byteSize="0x4" byteOffset="0x0" min="0x10000000" max="0x20000000" default="0x12345678"/>
+          <CONFIG_ELEMENT name="p1a_s1b" type="int" byteSize="0x4" byteOffset="0x4" min="0x80000000" max="0x7fffffff" default="0x11223344"/>
+          <CONFIG_ELEMENT name="p1a_s1c" type="int" byteSize="0x4" byteOffset="0x8" min="0x80000000" max="0x7fffffff" default="0x55667788"/>
+          <CONFIG_ELEMENT name="p1b_s2a" type="int" byteSize="0x4" byteOffset="0xc" min="0x80000000" max="0x7fffffff" default="0x77654321"/>
+          <CONFIG_ELEMENT name="p1b_s2b_s1a" type="int" byteSize="0x4" byteOffset="0x10" min="0x10000000" max="0x20000000" default="0x12345678"/>
+          <CONFIG_ELEMENT name="p1b_s2b_s1b" type="int" byteSize="0x4" byteOffset="0x14" min="0x80000000" max="0x7fffffff" default="0x11223344"/>
+          <CONFIG_ELEMENT name="p1b_s2b_s1c" type="int" byteSize="0x4" byteOffset="0x18" min="0x80000000" max="0x7fffffff" default="0x55667788"/>
+          <CONFIG_ELEMENT name="p1b_s2c_s1a" type="int" byteSize="0x4" byteOffset="0x1c" min="0x10000000" max="0x20000000" default="0x12345678"/>
+          <CONFIG_ELEMENT name="p1b_s2c_s1b" type="int" byteSize="0x4" byteOffset="0x20" min="0x80000000" max="0x7fffffff" default="0x11223344"/>
+          <CONFIG_ELEMENT name="p1b_s2c_s1c" type="int" byteSize="0x4" byteOffset="0x24" min="0x80000000" max="0x7fffffff" default="0x55667788"/>
+        </PARAMETER>
+      </PARAMETER_LIST>
+    </MODULE>
+  </MODULE_LIST>
+</DSP>

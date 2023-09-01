@@ -1,0 +1,16 @@
+#what we ship
+BUILD_COPIES+=inc/rpcmem.h
+
+INCDIRS += \
+  inc \
+  src \
+
+BUILD_COPIES += $V/rpcmem$(LIB_EXT)
+BUILD_COPIES += $V/rpcmem$(DLL_EXT)
+
+BUILD_LIBS += rpcmem
+rpcmem_C_SRCS = src/rpcmem_stub
+
+BUILD_DLLS += rpcmem
+
+BUILD_COPIES += $(SHIP_DIR)/ ;

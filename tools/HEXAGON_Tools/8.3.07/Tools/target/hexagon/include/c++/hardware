@@ -1,0 +1,242 @@
+// hardware header for 18015
+#ifndef _HARDWARE_
+#define _HARDWARE_
+#include <iohw.h>
+
+ #ifndef _IOHW_NAME
+  #define _IOHW_NAME	hardware
+ #endif /* _IOHW_NAME */
+
+namespace std {
+	namespace hardware {
+		// CLASS hw_base
+class hw_base
+	{	// define hardware address type
+public:
+	enum access_mode
+		{	// access modes
+		random, read, read_write, write
+		};
+	enum device_bus
+		{	// device register widths
+		device8, device16, device32, device64
+		};
+	enum byte_order
+		{	// endianness
+		msb_low, msb_high
+		};
+	enum processor_bus
+		{	// processor bus widths
+		bus8, bus16, bus32, bus64
+		};
+	enum data_bus
+		{	// type name for data bus
+		};
+	enum io_bus
+		{	// type name for I/O bus
+		};
+	enum address_kind
+		{	// addressing model
+		is_static, is_dynamic
+		};
+
+	typedef ::ioreg address_type;	// HARDWARE DEPENDENT
+	};
+
+		// TEMPLATE CLASS static_address
+template<hw_base::address_type _Val>
+	class static_address
+	{	// specialization for value of type hw_base::address_type
+public:
+	enum
+		{	// define value from template parameter
+		value_ = _Val
+		};
+
+	hw_base::address_type value() const
+		{	// get value of this static address
+		return (_Val);
+		}
+	};
+
+		// CLASS dynamic_address
+class dynamic_address
+	{	// store dynamic address
+public:
+	dynamic_address(hw_base::address_type _Address)
+		: value_(_Address)
+		{	// construct from address
+		}
+
+	hw_base::address_type value() const
+		{	// get value of stored address
+		return (value_);
+		}
+
+	hw_base::address_type value_;	// stored address
+	};
+
+		// CLASS platform_traits
+class platform_traits
+	{	// default platform traits (all contents optional)
+public:
+	typedef hw_base::address_type address_holder;	// HARDWARE DEPENDENT
+	typedef hw_base::address_type processor_bus;	// HARDWARE DEPENDENT
+	enum
+		{	// platform traits
+		address_mode = hw_base::is_static,	// HARDWARE DEPENDENT
+		processor_endianness = hw_base::msb_low,	// HARDWARE DEPENDENT
+		processor_bus_width = hw_base::bus32	// HARDWARE DEPENDENT
+		};
+	};
+
+		// CLASS register_traits
+class register_traits
+	{	// default register traits (all contents optional)
+public:
+	typedef unsigned int value_type;	// HARDWARE DEPENDENT
+	typedef hw_base::address_type address_holder;	// HARDWARE DEPENDENT
+	enum
+		{	// platform traits
+		address_mode = hw_base::is_static,	// HARDWARE DEPENDENT
+		access_mode = hw_base::read_write,	// HARDWARE DEPENDENT
+		endianness = hw_base::msb_low,	// HARDWARE DEPENDENT
+		device_bus_width = hw_base::device32	// HARDWARE DEPENDENT
+		};
+	};
+
+		// TEMPLATE CLASS register_access
+template<class _Reg_traits = register_traits,
+	class _Platform_traits = platform_traits>
+	class register_access
+	{	// access wrapper for a hardware I/O register
+	typedef typename _Platform_traits::address_holder _Plat_t;
+	typedef typename _Reg_traits::address_holder _Reg_t;
+
+public:
+	typedef typename _Reg_traits::value_type value_type;
+
+	register_access()
+		: _Raddr(0)
+		{	// construct from default addresses
+		}
+
+	register_access(const _Plat_t& _Plat_addr)
+		: _Raddr(_Plat_addr)
+		{	// construct from platform address
+		}
+
+	register_access(const _Reg_t& _Reg_addr,
+		const _Plat_t& _Plat_addr)
+		: _Raddr(_Reg_addr + _Plat_addr)
+		{	// construct from register/platform address
+		}
+
+	// access operators
+	operator value_type() const
+		{	// read the register
+		return (iordbuf(_IOHW_NAME, _Raddr));
+		}
+
+	void operator=(value_type _Val)
+		{	// write the register
+		iowrbuf(_IOHW_NAME, _Raddr, _Val);
+		}
+
+	void operator|=(value_type _Val)
+		{	// OR the register
+		ioorbuf(_IOHW_NAME, _Raddr, _Val);
+		}
+
+	void operator&=(value_type _Val)
+		{	// AND the register
+		ioandbuf(_IOHW_NAME, _Raddr, _Val);
+		}
+
+	void operator^=(value_type _Val)
+		{	// XOR the register
+		ioxorbuf(_IOHW_NAME, _Raddr, _Val);
+		}
+
+	// access functions
+	value_type read() const
+		{	// read the register
+		return (iordbuf(_IOHW_NAME, _Raddr));
+		}
+
+	void write(value_type _Val)
+		{	// write the register
+		iowrbuf(_IOHW_NAME, _Raddr, _Val);
+		}
+
+	void or_with(value_type _Val)
+		{	// OR the register
+		ioorbuf(_IOHW_NAME, _Raddr, _Val);
+		}
+
+	void and_with(value_type _Val)
+		{	// AND the register
+		ioandbuf(_IOHW_NAME, _Raddr, _Val);
+		}
+
+	void xor_with(value_type _Val)
+		{	// XOR the register
+		ioxorbuf(_IOHW_NAME, _Raddr, _Val);
+		}
+
+private:
+	_Reg_t _Raddr;		// register address
+	};
+
+		// TEMPLATE CLASS register_buffer
+template<class _Reg_traits = register_traits,
+	class _Platform_traits = platform_traits>
+	class register_buffer
+	{	// access wrapper for a hardware I/O register
+	typedef typename _Platform_traits::address_holder _Plat_t;
+	typedef typename _Reg_traits::address_holder _Reg_t;
+
+public:
+	typedef register_access<_Reg_traits, _Platform_traits> ref_type;
+	typedef typename _Reg_traits::value_type value_type;
+
+	register_buffer()
+		: _Raddr(0)
+		{	// construct from default addresses
+		}
+
+	register_buffer(const _Plat_t& _Plat_addr)
+		: _Raddr(_Plat_addr)
+		{	// construct from platform address
+		}
+
+	register_buffer(const _Reg_t& _Reg_addr,
+		const _Plat_t& _Plat_addr)
+		: _Raddr(_Reg_addr + _Plat_addr)
+		{	// construct from register/platform address
+		}
+
+	// access operators
+	ref_type operator[](ioindex_t _Idx) const
+		{	// read the indexed element
+		return (ref_type(_Raddr, _Idx));
+		}
+
+	// access functions
+	ref_type get_buffer_element(ioindex_t _Idx) const
+		{	// read the indexed element
+		return (ref_type(_Raddr, _Idx));
+		}
+
+private:
+	_Reg_t _Raddr;		// register address
+	};
+
+	}	// namespace hardware
+}	// namespace std
+#endif /* _HARDWARE_ */
+
+/*
+ * Copyright (c) 1992-2006 by P.J. Plauger.  ALL RIGHTS RESERVED.
+ * Consult your license regarding permissions and restrictions.
+V5.01:1566 */

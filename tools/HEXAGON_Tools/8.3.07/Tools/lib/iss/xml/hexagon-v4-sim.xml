@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE feature SYSTEM "gdb-target.dtd">
+<target>
+ <architecture>hexagonv4</architecture>
+ <xi:include href="hexagon-core.xml"/>
+ <feature name="org.gnu.gdb.hexagon.v4.sim">
+  <reg name="p3_0"   bitsize="32" regnum="36" type="uint32"/>
+  <reg name="m0"     bitsize="32" regnum="38" type="uint32"/>
+  <reg name="m1"     bitsize="32" regnum="39" type="uint32"/>
+  <reg name="usr"    bitsize="32" regnum="40" type="uint32"/>
+  <reg name="pc"     bitsize="32" regnum="41" type="uint32"/>
+  <reg name="ugp"    bitsize="32" regnum="42" type="uint32"/>
+  <reg name="gp"     bitsize="32" regnum="43" type="uint32"/>
+  <reg name="cs0"    bitsize="32" regnum="44" type="uint32"/>
+  <reg name="cs1"    bitsize="32" regnum="45" type="uint32"/>
+  <reg name="sgp0"   bitsize="32" regnum="64" type="uint32"/>
+  <reg name="stid"   bitsize="32" regnum="66" type="uint32"/>
+  <reg name="elr"    bitsize="32" regnum="67" type="uint32"/>
+  <reg name="badva0" bitsize="32" regnum="68" type="uint32"/>
+  <reg name="badva1" bitsize="32" regnum="69" type="uint32"/>
+  <reg name="ssr"    bitsize="32" regnum="70" type="uint32"/>
+  <reg name="ccr"    bitsize="32" regnum="71" type="uint32"/>
+  <reg name="htid"   bitsize="32" regnum="72" type="uint32"/>
+  <reg name="imask"  bitsize="32" regnum="74" type="uint32"/>
+  <reg name="g0"     bitsize="32" regnum="80" type="uint32"/>
+  <reg name="g1"     bitsize="32" regnum="81" type="uint32"/>
+  <reg name="g2"     bitsize="32" regnum="82" type="uint32"/>
+  <reg name="g3"     bitsize="32" regnum="83" type="uint32"/>
+ </feature>
+</target>

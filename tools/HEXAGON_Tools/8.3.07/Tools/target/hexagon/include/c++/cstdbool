@@ -1,0 +1,12 @@
+// cstdbool standard header
+#ifndef _CSTDBOOL_
+#define _CSTDBOOL_
+#include <yvals.h>
+
+#include <stdbool.h>
+#endif /* _CSTDBOOL_ */
+
+/*
+ * Copyright (c) 1992-2006 by P.J. Plauger.  ALL RIGHTS RESERVED.
+ * Consult your license regarding permissions and restrictions.
+V5.01:1566 */

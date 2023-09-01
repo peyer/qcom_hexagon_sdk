@@ -1,0 +1,18 @@
+#  min file
+
+
+
+# adjust paths to be relative to current working dir
+_pkg_deps = 
+__pkg_dir := $(filter-out ./,$(dir $(lastword $(MAKEFILE_LIST))))
+
+
+# assign these variables only for the top-level makefile
+ifeq ($(origin __pkg_root),undefined)
+  __pkg_root    := $(__pkg_dir).
+  __pkg_result  := $(__pkg_root)$(filter-out /.,/.)
+  __pkg_deps    := $(_pkg_deps)
+endif
+__pkg_version ?= 1242031
+
+UBUNTUARM_TOOLS_DIR=$(UBUNTUARM_DIR)

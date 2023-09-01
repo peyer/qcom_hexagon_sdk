@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.cdt.launch.serial.feature"
+      label="%featureName"
+      version="9.5.0.201806170908"
+      provider-name="%providerName">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <plugin
+         id="org.eclipse.cdt.launch.serial.ui"
+         download-size="19"
+         install-size="29"
+         version="1.0.0.201806170908"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.cdt.launch.serial.core"
+         download-size="16"
+         install-size="24"
+         version="1.0.0.201806170908"/>
+
+</feature>

@@ -1,0 +1,13 @@
+<div class='src_summary'>
+<h1 class='src_file_path'>{{ TITLE }}</h1>
+<div id='src_summary_text' >Total Packets: {{ TOTAL_PACKETS }}, Packets Executed: {{ PACKETS_EXECUTED }}</div><br>
+<div id='src_summary_percent_text'>Coverage: <span class='{{ COLOR_CLASS }}'>{{ WEIGHT_TEXT }}%</span></div>
+<!--div id='src_summary_chart' style='height:400px; width:100%;'></div>
+<script type="text/javascript">
+var total_packets = {{ TOTAL_PACKETS }};
+var packets_executed = {{ PACKETS_EXECUTED }};
+var data = [
+    ["Executed", {{ PACKETS_EXECUTED }}],
+    ["Not Executed", {{ TOTAL_PACKETS }} - {{ PACKETS_EXECUTED }}]
+];
+</script-->

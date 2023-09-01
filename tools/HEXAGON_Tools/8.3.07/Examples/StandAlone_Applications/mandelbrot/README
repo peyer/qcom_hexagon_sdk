@@ -1,0 +1,21 @@
+########################################################################
+# Copyright (c) Date: Tue Aug 26 16:38:28 CDT 2008 QUALCOMM INCORPORATED 
+# All Rights Reserved 
+# Modified by QUALCOMM INCORPORATED on Tue Aug 26 16:38:28 CDT 2008 
+########################################################################
+
+crt0if example:
+The crt0.s file provides C run time support for stand-alone and rtos applications. 
+The mandelbrot.c application includes hexagon_standalone.h and demonstartes the use of API calls to crt0.s. 
+
+Mechanism:
+1. The application spawns worker threads using the "thread_create" API. 
+2. Each "compute_fractal" worker thread creates a part of the mandelbrot fractal.
+3. After completing of the computation, a worker thread locks a mutex (Mx) and writes to the image buffer. 
+4. The master thread (thread 0) then displays the contents of the image buffer and releases the mutex.
+
+Running Example:
+1) make
+
+Result:
+The simulation will take a bit of time to perform the required calculations before any output is displayed, followed by a printout of the mandelbrot fractal. 

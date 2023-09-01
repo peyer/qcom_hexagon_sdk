@@ -1,0 +1,20 @@
+INCDIRS += \
+   inc \
+   src \
+   $(HEXAGON_SDK_ROOT)/incs/audio \
+   $(HEXAGON_SDK_ROOT)/incs/a1std \
+
+BUILD_LIBS = test_capi_v2
+
+test_capi_v2_C_SRCS += \
+   src/test_capi_v2 \
+   src/capi_v2_test \
+
+test_capi_v2_CPP_SRCS += \
+   src/feedback_fwk \
+   src/feedback_module \
+
+BUILD_COPIES = \
+   inc/test_capi_v2.h \
+   $V/test_capi_v2$(LIB_EXT) \
+   $(SHIP_DIR)/ ;

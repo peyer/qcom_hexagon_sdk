@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.jgit"
+      label="%featureName"
+      version="5.0.0.201806131550-r"
+      provider-name="%providerName">
+
+   <description url="http://www.eclipse.org/jgit/">
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <url>
+      <update label="%updateSiteName" url="http://download.eclipse.org/egit/updates"/>
+      <discovery label="%updateSiteName" url="http://download.eclipse.org/egit/updates"/>
+   </url>
+
+   <plugin
+         id="org.eclipse.jgit"
+         download-size="2595"
+         install-size="5312"
+         version="5.0.0.201806131550-r"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jgit.archive"
+         download-size="24"
+         install-size="49"
+         version="5.0.0.201806131550-r"
+         unpack="false"/>
+
+   <plugin
+         id="com.jcraft.jsch"
+         download-size="295"
+         install-size="536"
+         version="0.1.54.v20170116-1932"
+         unpack="false"/>
+
+   <plugin
+         id="javaewah"
+         download-size="179"
+         install-size="348"
+         version="1.1.6.v20160919-1400"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.commons.compress"
+         download-size="548"
+         install-size="1053"
+         version="1.15.0.v20180119-1613"
+         unpack="false"/>
+
+   <plugin
+         id="org.slf4j.api"
+         download-size="33"
+         install-size="60"
+         version="1.7.2.v20121108-1250"
+         unpack="false"/>
+
+   <plugin
+         id="org.slf4j.impl.log4j12"
+         download-size="15"
+         install-size="25"
+         version="1.7.2.v20131105-2200"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.log4j"
+         download-size="405"
+         install-size="775"
+         version="1.2.15.v201012070815"
+         unpack="false"/>
+
+   <plugin
+         id="com.jcraft.jzlib"
+         download-size="77"
+         install-size="145"
+         version="1.1.1.v201205102305"
+         unpack="false"/>
+
+</feature>

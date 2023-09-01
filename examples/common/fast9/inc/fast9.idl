@@ -1,0 +1,25 @@
+/**=============================================================================
+Copyright (c) 2014-2015 QUALCOMM Technologies Incorporated.
+All Rights Reserved Qualcomm Proprietary
+=============================================================================**/
+#ifndef FAST9_APP_IDL
+#define FAST9_APP_IDL
+
+#include "AEEStdDef.idl"
+
+interface fast9{
+
+AEEResult fast9(
+    in sequence<octet> im,        // input buffer of unsigned 8-bit values
+    in unsigned long stride,      // stride of src image
+    in unsigned long xsize,       // xsize
+    in unsigned long ysize,       // ysize
+    in unsigned long barrier,     // barrier
+    in unsigned long border,      // border
+    rout sequence<short> xy,      // output buffer for coord of corners
+    in long maxnumcorners,        // maxnumcorners
+    rout long numcorners          // num of cornes
+    );
+
+};
+#endif //FAST9_APP_IDL

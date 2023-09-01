@@ -1,0 +1,106 @@
+Halide APK Camera Pipe Demo
+---------------------------
+
+Install Android Studio
+----------------------
+Download Android Studio from https://developer.android.com/studio
+Install Android Studio
+   Linux:   mkdir ~/Android
+            cd    ~/Android
+            tar xvf ~/Downloads/android-studio-ide-191.5791312-linux.tar.gz
+   Windows: run Downloads/android-studio-ide-191.5791312-windows.exe
+Run Android Studio & install any updates
+   Linux:   ~/Android/android-studio/bin/studio.sh
+   Windows: Start Menu->Android Studio
+Configure -> SDK Manager
+   Install Android SDK Platform 25 & 28
+   Accept License
+Exit Android Studio
+
+Linux APK Build Instructions
+----------------------------
+In a bash shell:
+cd Halide/Examples
+setup-env.sh
+cd camera_pipe
+./test-camera-pipe-android
+cd ..
+cd ApkCameraPipe
+cp ../camera_pipe/cam*.h app/src/main/cpp
+export ANDROID_NDK_HOME=${HEXAGON_SDK_ROOT}/tools/android-ndk-r19c
+export ANDROID_HOME=${HOME}/Android/Sdk
+export JAVA_HOME=${HOME}/Android/android-studio/jre
+gradlew clean
+gradlew build
+
+APK output will be in: app/build/outputs/apk/release
+
+Sign the APK (answer questions as prompted):
+${JAVA_HOME}/bin/keytool -genkey -keyalg RSA -validity 10000 \
+        -keystore hcpdemo.keystore -alias hcpdemo
+${JAVA_HOME}/bin/jarsigner -verbose -keystore hcpdemo.keystore \
+        app/build/outputs/apk/release/app-release-unsigned.apk \
+        -signedjar hcpdemo-release.apk hcpdemo
+
+
+Windows APK Build Instructions
+------------------------------
+In a Windows Command Shell:
+cd Halide/Examples
+setup-env.cmd
+cd camera_pipe
+test-camera-pipe-android.cmd
+cd ..
+cd ApkCameraPipe
+copy ..\camera_pipe\cam*.h app\src\main\cpp
+set ANDROID_NDK_HOME=%SDK_ROOT%\tools\android-ndk-r19c
+set ANDROID_HOME=%LOCALAPPDATA%\Android\Sdk
+set JAVA_HOME="C:\Program Files\Android\Android Studio\jre"
+gradlew clean
+gradlew build
+
+APK output will be in: app\build\outputs\apk\release
+
+Sign the APK (answer questions as prompted):
+%JAVA_HOME%\bin\keytool -genkey -keyalg RSA -validity 10000 ^
+        -keystore hcpdemo.keystore -alias hcpdemo
+%JAVA_HOME%\bin\jarsigner -verbose -keystore hcpdemo.keystore ^
+        app/build/outputs/apk/release/app-release-unsigned.apk ^
+        -signedjar hcpdemo-release.apk hcpdemo
+
+Install the APK
+---------------
+adb root
+adb remount
+adb install -r hcpdemo-release.apk
+adb push ../Images/bayer_raw.pgm /storage/emulated/0/bayer_raw_input.pgm
+
+Make libhalide_hexagon_host.so available to the app:
+adb pull /vendor/etc/public.libraries.txt
+    Edit public.libraries.txt
+    Add libhalide_hexagon_host.so to the end of the file
+    This makes this library public so it can be used by the app
+adb push public.libraries.txt /vendor/etc
+Linux:
+    adb push ${HALIDE_ROOT}/lib/arm-32-android/libhalide_hexagon_host.so /vendor/lib32
+    adb push ${HALIDE_ROOT}/lib/arm-64-android/libhalide_hexagon_host.so /vendor/lib64
+Windows:
+    adb push %HALIDE_ROOT%/lib/arm-32-android/libhalide_hexagon_host.so /vendor/lib32
+    adb push %HALIDE_ROOT%/lib/arm-64-android/libhalide_hexagon_host.so /vendor/lib64
+adb reboot
+adb root
+adb remount
+
+Run the App
+-----------
+If benchmarking, you can first stabilize the device clock settings using:
+    Examples/bin/adb-dcvs-performance
+
+Activate the device display and unlock the screen
+Swipe up to open the App menu
+Click on "Camera Pipe"
+Allow Camera Pipe to access photos on your device
+    Click "Run on HVX" to run the pipeline with Hexagon HVX
+    Click "Reset"      to reset the output between runs
+    Click "Run on CPU" to run the pipeline with the ARM CPU
+

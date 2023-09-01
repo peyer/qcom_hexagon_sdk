@@ -1,0 +1,55 @@
+<launchConfiguration type="com.qualcomm.hexagon.launch.applicationLaunchType">
+<booleanAttribute key="com.qualcomm.hexagon.gdb.launch.debuggerTab.DEFAULTS_SET" value="true" />
+<stringAttribute key="com.qualcomm.hexagon.launch.BUS_PENALITY" value="20" />
+<stringAttribute key="com.qualcomm.hexagon.launch.COREDUMP" value="coredump" />
+<booleanAttribute key="com.qualcomm.hexagon.launch.COREDUMP_SELECTION" value="false" />
+<stringAttribute key="com.qualcomm.hexagon.launch.COSIM_FILE_NAME" value="" />
+<stringAttribute key="com.qualcomm.hexagon.launch.CPU_ARCHITECTURE" value="v60" />
+<stringAttribute key="com.qualcomm.hexagon.launch.DSP_CLOCK" value="" />
+<stringAttribute key="com.qualcomm.hexagon.launch.ERROR_FILE_NAME" value="" />
+<stringAttribute key="com.qualcomm.hexagon.launch.INPUT_FILE_NAME" value="" />
+<stringAttribute key="com.qualcomm.hexagon.launch.MEMORY_FILL_VALUE" value="0" />
+<stringAttribute key="com.qualcomm.hexagon.launch.MISC_FLAGS" value="" />
+<stringAttribute key="com.qualcomm.hexagon.launch.OUTPUT_FILE_NAME" value="" />
+<stringAttribute key="com.qualcomm.hexagon.launch.SOLIB_FILE" value="" />
+<stringAttribute key="com.qualcomm.hexagon.launch.SYMBOL_FILES" value="" />
+<stringAttribute key="com.qualcomm.hexagon.launch.UNIT_TEST_FILE_NAME" value="test_capi_v2_decimate.qhut" />
+<stringAttribute key="com.qualcomm.hexagon.launch.UNIT_TEST_FILE_PARAMS" value="TestCase1++../../data/input.raw++../../data/output_.raw++../../data/decimate_enable.cfg++ ++@@@@" />
+<stringAttribute key="com.qualcomm.hexagon.launch.UNIT_TEST_FILE_PATH" value="artifact/qualcomm_hexagon_sdk_3_5_2/examples/audio/capi_v2_decimate/eclipse/test_capi_v2_decimate/test_capi_v2_decimate.qhut" />
+<stringAttribute key="com.qualcomm.hexagon.launch.UNIT_TEST_RUN_STATUS" value="Inactive" />
+<stringAttribute key="defaultGdbCommand" value="hexagon-lldb" />
+<stringAttribute key="org.eclipse.cdt.debug.mi.core.DEBUG_NAME" value="gdb" />
+<stringAttribute key="org.eclipse.cdt.debug.mi.core.DEV" value="/dev/ttyS0" />
+<stringAttribute key="org.eclipse.cdt.debug.mi.core.DEV_SPEED" value="115200" />
+<stringAttribute key="org.eclipse.cdt.debug.mi.core.GDB_INIT" value=".gdbinit" />
+<stringAttribute key="org.eclipse.cdt.debug.mi.core.HOST" value="localhost" />
+<stringAttribute key="org.eclipse.cdt.debug.mi.core.PORT" value="10000" />
+<booleanAttribute key="org.eclipse.cdt.debug.mi.core.REMOTE_TCP" value="false" />
+<stringAttribute key="org.eclipse.cdt.debug.mi.core.commandFactory" value="org.eclipse.cdt.debug.mi.core.standardCommandFactory" />
+<booleanAttribute key="org.eclipse.cdt.debug.mi.core.verboseMode" value="false" />
+<booleanAttribute key="org.eclipse.cdt.dsf.gdb.AUTO_SOLIB" value="true" />
+<stringAttribute key="org.eclipse.cdt.dsf.gdb.DEBUG_NAME" value="hexagon-lldb" />
+<stringAttribute key="org.eclipse.cdt.dsf.gdb.GDB_INIT" value="" />
+<listAttribute key="org.eclipse.cdt.dsf.gdb.SOLIB_PATH" />
+<intAttribute key="org.eclipse.cdt.launch.ATTR_BUILD_BEFORE_LAUNCH_ATTR" value="2" />
+<stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_ID" value="hexagon-lldb" />
+<stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_START_MODE" value="run" />
+<booleanAttribute key="org.eclipse.cdt.launch.DEBUGGER_STOP_AT_MAIN" value="true" />
+<stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_STOP_AT_MAIN_SYMBOL" value="main" />
+<stringAttribute key="org.eclipse.cdt.launch.PROGRAM_ARGUMENTS" value="-i ../../data/input.raw -o ../../data/output_.raw -c ../../data/decimate_enable.cfg" />
+<stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value="LLVM_Debug/test_capi_v2_decimate" />
+<stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value="test_capi_v2_decimate" />
+<stringAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_ID_ATTR" value="" />
+<booleanAttribute key="org.eclipse.cdt.launch.use_terminal" value="true" />
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/test_capi_v2_decimate" />
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="4" />
+</listAttribute>
+<mapAttribute key="org.eclipse.debug.core.preferred_launchers">
+<mapEntry key="[debug]" value="com.qualcomm.hexagon.launch.localCLLDBDebugLaunch" />
+</mapAttribute>
+<stringAttribute key="org.eclipse.dsf.launch.MEMORY_BLOCKS" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#10;&lt;memoryBlockExpressionList context=&quot;reserved-for-future-use&quot;/&gt;&#10;" />
+<stringAttribute key="process_factory_id" value="org.eclipse.cdt.dsf.gdb.GdbProcessFactory" />
+</launchConfiguration>

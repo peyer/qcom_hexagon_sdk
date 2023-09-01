@@ -1,0 +1,4 @@
+-rsc
+hexagon_Debug_dynamic_toolv83_v66/atomic.a
+hexagon_Debug_dynamic_toolv83_v66/atomic.o
+hexagon_Debug_dynamic_toolv83_v66/cae.o

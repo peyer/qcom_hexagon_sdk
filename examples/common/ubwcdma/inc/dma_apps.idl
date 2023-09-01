@@ -1,0 +1,63 @@
+/*!
+ ******************************************************************************
+ * Copyright (c) 2017 Qualcomm Technologies, Inc.
+ * All Rights Reserved.
+ * Confidential and Proprietary - Qualcomm Technologies, Inc.
+ *******************************************************************************
+ */
+
+#ifndef DMA_APPS_IDL
+#define DMA_APPS_IDL
+
+#include "AEEStdDef.idl"
+
+interface dma_apps
+{
+    /*!
+     * @enum    pix_fmt
+     * @brief   pixel format of frame input/output to the application
+     */
+    enum pix_fmt
+    {
+        FMT_NV12,
+        FMT_NV21,
+        FMT_NV124R,
+        FMT_P010,
+        ////////////////////////////////////////
+        FMT_MAX
+    };
+
+    struct hdl_t
+    {
+        unsigned long src_buf_size;
+        unsigned long dst_buf_size;
+        sequence<octet> app_scratch;
+    };
+
+    struct cfg_t
+    {
+        unsigned short frm_ht;
+        unsigned short frm_wd;
+        pix_fmt fmt;
+        boolean src_is_ubwc;
+        boolean dst_is_ubwc;
+    };
+
+    AEEResult blend_scratch_size(rout long size);
+    AEEResult blend_open(in cfg_t cfg, rout hdl_t p_hdl);
+    AEEResult blend_run(in hdl_t p_hdl, in sequence<octet> src0, in sequence<octet> src1, rout sequence<octet> dst);
+    AEEResult blend_close(in hdl_t hdl);
+
+    AEEResult sum_hvx_scratch_size(rout long size);
+    AEEResult sum_hvx_open(in cfg_t cfg, rout hdl_t p_hdl);
+    AEEResult sum_hvx_run(in hdl_t p_hdl, in sequence<octet> src0, in sequence<octet> src1, rout sequence<octet> dst);
+    AEEResult sum_hvx_close(in hdl_t hdl);
+
+    AEEResult memcpy_scratch_size(rout long size);
+    AEEResult memcpy_open(in cfg_t cfg, rout hdl_t p_hdl);
+    AEEResult memcpy_run(in hdl_t p_hdl, in sequence<octet> src, rout sequence<octet> dst);
+    AEEResult memcpy_close(in hdl_t hdl);
+
+};
+
+#endif DMA_APPS_IDL

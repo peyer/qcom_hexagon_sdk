@@ -1,0 +1,3 @@
+-rsc
+hexagon_Debug_dynamic_toolv83_v66/HAP_debug_printf.a
+hexagon_Debug_dynamic_toolv83_v66/HAP_debug_printf.o

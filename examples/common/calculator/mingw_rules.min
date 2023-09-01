@@ -1,0 +1,15 @@
+# test library executed using TISE
+BUILD_DLLS += calculator_test
+calculator_test_QAICIDLS += inc/calculator
+calculator_test_C_SRCS += $V/calculator_stub
+calculator_test_C_SRCS += src/calculator_test_main src/calculator_test
+calculator_test_LIBS += rpcmem libptlremote
+calculator_test_main_DEFINES += CALC_EXPORT=__declspec\(dllexport\) 
+
+DEFINES+=WIN32
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

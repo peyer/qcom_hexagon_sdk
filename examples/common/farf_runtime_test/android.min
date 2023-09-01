@@ -1,0 +1,25 @@
+ifeq ($(CDSP_FLAG), 1) 
+	LIB_DSPRPC = libcdsprpc
+else ifeq ($(MDSP_FLAG), 1) 
+	LIB_DSPRPC = libmdsprpc
+else ifeq ($(SLPI_FLAG), 1) 
+	LIB_DSPRPC = libsdsprpc
+else
+	LIB_DSPRPC = libadsprpc
+endif
+
+$(info ************  LIB=$(LIB_DSPRPC) ************)
+
+BUILD_COPIES += $V/farf_runtime_test$(EXE_EXT)
+
+BUILD_EXES+=farf_runtime_test
+farf_runtime_test_C_SRCS = src/farf_runtime_test_apps $V/farf_runtime_test_stub
+farf_runtime_test_QAICIDLS=inc/farf_runtime_test
+farf_runtime_test_DLLS = $(LIB_DSPRPC)
+farf_runtime_test_LD_FLAGS += -llog
+
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

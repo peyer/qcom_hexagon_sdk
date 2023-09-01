@@ -1,0 +1,1232 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><title>CAPIv2</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="../images/sidebar_top.jpg"></top><script src="../scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, true)"><input id="searchButton" onclick="postFunction(true)" type="button" value="Search"></form><p>
+<a href="../index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="../feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="../hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="../images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="../hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="../images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="../images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="../Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="../Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="../Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="../Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="../Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="../Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="../HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="../Audio/Applications.html">Audio</a>
+</p><p>
+<a href="../Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="../Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="../FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="../Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="../Voice/Applications.html">Voice</a>
+</p><p>
+<a href="../Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="../APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="../APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="../APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="../APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="../Audio/Examples.html">Audio</a>
+</p><p>
+<a href="../Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="../Examples_Common.html">Common</a>
+</p><p>
+<a href="../Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="../Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="../Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="../Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="../CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="../Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="../Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="../Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="../Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="../Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="../Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="../Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="../Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="../Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="../Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="../Tools_Signing.html">Signing</a>
+</p><p>
+<a href="../Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="../Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="../FAQ_Common.html">Common</a>
+</p><p>
+<a href="../FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="../FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="../FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="../Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="../Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="../Support_Contact.html">Contact</a>
+</p><center><img src="../images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h1>
+<a name="CAPIv2"></a>CAPIv2
+</h1><div class="toc"><div class="tocLevel"><a href="#Purpose">Purpose</a></div><div class="tocLevel"><a href="#Major%20Differences%20between%20APPI%20and%20CAPIv2">Major Differences between APPI and CAPIv2</a><div class="tocLevel"><a href="#Data%20Flow">Data Flow</a></div><div class="tocLevel"><a href="#Events">Events</a></div><div class="tocLevel"><a href="#Properties%20and%20Parameters">Properties and Parameters</a><div class="tocLevel"><a href="#Querying%20Properties%20Statically">Querying Properties Statically</a></div></div><div class="tocLevel"><a href="#Media%20Type%20at%20Initialization">Media Type at Initialization</a></div><div class="tocLevel"><a href="#Multiple%20Ports">Multiple Ports</a></div></div><div class="tocLevel"><a href="#Converting%20APPI%20Modules%20to%20CAPIv2">Converting APPI Modules to CAPIv2</a><div class="tocLevel"><a href="#Getsize">Getsize</a><div class="tocLevel"><a href="#APPI%20Version">APPI Version</a></div><div class="tocLevel"><a href="#CAPIv2%20Version">CAPIv2 Version</a></div></div><div class="tocLevel"><a href="#Init">Init</a><div class="tocLevel"><a href="#_APPI%20Version">APPI Version</a></div><div class="tocLevel"><a href="#_CAPIv2%20Version">CAPIv2 Version</a></div><div class="tocLevel"><a href="#Media%20Type%20at%20Init">Media Type at Init</a></div><div class="tocLevel"><a href="#Caching%20of%20Parameters">Caching of Parameters</a></div><div class="tocLevel"><a href="#Process%20and%20get_input_requirements">Process and get_input_requirements</a></div></div><div class="tocLevel"><a href="#ReInit">ReInit</a><div class="tocLevel"><a href="#__APPI%20Version">APPI Version</a></div><div class="tocLevel"><a href="#__CAPIv2%20Version">CAPIv2 Version</a></div></div><div class="tocLevel"><a href="#Set_param%20and%20get_param">Set_param and get_param</a><div class="tocLevel"><a href="#Params%20and%20Properties">Params and Properties</a></div><div class="tocLevel"><a href="#Events%20for%20State%20Changes">Events for State Changes</a></div></div></div><div class="tocLevel"><a href="#Using%20CAPIv2%20Features%20to%20Optimize%20the%20Code">Using CAPIv2 Features to Optimize the Code</a><div class="tocLevel"><a href="#Module%20Disablement%20from%20the%20Process%20Function">Module Disablement from the Process Function</a></div><div class="tocLevel"><a href="#Output%20Media%20Type%20Update%20Based%20on%20Parameter%20Setting">Output Media Type Update Based on Parameter Setting</a></div></div><div class="tocLevel"><a href="#Testing%20CAPIv2%20Modules">Testing CAPIv2 Modules</a></div></div><h2>
+<a name="Purpose"></a>Purpose
+</h2><p>
+The present context is intended for developers who have worked with the Audio Post Processor Interface (APPI) and want to start using the newer Common Audio Processor Interface Version 2 (CAPIv2) instead.
+</p><h2>
+<a name="Major%20Differences%20between%20APPI%20and%20CAPIv2"></a>Major Differences between APPI and CAPIv2
+</h2><p>
+This section describes the major differences between APPI and CAPIv2 in how various functionality is provided. CAPIv2 features are not explained in detail here; the <a href="CAPIv2_Introduction.html#Introduction">CAPIv2 Introduction Document</a> explains them in detail.
+</p><h3>
+<a name="Data%20Flow"></a>Data Flow
+</h3><p>
+Data flow is controlled for APPI modules by the client by querying for the input size using the get_input_requirements function. There is no such function in CAPIv2. Instead, CAPIv2 defines two distinct types of modules based on the method that they use &#8211; modules that require buffering and those that don't.
+</p><h3>
+<a name="Events"></a>Events
+</h3><p>
+Modules can now notify the framework of events using a callback function. This eliminates the need for the framework to explicitly query for changes to the module state with every API call using predefined param ids, which was required in APPI. Some examples of events that can be raised by the module are updates to the output media format, the algorithmic delay and the bandwidth requirement.
+</p><h3>
+<a name="Properties%20and%20Parameters"></a>Properties and Parameters
+</h3><p>
+APPI modules have functions for setting and getting parameters identified by param ids. The interface defined some param ids to set and get parameters which are used by the framework, and hence must be implemented by all modules. In addition to these, module developers also define their own param ids for parameters which are needed for functionality that is specific to the module.
+</p><p>
+CAPIv2 makes a distinction between parameters that are used for framework functionality and those that are used for module-specific functionality. In CAPIv2, parameters that are used for framework functionality are called properties. Parameters that are used for module specific functionality are called parameters. Separate functions are used for setting and getting properties and for setting and getting parameters. Certain properties may also be queried without creating an instance of the module. Certain properties may also be set at the time of initialization of the module.
+</p><h4>
+<a name="Querying%20Properties%20Statically"></a>Querying Properties Statically
+</h4><p>
+APPI requires that the module developer provide a function to query the size that is to be allocated to hold an instance of the module. This function is called before creating any instance of the module. CAPIv2 generalizes this concept and replaces this function with a function that can be used to query a number of different properties of the module without creating an instance of the module. One of these properties is the instance size, which provides the same functionality as the corresponding APPI function. However, there are many other properties that may be queried such as the stack size requirement, the buffering model used, whether the module supports in place processing etc.
+</p><h3>
+<a name="Media%20Type%20at%20Initialization"></a>Media Type at Initialization
+</h3><p>
+APPI requires that the framework provide the input media type at initialization and the module return the output media type. This requirement is removed in CAPIv2. The input media format is a property that can be set by the framework at any time. It may be sent at the init time, but it is not required. The output media type is provided to the framework by the module using an event which may be raised at any time. It is completely independent of the setting of the input media type.
+</p><h3>
+<a name="Multiple%20Ports"></a>Multiple Ports
+</h3><p>
+APPI modules have exactly one input and one output. CAPIv2 modules may have any number (including zero) of input ports and output ports.
+</p><h2>
+<a name="Converting%20APPI%20Modules%20to%20CAPIv2"></a>Converting APPI Modules to CAPIv2
+</h2><p>
+This section describes the major steps needed to change an APPI module to a CAPIv2 module.
+</p><h3>
+<a name="Getsize"></a>Getsize
+</h3><p>
+The getsize function has been generalized in CAPIv2, called get_static_properties. In addition to the size, the client may request for other properties such as the stack size, data buffering model (explained later), and whether the module can do inplace computation (this flag was returned from the init function in APPI). The get_static_properties function must iterate through the property structure that is passed by the client and fill in the data for each property.
+</p><p>
+APPI allows the client to pass in a buffer with arbitrary data to the getsize function to be used to calculate the size. The contents of the buffer were not defined. CAPIv2 allows the client to pass in the same properties that it passes in during the call to init. The payload for each property is defined based on the property ID. Custom data can still be passed to the module using the CAPI_V2_CUSTOM_INIT_DATA property.
+</p><h4>
+<a name="APPI%20Version"></a>APPI Version
+</h4><pre>ADSPResult appi_module_getsize(<span style="color: blue">const</span> appi_buf_t *params_ptr, uint32_t *size_ptr) {
+    *size_ptr = calculate_module_size(params_ptr);
+    <span style="color: blue">return</span> ADSP_EOK;
+  }
+</pre><h4>
+<a name="CAPIv2%20Version"></a>CAPIv2 Version
+</h4><pre>capi_v2_err_t capi_v2_module_get_static_properties(capi_v2_proplist *init_properties, capi_v2_proplist *static_properties) {
+  capi_v2_err_t err = CAPI_V2_EOK;
+  uint32_t i = 0;
+  <span style="color: blue">for</span> (i = 0; i &lt; props_ptr-&gt;props_num; i++) {
+     capi_v2_buf_t *payload = &amp;prop_ptr[i].payload;
+     <span style="color: blue">switch</span>(prop_ptr[i].id) {
+        <span style="color: blue">case</span> CAPI_V2_INIT_MEMORY_REQUIREMENT:
+        {
+           capi_v2_init_memory_requirement_t *data_ptr = (capi_v2_init_memory_requirement_t*)payload-&gt;data_ptr;
+           uint32_t size = calculate_module_size(init_properties);
+           data_ptr-&gt;size_in_bytes = size;
+           payload-&gt;actual_data_len = <span style="color: blue">sizeof</span>(capi_v2_init_memory_requirement_t);
+           <span style="color: blue">break</span>;
+        }
+        <span style="color: blue">case</span> CAPI_V2_STACK_SIZE:
+        {
+           capi_v2_stack_size_t *data_ptr = (capi_v2_stack_size_t*)payload-&gt;data_ptr;
+           data_ptr-&gt;size_in_bytes = STACK_SIZE;
+           payload-&gt;actual_data_len = <span style="color: blue">sizeof</span>(capi_v2_stack_size_t);
+           <span style="color: blue">break</span>;
+        }
+        <span style="color: blue">case</span> CAPI_V2_IS_INPLACE:
+        {
+           capi_v2_is_inplace_t *data_ptr = (capi_v2_is_inplace_t*)payload-&gt;data_ptr;
+           data_ptr-&gt;is_inplace = INPLACE_VALUE; <span style="color: darkgreen">//Note: Returned from init() in the APPI version.</span>
+           payload-&gt;actual_data_len = <span style="color: blue">sizeof</span>(capi_v2_is_inplace_t);
+           <span style="color: blue">break</span>;
+        }
+        <span style="color: blue">case</span> CAPI_V2_REQUIRES_DATA_BUFFERING:
+        {
+           capi_v2_requires_data_buffering_t *data_ptr = (capi_v2_requires_data_buffering_t*)payload-&gt;data_ptr;
+           data_ptr-&gt;requires_data_buffering = FALSE; <span style="color: darkgreen">//Note: Please refer to the section on Data Buffering to determine what to fill here.</span>
+           payload-&gt;actual_data_len = <span style="color: blue">sizeof</span>(capi_v2_requires_data_buffering_t);
+           <span style="color: blue">break</span>;
+        }
+        <span style="color: blue">default</span>:
+        {
+           payload-&gt;actual_data_len = 0;
+           CAPI_V2_SET_ERROR(err,CAPI_V2_EUNSUPPORTED); 
+           <span style="color: darkgreen">// CAPI_V2_SET_ERROR must be used to set the error, so that the errors from all iterations are accumulated.</span>
+        }
+     }
+  }
+  <span style="color: blue">return</span> err;
+}
+</pre><h3>
+<a name="Init"></a>Init
+</h3><p>
+The init function is used to initialize the module object just like in APPI. Instead of passing an arbitrary buffer for initialization params, a property list is passed. This allows the module to determine the payload structure of each property based on the property id. The client passes media type information to the APPI module in the call to the init function. For CAPIv2 modules, passing the media type information at init time is optional. The media type may or may not be present in the init property list that the client provides. The client may provide the media type information separately by calling the set_properties function. The process function will not be called before the media format is set. The module is not required to return the output media type in the call to init. The output media type can be provided to the client at any time using the CAPI_V2_EVENT_OUTPUT_MEDIA_FORMAT_UPDATED event. Please refer to the section on reinit section below for details on this. The client will pass in properties which need to be set at init time. These properties must be set to the module just like a call to the set_properties function.
+</p><h4>
+<a name="_APPI%20Version"></a>APPI Version
+</h4><pre>ADSPResult appi_module_init(
+     appi_t*               _pif,
+     bool_t*               is_in_place_ptr,
+     <span style="color: blue">const</span> appi_format_t*  in_format_ptr,
+     appi_format_t*        out_format_ptr,
+     appi_buf_t*           info_ptr) {
+    <span style="color: darkgreen">// Initialize the memory pointed to by the _pif pointer, optionally using info_ptr</span>
+    ...
+    <span style="color: darkgreen">// Set the input media format from in_format_ptr</span>
+    ...
+    <span style="color: darkgreen">// Populate the output media format to out_format_ptr</span>
+
+    *is_in_place_ptr = INPLACE_VALUE; <span style="color: darkgreen">// Note: This is moved to the get_static_properties function in CAPIv2. Please refer to section 3.1.</span>
+    <span style="color: blue">return</span> ADSP_EOK; 
+}
+</pre><h4>
+<a name="_CAPIv2%20Version"></a>CAPIv2 Version
+</h4><pre>
+capi_v2_err_t capi_v2_module_init(
+     capi_v2_t*          _pif,
+     capi_v2_proplist_t* init_set_properties) {
+    capi_v2_err_t err = CAPI_V2_EOK;
+   <span style="color: darkgreen">// Initialize the memory pointed to by the _pif pointer, optionally using init_set_properties.</span>
+   ...
+   <span style="color: darkgreen">// Set the properties provided by the client. They may or may not include the input media format.</span>
+   CAPI_V2_SET_ERROR(err, set_properties_internal(init_set_properties));
+   <span style="color: darkgreen">// Error handling not shown.</span>
+   <span style="color: darkgreen">// Raise any events if required. All events are optional here. Please refer to the section on events.</span>
+
+   <span style="color: blue">return</span> err;
+}
+</pre><h4>
+<a name="Media%20Type%20at%20Init"></a>Media Type at Init
+</h4><p>
+The media type information is provided to APPI modules at initialization time. This helps the module to set up its internal buffers and other states. The module must also return the output media format at this time. This requirement is removed in CAPIv2. In CAPIv2, the input media format is an event that may or may not be set by the framework at initialization time. It will be set before the first call to the process function though. The output media format is an event that may be raised by the module at any time, independent of the setting of the input media format. As a consequence of this, the module will need to wait for the input media format setting before setting up its internal buffers and any state that depends on the media format. Thus, some logic from the init function may need to be moved to the set_properties function where the input media format is set. A flag may be used to keep track of whether the module is completely initialized or not. Any calls to the process function may be returned with an error if the module is partially initialized.
+</p><h4>
+<a name="Caching%20of%20Parameters"></a>Caching of Parameters
+</h4><p>
+CAPIv2 guarantees that the process function will not be called until the input media type is set. However, there is no such restriction regarding the set_param function. Any module parameters may be set before the input media type is received. If the module is only partially initialized, it may need to allocate temporary memory to cache these parameter values and then set them only once the module is fully initialized. The get_param function should also be updated to return the cached parameters if the module is not fully initialized.
+</p><h4>
+<a name="Process%20and%20get_input_requirements"></a>Process and get_input_requirements
+</h4><p>
+There is no get_input_requirements function in CAPIv2. Based on the logic that was used for getting the input requirements, the module must advertise itself as either requiring buffering from the framework or not. This is done in the get_static_properties function. Some changes are also required in the process function.
+</p><ol type="1">
+<li>
+<p>
+Modules that do sample-by-sample processing
+</p><p>
+The simplest data flow is for modules that can process any number of amples at a time and return the same number of samples. For such modules, the get_input_requirements function simply returns the number of output samples. Such modules can identify themselves as not requiring any data buffering. The process function logic does not need to be modified at all. The APPI structures just need to be changed to the CAPIv2 structures.
+</p><p>
+APPI Version
+</p><pre>ADSPResult appi_module_get_input_req(
+    appi_t*               _pif,
+    <span style="color: blue">const</span> uint32_t        output_size,
+    uint32_t*             input_size) {
+ *input_size = output_size;
+ <span style="color: blue">return</span> ADSP_EOK;
+ }
+
+
+ ADSPResult appi_module_process(
+    appi_t*               _pif,
+    <span style="color: blue">const</span> appi_buflist_t* input,
+    appi_buflist_t*       output,
+    appi_buf_t*           info_ptr) {
+ ADSPResult result = ADSP_EOK;
+
+ num_bytes = (input-&gt;buf_ptr[0].actual_data_len &lt; output-&gt;buf_ptr[0].max_data_len) ? input-&gt;buf_ptr[0].actual_data_len : output-&gt;buf_ptr[0].max_data_len;
+
+  <span style="color: darkgreen">// Process num_bytes of data.</span>
+  ...
+  <span style="color: darkgreen">// Update the buffer offsets</span>
+  {
+      uint32_t i = 0;
+      <span style="color: blue">for</span> (i = 0; i &lt; input-&gt;bufs_num; i++) {
+           input-&gt;buf_ptr[i].actual_data_len = num_bytes;
+      }
+      <span style="color: blue">for</span> (i = 0; i &lt; output-&gt;bufs_num; i++) {
+           output-&gt;buf_ptr[i].actual_data_len = num_bytes;
+      }
+  }
+  <span style="color: blue">return</span> ADSP_EOK;
+ }
+</pre><p>
+CAPIv2 Version:
+</p><pre>capi_v2_err_t capi_v2_module_get_static_properties(capi_v2_proplist *init_properties, 
+    capi_v2_proplist *static_properties) {
+    capi_v2_err_t err = CAPI_V2_EOK;
+    uint32_t i = 0;
+    <span style="color: blue">for</span> (i = 0; i &lt; props_ptr-&gt;props_num; i++) {
+          capi_v2_buf_t *payload = &amp;prop_ptr[i].payload;
+          <span style="color: blue">switch</span>(prop_ptr[i].id) {
+              ...
+            <span style="color: blue">case</span> CAPI_V2_REQUIRES_DATA_BUFFERING:
+            {
+             capi_v2_requires_data_buffering_t *data_ptr = (capi_v2_requires_data_buffering_t*)payload-&gt;data_ptr;
+             data_ptr-&gt;requires_data_buffering = FALSE; 
+             payload-&gt;actual_data_len = <span style="color: blue">sizeof</span>(capi_v2_requires_data_buffering_t);
+             <span style="color: blue">break</span>;
+            }
+            ...
+            }
+        }
+        <span style="color: blue">return</span> err;
+    }
+
+
+capi_v2_err_t capi_v2_module_process(
+    capi_v2_t*              _pif,
+    capi_v2_stream_data_t*  input[],
+    capi_v2_stream_data_t*  output[]) {
+    capi_v2_err_t err = CAPI_V2_EOK;
+
+    num_bytes = (input[0]-&gt;buf_ptr[0].actual_data_len &lt; output[0]-&gt;buf_ptr[0].max_data_len) ? input[0]-&gt;buf_ptr[0].actual_data_len : output[0]-&gt;buf_ptr[0].max_data_len;
+
+    <span style="color: darkgreen">// Process num_bytes of data using the same logic as the APPI version.</span>
+    ...
+    <span style="color: darkgreen">// Update the buffer offsets</span>
+      {
+        uint32_t i = 0;
+        <span style="color: blue">for</span> (i = 0; i &lt; input[0]-&gt;bufs_num; i++) {
+            input[0]-&gt;buf_ptr[i].actual_data_len = num_bytes;
+        }
+
+        <span style="color: blue">for</span> (i = 0; i &lt; output[0]-&gt;bufs_num; i++) {
+            output[0]-&gt;buf_ptr[i].actual_data_len = num_bytes;
+        }
+    }
+  <span style="color: blue">return</span> CAPI_V2_EOK;
+}
+</pre>
+</li><li>
+<p>
+Modules that process in a fixed frame size
+</p><p>
+Such modules follow a logic which is similar 'Rebuffering Requirements'. These modules should identify themselves as not requiring any data buffering. The process function logic should be changed to the logic that is described in the section <a href="CAPIv2_Introduction.html#Non-Buffered%20Data%20Flow%20Model">'Non-buffered data flow model'</a>. The memory requirements of the module will not change with this modification in logic. The module will output an additional frame of zeros at the beginning, however. This will cause an increase in the delay. If this is not desirable, then the procedure described in the point below for &#8220;Any Other Module&#8221; can be used. However, using this logic will make the data flow less uniform (the data flow will be similar to the APPI module) and also add some processing and memory overhead on the framework.
+</p>
+</li><li>
+<p>
+Any Other Module
+</p><p>
+If the module's data flow doesn't fit into the models described above, then it must identify itself as requiring data buffering. The process function should ensure that the module either empties its input or fills up its output with every call. This will not require any modification to the process function logic since the APPI logic guarantees this behaviour in the following way:
+</p><ol type="1">
+<li>
+<p>
+If the input was less than the input requirement, the APPI module must empty the input and it may partially fill the output. Thus, the input is emptied in this case.
+</p>
+</li><li>
+<p>
+If the input was equal to the input requirement, the APPI module must empty the input and fill the output. This the input is again emptied in this case.
+</p>
+</li><li>
+<p>
+If the input was more than the input requirement, the APPI module must fill the output and it may partially empty the input. The output is filled in this case.
+</p>
+</li>
+</ol><p>
+Thus, no change is needed in the process function logic. The get_input_requirements function can simply be removed from the API since it is no longer needed in CAPIv2.
+</p><p>
+APPI Version
+</p><pre>ADSPResult appi_module_get_input_req(
+  appi_t*               _pif,
+  <span style="color: blue">const</span> uint32_t        output_size,
+  uint32_t*             input_size) {
+ <span style="color: darkgreen">// Arbitrary logic to determine the input size from the output size.</span>
+ ...
+ <span style="color: blue">return</span> ADSP_EOK;
+}
+
+ADSPResult appi_module_process(
+  appi_t*               _pif,
+  <span style="color: blue">const</span> appi_buflist_t* input,
+  appi_buflist_t*       output,
+  appi_buf_t*           info_ptr) {
+ ADSPResult result = ADSP_EOK;
+
+  <span style="color: darkgreen">// Arbitrary processing logic that conforms to the APPI interface rules.</span>
+  ...
+  <span style="color: darkgreen">// Update the buffer offsets</span>
+   {
+     uint32_t i = 0;
+     <span style="color: blue">for</span> (i = 0; i &lt; input-&gt;bufs_num; i++) {
+       input-&gt;buf_ptr[i].actual_data_len = num_bytes_consumed;
+      }
+     <span style="color: blue">for</span> (i = 0; i &lt; output-&gt;bufs_num; i++) {
+       output-&gt;buf_ptr[i].actual_data_len = num_bytes_produced;
+      }
+   }
+ <span style="color: blue">return</span> ADSP_EOK;
+}
+</pre><p>
+CAPIv2 Version
+</p><pre>capi_v2_err_t capi_v2_module_get_static_properties(capi_v2_proplist *init_properties, capi_v2_proplist *static_properties) {
+capi_v2_err_t err = CAPI_V2_EOK;
+uint32_t i = 0;
+<span style="color: blue">for</span> (i = 0; i &lt; props_ptr-&gt;props_num; i++) {
+  capi_v2_buf_t *payload = &amp;prop_ptr[i].payload;
+  <span style="color: blue">switch</span>(prop_ptr[i].id) {
+     ...
+     <span style="color: blue">case</span> CAPI_V2_REQUIRES_DATA_BUFFERING:
+     {
+      capi_v2_requires_data_buffering_t *data_ptr = (capi_v2_requires_data_buffering_t*)payload-&gt;data_ptr;
+      data_ptr-&gt;requires_data_buffering = TRUE; 
+      payload-&gt;actual_data_len = <span style="color: blue">sizeof</span>(capi_v2_requires_data_buffering_t);
+      <span style="color: blue">break</span>;
+     }
+     ...
+   }
+}
+<span style="color: blue">return</span> err;
+} 
+capi_v2_err_t capi_v2_module_process(
+  capi_v2_t*              _pif,
+  capi_v2_stream_data_t*  input[],
+  capi_v2_stream_data_t*  output[]) {
+  capi_v2_err_t err = CAPI_V2_EOK;
+
+  <span style="color: darkgreen">// Process data using the same logic as the APPI version.</span>
+  ...
+  <span style="color: darkgreen">// Update the buffer offsets</span>
+  {
+   uint32_t i = 0;
+   <span style="color: blue">for</span> (i = 0; i &lt; input[0]-&gt;bufs_num; i++) {
+      input[0]-&gt;buf_ptr[i].actual_data_len = num_bytes_consumed;
+   }
+   <span style="color: blue">for</span> (i = 0; i &lt; output[0]-&gt;bufs_num; i++) {
+      output[0]-&gt;buf_ptr[i].actual_data_len = num_bytes_produced;
+   }
+  }
+  <span style="color: blue">return</span> CAPI_V2_EOK;
+ }
+</pre>
+</li>
+</ol><h3>
+<a name="ReInit"></a>ReInit
+</h3><p>
+The ReInit function is called for APPI modules to specify the input media type and get the output media type. The input and output media types are decoupled in CAPIv2. The framework sets the input media type property to specify the input media type and the module needs to raise the output media type event to notify the framework of changes in the output media type. To convert an existing APPI module to CAPIv2, the reinit function logic can simply be called internally when the input media type property is set by the framework. The output media format returned by this logic must then be notified to the framework by raising the output media type event.
+</p><h4>
+<a name="__APPI%20Version"></a>APPI Version
+</h4><pre>ADSPResult appi_module_reinit(
+     appi_t*               _pif,
+     <span style="color: blue">const</span> appi_format_t*  in_format_ptr,
+     appi_format_t*        out_format_ptr,
+     appi_buf_t*           info_ptr) {
+   <span style="color: blue">return</span> internal_media_type_setting_logic(_pif, in_format_ptr, out_format_ptr);
+}
+</pre><h4>
+<a name="__CAPIv2%20Version"></a>CAPIv2 Version
+</h4><pre><span style="color: blue">typedef</span> <span style="color: blue">struct</span> pcm_media_format {
+   capi_v2_set_get_media_format_t main;
+   capi_v2_standard_data_format_t std_fmt;
+ } pcm_media_format;
+
+capi_v2_err_t capi_v2_module_set_properties(
+     capi_v2_t*            _pif,
+     capi_v2_proplist_t    *props_ptr) {
+  capi_v2_err_t err = CAPI_V2_EOK;
+  uint32_t i = 0;
+  <span style="color: blue">for</span> (i = 0; i &lt; props_ptr-&gt;props_num; i++) {
+     capi_v2_buf_t *payload = &amp;prop_ptr[i].payload;
+     <span style="color: blue">switch</span>(prop_ptr[i].id) {
+        ...
+        <span style="color: blue">case</span> CAPI_V2_INPUT_MEDIA_FORMAT:
+        {
+           pcm_media_format *input_fmt = (pcm_media_format*)payload-&gt;data_ptr;
+           pcm_media_format output_fmt;
+           CAPI_V2_SET_ERROR(err, internal_media_type_setting_logic(_pif, input_fmt, &amp;output_fmt));
+           payload-&gt;actual_data_len = <span style="color: blue">sizeof</span>(pcm_media_format);
+           raise_output_media_type_event(_pif, &amp;output_fmt); <span style="color: darkgreen">//Refer to the CAPIv2 Interface document2 for details on how to raise events.</span>
+           <span style="color: blue">break</span>;
+        }
+      ...
+     }
+  }
+  <span style="color: blue">return</span> err;
+}
+</pre><h3>
+<a name="Set_param%20and%20get_param"></a>Set_param and get_param
+</h3><p>
+The set and get parameter mechanism works the same way in CAPIv2 as APPI. CAPIv2 also requires two other functions to be implemented &#8211; set_properties and get_properties. These functions also work in a similar fashion as the set_param and get_param functions.
+</p><h4>
+<a name="Params%20and%20Properties"></a>Params and Properties
+</h4><p>
+Properties are predefined pieces of information that can be set or queried from a module. They are applicable to many different modules. Some examples of properties are stack size requirement, output media format, event callback function pointer. They can be set and queried using the set_properties and get_properties functions. Some properties can also be queried using the get_static_properties function. Also, some properties can be set using the init function. Parameters are pieces of information that are usually applicable to only the particular module. For example, a module that implements a filter may have parameters such as cutoff frequency, filter length and filter type. A module that implements volume control functionality may have parameters such as volume level and mute. Parameters can be set by the client processor of the aDSP. They are generally used to tune algorithms. Properties are used for general control flow by the framework. They are not exposed to the client processor. To convert the existing APPI set param and get param functions to CAPIv2, the APPI parameters which have been changed to properties in CAPIv2 need to be extracted from the functions and put into the set properties and get properties functions.
+</p><h4>
+<a name="Events%20for%20State%20Changes"></a>Events for State Changes
+</h4><p>
+APPI defines special parameter IDs for the framework to query the current algorithmic delay, KPPS, bandwidth and process state of the module. The framework queries each of these independently whenever it feels that they might have changed. These parameters are now changed to events. It is the responsibility of the module to raise an event when there is a change in any of these parameters. This reduces the run time overhead of polling by the framework and simplifies the get_param function. These parameters should be removed from the get_param function and code should be added to raise appropriate events instead. Please refer to the CAPIv2 Interface Document2 for details on how to raise events.
+</p><ol type="1">
+<li>
+<p>
+APPI Version
+</p><pre>ADSPResult appi_module_set_param(
+   appi_t*               _pif,
+   uint32_t              param_id,
+   <span style="color: blue">const</span> appi_buf_t*     params_ptr) {
+   ADSPResult result = ADSP_EOK;
+   <span style="color: blue">switch</span> (param_id) {
+     <span style="color: blue">case</span> APPI_PARAM_ID_ALGORITHMIC_RESET:
+      <span style="color: darkgreen">// Code to perform reset.</span>
+      ...
+      <span style="color: blue">break</span>;
+     <span style="color: darkgreen">// Module-specific parameters</span>
+      ...
+    }
+   <span style="color: blue">return</span> result;
+   }
+ADSPResult appi_module_get_param(
+   appi_t*               _pif,
+   uint32_t              param_id,
+   appi_buf_t*           params_ptr) {
+ADSPResult result = ADSP_EOK;
+<span style="color: blue">switch</span> (param_id)
+{
+   <span style="color: blue">case</span> APPI_PARAM_ID_ALGORITHMIC_DELAY:
+    <span style="color: darkgreen">// Calculation of algorithmic delay</span>
+    ... 
+   <span style="color: blue">break</span>;
+
+   <span style="color: blue">case</span> APPI_PARAM_ID_PROCESS_CHECK:
+    <span style="color: darkgreen">// Filling up process state</span>
+    ...
+    <span style="color: blue">break</span>;      
+   <span style="color: blue">case</span> APPI_PARAM_ID_KPPS:
+    <span style="color: darkgreen">// Filling up the KPPS requirement</span>
+     ...
+    <span style="color: blue">break</span>;   
+   <span style="color: blue">case</span> APPI_PARAM_ID_MEDIA_FORMAT_CHANGE
+    <span style="color: darkgreen">// Setting a flag to indicate whether the media format has changed.</span>
+     ...
+    <span style="color: blue">break</span>;
+    <span style="color: darkgreen">// Module specific parameters</span>
+     ...
+ }
+ <span style="color: blue">return</span> result;
+</pre><p>
+}
+</p>
+</li><li>
+<p>
+CAPIv2 Version
+</p><pre>capi_v2_err_t capi_v2_module_set_param(
+   capi_v2_t*                   _pif,
+   uint32_t                     param_id,
+   <span style="color: blue">const</span> capi_v2_port_info_t*   port_info_ptr,
+   capi_v2_buf_t*         params_ptr) {
+ capi_v2_err_t err = CAPI_V2_EOK;
+ <span style="color: blue">switch</span> (param_id)
+   { 
+    <span style="color: darkgreen">// Module-specific parameters</span>
+   }
+ <span style="color: blue">return</span> err;
+ }
+
+ capi_v2_err_t capi_v2_module_get_param(
+   capi_v2_t*                   _pif,
+   uint32_t                     param_id,
+   <span style="color: blue">const</span> capi_v2_port_info_t*   port_info_ptr,
+   capi_v2_buf_t*               params_ptr) {
+ capi_v2_err_t err = CAPI_V2_EOK;
+  <span style="color: blue">switch</span> (param_id)
+  {
+   <span style="color: darkgreen">// Module-specific parameters</span>
+  }
+  <span style="color: blue">return</span> err;
+ }
+
+ capi_v2_err_t capi_v2_module_set_properties(
+   capi_v2_t*          _pif,
+   capi_v2_proplist_t* props_ptr) {
+  capi_v2_err_t  err = CAPI_V2_EOK;
+  capi_v2_prop_t *prop_array = props_ptr-&gt;prop_ptr;
+
+  <span style="color: blue">for</span> (uint8_t i=0; i &lt; props_ptr-&gt;props_num; i++) {
+     capi_v2_buf_t *payload = &amp;(prop_array[i].payload);
+     <span style="color: blue">switch</span>(prop_array[i].id) {
+       <span style="color: blue">case</span> CAPI_V2_ALGORITHMIC_RESET:
+       {
+         <span style="color: darkgreen">// Code to perform reset.</span>
+        <span style="color: blue">break</span>;
+       }
+      <span style="color: darkgreen">// Other properties as required. Please refer to the CAPIv2 interface document2 for a list of all the properties defined in the interface.</span>
+      ...
+     }
+  <span style="color: blue">return</span> err;
+ }
+
+ capi_v2_err_t capi_v2_module_get_properties(
+   capi_v2_t*          _pif,
+   capi_v2_proplist_t* props_ptr) {
+   capi_v2_err_t err = CAPI_V2_EOK;
+   capi_v2_prop_t *prop_ptr= props_ptr-&gt;prop_ptr;
+   <span style="color: blue">for</span> (i=0; i &lt; props_ptr-&gt;props_num; i++) {
+      capi_v2_buf_t *payload = &amp;prop_ptr[i].payload;
+      <span style="color: blue">switch</span>(prop_ptr[i].id) {
+      <span style="color: darkgreen">// Properties as required. None of the standard APPI parameters have been converted to get properties. Please refer to the CAPIv2 interface document2 for a description of all the properties.</span>
+      ...
+      }
+  <span style="color: blue">return</span> err;
+ }
+<span style="color: darkgreen">/* 
+ Code must be added to raise the following events if the corresponding get parameters were implemented in the APPI version of the module:
+  CAPI_V2_EVENT_KPPS: Must be raised whenever the KPPS requirement changes. If the KPPS requirement never changes, it can be raised once at init time.
+  CAPI_V2_EVENT_BANDWIDTH: Must be raised whenever the bandwidth requirement changes. If the bandwidth requirement never changes, it can be raised once at init time.
+  CAPI_V2_EVENT_OUTPUT_MEDIA_FORMAT_UPDATED: Must be raised whenever the output media format changes. For APPI modules, this is typically when the input media format is set. The input media format is set using a set_properties call, so this event can be raised at that point. For more details, please refer to the section on reinit(3.4).
+  CAPI_V2_EVENT_PROCESS_STATE: Must be raised when the process state of the module changes, i.e. when the module goes from enabled to disabled and disabled to enabled.
+  CAPI_V2_EVENT_ALGORITHMIC_DELAY: Must be raised whenever the algorithmic delay changes. This typically happens when some algorithm-specific configuration changes due to a set param call. This event must be raised at that point.
+*/</span>
+</pre>
+</li>
+</ol><h2>
+<a name="Using%20CAPIv2%20Features%20to%20Optimize%20the%20Code"></a>Using CAPIv2 Features to Optimize the Code
+</h2><p>
+This section describes some additional optimizations that are possible by using some of the new features of CAPIv2.
+</p><h3>
+<a name="Module%20Disablement%20from%20the%20Process%20Function"></a>Module Disablement from the Process Function
+</h3><p>
+The process state of an APPI module could be communicated to the framework only when the framework queries for it. This query is typically only done after a set_param or reinit function call. This works fine if a module was disabled by setting a param and the module immediately stops processing. However, many modules perform a smooth transition from the enabled to the disabled state to avoid glitches in the output. Such modules must return their process state as true when queried immediately after the call to set_param. After their transition is over, they have to keep copying the input to the output since the framework doesn't query for process state later. Process state changes can be notified to the framework using an event in CAPIv2. This allows the module to finish its transition to the disabled state and then raise an event from the process call. The framework then stops calling the process function of the module.
+</p><h3>
+<a name="Output%20Media%20Type%20Update%20Based%20on%20Parameter%20Setting"></a>Output Media Type Update Based on Parameter Setting
+</h3><p>
+APPI modules can only return the output media type when their reinit function is called. If the output format of a module changes based on a parameter setting, the module must wait for the reinit function to be called before using the new media type. This typically requires the addition of special code in the framework to detect this setting and call reinit. CAPIv2 provides an event for the module to inform the framework of output media type changes. This event can be called from the set_param function when a parameter setting changes the output media format. The new output media format can be used from the next process call.
+</p><h2>
+<a name="Testing%20CAPIv2%20Modules"></a>Testing CAPIv2 Modules
+</h2><ol type="1">
+<li>
+<p>
+Audio : Testing procedure of CAPIv2 modules is same as APPI/CAPI modules.
+</p><div class="indent"><p>
+For more information please click <a href="../Audio/Examples.html#Building%20CAPIv2/CAPI/APPI%20modules">here</a>
+</p></div>
+</li><li>
+<p>
+Voice : Testing procedure of voice CAPIv2 modules is mentioned <a href="../Voice/voice_overview.html#Introduction">here</a>
+</p>
+</li>
+</ol><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

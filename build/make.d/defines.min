@@ -1,0 +1,595 @@
+##########################################################################
+#  Name:
+#    defines.min
+#
+#  Description:
+#    Definitions and functions used by and exported by the make.d 
+#     make system.  See readme.txt for instructions for use.
+#
+#
+#        Copyright 2005 - 2009 QUALCOMM Incorporated.
+#               All Rights Reserved.
+#            QUALCOMM Confidential and Proprietary
+##########################################################################
+
+
+##########################################################################
+# version check
+$(if $(abspath .),,\
+    $(error "Error: This makefile requires make version that supports abspath (you're running $(MAKE_VERSION)). Try GNU make 3.81 or better."))
+
+##########################################################################
+# utilities, some necessary for definition of MAKE_D_DIR
+##########################################################################
+
+#   make FARF_include=1         shows included min files
+#   make FARF_eval=1            shows text passed to eval
+#   make FARFS=eval             alternate syntax
+#   make FARFS='eval include'   show eval & include
+#   make FARFS=%                show all farfs
+FARF = $(if $(or $(FARF$0),$(filter $(FARFS),$(0:_%=%))),$(info FARF$0: $1))
+_eval = $(FARF)$(eval $1)
+_include = $(FARF)$(eval -include $1)
+
+# patQuote, patUnquote: escape/unescape "%"
+#
+patQuote=$(subst %,^p,$(subst ^,^c,$1))
+patUnquote=$(subst ^c,^,$(subst ^p,%,$1))
+
+# tab & newline
+_tab := $()	#
+define _nl
+
+
+endef
+
+# strQuote, strUnquote: escape/unescape "%", spaces, and tabs
+#
+strQuote=$(subst $(_tab),^t,$(subst $() ,^s,$(call patQuote,$1)))
+strUnquote=$(call patUnquote,$(subst ^s, ,$(subst ^t,$(_tab),$1)))
+
+# cleanPath: remove redundant "." and ".." elements from a path name
+#
+_cp1=$(if $(findstring $() . , $1 ),$(call $0,$(subst $() . , , $1 )),$(strip $1))
+_cp2=$(if $(and $(filter ..,$(word 2,$1)),$(filter-out ..,$(word 1,$1))),$(call $0,$2 $(wordlist 3,9999,$1)),$(if $1,$(call $0,$(wordlist 2,9999,$1),$(if $2,$2 )$(word 1,$1)),$2))
+_cp0=$(if $(filter /%,$1),/$(call cleanPath,$(patsubst /%,%,$1)),$(subst $() ,/,$(or $(call _cp2,$(call _cp1,$(subst /, ,$1))),.)))
+cleanPath=$(call strUnquote,$(call _cp0,$(call strQuote,$(subst \\,/,$1))))
+
+##########################################################################
+# If using windows set shell to ComSpec
+##########################################################################
+ifeq ($(OS),Windows_NT)
+SHELL:=$(ComSpec)
+endif
+
+##########################################################################
+# Export a function that can be used at the top of other makefiles
+#  to get a path to themselves
+##########################################################################
+thisDir=$(call cleanPath,$(dir $(lastword $(MAKEFILE_LIST))))
+
+##########################################################################
+# Export the location of make.d, do this early, so that MAKEFILE_LIST
+#  is still intact
+##########################################################################
+MAKE_D_DIR:=$(thisDir)
+
+##########################################################################
+# Define RULES_MIN for legacy projects. If you're not using go.min 
+#  and the template makefile, this should be included from your makefile
+#  after all your BUILD_* definitions.
+RULES_MIN=$(MAKE_D_DIR)/rules.min
+
+##########################################################################
+# If using emake, assign SHELL so it comes from PATH on the cluster, to
+#  support cases where emake clients have sh.exe somewhere different.
+##########################################################################
+ifneq ($(EMAKE_VERSION),)
+SHELL=sh
+endif
+
+##########################################################################
+# Get the OS, hope OS is set on NT, or fall back to one of the Unix-y 
+# environments (which usually offer uname)
+##########################################################################
+ifeq ($(OS),Windows_NT)
+UNAME_S:=WinNT
+else
+# we could still be in Cygwin, MSYS or MKSToolKit
+UNAME_S:=$(firstword $(filter-out CYGWIN_NT% MINGW32_NT% Windows_NT,$(shell uname -s)) WinNT)
+endif
+
+##########################################################################
+# closure
+call*=$(call or,$1)
+
+##########################################################################
+# map with closure
+map*=$(foreach a,$2,$(call call*,$1,$(a)))
+
+##########################################################################
+# fold/accumulate from left: $1 = closure,  $2 = list,  $3 = intial value
+# In closure, $$2 = accumulator,  $$3 = next item in list
+lfold* = $(if $2,$(call $0,$1,$(wordlist 2,9999,$2),$(call call*,$1,$3,$(word 1,$2))),$3)
+
+##########################################################################
+# multicmd using map*
+multicmd=$(call map*,($1) &&,$2) $(call true)
+
+##########################################################################
+# CMD_MODE
+# set to yes if the shell from make is actually cmd.exe
+##########################################################################
+CMD_MODE:=$(if $(strip $(shell echo)),yes)
+
+##########################################################################
+# Helpers
+##########################################################################
+
+# Does the shell drop single "%" characters? (as in GNU Win32 Make)
+_pctdup := $(and $(CMD_MODE),$(filter ab,$(shell echo a%b)),%)
+
+# Escape special characters for CMD's processing of lines.
+_cmdEsc = $(subst %,%$(_pctdup),$(call lfold*,$$(subst $$3,^$$3,$$2),^ " % & ( ) < > |,$1))#"
+
+# argQuote for CMD
+_argQuoteCMD = $(if $(findstring ",$1),$(call _cmdEsc,$(cstrQuote)),$(cstrQuote))#"
+
+# argQuote for other shells
+_argQuote = $(subst `,\`,$(subst $$,\$$,$(cstrQuote)))#` helps emacs make-mode
+
+# echo a single line
+_echo1 = $(if $(CMD_MODE),$(if $(strip $1),echo $(call _cmdEsc,$1),cmd /c echo:$1),echo $(_argQuote))
+
+# echoN: echo one or more lines of text
+_echoN = $(call lfold*,$$(if $$2,$$2&&)$$(call _echo1,$$(call strUnquote,$$(3:%^=%))),\
+	    $(subst $(_nl),^ ,$(strQuote)))
+
+##########################################################################
+# Some "basic" shell utilities, offered here as functions to allow make.d 
+#  clients to build on:
+#   * native GNU make on Windows
+#   * native GNU make on Unix
+#   * GNU make for Cygwin, MSYS, or other Unix-alike on Windows
+##########################################################################
+
+##########################################################################
+# Enclose string in double quotes, escaping double quotes backslashes
+cstrQuote = "$(subst ",\",$(subst \,\\,$1))"#"
+
+##########################################################################
+# Quote a command line argument
+argQuote = $(if $(CMD_MODE),$(_argQuoteCMD),$(_argQuote))
+
+##########################################################################
+# if $1 exists on the file system, do $2
+# e.g. $(call if_exists,foo,$(call rm_f foo))
+if_exists=$(if $(CMD_MODE),\
+            if exist $(subst /,\,$1) ($2),\
+            if test -e $1; then $2; fi)
+
+##########################################################################
+# if $1 doesn't exist on the file system, do $2
+# e.g. $(call if_not_exists,foo,$(call rm_f foo))
+if_not_exists=$(if $(CMD_MODE),\
+                if not exist $(subst /,\,$1) ($2),\
+                if ! test -e $1; then $2; fi)
+
+##########################################################################
+# runs $1. if $1 has a zero return value (success) run $2, else run $3
+if_else=$(if $(CMD_MODE),\
+            ( $1 ) & if ERRORLEVEL 0 ( if ERRORLEVEL 1 ( $3 ) else ( $2 ) ) else ( $3 ),\
+            if ( $1 ); then ( $2 ); else ( $3 ); fi)
+
+##########################################################################
+# empty, but successful command
+true=$(if $(CMD_MODE),\
+            cmd /c exit 0,\
+            true)
+
+##########################################################################
+# empty, but unsuccessful command
+false=$(if $(CMD_MODE),\
+            cmd /c exit 1,\
+            false)
+
+##########################################################################
+# make a directory $1 (including parents) if it doesn't already exist
+mkdir_p=$(if $(CMD_MODE),\
+             $(call multicmd,if not exist $$2 mkdir $$2,$(subst /,\,$1)),\
+             mkdir -p $1)
+
+##########################################################################
+# dump the contents of the file $1 to stdout
+cat=$(if $(CMD_MODE),\
+         $(call multicmd,type $$2,$(subst /,\,$1)),\
+         cat $1)
+
+##########################################################################
+# cp -Rf with args of $1 (copy recursive, force)
+# 
+cp_af=$(if $(CMD_MODE),\
+           $(call multicmd,if exist $$2\? (echo $(LOCALE.XCOPY_D) | xcopy /i/s/c/y/k/r/q $$2 $(lastword $(subst /,\,$1))) else (echo $(LOCALE.XCOPY_F) | xcopy /c/y/k/r/q $$2 $(lastword $(subst /,\,$1)))>nul,$(subst /,\,$(call filter-outExact,$(lastword $1),$1))),\
+           cp -Rf $1)
+
+##### Why cp_af is really "cp -Rf" #####
+#
+# Of all the complexity in make.d, cp_af is one of the most fraught with
+#   portability, correctness issues.
+#
+# cp_af is /*supposed*/ to be "cp -af" from Linux, which is ACL-free on ext2,
+#   etc. and which basically ignores the "preserve ownership" semantics of "-a"
+#   if you're not root (try it sometime with "cp -af /etc/hosts /tmp").  On
+#   systems that *do* support ACLs properly (e.g. Solaris and Cygwin 1.7 on
+#   Windows), cp has a failure mode in which the actual copy succeeds, but
+#   ownership updates fail.  Instead of failing silently as on "old" Linux, a
+#   diagnostic error is emitted, and cp returns non-zero.  So: we don't use the
+#   "archive" flag anymore.  We limit the copied information to mode bits
+#   (mostly to preserve "execute") and time (to help GNU make sort things out).
+#
+# make.d is also tasked with sometimes running on ancient Cygwin and other
+#   non-GNU Unixes (like MacOS, Solaris).  These OSes don't support or don't
+#   fully support the --preserve option.  This is ok in most cases, since cp by
+#   default preserves mode bits.  The only time this isn't true is when a the
+#   target file already exists and has differing mode bits.
+# 
+# As of 1/2011, we've also dropped support for preserving time (for similar
+#   portability reasons), which is probably the right thing for make rules
+#   anyway.  Note that the xcopy form happens to preserve time.
+#
+
+##########################################################################
+# mv -f with args in $1 (rename, force)
+mv_f=$(if $(CMD_MODE),\
+	   $(call multicmd,move /y $$2 $(subst /,\,$(lastword $1)),\
+                   $(subst /,\,$(filter-out $(lastword $1),$1))),\
+           mv -f $1)
+
+##########################################################################
+# recursively remove directory $1
+rm_rf=$(if $(CMD_MODE),\
+            $(call multicmd,if exist $$2 rmdir/s/q $$2,$(subst /,\,$1)),\
+            rm -rf $1)
+
+##########################################################################
+# remove file $1
+rm_f=$(if $(strip $1), $(if $(CMD_MODE),\
+            $(call multicmd,if exist $$2 del/f/q $$2,$(subst /,\,$1)),\
+            rm -f $1))
+
+##########################################################################
+# touch file $1
+touch=$(if $(CMD_MODE),\
+            $(call multicmd,if exist $$2 (copy /b /v $$2 +,,$$2>nul) else (echo on>$$2),$(subst /,\,$1)),\
+            touch $1)
+
+##########################################################################
+# equivalent to "find $1 -type f" on unix
+find_type_f=$(foreach path,$1,\
+                $(if $(wildcard $(path)/.),\
+                     $(call $0,$(call filter-outExact,$(path)/. $(path)/..,$(wildcard $(path)/* $(path)/.*))),\
+                     $(wildcard $(path))))
+
+##########################################################################
+# echo $1
+echo = $(if $(findstring $(_nl),$1),($(_echoN)),$(_echo1))
+
+##########################################################################
+# run executable $1
+exec=$(if $(CMD_MODE),\
+          $(if $(filter "%,$(firstword $1)),$1,"$(strip $(firstword $1))" $(wordlist 2,9999,$1)),\
+          $1)#"# fixes emacs makefile mode...
+
+##########################################################################
+# pathsep character, depends on actual shell
+pathsep=$(if $(CMD_MODE),;,:)
+
+##########################################################################
+# like $(filter), but without wildcard in search term
+filterExact=$(call patUnquote,$(filter $(call patQuote,$1),$(call patQuote,$2)))
+
+##########################################################################
+# like $(filter-out), but without wildcard in search term
+filter-outExact=$(call patUnquote,$(filter-out $(call patQuote,$1),$(call patQuote,$2)))
+
+##########################################################################
+# find unique items in a list without sorting or re-ordering
+uniq=$(if $1,$(firstword $1) $(call $0,$(call filter-outExact,$(firstword $1),$1)))
+
+##########################################################################
+# shortPath, equivalent to "cygpath -mas $1" under WinNT
+ifeq ($(UNAME_S),WinNT)
+shortPath=$(strip $(subst \,/,$(firstword $(subst \:cmdbug:, ,\
+               $(if $(CMD_MODE),\
+                  $(shell for %%g in ( "$1\:cmdbug:" ) do echo. %%~fsg),\
+                  $(shell cmd /Q /C for %g in \( "$1\:cmdbug:" \) do echo. %~fsg))))))
+else
+shortPath=$1
+endif
+
+##########################################################################
+# absPath replacement, make.d's best effort.  We output Windows path even 
+#  when we're on Cygwin's make because they're the most interoperable.
+ifeq ($(UNAME_S),WinNT)
+absPath=$(shortPath)
+else
+absPath=$(abspath $1)
+endif
+
+
+##########################################################################
+# varPush, Pop, Top: a convention for scoping commonly-used variable
+#  names.  For example, _mydir, which is often used by related .min
+#  files to include each other.  Makefiles following a non-interference
+#  convention for this variable would Push to assign, Top to evaluate
+#  and Pop to clean up afterwards.
+#
+#
+#   $(call varPush,_mydir)# save _mydir
+#
+#   _mydir=$(call cleanPath,$(dir $(lastword $(MAKEFILE_LIST))))
+#
+#   include $(call varTop,_mydir)/x.min
+#   
+#   include $(call varTop,_mydir)/y.min
+#   
+#   $(call varPop,_mydir) # restores _mydir
+#
+varPush=$(eval __varstack__$1=$(call strQuote,$1=$(value $1)))
+varPop=$(eval $(call strUnquote,$(firstword $(__varstack__$1)))$(eval __varstack__$1=$(wordlist 2,9999,$($1))))
+
+#----------------------------------------------------------------------------
+# cmdsep
+# Allows us to put multiple commands inside a single make function
+#    it consists of an LF and a TAB, to tell make there are separate commands,
+#    to avoid having to use shell syntax to && or || multiple commands together
+# See everything_all for example use case
+# Note: the empty $() at the end of the line appeases emacs makefile-mode
+#----------------------------------------------------------------------------
+define cmdsep
+
+	$()
+endef
+
+##########################################################################
+# DATE_YMD
+#
+# Today's Date.  Format: <year>-<month>-<day>.  i.e. 2011-02-04
+#
+ifneq ($(CMD_MODE),)
+  DATE_WINNT:=$(subst /, ,$(lastword $(shell date /t)))
+  DATE_YMD:=$(word 3,$(DATE_WINNT))-$(word 1,$(DATE_WINNT))-$(word 2,$(DATE_WINNT))
+else
+  DATE_YMD:=$(shell date +%Y-%m-%d)
+endif
+
+##########################################################################
+# Used in rules.min to silence commands.  Use "make _@=" to defeat
+_@=@
+
+##########################################################################
+# constructs a fine-grained build ID
+RECURSE_ID:=$(strip $(if $(CMD_MODE),\
+                   $(subst .,,$(subst :,,$(shell echo %TIME%))),\
+                   $(shell date +%H%M%S)$(shell echo $$$$)))
+
+
+##########################################################################
+# defines how to call $(MAKE) for a recursive target
+# construct a fine-grained build id, pass to recursive invocations of make
+RECURSE_ID:=$(strip $(if $(CMD_MODE),\
+               $(subst .,,$(subst :,,$(shell echo %TIME%))),\
+               $(shell date +%H%M%S)$(shell echo $$$$)))
+
+RECURSE_MAKE=$(MAKE) RECURSE_ID=$(RECURSE_ID)
+
+##########################################################################
+# UNAME_S defaults
+##########################################################################
+##########################################################################
+# WinNT UNAME_S defaults
+WinNT.EXEC_EXT=.exe
+
+##########################################################################
+# assign these from UNAME_S defaults
+##########################################################################
+DEFAULT_V=$(firstword $($(UNAME_S).DEFAULT_V) $(UNAME_S)_Debug)
+EXEC_EXT=$($(UNAME_S).EXEC_EXT)
+LIB_EXT=.lib
+IMP_LIB_EXT=.lib
+OBJ_EXT=.o
+##########################################################################
+# output directory for rules.min
+##########################################################################
+OBJ_DIR=$(V)
+
+##########################################################################
+# default EVERY_V to DEFAULT_V
+##########################################################################
+EVERY_V?=$(DEFAULT_V)
+
+##########################################################################
+# set up locale
+##########################################################################
+ifdef CMD_MODE
+__trim0s=$(if $(subst $2,,$1),$(call $0,$(patsubst 0%,%,$1),$1),$1)
+__lcid:=$(call __trim0s,$(lastword $(shell reg query "HKEY_CURRENT_USER\Control Panel\International" /v "Locale")))
+-include $(MAKE_D_DIR)/locale/lcids.min
+LOCALE=$(LCID_$(__lcid).NAME)
+else
+LOCALE=$(firstword $(subst ., ,$(LANG)))
+endif
+
+LOCALE_LANG=$(firstword $(subst _, ,$(LOCALE)))
+
+# defaults, in case I can't find actual locale or lang
+include $(firstword $(wildcard $(MAKE_D_DIR)/locale/$(LOCALE).min \
+                  $(MAKE_D_DIR)/locale/$(LOCALE_LANG).min \
+                  $(MAKE_D_DIR)/locale/C.min))
+
+##########################################################################
+# default installation locations for BUILDs
+##########################################################################
+SHIP_DIR?=$(CURDIR)/ship
+MOD_INSTALL_DIR?=$(SHIP_DIR)/mod/$(OBJ_DIR)
+EXE_INSTALL_DIR?=$(SHIP_DIR)/bin/$(OBJ_DIR)
+LIB_INSTALL_DIR?=$(SHIP_DIR)/lib/$(OBJ_DIR)
+IMPLIB_INSTALL_DIR?=$(LIB_INSTALL_DIR)
+DLL_INSTALL_DIR?=$(LIB_INSTALL_DIR)
+METRICS_INSTALL_DIR?=$(SHIP_DIR)/metrics/$(OBJ_DIR)
+
+##########################################################################
+# defaults for tools make.d expect to find lying around to satisfy the 
+#  included ruleset
+##########################################################################
+
+QIDLC?=qidlc$(EXEC_EXT)
+CDEP?=cdep$(EXEC_EXT)
+APP2ASM?=app2asm$(EXEC_EXT)
+CIFC?=cifc$(EXEC_EXT)
+CMET?=cmet$(EXEC_EXT)
+ZIP?=zip$(EXEC_EXT)
+MODPACK?=modpack$(EXEC_EXT)
+
+CDEP_INCFLAG=-I
+CIFC_INCFLAG=-I
+QIDLC_FLAGS=# # use internal cpp
+
+##########################################################################
+# force all to be first
+##########################################################################
+all:
+
+##########################################################################
+# order-only helper
+.PHONY: |
+
+| : ; $(warning order-only rules not supported by this version of make)
+
+##########################################################################
+# Default V is the first thing in EVERY_V, unless AUTO_V can be deduced.
+# Note that EVERY_V is a site choice, not defined by make.d
+##########################################################################
+KNOWN_VS=$(patsubst V_%.min,%,$(notdir $(wildcard $(MAKE_D_DIR)/V_*.min)))
+
+AUTO_V:=$(filter $(firstword $(subst /, ,$(MAKECMDGOALS))),$(KNOWN_VS))
+
+$(if $(AUTO_V),$(if $(V),,$(info AUTO_V=$(AUTO_V))))
+
+V?=$(firstword $(AUTO_V) $(EVERY_V))
+
+##########################################################################
+# Default V setup, usually overridden by the V file, but allows 
+#  for definition of a simple V_Darwin.min, and the standard _Debug stuff
+#  comes for free.
+V_FLAVOR=$(or $(word 2,$(subst _, ,$(V))),Debug)
+V_TARGET=$(word 1,$(subst _, ,$(V)))
+V_OPTIONS=$(wordlist 3,$(words $(subst _, ,$(V))),$(subst _, ,$(V)))
+
+##########################################################################
+# For any V_OPTION of the form "x.y", set V_x=y, V_OPTIONS with no "." 
+#   are set to "1"
+$(foreach opt,$(V_OPTIONS),\
+   $(eval V_$(firstword $(subst ., ,$(opt)))=$(firstword $(word 2,$(subst ., ,$(opt))) 1)))
+
+##########################################################################
+# set up a variable that represents all directories meant to extend make.d
+# e.g.
+#
+#   MAKE_D_EXT_BUILDTOOLS_DIR=/dev/qctp406/apiOne/main/build/tools
+#   MAKE_D_EXT_VC7_DIR=/dev/qctp406/apiOne/main/build/tools/Vc7
+#
+# Callers (or MAKE_D_SITE_DIR/defines.min) can initialize this variable to 
+#  a list of extension directories, or just set a bunch of variables of 
+#  the form "MAKE_D_EXT_%_DIR".  Make.d will find the latter in .VARIABLES
+# 
+##########################################################################
+MAKE_D_EXT_DIRS += $(foreach ext,$(filter MAKE_D_EXT_%_DIR,$(.VARIABLES)),$(call cleanPath,$($(ext))))
+
+##########################################################################
+# Extract all MAKE_D_EXT_MINS for a particular file, e.g. "defines.min"
+# e.g.
+#
+#   MAKE_D_EXT_defines.min_buildtools_MIN=build/tools/buildtools.min
+#
+# Callers can set a bunch of variables of the form "MAKE_D_EXT_%_MIN". 
+#   Make.d will find them in .VARIABLES.
+# 
+##########################################################################
+MAKE_D_EXT_MINS_OF = \
+   $(foreach e,\
+      $(filter MAKE_D_EXT_$1_%_MIN MAKE_D_EXT_$(subst .,_,$1)_%_MIN,$(.VARIABLES)),\
+      $(or $(wildcard $($e)),$(error Extension $e = "$($e)" not found!)))
+
+##########################################################################
+# Extension files for file $1.  Order dictates priority.
+##########################################################################
+MAKE_D_EXT_FILES = $(wildcard \
+   $(foreach f,$(addsuffix /$1,$(MAKE_D_SITE_DIR) $(MAKE_D_EXT_DIRS)) $(MAKE_D_EXT_MINS_OF),\
+      $(call cleanPath,$f)))
+
+
+##########################################################################
+# Recursively include extension files in order of priority (extensions
+# may include other extensions).
+##########################################################################
+INCLUDE_MAKE_D_EXTS = \
+   $(foreach f,$(MAKE_D_EXT_FILES),\
+      $(if $(filter-out $(MAKEFILE_LIST),$f),$(call _include,$f)$(call $0,$1)))
+
+
+##########################################################################
+# Pull in all MAKE_D_EXT_*/defines.min, skip SITE_DIR, though, because I 
+#  included it above
+##########################################################################
+$(call INCLUDE_MAKE_D_EXTS,defines.min)
+
+
+##########################################################################
+# set up a variable that represents all directories meant to add to/override
+#  make.d's Vs.  For example:
+#
+#   MAKE_D_V_EXT_apiOne_DIR=/dev/qctp406/apiOne/main/make.d
+#
+# Can pull apiOne's V files.
+#
+# MAKE_D_SITE_DIR can initialize this variable to a list of extension 
+#  directories, or (better) just set a bunch of variables of the form 
+#  "MAKE_D_V_EXT_%_DIR".  Make.d will find them in .VARIABLES
+# 
+##########################################################################
+MAKE_D_V_EXT_DIRS+=$(foreach ext,$(filter MAKE_D_V_EXT_%_DIR,$(.VARIABLES)),$(call cleanPath,$($(ext))))
+
+_trimright=$(wordlist 1,$(words $(wordlist 2,9999,$1)),$1)
+
+_V_precedence=$(if $(strip $1),$1 $(call $0,\
+                 $(subst $() ,_,$(call _trimright,$(subst _, ,$1)))))
+
+V_FILE=$(strip $(firstword $(wildcard \
+          $(foreach vextdir,$(MAKE_D_V_EXT_DIRS),\
+             $(addprefix $(vextdir)/V_,\
+                $(addsuffix .min,$(call _V_precedence,$(V)))))\
+          $(addprefix $(MAKE_D_DIR)/V_,\
+             $(addsuffix .min,$(call _V_precedence,$(V)))))))
+
+$(if $(V_FILE)$(__V_TESTING),,\
+   $(warning *** Error: make.d did not find a V_ file for '$(V)')\
+   $(warning These are the known V files:)\
+   $(foreach v,$(notdir $(wildcard $(MAKE_D_DIR)/V_*.min)),$(warning $(v))) \
+   $(error ))
+
+include $(V_FILE)
+
+#----------------------------------------------------------------------------
+# Arithmetic rules
+#----------------------------------------------------------------------------
+
+16:= x x x x x x x x x x x x x x x x
+upper_limit := $(foreach u,$(16),$(16))
+ENCODE = $(wordlist 1,$1,$(upper_limit))
+GREATER_THAN=$(filter-out $(words $2),$(words $(subst xx,x,$(join $1,$2))))
+LESS_THAN=$(filter-out $(words $(subst xx,x,$(join $1,$2))),$(words $1))
+EQUAL_TO=$(filter $(words $1),$(words $2))
+NOT_EQUAL=$(filter-out $(words $1),$(words $2))
+GREATER_EQUAL_TO = $(call GREATER_THAN,$1,$2)$(call EQUAL_TO,$1,$2)
+LESS_EQUAL_TO = $(call LESS_THAN,$1,$2)$(call EQUAL_TO,$1,$2)

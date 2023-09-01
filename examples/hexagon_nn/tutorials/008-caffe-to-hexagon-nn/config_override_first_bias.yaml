@@ -1,0 +1,25 @@
+# Set to 1 to wrap each node append with log info
+check_init: 0
+
+# Set to 1 if your data file hasn't changed
+leave_coefficients_unchanged: 1
+
+# Set debug level to be used by nn_graph
+debug_level: 1
+
+# Set VGG float min/max for input; required if using uint8-based .dat input
+min_input: -114.2
+max_input: 140.8
+
+# Set to 0 to use 32-bit biases
+use_8b_biases: 1
+
+dic_external_coefficients : {
+    'biases_conv1_1':'my_biases_conv1_1',  
+        }
+
+# Built with commands like this
+dic_external_extrema : {
+    'max_biases_conv1_1':2.,
+    'min_biases_conv1_1':-.1,
+    }

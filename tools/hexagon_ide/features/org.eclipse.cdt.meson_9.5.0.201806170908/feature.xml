@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.cdt.meson"
+      label="%featureName"
+      version="9.5.0.201806170908"
+      provider-name="%providerName">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <plugin
+         id="org.eclipse.cdt.meson.core"
+         download-size="42"
+         install-size="80"
+         version="1.0.0.201806170908"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.cdt.meson.ui"
+         download-size="66"
+         install-size="127"
+         version="1.0.0.201806170908"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.cdt.meson.docs"
+         download-size="322"
+         install-size="377"
+         version="1.0.0.201806170908"/>
+
+   <plugin
+         id="org.eclipse.cdt.meson.ui.editor"
+         download-size="11"
+         install-size="19"
+         version="1.0.0.201806170908"
+         unpack="false"/>
+
+</feature>

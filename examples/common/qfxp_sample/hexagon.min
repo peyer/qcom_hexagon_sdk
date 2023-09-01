@@ -1,0 +1,48 @@
+# builds the static/dynamic skel
+ifeq (1,$(V_dynamic))
+BUILD_DLLS = libqfxp_sample_skel
+else
+BUILD_LIBS += libqfxp_sample_skel
+endif
+
+include $(QURT_IMAGE_DIR)/qurt_libs.min
+
+CC_FLAGS += $(MHVX_DOUBLE_FLAG)
+ASM_FLAGS += $(MHVX_DOUBLE_FLAG) 
+
+# Use -O0 temporarily when trying to debug C code.
+#_OPT = -O0
+
+INCDIRS += inc
+
+libqfxp_sample_skel_QAICIDLS = inc/qfxp_sample 
+
+libqfxp_sample_skel_C_SRCS += $V/qfxp_sample_skel \
+                                src/qfxp_sample_imp src/example
+
+libqfxp_sample_skel_DLLS += libdspCV_skel 
+
+libqfxp_sample_skel_LIBS += libqfxp 
+
+# Also build a stand-alone simulation environment executable unit test (only for static lib build)
+ifneq (1,$(V_dynamic))
+
+BUILD_QEXES += qfxp_q
+qfxp_q_OSTYPE = QURT
+# The following is needed to pull QuRT support into the executable for simulation
+
+qfxp_q_LIBS+= libdspCV_skel libqfxp 
+
+qfxp_q_C_SRCS+= src/qfxp_sample \
+                    src/qfxp_sample_imp \
+                    $V/qfxp_sample_skel src/example
+
+QEXE_EXEC+=--dsp_clock 800
+endif #//ifneq (1,$(V_dynamic))
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

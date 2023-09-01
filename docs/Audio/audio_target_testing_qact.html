@@ -1,0 +1,1017 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><title>QACT Lite : Testing the Audio Module on Target</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="../images/sidebar_top.jpg"></top><script src="../scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, true)"><input id="searchButton" onclick="postFunction(true)" type="button" value="Search"></form><p>
+<a href="../index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="../feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="../hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="../images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="../hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="../images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="../images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="../Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="../Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="../Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="../Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="../Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="../Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="../HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="../Audio/Applications.html">Audio</a>
+</p><p>
+<a href="../Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="../Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="../FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="../Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="../Voice/Applications.html">Voice</a>
+</p><p>
+<a href="../Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="../APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="../APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="../APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="../APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="../Audio/Examples.html">Audio</a>
+</p><p>
+<a href="../Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="../Examples_Common.html">Common</a>
+</p><p>
+<a href="../Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="../Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="../Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="../Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="../CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="../Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="../Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="../Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="../Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="../Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="../Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="../Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="../Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="../Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="../Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="../Tools_Signing.html">Signing</a>
+</p><p>
+<a href="../Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="../Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="../FAQ_Common.html">Common</a>
+</p><p>
+<a href="../FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="../FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="../FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="../Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="../Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="../Support_Contact.html">Contact</a>
+</p><center><img src="../images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h1>
+<a name="QACT%20Lite%20:%20Testing%20the%20Audio%20Module%20on%20Target"></a>QACT Lite : Testing the Audio Module on Target
+</h1><div class="toc"><div class="tocLevel"><a href="#Overview">Overview</a></div><div class="tocLevel"><a href="#Prerequisites">Prerequisites</a></div><div class="tocLevel"><a href="#Setting%20up%20the%20workspace">Setting up the workspace</a></div><div class="tocLevel"><a href="#Modify%20the%20ACDB">Modify the ACDB</a></div><div class="tocLevel"><a href="#Replacing%20the%20ACDB%20on%20the%20Target%20Device">Replacing the ACDB on the Target Device</a></div><div class="tocLevel"><a href="#Adding%20audio%20module%20to%20target">Adding audio module to target</a><div class="tocLevel"><a href="#Signing%20of%20device%20:%20generation%20of%20testsig.so">Signing of device : generation of testsig.so</a></div></div><div class="tocLevel"><a href="#DSP%20Calibration%20in%20Real%20Time%20using%20QACT">DSP Calibration in Real Time using QACT</a></div><div class="tocLevel"><a href="#Compiling%20the%20H2XML%20annotations%20to%20generate%20XML%20file(s)">Compiling the H2XML annotations to generate XML file(s)</a></div></div><h2>
+<a name="Overview"></a>Overview
+</h2><p>
+QACT (Qualcomm Audio Calibration Tool) Lite is a PC based tool that lets you modify the ACDB (Audio Calibration Database). ACDB is a set of binary files containing calibration data for all devices, networks and sample rates. The default set of acdb files can be found in the folder &#8220;/etc&#8221; on your target device.
+</p><p>
+To enable a custom audio module on target the module must be added to a new topology definition. These are the steps from a high level:
+</p><ol type="1">
+<li>
+<p>
+Pull out the acdb files from the target. (You may use the files already provided with the release as well)
+</p>
+</li><li>
+<p>
+Create the workspace file for the acdb files and launch acdb in QACT Lite.
+</p>
+</li><li>
+<p>
+Add information regarding the new topology and associated modules.
+</p>
+</li><li>
+<p>
+Add the appi_fir.so to AMDB using DSP Module manager functionality in QACT Lite
+</p>
+</li><li>
+<p>
+Push the modified acdb back to the target and reboot.
+</p>
+</li><li>
+<p>
+Configure the custom module parameters in real time using the 'DSP Calibration' feature of QACT Lite.
+</p>
+</li>
+</ol><h2>
+<a name="Prerequisites"></a>Prerequisites
+</h2><ol type="1">
+<li>
+<p>
+Android Device
+</p>
+</li><li>
+<p>
+QACT Lite and QPST installed on system.
+</p><div class="indent"><p>
+Please <a href="../Support_Contact.html">../Support_Contact</a> Qualcomm to obtain them. The User Guide shipped along with QACT will take you through the installation. You can refer section 2 of the document for more details
+</p></div>
+</li><li>
+<p>
+ADB drivers installed on system.
+</p>
+</li>
+</ol><h2>
+<a name="Setting%20up%20the%20workspace"></a>Setting up the workspace
+</h2><ol type="1">
+<li>
+<p>
+Pull the existing acdb files from the target device. (Assuming 'C:\Work\ACDB' is the working directory)
+</p><div class="indent"><pre>adb pull /etc/Speaker_cal.acdb C:\Work\ACDB
+adb pull /etc/Headset_cal.acdb C:\Work\ACDB
+adb pull /etc/Handset_cal.acdb C:\Work\ACDB
+adb pull /etc/Hdmi_cal.acdb C:\Work\ACDB
+adb pull /etc/Global_cal.acdb C:\Work\ACDB
+adb pull /etc/General_cal.acdb C:\Work\ACDB
+adb pull /etc/Bluetooth_cal.acdb C:\Work\ACDB
+</pre><p>
+Note : The acdb files can be present in /etc/ or /etc/acdbdata/MTP folder depending on the released image you are working on.
+</p></div>
+</li><li>
+<p>
+Create a workspace file 'workspaceFile.qwsp' in the same folder. You can modify the existing qwsp file, if you are provided with one.
+</p><div class="indent"><p>
+If creating new, a text file with contents as shown should suffice
+</p><pre>&lt;WorkSpace_Data WSVersID="Badger_3"&gt;
+</pre><div class="indent"><pre>&lt;ACDBFile_Paths&gt;
+</pre><div class="indent"><pre>&lt;ACDBFile_Paths path="Bluetooth_cal.acdb" /&gt;
+&lt;ACDBFile_Paths path="General_cal.acdb" /&gt;
+&lt;ACDBFile_Paths path="Global_cal.acdb" /&gt;
+&lt;ACDBFile_Paths path="Handset_cal.acdb" /&gt;
+&lt;ACDBFile_Paths path="Hdmi_cal.acdb" /&gt;
+&lt;ACDBFile_Paths path="Headset_cal.acdb" /&gt;
+&lt;ACDBFile_Paths path="Speaker_cal.acdb" /&gt;
+</pre></div><pre>&lt;/ACDBFile_Paths&gt;
+&lt;GUI_Data&gt;
+&lt;/GUI_Data&gt;
+</pre></div><pre>&lt;/WorkSpace_Data&gt;
+</pre><p>
+NOTE : If the file are pulled from /etc/acdbdata/MTP, then they have to be renamed to MTP_***_cal.acdb
+</p><pre>&lt;WorkSpace_Data WSVersID="Badger_3"&gt;
+</pre><div class="indent"><pre>&lt;ACDBFile_Paths&gt;
+</pre><div class="indent"><pre>&lt;ACDBFile_Paths path="MTP_Bluetooth_cal.acdb" /&gt;
+&lt;ACDBFile_Paths path="MTP_General_cal.acdb" /&gt;
+&lt;ACDBFile_Paths path="MTP_Global_cal.acdb" /&gt;
+&lt;ACDBFile_Paths path="MTP_Handset_cal.acdb" /&gt;
+&lt;ACDBFile_Paths path="MTP_Hdmi_cal.acdb" /&gt;
+&lt;ACDBFile_Paths path="MTP_Headset_cal.acdb" /&gt;
+&lt;ACDBFile_Paths path="MTP_Speaker_cal.acdb" /&gt;
+</pre></div><pre>&lt;/ACDBFile_Paths&gt;
+&lt;GUI_Data&gt;
+&lt;/GUI_Data&gt;
+</pre></div><pre>&lt;/WorkSpace_Data&gt;
+</pre></div>
+</li>
+</ol><ol type="1">
+<li>
+<p>
+Another method to extract the acdb files is by connecting to a target from QACT Lite where a new image has been flashed and saving the files from QACT.
+</p><div class="indent"><p>
+This will save the acdb files and workspace file automatically. Use &#8220;Connect to target&#8221; option in QACT Lite.
+</p></div><ol type="1">
+<li>
+<p>
+Launch QACT Lite. Choose 'Open File' icon as shown.
+</p><div class="indent"><left><img alt="<Image not found&gt;" src="images/qact_open_file.png"></left></div><p>
+Browse to the location C:\Work\ACDB and choose the file workspaceFile.qwsp.
+</p><p>
+Now we are ready to modify the acdb for the custom requirement.
+</p>
+</li>
+</ol>
+</li>
+</ol><h2>
+<a name="Modify%20the%20ACDB"></a>Modify the ACDB
+</h2><p>
+Assume we have created an audio module named appi_fir.so. We would like to have this module present in the COPP RX path while playing out audio through the speaker. In order to achieve this, we need to create a topology with the FIR module in it. Now, set this new topology to be chosen for the audio playback session through the speaker.
+</p><ol type="1">
+<li>
+<p>
+Start with adding parameter IDs for the FIR module. Choose &#8220;Parameter Designer&#8221; from the 'Tools' menu as shown
+</p><div class="indent"><left><img alt="<Image not found&gt;" src="images/qact_choose_param_design.png"></left><p>
+Now, you can fill up the information regarding the parameters for FIR module. Use the file &#8220;&lt;SDK_Location&gt;examples\audio\appi_fir\inc\appi_fir.h&#8221; as the reference for filling up the info here.
+</p><p>
+In the parameter designer window, click &#8220;Add&#8221; as shown
+</p><left><img alt="<Image not found&gt;" src="images/qact_add_param_enable.png"></left><p>
+A new window will pop up, where you can provide the parameter info as shown. Parameter name is an identifier. The ID should match the value present in 'appi_fir.h'
+</p><left><img alt="<Image not found&gt;" src="images/qact_add_param_enable_2.png"></left><p>
+You can add the relevant data for the parameter 'FIR_FILTER_ENABLE'. ( refer structure 'fir_filter_enable_cfg_t' from the file 'appi_fir.h'). Click on 'Add' as shown. Fill up the info in the popped up window. Once done with adding all data, click &#8220;Done&#8221;.
+</p><left><img alt="<Image not found&gt;" src="images/qact_add_enable_data.png"></left><p>
+Again, continue the same procedure for adding the parameter FIR_FILTER_PARAMS. (shown below).
+</p><left><img alt="<Image not found&gt;" src="images/qact_add_filter_params.png"></left><p>
+Adding data related to the FIR_FILTER_PARAMS (refer the structure 'fir_filter_cfg_params_t')
+</p><left><img alt="<Image not found&gt;" src="images/qact_add_num_taps.png"></left><p>
+Adding the reserved variable.
+</p><left><img alt="<Image not found&gt;" src="images/qact_add_reserved.png"></left><p>
+Now, we need to add the filter coefficient array as shown.
+</p><left><img alt="<Image not found&gt;" src="images/qact_add_filter_coeff.png"></left><p>
+After clicking &#8220;done&#8221;, the parameter designer window will look like this
+</p><left><img alt="<Image not found&gt;" src="images/qact_filter_param_done.png"></left></div>
+</li><li>
+<p>
+Now that we have added parameters for the FIR module, it's time to add the module details and map these parameters to the module.
+</p><div class="indent"><p>
+Choose 'Module Designer' from the 'Tools' Menu.
+</p><p>
+In the module designer window, click on 'Add'.
+</p><left><img alt="<Image not found&gt;" src="images/qact_add_module.png"></left><p>
+Provide the module name and Module ID. Choose the Module Type. (RX, TX or Both).You can provide a Module ID of your choice. But, make sure that the same ID is used while adding the module using DSP module manager in QACT.
+</p><p>
+Choose the applicable parameters for the modules as shown below.
+</p><left><img alt="<Image not found&gt;" src="images/qact_module_designer.png"></left><p>
+Once done with module addition, the module designer will have the FIR module listed as shown
+</p><left><img alt="<Image not found&gt;" src="images/qact_module_added.png"></left></div>
+</li><li>
+<p>
+It's time to design a new topology with the newly added FIR module in it. Choose 'Topology Designer' from the 'Tools' Menu and proceed as shown.
+</p><div class="indent"><p>
+Fill the information regarding Topology Name, Topology ID, and Topology Type. Topology ID can be any value of your choice, but greater than 0x10000000
+</p><p>
+Now choose the module 'APPI_FIR' to be part of this topology.
+</p><left><img alt="<Image not found&gt;" src="images/qact_add_topology.png"></left><p>
+After the design of new topology, the topology designer window may look like this.
+</p><left><img alt="<Image not found&gt;" src="images/qact_topology_done.png"></left></div>
+</li><li>
+<p>
+Add the newly designed topology in the Database designer. Choose 'Database Designer' from the 'Tools' Menu.
+</p><div class="indent"><p>
+Choose AUDIO_COPP_RX from the left side of the window. Now click 'Add' as shown
+</p><left><img alt="<Image not found&gt;" src="images/qact_database_design.png"></left><p>
+Check box corresponding to the newly created topology 'CUSTOM_TOPO_WITH_FIR'.
+</p><left><img alt="<Image not found&gt;" src="images/qact_database_choose.png"></left></div>
+</li><li>
+<p>
+Add the module information in DSP module manager. This is a new feature in QACT to allow addition of dynamic modules to AMDB(Audio Module Database).
+</p><div class="indent"><p>
+It allows addition of CAPIv2, CAPI as well as APPI modules to AMDB.
+</p><p>
+Select &#8220;DSP Module Manager&#8221; from the &#8220;Tools&#8221; menu.
+</p><p>
+Click on &#8220;Add Module&#8221; button.
+</p><p>
+Select the options for appi_fir module as shown in the image below.
+</p><left><img alt="<Image not found&gt;" src="images/dsp_module_manager.jpg"></left></div>
+</li><li>
+<p>
+Choose the device to run the new topology.
+</p><div class="indent"><p>
+In the 'Tools' menu select 'Device Designer'.
+</p><p>
+Select the appropriate device (SPKR_PHONE_SPKR_STEREO, SPKR_PHONE_SPKR_MONO, HEADSET_SPKR_MONO,HEADSET_SPKR_STEREO) from the left side of the window. Now, on the right side, for the Audio COPP Topology ID, choose the topology CUSTOM_TOPO_WITH_FIR from the dropdown menu.
+</p><left><img alt="<Image not found&gt;" src="images/qact_device_designer.png"></left></div>
+</li><li>
+<p>
+Time to save the modified ACDB.
+</p><div class="indent"><p>
+Choose &#8220;Save As&#8221; from &#8220;File&#8221; menu.
+</p><p>
+A window will pop up where you can browse to the folder to save all the acdb files and workspace file. For the worksapce file, browse to your desired location. The same location will be picked up for all other files.
+</p><p>
+Assuming you have saved all the files in C:\WORK\ACDB\FIR_ADDED
+</p><left><img alt="<Image not found&gt;" src="images/qact_save_worksapce.png"></left></div>
+</li>
+</ol><h2>
+<a name="Replacing%20the%20ACDB%20on%20the%20Target%20Device"></a>Replacing the ACDB on the Target Device
+</h2><p>
+Now that we are done with modifying the ACDB, it's time to push the files to Target. Assuming the saved acdb files are kept at C:\WORK\ACDB\FIR_ADDED. Issue the following commands in a CLI shell.
+</p><div class="indent"><pre>adb push Speaker_cal.acdb /etc/acdbdata/MTP
+adb push Headset_cal.acdb /etc/acdbdata/MTP
+adb push Handset_cal.acdb /etc/acdbdata/MTP
+adb push Hdmi_cal.acdb /etc/acdbdata/MTP
+adb push Global_cal.acdb /etc/acdbdata/MTP
+adb push General_cal.acdb /etc/acdbdata/MTP
+adb push Bluetooth_cal.acdb /etc/acdbdata/MTP
+</pre></div><p>
+To push the acdb file that is read by DSP to add dynamic module to AMDB, execute the following command
+</p><div class="indent"><pre>adb push adsp_avs_config.acdb /etc/acdbdata/
+</pre></div><p>
+Reboot the device.
+</p><h2>
+<a name="Adding%20audio%20module%20to%20target"></a>Adding audio module to target
+</h2><p>
+This section covers information about adding a dynamic audio module to target.
+</p><p>
+NOTE: After loading the new ACDB with custom topology, dynamic module needs to be loaded after boot up. However, for an audio session when a topology gets created, dynamic module will not be present, unless specified in acdb files If the module is not added to AMDB via acdb files, the topology creation exits mentioning absence of module in AMDB. Once the module is added to AMDB(either at bootup or when the use case is invoked, topology creation will be successful and playback/record session will work as expected. This can be followed by calibration of the custom dynamic module.
+</p><p>
+There is an automated script in SDK ( push_audio_module.cmd) which will compile respective example and push it to target. It will take care of updating the other dependencies for testing like testsig generation, pushing testsig to target etc. This script can be found at &lt;SDK_ROOT&gt;\scripts\push_audio_module.cmd
+</p><p>
+Usage of this script to push appi_fir example, testsig.so, skel.so
+</p><pre>run setup_sdk_env.cmd
+cd scripts
+push_audio_module.cmd appi_fir
+</pre><h3>
+<a name="Signing%20of%20device%20:%20generation%20of%20testsig.so"></a>Signing of device : generation of testsig.so
+</h3><ol type="1">
+<li>
+<p>
+Find out the serial number of device
+</p><pre>Open a CLI shell and push *getserial* application
+from &lt;HEXAGON_SDK_ROOT&gt;tools\elfsigner to target
+</pre><pre>adb push &lt;HEXAGON_SDK_ROOT&gt;tools\elfsigner\getserial /data
+</pre>
+</li><li>
+<p>
+Connect the device and log into adb shell as root user.
+</p><pre>adb root
+adb shell
+cd data
+chmod 777 getserial
+./getserial
+</pre><p>
+This will show the serial number of device If getserial application fails to run, then execute the following command and then try running getserial again
+</p><pre>insmod /system/lib/modules/adsprpc.ko
+</pre>
+</li><li>
+<p>
+Create testsig.so from elfsigner.py at &lt;HEXAGON_SDK_ROOT&gt;tools\elfsigner
+</p><div class="indent"><p>
+NOTE : Run setup_sdk_env.cmd(present at &lt;HEXAGON_SDK_ROOT&gt; location) before running elfsigner.py
+</p></div><pre>elfsigner.py  -t &lt;SERIALNUM&gt;
+</pre><p>
+This will generate testsig-0x****.so.
+</p>
+</li><li>
+<p>
+Rename the so to testsig.so and copy to device under /system/lib/rfsa/adsp/
+</p><p>
+Note: If this directory doesn't exist, create this directory in /system/lib/rfsa/adsp/ folder on target and then push testsig.so on target
+</p><pre>adb shell
+mkdir /system/lib/rfsa/adsp/
+</pre>
+</li>
+</ol><p>
+After this step, reboot the device.
+</p><p>
+For more information about Elfsigner, please refer <a href="../Tools_Signing.html">Signing</a>
+</p><p>
+There is an automated script present in Hexagon SDK to flash testsig.so to target. Run the following script
+</p><p>
+&lt;SDK_ROOT&gt;\tools\scripts\testsig.cmd
+</p><h2>
+<a name="DSP%20Calibration%20in%20Real%20Time%20using%20QACT"></a>DSP Calibration in Real Time using QACT
+</h2><p>
+QACT Lite provides a GUI based calibration for audio modules.
+</p><ol type="1">
+<li>
+<p>
+Launch QPST
+</p>
+</li><li>
+<p>
+Launch QACT and choose &#8220;Connect to Phone&#8221; icon.
+</p><div class="indent"><p>
+If you encounter a message as shown below, click 'Yes' and browse to the ACDB location we have created in previous steps (Eg: C:\WORK\ACDB\FIR_ADDED ). Choose the workspace file.
+</p><left><img alt="<Image not found&gt;" src="images/qact_connect_phone.png"></left><p>
+Click on 'DSP Calibration' as shown below. Start playing audio from the native player in Android. You will see the COPP topology with APPI_FIR in it.
+</p><left><img alt="<Image not found&gt;" src="images/qact_dsp_calibration.png"></left><p>
+Double click on the APPI_FIR box and you will see the calibration window for the module.
+</p><p>
+Now you may set the various parameters for the module, in real time. Set the enable flag to 0x1, and provide a set of filter coefficients.
+</p><p>
+For eg: HP100 = {0xFFF4,0xFFE9,0xFFCE,0xFFA8,0xFF82,0xFF66,0x3F5B,0xFF66,0xFF82,0xFFA8,0xFFCE,0xFFE9,0xFFF4}
+</p><p>
+After configuring the values, click on &#8220;Set to DSP&#8221; and you can feel the effect of filter in the live audio.
+</p><left><img alt="<Image not found&gt;" src="images/qact_fir_calibration.png"></left><p>
+The Option &#8220;Get from DSP&#8221; can be used to retrieve the existing parameter values from the DSP.
+</p></div>
+</li>
+</ol><h2>
+<a name="Compiling%20the%20H2XML%20annotations%20to%20generate%20XML%20file(s)"></a>Compiling the H2XML annotations to generate XML file(s)
+</h2><ol type="1">
+<li>
+<p>
+Use the following command to generate the XML file from annotated header file.
+</p>
+</li>
+</ol><p>
+$ ./&lt;h2xml binary path&gt;/h2xml.exe -conf &lt;config file path&gt;/config_adsp.xml -i &lt;input file&gt; -o &lt;output directory&gt;
+</p><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

@@ -1,0 +1,1002 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><title>Exceptions</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="images/sidebar_top.jpg"></top><script src="scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, false)"><input id="searchButton" onclick="postFunction(false)" type="button" value="Search"></form><p>
+<a href="index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<p>
+<a href="sitemap.html">Sitemap</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="Audio/Applications.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="Voice/Applications.html">Voice</a>
+</p><p>
+<a href="Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="Audio/Examples.html">Audio</a>
+</p><p>
+<a href="Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="Examples_Common.html">Common</a>
+</p><p>
+<a href="Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="Tools_Signing.html">Signing</a>
+</p><p>
+<a href="Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="FAQ_Common.html">Common</a>
+</p><p>
+<a href="FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="Support_Contact.html">Contact</a>
+</p><center><img src="images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h1>
+<a name="Exceptions"></a>Exceptions
+</h1><div class="toc"><div class="tocLevel"><a href="#Debugging%20Exceptions%20using%20crash%20signature">Debugging Exceptions using crash signature</a></div><div class="tocLevel"><a href="#Debugging%20Exceptions%20using%20PD%20Dumps">Debugging Exceptions using PD Dumps</a><div class="tocLevel"><a href="#How%20to%20enable%20PD%20dump%20mode">How to enable PD dump mode</a></div><div class="tocLevel"><a href="#How%20to%20collect%20PD%20dump">How to collect PD dump</a></div><div class="tocLevel"><a href="#Analysis%20of%20PD%20dumps">Analysis of PD dumps</a><div class="tocLevel"><a href="#Prerequisites%20for%20Analysis%20of%20dumps">Prerequisites for Analysis of dumps</a></div><div class="tocLevel"><a href="#Example">Example</a></div></div></div></div><h2>
+<a name="Debugging%20Exceptions%20using%20crash%20signature"></a>Debugging Exceptions using crash signature
+</h2><p>
+When user process crashes on DSP, fastrpc exception handler collects the required information from QURT and flush the messages to logcat. This allows the user to understand the reason for the crash. It contains information like process name, thread name, and last known PC location along with the library name. It also lists the offset and size of all the dynamically loaded objects for user reference.
+</p><p>
+Below are the list of details provided in the logcat logs during the crash:
+</p><ol type="1">
+<li>
+<p>
+User process name
+</p>
+</li><li>
+<p>
+Thread name
+</p>
+</li><li>
+<p>
+Name of the shared object and the symbol offset (derived from PC during crash)
+</p>
+</li><li>
+<p>
+Kind of exception and details
+</p>
+</li><li>
+<p>
+Last known PC
+</p>
+</li><li>
+<p>
+Call trace
+</p>
+</li>
+</ol><p>
+Given below is an example of the logcat for reference:
+</p><pre>
+adsprpc : ADSP: ############################### Process on aDSP CRASHED!!!!!!! ########################################
+adsprpc : ADSP: --------------------- Crash Details are furnished below ----------------------------------------------------
+
+adsprpc : ADSP: process "/frpc/f067e6a0 calculator" crashed in thread "/frpc/f067e6a0 " due to "TLBMISS RW occurrence" in ./libcalculator_skel.so
+adsprpc : ADSP: Crashed Shared Object ./libcalculator_skel.so load address : 0xe648c000
+adsprpc : ADSP: fastrpc_shell_0 load address : DE500000  and size : D2208
+adsprpc : ADSP: Fault PC   :    0xE648C8D0 
+adsprpc : ADSP: LR         :    0xE648C8B4
+adsprpc : ADSP: SP         :    0xAE0B3DC0
+adsprpc : ADSP: Bad va     :    0x0  
+adsprpc : ADSP: FP         :    0xAE0B3DE8
+adsprpc : ADSP: SSR        :    0x21970770 
+adsprpc : ADSP: Call trace:
+adsprpc : ADSP: [&lt;e648c8b4&gt;] calculator_sum+0xB4:     (./libcalculator_skel.so)
+adsprpc : ADSP: [&lt;e648c7ac&gt;] calculator_skel_invoke+0x23C:     (./libcalculator_skel.so)
+adsprpc : ADSP: [&lt;e648c5c0&gt;] calculator_skel_invoke+0x50:     (./libcalculator_skel.so)
+adsprpc : ADSP: [&lt;de5721a0&gt;] mod_table_invoke+0x2A4:     (fastrpc_shell_0)
+adsprpc : ADSP: [&lt;de5950b4&gt;] fastrpc_invoke_dispatch+0x14D4:     (fastrpc_shell_0) 
+adsprpc : ADSP: [&lt;de56cab4&gt;] adsp_current_process_getASID+0x26C:     (fastrpc_shell_0)   
+adsprpc : ADSP: [&lt;de56e36c&gt;] _pl_fastrpc_uprocess+0x730:     (fastrpc_shell_0)  
+
+adsprpc : ADSP: ----------------------------- End of Crash Report -----------------------------------------------------------
+</pre><p>
+Note:
+</p><ol type="1">
+<li>
+<p>
+This feature is supported only on SM8150 and later devices.
+</p>
+</li><li>
+<p>
+Symbol names may not be proper in call trace, if the crash is in static symbols.
+</p>
+</li><li>
+<p>
+It is recommended to use the ReleaseG flavor, in order to get the correct details from crash report.
+</p>
+</li>
+</ol><p>
+Please use below steps to find out crash location in source code from crash-signature.
+</p><ul type="circle">
+<li>
+<p>
+Crash signature gives Fault PC address and load address of crashed elf.
+</p>
+</li>
+</ul><pre>Crashed Shared Object ./libcalculator_skel.so load address : 0xE42F0000
+Fault PC   :    0xE42F08B0
+</pre><ul type="circle">
+<li>
+<p>
+Find the offset by calculating difference between Fault PC and load address of your crashed shared object.
+</p>
+</li>
+</ul><pre>(0xE42F08B0 - 0xE42F0000) = 0x8B0
+</pre><ul type="circle">
+<li>
+<p>
+Run hexagon-addr2line using this offset and crashed shared object as below to get line number in source file where it crashed.
+</p>
+</li>
+</ul><pre>&lt;Hexagon_SDK&gt;tools\HEXAGON_Tools\8.2.04\Tools\bin\hexagon-addr2line.exe  
+      -e libcalculator_skel.so  0x8B0
+</pre><p>
+hexagon-addr2line.exe output should look like below
+</p><pre style="font-size: 86%">D:\Qualcomm\Hexagon_SDK\3.4.0\examples\common\calculator\src\calculator_imp.c:24:4
+</pre><p>
+This means source code located at line number 24 in calculator_imp.c caused this PD crash.
+</p><p>
+Also you can run hexagon-llvm-objdump.exe to find out the disassembly of crashing packet.
+</p><pre>&lt;Hexagon_SDK&gt;tools\HEXAGON_Tools\8.2.04\Tools\bin\hexagon-llvm-objdump.exe
+      --disassemble -source libcalculator_skel.so
+</pre><p>
+Above command gives disassembly of all instructions in libcalculator_skel.so with source interleaved.
+</p><p>
+In this example the offset of FaultPC is 0x8B0, you can search for instructions at this offset in hexagon-llvm-objdump.exe output. you should see something like below.
+</p><pre>*res = *p;
+   8ac:       62 ff 9e 97 979eff62 {  r2 = memw(r30+#-20) } 
+   8b0:       02 c0 82 91 9182c002 {  r2 = memw(r2+#0) } 
+   8b4:       00 c0 42 84 8442c000 {  r1:0 = sxtw(r2) } 
+   8b8:       a2 ff 9e 97 979effa2 {  r2 = memw(r30+#-12) } 
+   8bc:       00 c0 c2 a1 a1c2c000 {  memd(r2+#0) = r1:0 } 
+</pre><p>
+The instruction at 8b0 is causing PD exception in this example. This way you can use hexagon-addr2line.exe or hexagon-llvm-objdump.exe to find out the source location of PD crash.
+</p><h2>
+<a name="Debugging%20Exceptions%20using%20PD%20Dumps"></a>Debugging Exceptions using PD Dumps
+</h2><p>
+PD dump is a snapshot of an application running on DSP at the point in time the exception occured. It shows what was executing, what modules are loaded and other useful information for analyzing the crash.
+</p><h3>
+<a name="How%20to%20enable%20PD%20dump%20mode"></a>How to enable PD dump mode
+</h3><p>
+By default collection of PD dumps is not enabled. To enable this mode you have to run the following commands:
+</p><pre>adb root
+</pre><pre>adb shell setprop vendor.fastrpc.process.attrs 32
+</pre><h3>
+<a name="How%20to%20collect%20PD%20dump"></a>How to collect PD dump
+</h3><p>
+Once PD dump mode is enabled, dumps will be automatically collected whenever any exception occurs in any PD. This change won't effect the PD's that existed before the PD dump mode was enabled.
+</p><p>
+On Target, PD dumps will be created at :
+</p><ul type="circle">
+<li>
+<p>
+ADSP: /vendor/rfs/msm/adsp/ramdumps/frpc
+</p>
+</li><li>
+<p>
+CDSP: /vendor/rfs/msm/cdsp/ramdumps/frpc
+</p>
+</li><li>
+<p>
+SLPI: /vendor/rfs/msm/slpi/ramdumps/frpc
+</p>
+</li>
+</ul><p>
+You can use adb pull to fetch the PD dump file from the target to your local machine.
+</p><pre>adb pull /vendor/rfs/msm/adsp/ramdumps/pd_dump_/frpc .
+</pre><h3>
+<a name="Analysis%20of%20PD%20dumps"></a>Analysis of PD dumps
+</h3><h4>
+<a name="Prerequisites%20for%20Analysis%20of%20dumps"></a>Prerequisites for Analysis of dumps
+</h4><ol type="1">
+<li>
+<p>
+Hexagon LLDB tools 8.3.07 or above
+</p>
+</li><li>
+<p>
+PD dump file i.e. the .elf file for the crashed user PD which was generated while collecting the PD dumps.
+</p>
+</li><li>
+<p>
+Fastrpc shell image ( ex. fastrpc_shell_0 for ADSP, fastrpc_shell_3 for CDSP). This can be pulled from the target at location /vendor/dsp/adsp or /vendor/dsp/cdsp.
+</p><pre>adb pull /vendor/dsp/cdsp/fastrpc_shell_3
+</pre>
+</li><li>
+<p>
+All the required shared object files. This includes the shared object running on the DSP for that user PD and its dependent shared objects.
+</p>
+</li>
+</ol><h4>
+<a name="Example"></a>Example
+</h4><p>
+We will take an example of benchmark_v65 from SDK to illustrate how we can analyze the dumps. Following are the steps to analyse the PD dumps
+</p><ul type="circle">
+<li>
+<p>
+Be sure to setup your shell local environment. Please refer to <a href="readme.html">Setup Instructions</a> for more details.
+</p>
+</li><li>
+<p>
+If you want to collect dumps for an application that doesn't behave as you expect but doesn't crash either, you can induce a crash by writing to the NULL address from the DSP side. This approach is used in benchmark_v65 with the -f crash10 option:
+</p><pre style="font-size: 74%">adb wait-for-device shell ADSP_LIBRARY_PATH="/vendor/lib/rfsa/adsp:/system/lib/rfsa/adsp:/dsp;" 
+/vendor/bin/benchmark -o /data/local/benchmark.csv -P 6 -L 10 -l 10 -s -f crash10
+</pre>
+</li><li>
+<p>
+Go to %HEXAGON_SDK_ROOT%\tools\HEXAGON_Tools\8.x.x\Tools\bin directory
+</p>
+</li><li>
+<p>
+Make sure you copy into your local directory the elf file that caused the crash, the fastrpc shell image, and all the required shared objects.
+</p>
+</li><li>
+<p>
+Run the below command:
+</p><pre>hexagon-lldb.exe fastrpc_shell_3 -c "c04e0d60 benchmark.00.elf"
+</pre><p>
+Here &#8220;c04e0d60 benchmark.00.elf&#8221; is the name for PD dump file. c04e0d60 is a unique identifier created for a process on DSP. All threads spawned from this process have the same identifier.
+</p>
+</li><li>
+<p>
+After running the above command, you should see a message similar to this:
+</p><pre style="font-size: 56%">(lldb) target create "fastrpc_shell_3" --core "c04e0d60 benchmark.00.elf"
+Core file 'C:\Qualcomm\Hexagon_SDK\3.5.3\tools\HEXAGON_Tools\8.3.07\Tools\bin\c04e0d60 benchmark.00.elf' (hexagon) was loaded.
+</pre>
+</li><li>
+<p>
+List all the required shared objects to make sure you are not missing any
+</p><pre style="font-size: 66%">(lldb) image list
+[  0] EB9EB44E            C:\Qualcomm\Hexagon_SDK\3.5.3\tools\HEXAGON_Tools\8.3.07\Tools\bin\fastrpc_shell_3
+[  1] 789E8357            libbenchmark_skel.so
+[  2] FD99A536            libdspCV_skel.so
+[  3] 8FFEE3FE            libapps_mem_heap_stub.so
+</pre><p>
+If you are missing any shared objects, then copy that .so file to the current directory, exit the lldb and start again.
+</p>
+</li><li>
+<p>
+To see the backtrace of the crashed thread, you can use bt command:
+</p><pre style="font-size: 76%">(lldb) bt
+ * thread #9, name = '/frpc/c04e0d60 ', stop reason = signal Memory write miss
+ * frame #0: 0xe0415e34
+ frame #1: 0xe04104f0 libbenchmark_skel.so`benchmark_skel_handle_invoke 
+           [inlined] _skel_method_1(_h=&lt;unavailable&gt;, _sc=&lt;unavailable&gt;, _pra=&lt;unavailable&gt;)
+           at benchmark_skel.c:544
+ frame #2: 0xe04103b4 libbenchmark_skel.so`benchmark_skel_handle_invoke
+           (_h=&lt;unavailable&gt;, _sc=&lt;unavailable&gt;, _pra=&lt;unavailable&gt;) at benchmark_skel.c:1031
+ frame #3: 0xe04104f0 libbenchmark_skel.so`benchmark_skel_handle_invoke 
+           [inlined] _skel_method_1(_h=&lt;unavailable&gt;, _sc=&lt;unavailable&gt;, _pra=&lt;unavailable&gt;) 
+           at benchmark_skel.c:544
+ frame #4: 0xe04103b4 libbenchmark_skel.so`benchmark_skel_handle_invoke
+           (_h=&lt;unavailable&gt;, _sc=&lt;unavailable&gt;, _pra=&lt;unavailable&gt;) at benchmark_skel.c:1031
+ frame #5: 0xe7025030 fastrpc_shell_3`mod_table_invoke + 564
+ frame #6: 0xe7045484 fastrpc_shell_3`fastrpc_invoke_dispatch + 368
+ frame #7: 0xe701f5d8 fastrpc_shell_3
+ frame #8: 0xe7021248 fastrpc_shell_3
+ frame #9: 0xe6fd5824 fastrpc_shell_3`qurt_trampoline + 44
+</pre><p>
+This shows that the crashed thread in #9, i.e. '/frpc/c04e0d60 '.
+</p>
+</li><li>
+<p>
+To see the backtrace for all the threads, you can use
+</p><pre style="font-size: 68%">(lldb) bt all
+thread #1, name = 'exception_handl', stop reason = signal 0
+  frame #0: 0xc00cc460
+thread #2, name = 'cmp5', stop reason = signal 0
+  frame #0: 0xe6fd4ec0 fastrpc_shell_3`qurt_signal_wait + 100
+  frame #1: 0xe6fd5824 fastrpc_shell_3`qurt_trampoline + 44
+thread #3, name = 'cmp4', stop reason = signal 0
+  frame #0: 0xe6fd4ec0 fastrpc_shell_3`qurt_signal_wait + 100
+  frame #1: 0xe6fd5824 fastrpc_shell_3`qurt_trampoline + 44
+thread #4, name = 'cmp3', stop reason = signal 0
+  frame #0: 0xe6fd47e0 fastrpc_shell_3`qurt_mutex_lock_i + 72
+  frame #1: 0xe0409fbc libdspCV_skel.so`dspCV_worker_main(context=&lt;unavailable&gt;) at dspCV_worker.cpp:142
+  frame #2: 0xe6fd5824 fastrpc_shell_3`qurt_trampoline + 44
+</pre>
+</li>
+</ul><p>
+Here are some useful commands
+</p><ul class="indent" type="circle">
+<li>
+<p>
+thread list - list the threads in your program
+</p>
+</li><li>
+<p>
+thread select 9 - select thread 9 as the default thread for subsequent commands
+</p>
+</li><li>
+<p>
+frame select 0 - select a different stack frame by index for the current thread
+</p>
+</li><li>
+<p>
+frame info - list information about the currently selected frame in the current thread
+</p>
+</li><li>
+<p>
+disassemble &#8212;frame - disassemble the current function for the current frame
+</p>
+</li><li>
+<p>
+frame v - print values of local variables
+</p>
+</li><li>
+<p>
+register read &#8212;all - show all registers in all register sets for the current thread
+</p>
+</li><li>
+<p>
+memory read 0xe0415e34 - read memory from address 0xe0415e34
+</p>
+</li><li>
+<p>
+image dump sections - dump all sections from the main executable and any shared libraries
+</p>
+</li>
+</ul><p>
+Note: PD dumps collection is enabled only for signed PD's on Hana Android Q or later targets as of SDK 3.5.3. Please refer to <a href="Tools_Signing.html">Signing</a> for more details about signed and Unsigned PD's.
+</p><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

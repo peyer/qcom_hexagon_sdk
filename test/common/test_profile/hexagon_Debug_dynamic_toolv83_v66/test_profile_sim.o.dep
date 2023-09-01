@@ -1,0 +1,12 @@
+src/test_profile_sim.c:
+inc/profile.h:
+inc/test_profile.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_farf.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/stddef/AEEStdDef.h:
+/home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_debug.h:
+hexagon_Debug_dynamic_toolv83_v66/test_profile_sim.o: src/test_profile_sim.c
+hexagon_Debug_dynamic_toolv83_v66/test_profile_sim.o: inc/profile.h
+hexagon_Debug_dynamic_toolv83_v66/test_profile_sim.o: inc/test_profile.h
+hexagon_Debug_dynamic_toolv83_v66/test_profile_sim.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_farf.h
+hexagon_Debug_dynamic_toolv83_v66/test_profile_sim.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/stddef/AEEStdDef.h
+hexagon_Debug_dynamic_toolv83_v66/test_profile_sim.o: /home/ml/Downloads/qcom/hexagon_354/Hexagon_SDK/3.5.4/incs/HAP_debug.h

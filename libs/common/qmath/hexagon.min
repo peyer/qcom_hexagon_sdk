@@ -1,0 +1,20 @@
+# builds the static lib
+BUILD_LIBS += libqmath \
+
+CC_FLAGS += $(MHVX_DOUBLE_FLAG) -mllvm -hexagon-eif=0
+
+# Use -O0 temporarily when trying to debug C code.
+#_OPT = -O0
+
+INCDIRS += inc
+
+libqmath_C_SRCS += src/qmath_vqf32 \
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   inc/qmath.h \
+   inc/qmath.inl \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

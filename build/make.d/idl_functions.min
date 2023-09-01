@@ -1,0 +1,167 @@
+#============================================================================
+#  Name:
+#    idl_functions.min
+#
+#  Description:
+#    This file contains functions and other defines for IDL rules.  See
+#    idl_rules.min for documentation of the constructs implemented here. 
+#
+#                 Copyright (c) 2007 QUALCOMM Incorporated.  
+#                            All Rights Reserved.
+#                   QUALCOMM Proprietary and Confidential
+#============================================================================
+
+#Override rules.min functions to add IDL features
+IN_COMPONENT=$(if $(filter $(basename $(1)) ./$(basename $(1)),\
+                      $(addprefix $(2)/,\
+                            $(COMPONENT_$(2)_C_SRCS)\
+                            $(COMPONENT_$(2)_CPP_SRCS)\
+                            $(COMPONENT_$(2)_CXX_SRCS)\
+                            $(COMPONENT_$(2)_ASM_SRCS)\
+                            $(COMPONENT_$(2)_IDLS)\
+                            $(COMPONENT_$(2)_HEADER_IDLS)\
+                            $(COMPONENT_$(2)_IMPL_IDLS)\
+                            $(COMPONENT_$(2)_CIF_IDLS)\
+			     )),\
+                  $(2))
+
+# Headers are generated in $(OBJ_DIR), so it needs to be in the include path for all other sources
+INCDIRS+=$(OBJ_DIR)
+
+# IDL files that should never be compiled for any reason
+SKIP_IDLS=AEEIQI.idl
+
+# Call the function named $(1) with the argument $(2) and return the result.
+# Caches the result to avoid the call to $(1) on subsequent calls to DO_CACHE.
+ifeq ($(MAKE_VERSION),3.80)
+# Make 3.80 is buggy with $(eval), so we won't try to be fancy.
+DO_CACHE=$(call $(1),$(2),$(3))
+else
+DO_CACHE=$(if $(filter undefined,$(origin $(1)_CACHE_$(2))),\
+            $(eval $(1)_CACHE_$(2):=$(call $(1),$(2),$(3))))$($(1)_CACHE_$(2))
+endif
+
+# More fun with Make 3.80.  $(eval) is buggy with long arguments, so we try to
+# work around it for evaluating dependencies by having this function iterate
+# over both lists and evaluate each dependency individually.  $(1) is the
+# dependency rule generation function, $(2) is the list of targets, and $(3)
+# is the list of prerequisites.
+# The definition can be simplified for newer makes without the long $(eval)
+# bug, bug this hasn't been done so as to keep the number of version-dependent
+# definitions to a minimum.  For make 3.81+ (and emake), the following is
+# probably faster:  MULTI_DEPENDS=$(call $(1),$(2),$(3)))
+MULTIDEP=$(foreach target,$(2),\
+            $(foreach dep,$(3),\
+               $(call $(1),$(target),$(dep))))
+
+
+# Locate $(1) in the current directory, the vpath, or the include path (in
+# that order).  An error is generated if not found.
+# Note that this search mechanism means that the 'vpath' directive cannot be
+# used to specify additional IDL paths; the VPATH variable or INCDIRS should
+# be used instead.
+#
+# We use an explicit $(foreach) rather than a single call to $(wildcard),
+# since the order returned from $(wildcard) isn't guaranteed.
+IDL_FIND=$(call DO_CACHE,IDL_FIND_INTERNAL,$(1))
+
+
+\L=(
+\R=)
+
+_demake=$(subst :, ,\
+        $(subst ;, ,\
+        $(subst =, ,\
+        $(subst $$, ,\
+        $(subst $(,), ,\
+        $(subst $(\L), ,\
+        $(subst $(\R), ,$1)))))))
+
+_inMakefile=$(strip $(foreach i,$1,\
+               $(foreach file,$(MAKEFILE_LIST),\
+                 $(if $(filter $(basename $(notdir $i)),\
+                  $(call _demake,$(shell $(call cat,$(file))))),$(file)))))
+
+IDL_FIND_INTERNAL=$(or $(call IDL_FIND_ACTUAL,$(1)),\
+                       $(warning IDL_FIND: cannot find '$(1)', named in $(call _inMakefile,$1)))
+
+IDL_FIND_ACTUAL=$(firstword \
+                   $(foreach candidate,$(1) \
+                             $(addsuffix /$(1),$(subst :, ,$(VPATH)) \
+                                               $(call INCDIRS_OF,$(1))),\
+                             $(wildcard $(candidate))))
+
+IDL_HEADER_OF=$(addsuffix .h,$(addprefix $(OBJ_DIR)/,$(call NAME_OF,$(1))))
+
+# Get the $(2)_IDLS for build $(1).  Complete paths to each IDL (with
+# .idl extension) are returned.
+X_IDLS_OF=$(call MAP,IDL_FIND,\
+             $(call uniq,$(call XS_OF,$(1),$(2)_IDLS,.idl) \
+                         $(call XS_OF,$(1),IDLS,.idl)))
+
+# Get the CIF, IMPL, and HEADER IDLs for a build, including those specified in
+# an all-encompassing <build>_IDLS.  IDLs are returned with complete paths
+CIF_IDLS_OF=$(call X_IDLS_OF,$(1),CIF)
+IMPL_IDLS_OF=$(call X_IDLS_OF,$(1),IMPL)
+HEADER_IDLS_OF=$(call X_IDLS_OF,$(1),HEADER)\
+               $(call MAP,IDL_FIND,\
+                  $(addsuffix .idl,$(BUILD_HEADERS_FROM_IDL)))
+
+# Filter out IDL files that have a corresponding header in the include path or same directory
+FILTER_PRECOMPILED_HEADER_IDLS=$(foreach idl,$(1),\
+                                  $(if $(wildcard $(basename $(idl)).h\
+                                       $(addsuffix /$(notdir $(basename $(idl)).h),$(filter-out $(V),$(INCDIRS)))),,$(idl)))
+
+# Add all implicit (included) IDLs to the list of IDLs specified in $(2), INCDIRS of $(1)
+ADD_IMPLICIT_IDLS_OF=$(call DO_CACHE,ADD_IMPLICIT_IDLS_OF_INTERNAL,$(1),$(2))
+ADD_IMPLICIT_IDLS_OF_INTERNAL=$(if $(strip $(2)),\
+                                  $(call uniq,$(2) $(filter-out $(addprefix %/,$(SKIP_IDLS)),\
+                                     $(shell $(CDEP) $(call uniq,$(call MAP,CDEP_INCDIRS_OF,$(2))) -1 $(2)))))
+
+# All the headers to build from IDL for a particular build
+ALL_HEADER_IDLS_OF=$(call DO_CACHE,ALL_HEADER_IDLS_OF_INTERNAL,$(1))
+ALL_HEADER_IDLS_OF_INTERNAL=$(call FILTER_PRECOMPILED_HEADER_IDLS,\
+                               $(call ADD_IMPLICIT_IDLS_OF,HEADER_$(1),\
+                                  $(call HEADER_IDLS_OF,$(1))))
+
+# For now, we need to add the implicit IDLs, since there are dependencies on
+# the stub/skel headers of any IDL included.  Once stub/skel headers are
+# eliminated, we can change this to not add the implicit IDLs (and just filter
+# SKIP_IDLS)
+ALL_IMPL_IDLS_OF=$(call ADD_IMPLICIT_IDLS_OF,IMPL_$(1),$(call IMPL_IDLS_OF,$(1)))
+
+# the C source file of a build that has all the remoting code
+IDL_IMPL_SRC_OF=$(if $(call IMPL_IDLS_OF,$(1)),$(OBJ_DIR)/$(call NAME_OF,$(1))_stub_skel.c)
+
+# Update C_SRCS_OF to include IDL implementation source file
+C_SRCS_OF+=$(call IDL_IMPL_SRC_OF,$(1))
+
+# the cif file of a build, has pointers to all the remoting code newfuncs
+IDL_CIF_OF=$(if $(call CIF_IDLS_OF,$(1)),$(OBJ_DIR)/$(call NAME_OF,$(1))_stub_skel.cif)
+
+# Update CIFS_OF to include IDL CIF
+CIFS_OF+=$(call IDL_CIF_OF,$(1))
+
+CLIF_OF=$(OBJ_DIR)/$(1).clif
+
+IDL_INCFLAG=-I
+IDL_INCDIRS_OF=$(addprefix $(IDL_INCFLAG),$(call INCDIRS_OF,$(1)))
+
+# Objects for a build need to be built after the IDL headers, so we
+# advertise the autogenerated headers for downstream rules.min files.
+# AUTOGEN_HEADERS should be order-only prerequisites of CLIFS, OBJS, LINTS, 
+# and any target that compiles source that might include a generated 
+# header.
+AUTOGEN_HEADERS+=$(call IDL_HEADER_OF,$(call MAP,ALL_HEADER_IDLS_OF,$(BUILDS)))
+
+
+IDL_IMPL_SRCS=$(call uniq,$(call MAP,IDL_IMPL_SRC_OF,$(BUILDS)))
+IDL_IMPL_OBJS=$(call MAP,OBJ_OF,$(IDL_IMPL_SRCS))
+
+HEADER_IDLS=$(call uniq,$(call MAP,ALL_HEADER_IDLS_OF,$(BUILDS))\
+                         $(call MAP,IDL_FIND,\
+                            $(addsuffix .idl,$(BUILD_HEADERS_FROM_IDL))))
+
+IDL_CIFS=$(call uniq,$(call MAP,IDL_CIF_OF,$(BUILDS)))
+IDL_HEADERS=$(call uniq,$(call MAP,IDL_HEADER_OF,$(HEADER_IDLS)))
+

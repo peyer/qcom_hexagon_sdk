@@ -1,0 +1,33 @@
+ifeq (1,$(V_dynamic))
+BUILD_DLLS =  libimage_dspq_skel
+else
+BUILD_LIBS += libimage_dspq_skel
+endif
+
+include $(QURT_INSTALL)/qurt_libs.min
+
+CC_FLAGS += $(MHVX_DOUBLE_FLAG)
+ASM_FLAGS += $(MHVX_SINGLE_FLAG)
+
+INCDIRS += inc
+
+# Use -O0 temporarily when trying to debug C code.
+#_OPT = -O0
+
+
+# asyncdspq library and RPC skeleton
+libimage_dspq_skel_QAICIDLS = inc/image_dspq
+
+libimage_dspq_skel_DLLS += libasyncdspq_skel
+libimage_dspq_skel_C_SRCS += $V/image_dspq_skel \
+                             src/image_dspq_dsp
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   inc/image_dspq.idl \
+   inc/image_dspq_dsp.h \
+   inc/image_dspq_common.h \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

@@ -1,0 +1,25 @@
+# This builds the skel library
+BUILD_LIBS += libcalculator_multi_domains_skel
+
+# only build the shared object if dynamic option specified in the variant
+ifeq (1,$(V_dynamic))
+BUILD_DLLS = libcalculator_multi_domains_skel
+endif
+
+libcalculator_multi_domains_skel_QAICIDLS = inc/calculator_multi_domains
+libcalculator_multi_domains_skel_C_SRCS += $V/calculator_multi_domains_skel
+libcalculator_multi_domains_skel_C_SRCS += src/calculator_imp
+
+# quality test
+BUILD_QEXES += calculator_q
+
+calculator_q_QAICIDLS = inc/calculator_multi_domains
+calculator_q_C_SRCS = src/calculator_test_main src/calculator_test src/calculator_imp
+calculator_q_LIBS = rtld rpcmem test_util atomic
+
+# copy final build products to the ship directory
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

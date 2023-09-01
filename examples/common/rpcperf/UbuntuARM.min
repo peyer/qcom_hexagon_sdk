@@ -1,0 +1,33 @@
+ifeq ($(CDSP_FLAG), 1) 
+	LIB_DSPRPC = libcdsprpc
+else ifeq ($(MDSP_FLAG), 1) 
+	LIB_DSPRPC = libmdsprpc
+else ifeq ($(SLPI_FLAG), 1) 
+	LIB_DSPRPC = libsdsprpc
+else
+	LIB_DSPRPC = libadsprpc
+endif
+
+$(info ************  LIB=$(LIB_DSPRPC) ************)
+
+BUILD_EXES+=rpcperf
+
+INCDIRS += inc
+
+rpcperf_C_SRCS = src/rpcperf src/rpcperf_main $V/rpcperf_stub
+rpcperf_DLLS = $(LIB_DSPRPC)
+rpcperf_LIBS = rpcmem
+rpcperf_QAICIDLS=inc/rpcperf
+rpcperf_LD_FLAGS += -lpthread	
+
+LD_LIBS+= -ldl
+
+#DEFINES+=VERIFY_PRINT_INFO
+#DEFINES+=VERIFY_PRINT_ERROR
+#CC_FLAGS:=$(filter-out -Werror,$(CC_FLAGS))
+
+BUILD_COPIES = \
+   $(DLLS) \
+   $(EXES) \
+   $(LIBS) \
+   $(SHIP_DIR)/ ;

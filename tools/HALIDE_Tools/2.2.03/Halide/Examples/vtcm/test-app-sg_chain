@@ -1,0 +1,36 @@
+#!/bin/bash
+
+basedir=`dirname $0`
+cd $basedir
+. ../setup-env.sh
+declare -i result=0
+set -x
+
+EXAMPLES_ROOT=$HALIDE_ROOT/Examples
+INCLUDES="-I $HALIDE_ROOT/include -I $EXAMPLES_ROOT/include -I $HALIDE_ROOT/support -I includes -I $HL_HEXAGON_TOOLS_SIM"
+HL_LIBS="$HALIDE_ROOT/lib/libHalide.a"
+
+#############################################################################
+cat <<EOT
+=== Build Host/Hexagon executable for simulation ===
+EOT
+
+pushd .
+cd sg_chain
+rm -fr ./bin
+mkdir -p bin/host
+
+${CXX} -std=c++11 $INCLUDES  -g -fno-rtti pipeline.cpp $HALIDE_ROOT/tools/GenGen.cpp -g $HL_LIBS -o bin/pipeline.generator -ldl -lpthread -lz
+
+export LD_LIBRARY_PATH=$HALIDE_ROOT/lib/host:${HL_HEXAGON_TOOLS_SIM}/lib/iss/:.
+
+bin/pipeline.generator -g sg_chain -f pipeline -o ./bin/host target=host-hvx_128-hvx_v65
+
+${CXX} -std=c++11 $INCLUDES -Wall -I ./bin/host -O3 process.cpp ./bin/host/pipeline.a -o bin/host/test -lpthread -ldl -lm
+
+./bin/host/test 1
+
+result=$?
+
+popd
+exit $result

@@ -1,0 +1,1626 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<style type="text/css">
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+
+.smarkdoc {
+  margin-left: 42px; margin-right: 42px;
+  font-size: 13px;
+  font-family: 'Lucida Grande', Geneva, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3 { color: #3c4c6c; }
+h1 {
+  text-align: center;
+  font-size: 200%;
+/*    margin-left: -30px; */
+  clear: both;
+}
+h2 {
+  font-size: 160%;
+  margin: 32px -40px 24px -42px;
+  padding: 3px 24px 8px;
+  border-bottom: 2px solid #5088c5;
+  clear: both;
+}
+h3 {
+  font-size: 130%;
+  margin: 20px -4px 10px;
+  padding: 4px;
+  clear: both;
+}
+h4 {
+  font-size: 110%;
+  margin: 2em 0 1em;
+}
+
+pre {
+  font-size: 90%;
+  background-color: #f0f0f4; padding: 6px; border: 1px solid #d0d0ee;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+.pre {
+  font-size: 90%;
+  padding: 6px;
+  background-color: #f0f0f4;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+code {
+  font-size: 90%;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+h3 code {
+  font-size: 100%;
+}
+
+p {
+  margin: 0.8em 0;
+}
+ul, ol {
+  margin: 1em 0 1em 3em; padding: 0;
+}
+div.indent {
+  margin: 0 3em;
+}
+
+a[href] {
+  text-decoration: none;
+  color: #2020b0;
+}
+a[href]:hover {
+  border-bottom: 1px dotted #2030d0;
+}
+
+/* Smark Users Guide */
+
+.codebox {
+  padding: 0 1px;  margin-right:1px;
+  border:1px solid #d0d0ee;
+  background-color: #f0f0f4;
+  font-weight: bold;
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* .art .line {  -webkit-box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,0.3); } */
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console";
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   /* border: 1px solid #555; */  /* Useful for non-white pages */
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+.toc {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em;
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ================ Print ================ */
+
+@media print {
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 3in 0 20px; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em -2em }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+/* ================  Layout  ================ */
+/*
+ *  +------------------------+
+ *  |         #header        |
+ *  +----------+-------------+
+ *  | #sidebar |  #content   |
+ *  |          |             |
+ *  +----------+-------------+
+ *
+ * CSS padding, border width, and border style (!) affect the actual height
+ * (and in turn layout).
+ */
+
+#header {
+  position: fixed;
+  top: 0px;
+  height: 32px;
+  left: 0px;
+  width: 100%;
+  padding: 10px 10px 0 0;
+}
+#sidebar {
+  position: fixed;
+  top: 42px;
+  bottom: 0px;
+  left: 0px;
+  min-width: 180px;
+  overflow: auto;
+  border: 1px solid transparent;
+  border-width: 0 1px 0 1px;
+  padding: 0px 5px 0px 5px;
+}
+#content {
+  position: fixed;
+  top: 60px;
+  left: 200px;
+  bottom: 0px;
+  right: 0px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 20px;
+  padding-top: 0;
+}
+
+/* ================  Styles  ================ */
+
+
+body {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+#header {
+  color: #fff;
+  background: #555;
+  text-align: center;
+  font-size: 25px;
+}
+
+#sidebar {
+  color: #000;
+  background: #eee;
+  border-right: 1px solid #bbb;
+  text-align: left;
+  font-size: 12px;
+  line-height: 50%;
+}
+
+#sidebar h1 {
+  margin: 0 0 0 0;
+  border-left: 5px solid transparent;
+  text-align: left;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+#sidebar h2 {
+  margin: 2px 0 8px 0;
+  border-left: 5px solid transparent;
+  text-align: center;
+  font-size: 12px;
+  /*text-shadow: #fff 1px 0px;*/
+  line-height: 1%;
+}
+
+
+
+#content {
+  margin: 0;
+  font-size: 13px;
+  line-height: 160%;
+}
+
+#content h1, #content h2 {
+  border-bottom: 2px solid;
+  font-size: 1.8em;
+  font-weight: normal;
+  margin: 2.0em 0px 1.3em 0px;
+  padding-bottom: 0.6em;
+  text-align: left;
+}
+
+#content h3 {
+  color: #242220;
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 2em 0px 0.8em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+#content h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  margin: 2em 0px 0.5em 0px;
+  text-shadow: #FFFFFF 0px 1px 1px;
+}
+
+a[href] {
+  color: #05c;
+  text-decoration: none;
+}
+
+#sidebar a {
+  /*text-shadow:  1px 1px 2px #fff, -1px -1px #ddd;*/
+  line-height: 40%;
+}
+
+pre, code {
+  font-family: "Courier New", "Lucida Console", "Monaco", monospace;
+  font-family: "Monaco", monospace;  font-size: 90%;
+  background-color: #f8f8fa;
+  border: 1px solid #e4e4ee;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 1px 0 0 1px;
+}
+
+pre {
+  padding: 2px 4px;
+}
+
+table {
+   border-collapse: collapse;
+   border-width: 1px;
+   border-spacing: 1px;
+   border-color: transparent;
+   margin: 16px 0;
+   width: 100%;
+}
+th {
+   background-color: #bbb; color: white;
+}
+td, th {
+   border-style: solid;
+   border-color: black;
+   border-width: 1px;
+   padding: 0 6px;
+}
+
+/* Highlight currently-selected sidebar link */
+
+#sidebar a.thisfile {
+  color: #557;
+}
+
+/* indentation */
+
+#content {
+   padding-left: 60px;
+}
+#content h1, 
+#content h2, 
+#content h3, h4 {
+    margin-left: -30px;
+}
+
+h3 > code {
+    font-size: 80%;
+}
+
+/* ================ Smark-specific classes ================ */
+
+.indent {
+  margin: 0 3em;
+}
+
+/*
+|| Floats affect text flow but not block boundaries, so graphics in a DIV 
+|| would overlap floats if not for "clear: both"
+*/
+.diagram {
+  margin: 18px 0;
+  clear: both;
+}
+
+/* ASCII Art */
+
+.art {
+  margin-right: auto; margin-left: auto; /* center */
+  font-family: Arial, Verdana, "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+.art * {
+   border-color: #543;
+}
+.art .dline, .art .drect {
+   border-style: dotted;
+}
+.art .rect {
+   -webkit-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   -moz-box-shadow: 0.2em 0.2em 0.3em rgba(0,0,0,0.3);
+   box-shadow: 0.2em 0.2em 0.2em #875;
+   background-color: #f9faf4; /* #fafff4; #f8f8ec;  */
+}
+.art .nofx {
+   background-color: #f9faf4;
+}
+.art .round {
+   border-radius: 0.6em;
+   -webkit-border-radius: 0.6em;
+   -moz-border-radius: 0.6em;
+}
+
+/* Sequence Charts */
+
+.msc {
+   font: 11px Verdana, Monaco, "Lucida Console"; 
+   margin-left: auto; margin-right: auto;
+   background-color: white;
+   border: 1px solid #555;
+}
+
+/* Table of Contents */
+
+.tocLevel {
+  margin-left: 2em;
+  font-weight: normal;
+}
+.tocLevel .tocLevel {
+  font-size: 90%; /* ...of inherited font size */
+  line-height: 150%; /* ...of font size */
+}
+/*
+.toc > .tocLevel {
+  font-weight: bold;
+  margin: 0.5em 0
+}
+*/
+
+.toc {
+  column-count: 1; column-gap: 2em;
+  -moz-column-count: 1; -moz-column-gap: 2em;
+  -webkit-column-count: 1; -webkit-column-gap: 2em; 
+   alternate: column-width: 235px; column-rule-width: 5px;
+}
+
+
+.columns {
+  column-count: 2; column-gap: 2em;
+  -moz-column-count: 2; -moz-column-gap: 2em;
+  -webkit-column-count: 2; -webkit-column-gap: 2em; p
+}
+
+/* ordinary text content is in P elements */
+
+td p:first-child, th p:first-child {
+   margin-top: 3px;
+}
+td p:last-child, th p:last-child {
+   margin-bottom: 3px;
+}
+li p:only-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+/* ================ Print ================ */
+
+@media print {
+
+  #header, #content { position: static; }
+  #sidebar { display: none; }
+
+  @page {
+    margin: 0.75in 0.75in;
+    size: Letter;
+    @bottom {
+      content: counter(page);
+      vertical-align: top;
+      padding-top: 1em;
+    }
+  }
+  h1 { text-align: center;
+       margin: 1in 0 1in; }
+  h2 { page-break-before: always; }
+  h2 { string-set: section content() }
+  .toc { margin: 3em 0 }
+  .toc a::after {
+     font-size: 10px;
+     content: leader(' . ') "  " target-counter(attr(href), page);
+  }
+  table { page-break-inside: avoid; }
+}
+
+
+</style><style type="text/css">
+.search { right: 20pt; position: fixed; top: 5pt }
+
+</style><title>Camera streaming examples</title>
+</head><body>
+<div class="smarkdoc"><div id="header">Hexagon SDK 3.5.4</div><div id="sidebar"><top><img src="../images/sidebar_top.jpg"></top><script src="../scripts/post.js" type="text/javascript"></script><form class="search" id="searchForm"><input id="searchquery" name="q" onkeydown="postFunctionKeydown(event, true)"><input id="searchButton" onclick="postFunction(true)" type="button" value="Search"></form><p>
+<a href="../index.html">Quick start</a>
+</p><hr>
+<p>
+<a href="../feature_matrix.html">Feature Matrix</a>
+</p><hr>
+<p>
+<a href="../hexagon_architecture.html">Hexagon Architecture</a>
+</p><hr>
+<p>
+<a href="../images/Hexagon_Document_Bundle.pdf#page=2881">Hexagon Compiler/Linker</a>
+</p><hr>
+<p>
+<a href="../hexagon_libraries.html">Hexagon Standard Libraries</a>
+</p><hr>
+<p>
+<a href="../images/80-VB419-178_QuRT_User_Guide.pdf">Hexagon RTOS</a>
+</p><hr>
+<p>
+<a href="../images/80-VB419-108_Hexagon_DSP_User_Guide.pdf">Hexagon DSP Programming</a>
+</p><hr>
+<h3>
+<a name="Platforms"></a>Platforms
+</h3><p>
+<a href="../Platforms_HLOS.html">HLOS</a>
+</p><p>
+<a href="../Platforms_Simulator.html">Simulator</a>
+</p><p>
+<a href="../Platforms_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Environments"></a>Environments
+</h3><p>
+<a href="../Environments_Build%20System.html">Build System</a>
+</p><p>
+<a href="../Environments_Build%20System%20Porting.html">Build System Porting</a>
+</p><p>
+<a href="../Environments_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="ArchitectureOverview"></a>ArchitectureOverview
+</h3><p>
+<a href="../HVX/ArchitectureOverview.html">HVX</a>
+</p><hr>
+<h3>
+<a name="Applications"></a>Applications
+</h3><p>
+<a href="../Audio/Applications.html">Audio</a>
+</p><p>
+<a href="../Camera%20streaming/Applications.html">Camera streaming</a>
+</p><p>
+<a href="../Applications_Compute%20offload.html">Compute offload</a>
+</p><p>
+<a href="../FastCV/Applications_Computer%20Vision.html">Computer Vision</a>
+</p><p>
+<a href="../Neural%20Networks/Applications.html">Neural Networks</a>
+</p><p>
+<a href="../Voice/Applications.html">Voice</a>
+</p><p>
+<a href="../Camera%20streaming/Applications_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="APIs"></a>APIs
+</h3><p>
+<a href="../APIs_Async%20Message%20Queue.html">Async Message Queue</a>
+</p><p>
+<a href="../APIs_DSP%20Clk%20&amp;%20Rsrc%20Mgmt.html">DSP Clk &amp; Rsrc Mgmt</a>
+</p><p>
+<a href="../APIs_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="../APIs_FastRPC.html">FastRPC</a>
+</p><hr>
+<h3>
+<a name="Examples"></a>Examples
+</h3><p>
+<a href="../Audio/Examples.html">Audio</a>
+</p><p>
+<a href="../Camera%20streaming/Examples.html">Camera streaming</a>
+</p><p>
+<a href="../Examples_Common.html">Common</a>
+</p><p>
+<a href="../Examples_ComputeHVX.html">ComputeHVX</a>
+</p><p>
+<a href="../Examples_GeneralOverview.html">GeneralOverview</a>
+</p><p>
+<a href="../Neural%20Networks/Examples.html">Neural Networks</a>
+</p><p>
+<a href="../Camera%20streaming/Examples_legacy.html">legacy</a>
+</p><hr>
+<h3>
+<a name="Testing"></a>Testing
+</h3><p>
+<a href="../CAPIv2/Testing_CAPIv2%20Unit%20Tests.html">CAPIv2 Unit Tests</a>
+</p><p>
+<a href="../Testing_Eclipse%20Unit%20Tests.html">Eclipse Unit Tests</a>
+</p><hr>
+<h3>
+<a name="Debugging"></a>Debugging
+</h3><p>
+<a href="../Debugging_Connect%20to%20Device.html">Connect to Device</a>
+</p><p>
+<a href="../Debugging_Exceptions.html">Exceptions</a>
+</p><p>
+<a href="../Debugging_Message%20Logging.html">Message Logging</a>
+</p><p>
+<a href="../Debugging_Simulator.html">Simulator</a>
+</p><p>
+<a href="../Debugging_Target.html">Target</a>
+</p><hr>
+<h3>
+<a name="Tools"></a>Tools
+</h3><p>
+<a href="../Tools_Hexagon%20Tools%208.3.html">Hexagon Tools 8.3</a>
+</p><p>
+<a href="../Tools_IDL%20Compiler.html">IDL Compiler</a>
+</p><p>
+<a href="../Tools_On%20Target%20Profiling.html">On Target Profiling</a>
+</p><p>
+<a href="../Tools_Scripts.html">Scripts</a>
+</p><p>
+<a href="../Tools_Signing.html">Signing</a>
+</p><p>
+<a href="../Tools_UserGuides.html">UserGuides</a>
+</p><p>
+<a href="../Tools_Utilities.html">Utilities</a>
+</p><hr>
+<h3>
+<a name="FAQ"></a>FAQ
+</h3><p>
+<a href="../FAQ_Common.html">Common</a>
+</p><p>
+<a href="../FAQ_Dynamic%20Loading.html">Dynamic Loading</a>
+</p><p>
+<a href="../FAQ_FastRPC.html">FastRPC</a>
+</p><p>
+<a href="../FAQ_Hexagon%20IDE.html">Hexagon IDE</a>
+</p><hr>
+<h3>
+<a name="Dependencies"></a>Dependencies
+</h3><p>
+<a href="../Dependencies_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Release%20Notes"></a>Release Notes
+</h3><p>
+<a href="../Release%20Notes_Common.html">Common</a>
+</p><hr>
+<h3>
+<a name="Support"></a>Support
+</h3><p>
+<a href="../Support_Contact.html">Contact</a>
+</p><center><img src="../images/sidebar_bot.jpg"></center></div><div id="content"><a name="_top_" style="display:block;"></a><h1>
+<a name="Camera%20streaming%20examples"></a>Camera streaming examples
+</h1><div class="toc"><div class="tocLevel"><a href="#Overview">Overview</a></div><div class="tocLevel"><a href="#Goals">Goals</a></div><div class="tocLevel"><a href="#Example%20contents">Example contents</a><div class="tocLevel"><a href="#_Dependencies">Dependencies</a></div><div class="tocLevel"><a href="#File%20Structure">File Structure</a></div><div class="tocLevel"><a href="#hvx_add_constant%20example%20walk-through">hvx_add_constant example walk-through</a></div><div class="tocLevel"><a href="#Function%20naming%20conventions">Function naming conventions</a></div></div><div class="tocLevel"><a href="#Building%20examples">Building examples</a><div class="tocLevel"><a href="#Build%20OEM%20plugin:">Build OEM plugin:</a></div><div class="tocLevel"><a href="#Build%20QDSP6%20lib:">Build QDSP6 lib:</a></div></div><div class="tocLevel"><a href="#Load%20example%20to%20device">Load example to device</a></div><div class="tocLevel"><a href="#Running%20the%20examples">Running the examples</a></div><div class="tocLevel"><a href="#Collect%20Frame%20Dump">Collect Frame Dump</a></div><div class="tocLevel"><a href="#Debug%20and%20logging">Debug and logging</a></div><div class="tocLevel"><a href="#SDM845%20Camera%20Streaming">SDM845 Camera Streaming</a></div><div class="tocLevel"><a href="#Steps%20to%20verify%20Camera%20Streaming:">Steps to verify Camera Streaming:</a></div><div class="tocLevel"><a href="#Files%20in%20SDK">Files in SDK</a><div class="tocLevel"><a href="#Camera%20Streaming%20Framework">Camera Streaming Framework</a></div><div class="tocLevel"><a href="#Example:">Example:</a></div></div><div class="tocLevel"><a href="#OEM%20Plug-in:">OEM Plug-in:</a></div></div><h2>
+<a name="Overview"></a>Overview
+</h2><p>
+<i>Note:</i>
+</p><p>
+This example note applys to sm8250/sm7250/sm8350.
+</p><p>
+For other targets such as msm8998, sdm660, sdm485, sm8150, sm7150, sm6125 etc. Please refer to <a href="Examples_legacy.html">Example_legacy.html</a>.
+</p><p>
+Camera streaming examples includes hvx_app_add_constant. This simple examples shows how a developer would use the utilities provided by camera streaming framework to develop a camera streaming use case for Bayer pixel data processing.
+</p><p>
+Please make sure to have the dependencies ready before running examples on device. See <a href="Applications.html">Dependencies</a>.
+</p><h2>
+<a name="Goals"></a>Goals
+</h2><p>
+In general the goal for this example is to
+</p><ul type="circle">
+<li>
+<p>
+Show how to use the utilities provided by camera streaming framework
+</p>
+</li><li>
+<p>
+Provide programming model for developers.
+</p>
+</li><li>
+<p>
+Show different use cases that camera streaming usually handle
+</p>
+</li><li>
+<p>
+Using these examples as reference, developers can replace the processing portion of the code with their own, and quickly implement their own camera streaming use case.
+</p>
+</li>
+</ul><p>
+The add_constant example shows how application can pass runtime parameter from OEM plugin to QDSP6 lib, and how application can transmit and access buffers between Android and DSP.
+</p><h2>
+<a name="Example%20contents"></a>Example contents
+</h2><h3>
+<a name="_Dependencies"></a>Dependencies
+</h3><ul type="circle">
+<li>
+<p>
+Camera streaming example require DSP6 V66 and above.
+</p>
+</li><li>
+<p>
+Camera streaming example require Hexagon tools version 8.3.00 or above for compilation and simulation.
+</p>
+</li>
+</ul><p>
+All code-level dependencies are included in HexagonSDK.
+</p><p>
+QDSP6 lib's dependencies are at:
+</p><pre style="font-size: 72%">&lt;SDK root&gt;\lib\camera_streaming\framework\ship\hexagon_ReleaseG_dynamic_toolv83_v66\sm8250_sm7250\
+</pre><p>
+This folder contains
+</p><pre style="font-size: 70%">dsp_streamer.h: fastRPC communication prototype API
+dsp_streamer_if_app.h: interface defination for User to create app_entry()
+dsp_streamer_common.h: Common definitions to be used by both the user APP and  DSP streamer framework
+dsp_streamer_process_utils.h: Utility APIs for User to control workloop
+hwio.h: utility to read/write to a pointer
+</pre><p>
+OEM plugin's dependencies are at:
+</p><pre>&lt;HexagonSDK root&gt;\&lt;version&gt;\lib\camera_streaming\framework_stub
+</pre><p>
+This folder contains
+</p><ul type="circle">
+<li>
+<p>
+<b>hvx_lib.h</b>: the API for OEM plugin to implement
+</p>
+</li>
+</ul><p>
+All dependency files are required to be present to build the examples.
+</p><h3>
+<a name="File%20Structure"></a>File Structure
+</h3><p>
+Two examples are provided with HexagonSDK release, both have OEM plugin and QDSP6 lib implementation. Structure-wise, both examples are similar, so we take &#8220;hvx_add_constant&#8221; as example for better explanation.
+</p><p>
+The OEM plugin implementation is at:
+</p><pre>&lt;hexagonSDK root&gt;\&lt;version&gt;\examples\camera_streaming\hvx_add_constant_stub
+</pre><p>
+A single c source file is included:
+</p><ul type="circle">
+<li>
+<p>
+<b>hvx_add_constant.c</b> is implemented following hvx_lib.h
+</p>
+</li>
+</ul><p>
+The QDSP6 lib implementation is at:
+</p><pre>&lt;hexagonSDK root&gt;\&lt;version&gt;\examples\camera_streaming\hvx_add_constant
+</pre><p>
+It contains a set of header, c source and asm source files to generate the shared library for streaming processing.
+</p><ul type="circle">
+<li>
+<p>
+<b>asm_src/add_constant.S</b> is the assembly file for add constant function. This file contains most of data processing
+</p>
+</li><li>
+<p>
+<b>inc/hvx_app_add_constant.h</b> is the header file for copy line function.
+</p>
+</li><li>
+<p>
+<b>inc/hvx_add_constant_def.h</b> is the header shares runtime parameter structure with user lib in Android side
+</p>
+</li><li>
+<p>
+<b>src/hvx_app_add_constant.c</b> is the c source code. This file contains most of the control logic
+</p>
+</li><li>
+<p>
+<b>hexagon.min</b> contains information required to build the DSP libraries and test executable. It may need to be modified if source files and/or dependencies are changed. See <a href="../Environments_Build%20System.html">Command line development environment</a> for more information
+</p>
+</li><li>
+<p>
+<b>Makefile</b> should not need to change. See <a href="../Environments_Build%20System.html">Command line development environment</a> for more information
+</p>
+</li>
+</ul><p>
+The camera streaming framework binary and header is at:
+</p><pre style="font-size: 72%">&lt;hexagonSDK root&gt;\&lt;version&gt;\lib\camera_streaming\framework\ship\hexagon_Release_dynamic_toolv80_v60
+</pre><ul type="circle">
+<li>
+<p>
+<b>hvx_app_common.h</b> defines data structures shared between OEM plugin and QDSP6 lib.
+</p>
+</li>
+</ul><p>
+OEM plugin API and implementation could be updated in Android build release. Please always refer to Android build for latest version. Place to check in Android build:
+</p><pre>&lt;platform&gt;/vendor/qcom/proprietary/mm-camerasdk/hvx
+</pre><h3>
+<a name="hvx_add_constant%20example%20walk-through"></a>hvx_add_constant example walk-through
+</h3><pre><span style="color: darkgreen">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: darkgreen">// Copyright (c) 2019 Qualcomm Technologies, Inc.</span>
+<span style="color: darkgreen">// All Rights Reserved.</span>
+<span style="color: darkgreen">// Confidential and Proprietary - Qualcomm Technologies, Inc.</span>
+<span style="color: darkgreen">////////////////////////////////////////////////////////////////////////////////</span>
+<span style="color: darkgreen">// From Hexagon SDK environment</span>
+<span style="color: darkgreen">// If User want to control the workloop then uncomment the below #define USE_CUSTOM_WORKLOOP</span>
+<span style="color: darkgreen">//#define USE_CUSTOM_WORKLOOP</span>
+
+<span style="color: blue">#define</span>  FARF_ERROR 1
+<span style="color: blue">#define</span>  FARF_HIGH 1
+<span style="color: blue">#define</span>  FARF_LOW 1
+
+<span style="color: blue">#ifndef</span> _DEBUG
+<span style="color: blue">#define</span> _DEBUG
+<span style="color: blue">#endif</span>
+<span style="color: blue">#include</span> <span style="color: darkred">"HAP_farf.h"</span>
+<span style="color: blue">#include</span> <span style="color: darkred">"dsp_streamer_if_app.h"</span>
+<span style="color: blue">#include</span> <span style="color: darkred">"dsp_streamer_common.h"</span>
+<span style="color: blue">#include</span> <span style="color: darkred">"hvx_app_add_constant.h"</span>
+<span style="color: blue">#include</span> <span style="color: darkred">"hvx_add_constant_def.h"</span>
+<span style="color: blue">#include</span> &lt;stdio.h&gt;
+<span style="color: blue">#include</span> &lt;stdlib.h&gt;
+<span style="color: blue">#ifdef</span> USE_CUSTOM_WORKLOOP
+<span style="color: blue">#include</span> <span style="color: darkred">"dsp_streamer_process_utils.h"</span>
+<span style="color: blue">#endif</span>
+
+
+<span style="color: blue">#define</span> roundup_t(a, m)     (((a)+(m)-1)&amp;(0-m))
+<span style="color: darkgreen">////////////////</span>
+<span style="color: darkgreen">// Helper API //</span>
+<span style="color: darkgreen">////////////////</span>
+
+uint32_t wrap_buffer_idx(uint32_t idx, uint32_t bufsize) {
+    <span style="color: blue">if</span> (idx &gt;= bufsize) {
+        idx -= bufsize;
+    }
+    <span style="color: blue">return</span> idx;
+}
+</pre><pre><span style="color: darkgreen">/**
+ * @brief Wrapper for function used to dump buffers.
+ *
+ * @param  strm_dev_p  Streamer device.
+ * @param  callbacks_p Framework callback pointers.
+ * @param  buf_p  Pointer to buffer to be dumped.
+ *
+ * @return If success, return HVX_SUCCESS.
+ */</span>
+<span style="color: blue">int</span> buf_get_empty(<span style="color: blue">void</span>* strm_dev_p, framework_callback_functns_t *callbacks_p, dsp_streamer_buf_desc_t* buf_p)
+{
+    <span style="color: blue">int</span> ret = HVX_SUCCESS;
+    <span style="color: blue">unsigned</span> <span style="color: blue">int</span> blocking = 0;
+
+    <span style="color: blue">if</span>(!strm_dev_p || !callbacks_p || !buf_p)
+    {
+        FARF(ERROR, <span style="color: darkred">"%s: NULL parameter (%p/%p)!"</span>, __func__, strm_dev_p, buf_p);
+        <span style="color: blue">return</span> HVX_FAILURE;
+    }
+
+    <span style="color: blue">if</span>(callbacks_p-&gt;buf_get_empty_func_ptr)
+    {
+        <span style="color: blue">int</span> rc = callbacks_p-&gt;buf_get_empty_func_ptr(strm_dev_p, (<span style="color: blue">void</span>*)buf_p, blocking);
+        FARF(HIGH, <span style="color: darkred">"%s: buf_get_empty_func_ptr callback returned %d!"</span>, __func__, rc);
+        <span style="color: blue">if</span>(rc != 0)<span style="color: darkgreen">//TODO: use ret code</span>
+        {
+            ret = HVX_FAILURE;
+        }
+    }
+    <span style="color: blue">else</span>
+    {
+        FARF(ERROR, <span style="color: darkred">"%s: callback func not present!"</span>, __func__);
+        ret = HVX_FAILURE;
+    }
+
+    <span style="color: blue">return</span> ret;
+}
+</pre><pre><span style="color: darkgreen">/**
+ * @brief Wrapper for function used to retrieve buffers.
+ *
+ * @param  strm_dev_p  Streamer device.
+ * @param  callbacks_p Framework callback pointers.
+ * @param  buf_p  Pointer to buffer to be dumped.
+ *
+ * @return If success, return HVX_SUCCESS.
+ */</span>
+<span style="color: blue">int</span> buf_send_full(<span style="color: blue">void</span>* strm_dev_p, framework_callback_functns_t *callbacks_p, dsp_streamer_buf_desc_t* buf_p)
+{
+    <span style="color: blue">int</span> ret = HVX_SUCCESS;
+    <span style="color: blue">unsigned</span> <span style="color: blue">int</span> blocking = 1;
+
+    <span style="color: blue">if</span>(!strm_dev_p || !callbacks_p || !buf_p)
+    {
+        FARF(ERROR, <span style="color: darkred">"%s: NULL parameter!"</span>, __func__);
+        <span style="color: blue">return</span> HVX_FAILURE;
+    }
+
+    <span style="color: blue">if</span>(callbacks_p-&gt;buf_send_full_func_ptr)
+    {
+        <span style="color: blue">int</span> rc = callbacks_p-&gt;buf_send_full_func_ptr(strm_dev_p, (<span style="color: blue">void</span>*)buf_p, blocking);
+        FARF(HIGH, <span style="color: darkred">"%s: buf_send_full_func_ptr callback returned %d!"</span>, __func__, rc);
+        <span style="color: blue">if</span>(rc != 0)<span style="color: darkgreen">//TODO: use ret code</span>
+        {
+            ret = HVX_FAILURE;
+        }
+    }
+    <span style="color: blue">else</span>
+    {
+        FARF(ERROR, <span style="color: darkred">"%s: callback func not present!"</span>, __func__);
+        ret = HVX_FAILURE;
+    }
+
+    <span style="color: blue">return</span> ret;
+}
+</pre><pre><span style="color: darkgreen">/**
+ * @brief linesize_128b_aligned_get.
+ *
+ * Calcuate the 128b aligned linesize
+ * @param  width  Streamer device.
+ * @param  pad_size.
+ * @param  byteperpixel.
+ *
+ * @return size of 128b aligned.
+ */</span>
+<span style="color: blue">static</span> <span style="color: blue">unsigned</span> <span style="color: blue">int</span> linesize_128b_aligned_get(<span style="color: blue">unsigned</span> <span style="color: blue">int</span> width, <span style="color: blue">unsigned</span> <span style="color: blue">int</span> pad_size, <span style="color: blue">unsigned</span> <span style="color: blue">int</span> byteperpixel)
+{ 
+    <span style="color: blue">unsigned</span> <span style="color: blue">int</span> padsize=0,linesize=0;
+    <span style="color: blue">switch</span>(pad_size)
+    {
+        <span style="color: blue">case</span> PAD_SIZE_0:
+            padsize =0;
+        <span style="color: blue">break</span>;
+        <span style="color: blue">case</span> PAD_SIZE_8:
+            padsize =16;
+        <span style="color: blue">break</span>;
+        <span style="color: blue">case</span> PAD_SIZE_SOL_ONLY:
+        <span style="color: blue">case</span> PAD_SIZE_EOL_ONLY:
+            padsize =8;
+        <span style="color: blue">break</span>;
+        <span style="color: blue">default</span>:
+            padsize =0;
+    }
+    linesize = (<span style="color: blue">unsigned</span> <span style="color: blue">int</span>) roundup_t(width* byteperpixel + padsize * byteperpixel, 128);
+    <span style="color: blue">return</span> linesize;
+}
+</pre><pre><span style="color: darkgreen">/**
+ * @brief: app_callbacks_p-&gt;get_config_func_ptr = &amp;hvx_add_constant_get_config;
+ * This function allows User to configure the streamer accordingly to User's requirement
+ * (RX/TX buffer size, n of capture lines, how to pack onto L2$ buffer pixel data padding etc..)
+ *
+ * @param  app_context_p   Pointer to app context allocate at entry point.
+ * @param config_in_p: pointer to the (input) configuration data set by the streamer framework (configuration from the IFE side).
+ * @param config_out_p: pointer to the (output) configuration data set by the User and returned to the streamer framework.
+ * @return If success, return HVX_SUCCESS.
+ */</span>
+<span style="color: blue">int</span> hvx_add_constant_get_config(<span style="color: blue">void</span> *app_context_p,
+        config_from_client_t* config_in_p,
+        config_from_app_t* config_out_p)
+{
+    <span style="color: blue">int</span> ret = HVX_SUCCESS;
+    FARF(ALWAYS, <span style="color: darkred">"%s: E"</span>, __func__);
+
+    FARF(ALWAYS, <span style="color: darkred">"%s:=========== CUSTOM get Config ============="</span>, __func__);
+    FARF(HIGH, <span style="color: darkred">"%s: input height = %d,"</span>
+            <span style="color: darkred">"output height = %d, ife_type = %u,"</span>
+            <span style="color: darkred">"pixel bit depth = %u, tapping point %d,"</span>
+            <span style="color: darkred">"frame pixel format %u"</span>, __func__,
+            config_in_p-&gt;frame_info.in_height,
+            config_in_p-&gt;frame_info.out_height,
+            config_in_p-&gt;ife_mode,
+            config_in_p-&gt;frame_info.pixel_bit_depth,
+            config_in_p-&gt;tapping_point,
+            config_in_p-&gt;frame_info.pixel_format);
+
+    config_out_p-&gt;streamer_config.dynamic_buf_size = <span style="color: blue">sizeof</span>(hvx_constant_t); <span style="color: darkgreen">// add constant will be update dynamicly from the CAMX</span>
+    config_out_p-&gt;streamer_config.rx_pad_size = PAD_SIZE_0; <span style="color: darkgreen">// disable padding</span>
+    config_out_p-&gt;streamer_config.rx_pad_type = PAD_0; <span style="color: darkgreen">// since padding is disable no use</span>
+    config_out_p-&gt;streamer_config.tx_pad_size = PAD_SIZE_0; <span style="color: darkgreen">// disable padding</span>
+    config_out_p-&gt;streamer_config.streamer_in_format = BIT_DEPTH_10; <span style="color: darkgreen">// this configure accordingly to config_in_p-&gt;frame_info.pixel_bit_depth</span>
+    config_out_p-&gt;streamer_config.streamer_out_format = BIT_DEPTH_10; <span style="color: darkgreen">// this configure accordingly to config_in_p-&gt;frame_info.pixel_bit_depth</span>
+
+    config_out_p-&gt;streamer_config.thread_stack_size = 4096; <span style="color: darkgreen">// configure stack size for the thread</span>
+
+    config_out_p-&gt;streamer_config.tx_timing_mode =TX_PROGRAMMED_MODE;<span style="color: darkgreen">// This is the only mode currently support</span>
+
+    FARF(HIGH, <span style="color: darkred">"%s: streamer %d input width = %d, output width = %d,"</span>,
+            __func__, config_in_p-&gt;id,
+            config_in_p-&gt;frame_info.in_width,config_in_p-&gt;frame_info.out_width);
+    config_out_p-&gt;streamer_config.rx_lines = INPUT_BUF_LINES; <span style="color: darkgreen">// configure circular RX buffer -&gt; streamer framework will allocate locked L2$ buffer</span>
+    config_out_p-&gt;streamer_config.tx_lines = OUTPUT_BUF_LINES; <span style="color: darkgreen">// configure circular TX buffer -&gt; streamer framework will allocate locked L2$ buffer</span>
+    config_out_p-&gt;streamer_config.tx_min_start = OUTPUT_START_DELAY;
+
+    config_out_p-&gt;streamer_config.rx_first_fetch_numlines = 4;<span style="color: darkgreen">// at SOF input frame, n of caputured lines that algo want to access</span>
+    config_out_p-&gt;streamer_config.rx_fetch_numlines = 2;<span style="color: darkgreen">// streamer framework workloop will capture every n of lines before call algo pre-process function</span>
+
+    config_out_p-&gt;streamer_config.tx_first_fetch_numlines = 4; <span style="color: darkgreen">// currently there is no use for this</span>
+    config_out_p-&gt;streamer_config.tx_fetch_numlines =2;<span style="color: darkgreen">// streamer framework workloop will transfer back to IFE every n of lines</span>
+
+    <span style="color: darkgreen">/*** calculate rx and tx linesize in BYTE based on width and padding ***/</span>
+    config_out_p-&gt;streamer_config.rx_linesize = linesize_128b_aligned_get(
+            config_in_p-&gt;frame_info.in_width, config_out_p-&gt;streamer_config.rx_pad_size,
+            BYTES_PER_PIXEL);
+        config_out_p-&gt;streamer_config.rx_l2_format=1;<span style="color: darkgreen">// configure L2$ packed mode for RX circular buffer: 0-&gt;8-bit mode, 1-&gt;16-bit mode</span>
+                                                                                                 <span style="color: darkgreen">// in 8-bit mode: if pixel_bit_depth &gt; 8, it will be truncated lsb</span>
+        config_out_p-&gt;streamer_config.tx_l2_format=1;<span style="color: darkgreen">// configure L2$ packed mode for TX circular buffer: 0-&gt;8-bit mode, 1-&gt;16-bit mode</span>
+                                                                                                 <span style="color: darkgreen">// in 8-bit mode: if pixel_bit_depth &gt; 8, it will be truncated lsb</span>
+        config_out_p-&gt;streamer_config.rx_l2_pack_msb_aligned=0;<span style="color: darkgreen">// this only apply if rx_l2_format=1: 0-&gt;LSB aligned, 1-&gt;MSB aligned</span>
+        config_out_p-&gt;streamer_config.tx_l2_pack_msb_aligned=0;<span style="color: darkgreen">// this only apply if tx_l2_format=1: 0-&gt;LSB aligned, 1-&gt;MSB aligned</span>
+
+        config_out_p-&gt;streamer_config.tx_linesize = linesize_128b_aligned_get(
+        config_in_p-&gt;frame_info.out_width, config_out_p-&gt;streamer_config.tx_pad_size,
+                BYTES_PER_PIXEL);
+        config_out_p-&gt;streamer_config.tx_pixel_cnt = config_in_p-&gt;frame_info.out_width;<span style="color: darkgreen">// configure tx width</span>
+        config_out_p-&gt;streamer_config.tx_line_cnt = config_in_p-&gt;frame_info.out_height;<span style="color: darkgreen">// configure tx height</span>
+        config_out_p-&gt;streamer_config.tx_SOL_interval = 3212;<span style="color: darkgreen">// this is NOT applied for sm8250/sm7250/sm8350 target</span>
+        FARF(HIGH, <span style="color: darkred">"%s: for streamer %d, TX_PROGRAMMED_MODE enabled"</span>,
+                __func__, config_in_p-&gt;id);
+
+    FARF(HIGH, <span style="color: darkred">"%s: for streamer %d, rx_linesize is %d, tx_linesize is %d"</span>,
+            __func__, config_in_p-&gt;id, config_out_p-&gt;streamer_config.rx_linesize,
+            config_out_p-&gt;streamer_config.tx_linesize);
+
+        <span style="color: darkgreen">///////////////</span>
+        <span style="color: darkgreen">// BW voting //</span>
+        <span style="color: darkgreen">///////////////</span>
+    <span style="color: blue">if</span> (config_in_p-&gt;ife_mode == HVX_IFE_BOTH) {
+        <span style="color: darkgreen">// in case of dual vfe, vote for NOM ADSP clk</span>
+        config_out_p-&gt;power_votes.mips_total = 600;
+        config_out_p-&gt;power_votes.mips_per_thread = 150;
+    } <span style="color: blue">else</span> {
+        <span style="color: darkgreen">// in case of single vfe, vote for TURBO ADSP clk</span>
+        config_out_p-&gt;power_votes.mips_total = 900;
+        config_out_p-&gt;power_votes.mips_per_thread = 300;
+    }
+
+    config_out_p-&gt;power_votes.bus_bw = 4800000000;
+    config_out_p-&gt;power_votes.usage_percentage = 50;
+
+    <span style="color: darkgreen">/* Update internal data */</span>
+    ((hvx_add_constant_context_t*) app_context_p)-&gt;num_lines_processed = 0;
+    ((hvx_add_constant_context_t*) app_context_p)-&gt;num_lines_total =
+            config_in_p-&gt;frame_info.out_height;
+
+    FARF(ALWAYS, <span style="color: darkred">"%s: X"</span>, __func__);
+    <span style="color: blue">return</span> ret;
+}
+</pre><pre><span style="color: darkgreen">/**
+ * @brief: app_callbacks_p-&gt;process_lines_func_ptr = &amp;hvx_add_constant_process_lines;
+ * This is User's Pre-process function
+ *
+ * @param  app_context_p   Pointer to app context allocate at entry point.
+ * @param  dst_p -&gt; point to output buffer for Algo to write to
+ * @param  src_p -&gt; pointer to input buffer where pixel data been captured for Algo to read from
+ * @param  params_p -&gt; useful param to Algo
+ * @return None
+ */</span>
+<span style="color: blue">void</span> hvx_add_constant_process_lines(
+                            <span style="color: blue">void</span> *app_context_p,
+                            <span style="color: blue">void</span>* dst_p,
+                            <span style="color: blue">void</span>* src_p,
+                            process_lines_params_t* params_p)
+{
+    int32 shift = 7;
+    uint32 num_lines_to_process =
+            <span style="color: darkgreen">/* TH: uncomment this after fixing rx_first_fetch_numlines: ((hvx_add_constant_context_t*)app_context_p)-&gt;num_lines_processed == 0 ?
+                    params_p-&gt;app_cfg_p-&gt;streamer_config.rx_first_fetch_numlines : */</span>
+                    params_p-&gt;app_cfg_p-&gt;streamer_config.rx_fetch_numlines;
+    uint32 Tx_buffpointer = (uint32)dst_p;
+    uint32 Rx_buffpointer = (uint32)src_p;
+    hvx_constant_t* hvx_constant = (hvx_constant_t*)params_p-&gt;metadata_p;
+    uint32 linesize_bytes = params_p-&gt;app_cfg_p-&gt;streamer_config.tx_linesize;
+
+<span style="color: blue">#ifdef</span> BUF_SHARING_EN 
+<span style="color: darkgreen">//////////////////////////////////////////////////////////////////</span>
+<span style="color: darkgreen">// NOTE: currently this Buffer sharing feature is not Supported //</span>
+<span style="color: darkgreen">//////////////////////////////////////////////////////////////////</span>
+    dsp_streamer_buf_desc_t buf;
+    <span style="color: blue">unsigned</span> <span style="color: blue">int</span> send_buf = 0;
+    <span style="color: blue">if</span>(!((hvx_add_constant_context_t*)app_context_p)-&gt;num_lines_processed)
+    {
+        <span style="color: blue">if</span>(!buf_get_empty(
+                ((hvx_add_constant_context_t*)app_context_p)-&gt;client_p,
+                ((hvx_add_constant_context_t*)app_context_p)-&gt;callbacks_p,
+                &amp;buf))
+        {
+            FARF(LOW, <span style="color: darkred">"%s: Received buf with fd %d, size %u!\n"</span>,
+                                __func__,
+                                buf.hndl,
+                                buf.len);
+            *((<span style="color: blue">unsigned</span> <span style="color: blue">char</span>*)(buf.vaddr)) = 0xAB;
+            *((<span style="color: blue">unsigned</span> <span style="color: blue">char</span>*)(buf.vaddr+1)) = 0xCD;
+            send_buf = 1;
+        }
+        <span style="color: blue">else</span>
+        {
+            FARF(ERROR, <span style="color: darkred">"%s: buf_get_empty failed!\n"</span>,
+                                __func__);
+            buf.hndl = -1;
+        }
+    }
+<span style="color: blue">#endif</span> <span style="color: darkgreen">//BUF_SHARING_EN</span>
+
+    hvx_add_constant_asm((<span style="color: blue">void</span>*)(Tx_buffpointer),
+                            (<span style="color: blue">void</span>*)(Rx_buffpointer),
+                            (linesize_bytes*num_lines_to_process),
+                            hvx_constant-&gt;constant,
+                            shift);
+
+    ((hvx_add_constant_context_t*)app_context_p)-&gt;num_lines_processed += num_lines_to_process;
+
+    <span style="color: blue">if</span>(((hvx_add_constant_context_t*)app_context_p)-&gt;num_lines_processed &gt;=
+            ((hvx_add_constant_context_t*)app_context_p)-&gt;num_lines_total)
+    {
+        FARF(HIGH, <span style="color: darkred">"%s: lines processed %u out of %u. Resetting!\n"</span>,
+                    __func__,
+                    ((hvx_add_constant_context_t*)app_context_p)-&gt;num_lines_processed,
+                    ((hvx_add_constant_context_t*)app_context_p)-&gt;num_lines_total);
+        ((hvx_add_constant_context_t*)app_context_p)-&gt;num_lines_processed = 0;
+    }
+
+<span style="color: blue">#ifdef</span> BUF_SHARING_EN
+<span style="color: darkgreen">//////////////////////////////////////////////////////////////////</span>
+<span style="color: darkgreen">// NOTE: currently this Buffer sharing feature is not Supported //</span>
+<span style="color: darkgreen">//////////////////////////////////////////////////////////////////</span>
+     <span style="color: blue">if</span>(send_buf)
+     {
+         <span style="color: blue">if</span>(buf_send_full(
+                 ((hvx_add_constant_context_t*)app_context_p)-&gt;client_p,
+                 ((hvx_add_constant_context_t*)app_context_p)-&gt;callbacks_p,
+                 &amp;buf))
+         {
+             FARF(ERROR, <span style="color: darkred">"%s: buf_send_full failed!\n"</span>,
+                                 __func__);
+         }
+     }
+<span style="color: blue">#endif</span> <span style="color: darkgreen">// BUF_SHARING_EN</span>
+}
+
+<span style="color: darkgreen">/**
+ * @brief Main processing loop.
+ * This is to allow User to control workloop instead of streamer framework control it
+ *
+ * @param  p  Thread payload.
+ *
+ * @return If success, return HVX_SUCCESS.
+ */</span>
+<span style="color: blue">void</span> hvx_add_constant(<span style="color: blue">void</span> *p)
+{
+<span style="color: blue">#ifdef</span> USE_CUSTOM_WORKLOOP
+
+    uint32 raw_status = 0,raw_status_mask=0,raw_status_Rx_data_loss_mask=0;
+    uint32 overflow_recovery = 0;
+    uint32 linecount = 0;
+    uint32 in_idx = 0;
+    uint32 out_idx = 0;
+    uint32 sess_p_stats_frame_cnt = 0;
+    uint32 skip_processing = 0;
+        streamer_request_config_t  *config_p = (streamer_request_config_t*)process_util_get_streamer_config(p);
+    ife_frame_info_t* frame_info_p = process_util_get_frame_info(p);
+
+    <span style="color: darkgreen">/* TX/RX pointers*/</span>
+    uint8 *tx_buf_p = (uint8*)process_util_get_txbuf_addr(p);
+    uint8 *rx_buf_p = (uint8*)process_util_get_rxbuf_addr(p);
+
+    process_lines_params_t params;
+    params.app_cfg_p =(config_from_app_t*)process_util_get_config_from_app(p);
+    params.client_cfg_p =(config_from_client_t*) process_util_get_client_cfg(p);
+    params.metadata_p =(<span style="color: blue">void</span>*) process_util_get_metabuf(p);
+    params.num_lines_processed = 0;
+        <span style="color: blue">void</span>* app_context_p= process_util_get_app_context(p);
+
+    <span style="color: darkgreen">/**
+     * RX and TX buffer size
+     * these values are whatever got calculated in get_config
+     * function
+     * in dual IFE case, two processing thread will get separate buf
+     * size based on thread_id.
+     * in single IFE case, thread_id will be 0
+     */</span>
+    uint32 rx_linesize = config_p-&gt;rx_linesize;
+    uint32 tx_linesize = config_p-&gt;tx_linesize;
+    uint32 rx_bufsize = rx_linesize * config_p-&gt;rx_lines;
+    uint32 tx_bufsize = tx_linesize * config_p-&gt;tx_lines;
+
+<span style="color: darkgreen">//    FARF(LOW, "Entering CUSTOM workloop for dev %u!", dev_p-&gt;resources.id);</span>
+
+    <span style="color: darkgreen">/** Frame layout **/</span>
+    uint32 width = frame_info_p-&gt;in_width;
+    uint32 height = frame_info_p-&gt;in_height;
+<span style="color: darkgreen">//    uint32 RX_SOL_interval = 0;</span>
+
+    <span style="color: darkgreen">/** Copy shadow_metabuf-&gt;metabuf **/</span>
+    process_util_update_metabuf(p);
+
+    <span style="color: darkgreen">/** Wait for config_p-&gt;rx_first_fetch_numlines before calling the processing function the first time.
+     * Wait for config_p-&gt;fetch_numlines before calling the processing function all subsequent times.
+     */</span>
+<span style="color: darkgreen">//    uint32 rx_line_count = config_p-&gt;rx_first_fetch_numlines;</span>
+    uint32 processed_linecount = 0;
+
+    <span style="color: darkgreen">/******** Wait here before entering main loop ****/</span>
+<span style="color: darkgreen">//    osal_sem_down(&amp;dev_p-&gt;workloop_ctrl.sync, NULL, blocking);</span>
+    FARF(HIGH, <span style="color: darkred">"Workloop for . rx_first_fetch_numlines %u, fetch_numlines %u, width %u, height %u!"</span>,
+                     config_p-&gt;rx_first_fetch_numlines, config_p-&gt;rx_fetch_numlines, width, height);
+    FARF(HIGH, <span style="color: darkred">"Workloop for . rx_linesize %u, tx_linesize %u, rx_bufsize %u, tx_bufsize %u, tx_min_start %u, tx_timing_mode %u!"</span>,
+                     rx_linesize, tx_linesize, rx_bufsize, tx_bufsize, config_p-&gt;tx_min_start, config_p-&gt;tx_timing_mode);
+    uint32 internal_exit_flag = 0;
+    <span style="color: blue">while</span>(!process_util_get_force_exit_flag(p) &amp;&amp; !internal_exit_flag){
+        processed_linecount = 0;
+        overflow_recovery = 0;
+
+        <span style="color: darkgreen">/* Wait for rx sof */</span>
+        <span style="color: blue">while</span> (!process_util_check_rx_sof(p)) {
+            <span style="color: blue">if</span> (process_util_get_force_exit_flag(p)) {
+            FARF(HIGH,  <span style="color: darkred">"Worker loop for dev id hit force exit flag. Exiting loop!"</span> );
+                <span style="color: blue">goto</span> exit_pre_sof;
+            }
+        }
+
+        sess_p_stats_frame_cnt++;
+
+        <span style="color: darkgreen">/* At SOF, program TX SOL interval if TX is in programmed mode */</span>
+        <span style="color: darkgreen">//TODO: why not use TX_START_CONDITION??</span>
+        <span style="color: blue">if</span> (config_p-&gt;tx_timing_mode == TX_PROGRAMMED_MODE) {
+<span style="color: darkgreen">// This is not apply to sm8250/sm7250/sm8350 target</span>
+<span style="color: darkgreen">//            while (process_util_get_rx_lines(p) &lt; ((uint32)config_p-&gt;rx_first_fetch_numlines[0]/2));//</span>
+<span style="color: darkgreen">//            RX_SOL_interval = process_util_get_rx_SOL_interval(p);</span>
+<span style="color: darkgreen">//            process_util_set_TX_SOL_interval(p, RX_SOL_interval );//+ (uint32)config_p-&gt;tx_first_fetch_numlines[0]</span>
+        }
+
+        <span style="color: darkgreen">/* At SOF, read streamer status and determine error status */</span>
+        raw_status = process_util_get_streamer_raw_status(p);
+        raw_status_mask = process_util_get_error_status_mask(p);
+
+        <span style="color: blue">if</span> (raw_status &amp; raw_status_mask) {<span style="color: darkgreen">//STREAMER_ERROR_MASK</span>
+            FARF(ERROR, <span style="color: darkred">"STREAMER_ERROR_MASK set in RAW STATUS: raw_status %x, frame %d!"</span>,
+                    raw_status, sess_p_stats_frame_cnt);
+        }
+        raw_status_Rx_data_loss_mask = process_util_get_RX_bad_frame_error_status_mask(p);
+        <span style="color: blue">if</span> (raw_status &amp; raw_status_Rx_data_loss_mask) {<span style="color: darkgreen">//STREAMER_STATUS_RX_DATA_DROP</span>
+            FARF(ERROR, <span style="color: darkred">"Enabling overflow_recovery: frame %d!"</span>,
+                    raw_status, sess_p_stats_frame_cnt);
+            overflow_recovery = 1;
+        }
+
+        <span style="color: darkgreen">/* At SOF, update metabuf to apply the latest per-frame parameters */</span>
+        <span style="color: blue">if</span> (process_util_check_reg_update(p)) {
+            process_util_update_metabuf(p);
+            skip_processing = 0;
+        }
+        <span style="color: blue">else</span>{
+            skip_processing = 1;
+        }
+
+        <span style="color: darkgreen">//TODO: if buffer exchange enabled: obtain an empty buffer here</span>
+
+        <span style="color: darkgreen">/* At SOF, reset rx sof for next SOF check */</span>
+        process_util_reset_rx_sof(p);
+
+        <span style="color: darkgreen">/* Process lines */</span>
+        <span style="color: blue">while</span> (processed_linecount &lt; height) {
+            linecount = processed_linecount +
+                    ((linecount &gt; config_p-&gt;rx_first_fetch_numlines) ? config_p-&gt;rx_fetch_numlines : config_p-&gt;rx_first_fetch_numlines)
+                    - 1;
+            linecount = process_util_rx_wait_for_line(p,(linecount ));
+            <span style="color: blue">do</span> {
+                params.num_lines_processed = processed_linecount;
+                <span style="color: blue">if</span>(!skip_processing){
+                    hvx_add_constant_process_lines(
+                        app_context_p,
+                        tx_buf_p + out_idx,
+                        rx_buf_p + in_idx,
+                                                &amp;params  );
+                }
+                processed_linecount += (uint32)(config_p-&gt;rx_fetch_numlines);
+                <span style="color: darkgreen">//TODO: if buffer exchange enabled: write into empty buffer here</span>
+
+                in_idx = wrap_buffer_idx(in_idx + (config_p-&gt;rx_fetch_numlines)*rx_linesize, rx_bufsize);
+                out_idx = wrap_buffer_idx(out_idx + (config_p-&gt;tx_fetch_numlines)*tx_linesize, tx_bufsize);
+                process_util_rx_done(p, 64*(<span style="color: blue">int</span>)(in_idx/64));
+                <span style="color: blue">if</span> (config_p-&gt;tx_timing_mode &lt;= TX_PROGRAMMED_MODE) {
+                    process_util_tx_done(p, 64*(<span style="color: blue">int</span>)(out_idx/64));
+                    }
+
+            } <span style="color: blue">while</span> (linecount &gt;( processed_linecount+(uint32)(config_p-&gt;rx_fetch_numlines)-1));
+        }
+
+        <span style="color: blue">if</span> (config_p-&gt;tx_timing_mode &lt;= TX_PROGRAMMED_MODE) {
+            process_util_tx_done(p, out_idx);
+            process_util_tx_wait_for_eof(p);
+            process_util_tx_clear_eof(p);
+                        process_util_tx_done(p, 0);<span style="color: darkgreen">// reset counter</span>
+        }
+        <span style="color: blue">if</span> (overflow_recovery) {
+            FARF(HIGH, <span style="color: darkred">" Overflow!!! recover in process"</span>);
+            process_util_recover_streamer(p);
+            out_idx = 0;
+            in_idx = 0;
+            overflow_recovery = 0;
+            sess_p_stats_frame_cnt = 0;
+        }
+
+    }<span style="color: darkgreen">//while(1)</span>
+
+exit_pre_sof:
+<span style="color: blue">#endif</span>
+    <span style="color: blue">return</span>;
+}
+
+
+<span style="color: darkgreen">/**
+ * @brief Termination function.
+ *
+ * @param app_context_p: pointer to the app context (originally allocated by the app at entry point).
+ *
+ * @return If success, return HVX_SUCCESS.
+ */</span>
+<span style="color: blue">void</span> hvx_add_constant_terminate(<span style="color: blue">void</span> *app_context_p)
+{
+    FARF(ALWAYS, <span style="color: darkred">"%s: E"</span>, __func__);
+
+<span style="color: blue">#ifdef</span> BUF_SHARING_EN
+<span style="color: darkgreen">//////////////////////////////////////////////////////////////////</span>
+<span style="color: darkgreen">// NOTE: currently this Buffer sharing feature is not Supported //</span>
+<span style="color: darkgreen">//////////////////////////////////////////////////////////////////</span>
+
+    <span style="color: darkgreen">//Flush buffer queues</span>
+    dsp_streamer_buf_desc_t buf;
+    <span style="color: blue">unsigned</span> <span style="color: blue">int</span> send_buf = 0;
+    <span style="color: blue">do</span>{
+        <span style="color: blue">if</span>(!buf_get_empty(
+                ((hvx_add_constant_context_t*)app_context_p)-&gt;client_p,
+                ((hvx_add_constant_context_t*)app_context_p)-&gt;callbacks_p,
+                &amp;buf))
+        {
+            FARF(LOW, <span style="color: darkred">"%s: Received buf with fd %d, size %u!\n"</span>,
+                                __func__,
+                                buf.hndl,
+                                buf.len);
+            send_buf = 1;
+        }
+        <span style="color: blue">else</span>
+        {
+            FARF(ERROR, <span style="color: darkred">"%s: buf_get_empty failed!\n"</span>,
+                                __func__);
+            buf.hndl = -1;
+            send_buf = 0;
+        }
+
+        <span style="color: blue">if</span>(send_buf)
+        {
+            <span style="color: blue">if</span>(buf_send_full(
+                    ((hvx_add_constant_context_t*)app_context_p)-&gt;client_p,
+                    ((hvx_add_constant_context_t*)app_context_p)-&gt;callbacks_p,
+                    &amp;buf))
+            {
+                FARF(ERROR, <span style="color: darkred">"%s: buf_send_full failed!\n"</span>,
+                                    __func__);
+            }
+        }
+    } <span style="color: blue">while</span>(send_buf);
+<span style="color: blue">#endif</span> <span style="color: darkgreen">// BUF_SHARING_EN</span>
+
+    <span style="color: blue">if</span>(app_context_p) free(app_context_p);
+    FARF(ALWAYS, <span style="color: darkred">"%s: X"</span>, __func__);
+}
+</pre><pre><span style="color: darkgreen">/**
+ * @brief app_entry()
+ *
+ * This is the entry point how the user component been register onto streamer framework 
+ * verison number as a string. 
+ *
+ * This feature apply to sm8250/sm7250/sm8350 targets
+ *
+ * @param:
+ *      app_callbacks_p-&gt;get_config_func_ptr -&gt; function pointer to streamer configuratio from user 
+ *      app_callbacks_p-&gt;process_lines_func_ptr -&gt; function pointer to pre-process algo from user
+ *      app_callbacks_p-&gt;exit_func_ptr -&gt; function pointer to terminate streamer process from user
+ *      app_callbacks_p-&gt;work_loop_func_ptr -&gt; function pointer the the process workloop if user want to control it 
+ *                                              or else set to NULL (streamer framework will control the workloop)
+ * @return None 
+ */</span>
+<span style="color: blue">void</span> app_entry(app_callbac_functns_t *app_callbacks_p, <span style="color: blue">void</span>** app_context_pp, <span style="color: blue">void</span> *client_p, framework_callback_functns_t *fwk_callbacks_p)
+{
+    FARF(ALWAYS, <span style="color: darkred">"%s: E"</span>, __func__);
+    *app_context_pp = malloc(<span style="color: blue">sizeof</span>(hvx_add_constant_context_t));
+    ((hvx_add_constant_context_t*)(*app_context_pp))-&gt;client_p = client_p;
+    ((hvx_add_constant_context_t*)(*app_context_pp))-&gt;callbacks_p = fwk_callbacks_p;
+
+        <span style="color: darkgreen">//////////////////////////////////////////////////</span>
+        <span style="color: darkgreen">// User need to populate these function pointer //</span>
+        <span style="color: darkgreen">//////////////////////////////////////////////////</span>
+    app_callbacks_p-&gt;get_config_func_ptr =  &amp;hvx_add_constant_get_config;
+    app_callbacks_p-&gt;process_lines_func_ptr = &amp;hvx_add_constant_process_lines;
+    app_callbacks_p-&gt;exit_func_ptr = &amp;hvx_add_constant_terminate;
+<span style="color: blue">#ifdef</span> USE_CUSTOM_WORKLOOP
+    app_callbacks_p-&gt;work_loop_func_ptr = &amp;hvx_add_constant; <span style="color: darkgreen">//define if user want to control workloop</span>
+<span style="color: blue">#else</span>
+    app_callbacks_p-&gt;work_loop_func_ptr = NULL;
+<span style="color: blue">#endif</span>
+    FARF(ALWAYS, <span style="color: darkred">"%s: X"</span>, __func__);
+}
+</pre><h3>
+<a name="Function%20naming%20conventions"></a>Function naming conventions
+</h3><p>
+Multiple OEM plugin libs and QDSP6 libs can exist in device at same time. A set of them uses a string to pair with each other. The naming of functions and libs should follow these conventions:
+</p><ul type="circle">
+<li>
+<p>
+<b>hvx_add_constant.c</b>: in implementation of hvx_lib_get_hvx_info, algo_name will be defined by user.
+</p>
+</li>
+</ul><p>
+Assuming this algo_name is &#8220;sample_algo&#8221;, then the QDSP6 lib should be named as &#8220;libadsp_hvx_sample_algo.so&#8221;, the main processing function in QDSP6 lib should be named as &#8220;hvx_sample_algo&#8221; and the get_config function in QDSP6 lib should be named as &#8220;hvx_sample_algo_get_config&#8221;.
+</p><h2>
+<a name="Building%20examples"></a>Building examples
+</h2><p>
+Steps to build the hvx_add_constant example are as follows. The same applys to other camera streaming examples as well.
+</p><h3>
+<a name="Build%20OEM%20plugin:"></a>Build OEM plugin:
+</h3><p>
+From <code>&lt;sdk_root&gt;\examples\camera_streaming\hvx_add_constant_stub</code>:
+</p><pre>make
+</pre><p>
+libmmcamera_hvx_add_constant.so will be generated under ship folder.
+</p><h3>
+<a name="Build%20QDSP6%20lib:"></a>Build QDSP6 lib:
+</h3><p>
+From <code>&lt;sdk_root&gt;\examples\camera_streaming\hvx_add_constant</code>:
+</p><pre>make tree V=hexagon_Release_dynamic_toolv83_v66 sm8250=1 VERBOSE=1
+</pre><p>
+Note that the &#8220;tree&#8221; in the make command is necessary to build all the example's dependencies for the specified variant (hexagon_ReleaseG). VERBOSE=1 is an optional flag to display the details of the make and its included simulation test result. Subsequent rebuilds of the example for the same variant can omit the &#8220;tree&#8221; as follows.
+</p><pre>make V=hexagon_Release_dynamic_toolv83_v66 sm8250=1
+</pre><p>
+Note that this make command builds the QDSP6 lib in shared library (.so) format. This shared library will be loaded to target chip-set that supports HVX streaming.
+</p><h2>
+<a name="Load%20example%20to%20device"></a>Load example to device
+</h2><p>
+There is a way to test camera streaming code off-line on simulator (given below), but due to the nature of streaming, examples are usually tested on a target device with proper imaging sensor mounted.
+</p><p>
+As a pre-requirement, the target device should have APPS build and DSP build be pre-loaded. See [Dependencies]page for details. On top of that, taking hvx_add_constant as example:
+</p><p>
+NOTE: If you have the images distributed by Qualcomm, you should already have these files on the device. There is no need to push the files on to the device for first time verification
+</p><ul type="circle">
+<li>
+<p>
+push <code>&lt;sdk_root&gt;\examples\camera_streaming\hvx_add_constant\hexagon_Release_dynamic_toolv80_v60\libadsp_hvx_add_constant.so</code> to <code>/system/lib/rfsa/adsp</code> on device
+</p>
+</li><li>
+<p>
+push <code>&lt;sdk_root&gt;\examples\camera_streaming\hvx_add_constant_stub\hexagon_Release_dynamic_toolv80_v60\libmmcamera_hvx_add_constant.so</code> to <code>/system/lib</code> on device
+</p>
+</li><li>
+<p>
+make sure that the test sig is present under /system/lib/rfsa/adsp. For the details of generating test sig for your device, click <a href="../Tools_Signing.html">here</a>
+</p>
+</li>
+</ul><h2>
+<a name="Running%20the%20examples"></a>Running the examples
+</h2><p>
+Currently the way to run camera streaming examples is to use adb shell setprop command to enable and disable it.
+</p><ul type="circle">
+<li>
+<p>
+Assuming OEM plugin name is &#8220;libmmcamera_hvx_add_constant.so&#8221;, do the following and this enables HVX camera streaming and loads the specified QDSP6 lib for processing.
+</p><pre>adb shell setprop persist.camera.hvx_lib_1 "libmmcamera_hvx_add_constant.so"
+</pre><p>
+Then open any camera application on device to see the pixel data processing effects. For hvx_add_constant example, bright area will periodically boosted to pink color.
+</p>
+</li><li>
+<p>
+To disable streaming, which make pixel data completely bypass HVX streaming module and act as a normal ISP, do
+</p><pre>adb shell setprop persist.camera.hvx_lib_1 ""
+</pre>
+</li>
+</ul><h2>
+<a name="Collect%20Frame%20Dump"></a>Collect Frame Dump
+</h2><ul type="circle">
+<li>
+<p>
+To Enable frame dump, set property &#8220;persist.camera.hvx_fdump_en&#8221;. The value
+</p>
+</li>
+</ul><p>
+of this property is the number of frames to dump. Do the following to enable dump for first 10 frames.
+</p><pre>adb shell setprop persist.camera.hvx_fdump_en "10"
+</pre><h2>
+<a name="Debug%20and%20logging"></a>Debug and logging
+</h2><p>
+HVX camera streaming works on both Android side and DSP side.
+</p><p>
+To collect Android log:
+</p><pre>adb logcat -vthreadtime &gt; log.txt 
+</pre><p>
+In the log file, search for &#8220;iface_hvx_&#8221; for information.
+</p><p>
+To collect DSP side log:
+</p><p>
+Open QXDM application, select &#8220;Messages View&#8221; in View drop down menu, then the logs would come. Right click and select &#8220;Export All Text...&#8221; to save current logs into file. Search for &#8220;streamer_&#8221; for information.
+</p><p>
+HVX camera streaming uses fastrpc heavily, please refer to <a href="../FAQ_FastRPC.html">fastrpc page</a> to understand fastrpc related issues.
+</p><h2>
+<a name="SDM845%20Camera%20Streaming"></a>SDM845 Camera Streaming
+</h2><h2>
+<a name="Steps%20to%20verify%20Camera%20Streaming:"></a>Steps to verify Camera Streaming:
+</h2><p>
+The steps to verify camera streaming are different for SDM845 than SDM820, SDM835 and SDM660; as the camera software architecture on CPU/HLOS side has changed to CamX.
+</p><p>
+Please follow the below steps to verify.
+</p><ol type="1">
+<li>
+<p>
+Flash the appropriate SDM845 build e.g. SDM845.LA.1.0.r1-00476-STD.PROD-1 to
+</p>
+</li>
+</ol><p>
+device.
+</p><ol type="1">
+<li>
+<p>
+Check if the libdsp_streamer_add_constant.so (example skel) &amp;
+</p>
+</li>
+</ol><p>
+libdsp_streamer_skel.so (streamer framework skel) are present in /vendor/lib/rfsa/adsp on the device.
+</p><ol type="1">
+<li>
+<p>
+If not present on device, it should be at below locations in HLOS build;
+</p>
+</li>
+</ol><p>
+push them to /vendor/lib/rfsa/adsp on SDM845 device.
+</p><p>
+&lt;HLOS BUILD&gt;/vendor/qcom/proprietary/camx/src/hwl/dspinterfaces/libdsp_streamer_skel.so
+</p><p>
+&lt;HLOS BUILD&gt;/vendor/qcom/proprietary/chi-cdk/vendor/node/hvx/addconstant/libdsp_streamer_add_constant.so
+</p><p>
+If you cannot find it in the above mentioned locations, create a case and we shall look into it.
+</p><ol type="1">
+<li>
+<p>
+Enable camera streaming (HVX) mode.
+</p>
+</li>
+</ol><p>
+adb root adb remount
+</p><p>
+Create a new text file with name <b>camxoverridesettings.txt</b> and insert <b>enableHVXStreaming=1</b> in file and then push it to the device at following location /vendor/etc/camera. Create the folders if they are not already present.
+</p><p>
+or
+</p><p>
+If the file exists then do: adb shell echo enableHVXStreaming=1 &gt; /vendor/etc/camera/camxoverridesettings .txt
+</p><p>
+adb reboot adb root adb remount adb shell setenforce 0
+</p><ol type="1">
+<li>
+<p>
+Launch Snapdragon Camera App on MTP or the respective camera app on the
+</p>
+</li>
+</ol><p>
+device in Preview mode and you should see bright area will be periodically boosted to pink color, which indicates the camera streaming mode is working with add constant example.
+</p><h2>
+<a name="Files%20in%20SDK"></a>Files in SDK
+</h2><h3>
+<a name="Camera%20Streaming%20Framework"></a>Camera Streaming Framework
+</h3><p>
+It is not provided in source. The generated library is located at:
+</p><p>
+&lt;SDK Root&gt;\libs\camera_streaming\framework\ship<br>hexagon_Release_dynamic_toolv81_v65\libdsp_streamer_skel.so
+</p><p>
+NOTE: This file may not be the latest and is placed here for successful linking of the example code developed on DSP side. DO NOT push this shared object to device as the build flashed to device will already be using an updated version.
+</p><h3>
+<a name="Example:"></a>Example:
+</h3><p>
+Example source code is located at: &lt;SDK Root&gt;\examples\camera_streaming\hvx_add_constant
+</p><p>
+To build example:
+</p><p>
+make tree_clean V=hexagon_Release_dynamic_toolv81_v65 VERBOSE=1 make tree V=hexagon_Release_dynamic_toolv81_v65 VERBOSE=1
+</p><p>
+After successful compilation, the shared object libdsp_streamer_add_constant.so will be generated and placed in:
+</p><p>
+&lt;SDK root&gt;\examples\camera_streaming\hvx_add_constant\hexagon_Release_dynamic_toolv81_v65\ship
+</p><p>
+NOTE: This example will eventually be replaced with camera streaming algorithm or skel code that will run on the DSP in camera streaming mode.
+</p><h2>
+<a name="OEM%20Plug-in:"></a>OEM Plug-in:
+</h2><p>
+This is the OEM Plug-in to be implemented on the HLOS or CPU side. It requires familarity in working with CamX software architecture to be able to successfully integrate and load the plug-in.
+</p><p>
+for example, the &#8220;add constant&#8221; OEM plug-in source code and build makefiles are placed at: &lt;HLOS Build&gt;\android\vendor\qcom\proprietary\chi-cdk\vendor\node\hvx\addconstant
+</p><p>
+In, &lt;HLOS build&gt;\android\vendor\qcom\proprietary\chi-cdk\vendor\node\hvx\addconstant, camxchihvxaddconstant.cpp, implements the OEM plug-in APIs as required and listed in chiisphvxdefs.h.
+</p><p>
+The Android.mk in the folder &lt;HLOS Build&gt;\android\vendor\qcom\proprietary\chi-cdk\vendor\node\hvx\addconstant\build\android makes the OEM plug-in, part of the com.qti.hvx.addconstant module.
+</p><p>
+Similar changes are required when implementing a custom OEM-plugin, so that the custom algorithm name, static and dynamic config. can be specified to DSP.
+</p><p align="center" style="display:block;padding-top: 50px;">
+  Copyright &#169; 2018 Qualcomm Technologies Inc. All rights reserved.
+
+</p><a style="display:block;padding-bottom: 700px;"></a></div></div>
+</body>
+</html>

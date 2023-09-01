@@ -1,0 +1,468 @@
+Signing
+#######
+
+.toc
+
+Introduction
+============
+
+Starting in the SM8150 family, **signature-free dynamic module offload** is
+enabled on cDSP. This allows signature-free dynamic shared objects to be offloaded
+to cDSP in a low-rights process (Unsigned PD). Please see [Unsigned PD]
+(#Unsigned PD) for further details. For use cases that require resources or
+privileges unavailable in the Unsigned PD, or for compatibility with legacy
+targets, please see the information on the code-signing utilities and processes below.
+
+Signing is a mechanism of adding cryptographic signature into aDSP [dynamic 
+modules] (APIs_Dynamic%20Loading.html) that can later be verified by the 
+loader. Dynamic modules can be signed for debug devices using [TestSigs] (#TestSigs) 
+or for production devices using [Production Sigs] (#Production-Signing).
+
+**elfsigner** is command-line utility used to generate digital signatures for
+aDSP dynamic shared objects and to generate test signatures (TestSigs) for
+facilitating development. Dynamic shared objects are required to be digitally
+signed and then authenticated at runtime before they are allowed to be loaded
+and executed.
+
+**elfsigner** comes configured with a test private key and root certificate,
+which provides for generating signatures for dynamic modules that will be run
+on a device configured with the same test root certificate. For devices that are 
+not configured as test devices, like commercial production devices, follow 
+the instructions in [Production-Signing] (#Production-Signing).
+
+
+Unsigned PD
+============
+
+Starting in the SM8150 family, clients can request to offload signature-free dynamic shared
+objects to cDSP. The signature-free dynamic shared object will be able to run inside the
+Unsigned PD on the cDSP.
+
+Unsigned PD is a sandboxed low-rights process that allows the signature-free modules to
+run on the cDSP. In the event of a compromise, access to full system functionality and data
+is prevented by the sandbox. Unsigned PDs are designed to support general compute applications
+and have limited access to underlying drivers. Please see the services available in the
+Unsigned PD and the limitations below. The available / unavailable services in the Unsigned PD
+may change in the future based on continuing security reviews.
+
+Unsigned PD support
+----------
+
+Check if device supports Unsigned PD by performing a [capability query] (FastRPC_Capability_API.html#UNSIGNED_PD_SUPPORT)
+using DSP attribute UNSIGNED_PD_SUPPORT.
+
+Unsigned PD available services
+----------
+
+- Thread creation and thread services
+- Timer creation and timer services
+- HVX contexts
+- Clock frequency controls
+- VTCM
+- Cache operations
+- Map HLOS memory allocated by corresponding HLOS application
+
+Unsigned PD limitations
+----------
+
+- Access to limited drivers
+  i.e. UBWC/DMA and Camera Streamer are not available to Unsigned PDs
+- Following are the limitations on Threads per Unsigned PD:
+	- Thread priority ceiling (Highest priority for any Unsigned PD thread) : 64
+	- Maximum number of threads allowed per Unsigned PD : 128
+**NOTE:** These limitations could change in the future.
+
+Request signature-free offload
+----------
+
+- To request signature-free dynamic module offload, clients will have to make the request as follows
+
+       . #pragma weak remote_session_control  
+       . if (remote_session_control)
+       . {
+       .     struct remote_rpc_control_unsigned_module data;
+       .     data.enable = 1;
+       .     data.domain = CDSP_DOMAIN_ID;
+       .     remote_session_control(DSPRPC_CONTROL_UNSIGNED_MODULE, (void*)&data, sizeof(data));
+       . }
+
+- This request should be made before calling any other FastRPC function.
+- A success from the remote_session_control function allows the clients to offload the dynamic shared object to cDSP without signing.
+
+
+
+TestSigs
+========
+
+A TestSig is a special type of dynamic shared object that when properly
+installed on a device, enables that device for development use by overriding
+the authentication requirement of other dynamic shared objects.  This
+eliminates the need for signing individual shared objects allowing for faster
+development cycles.
+
+The TestSig is a shared object named `testsig-XXXXXXXX.so` which contains a
+serial number corresponding to the specific device which it will be installed on.
+It must be signed by **elfsigner** with a command-line option that passes the
+device serial number to the TestSig.
+
+Installing a TestSig is easier using the script [testsig.py] ( Tools_Scripts.html ) 
+provided with the SDK.  Also note that this installation needs to be done only once 
+on the device.
+
+Using elfsigner
+===============
+
+Dependencies
+------------
+
+The elfsigner utility is implemented as a set of Python scripts, and as such
+requires that Python version 2.7 or above is installed on the host computer. Additional 
+dependencies include:
+- Windows 7 (32-bit or 64-bit) or higher		(For Windows Users)
+- OpenSSL 1.0.1g for Linux (or later version)		(For Linux Users)
+- The tool uses the system temporary folder as scratch space to create intermediate 
+output. Make sure that the tool has permission to write to the location %temp% (This 
+is an environment variable) in windows and to `/tmp` location in Linux.
+
+Before calling ELFSigner ensure the SDK's dependencies are properly setup.
+The installer should have done this for you.  If you encounter issues please see
+[Dependencies] (Dependencies_Common.html).
+
+Calling ELFSigner requires that the local environment be setup.  To do this, first [setup] (readme.html) the sdk environment.
+
+Command-line usage
+------------------
+
+ELFSigner is located at:
+
+. /tools/elfsigner/elfsigner.py
+
+There are two basic command-line forms for invoking **elfsigner**:
+
+. python elfsigner.py -t SERIALNUM -o [OUTPUTDIR]
+.
+.    SERIALNUM is a 32-bit device serial number in hex form: 0xabcd0123
+
+In this form, a TestSig is generated and written to the OUTPUTDIR directory. No
+files are specified on the command line. The output filename is generated by
+concatenating 'testsig-' with the serial number value in hexadecimal, followed
+by the extension '.so'.
+For example: using `-t 0xaf0123` will create a file named: `testsig-0xaf0123.so.`
+
+. python elfsigner.py -i INFILE -o [OUTDIR]
+.
+.    INFILE is the pathname of an ELF format shared object file to be signed.
+.    OUTDIR specifies the output folder's pathname of the signed output file.
+
+In this form, **elfsigner** produces a signed ELF file from an unsigned input file.
+A single file may be signed at each invocation. In its simplest form, OUTFILE
+may be omitted, in which case the signed output file is written to the current
+directory using the same name as the input file.  If there is a naming conflict
+where the input file would be overwritten by the output file then the output
+file will be named *{input_filename_base}*_signed.so.
+
+
+Options
+.......
+
+For help with elfsigner options and usage, please type
+. python elfsigner.py -h
+
+Commonly used  options are:
+
+* **`--testsig=SERIALNUM, or -t SERIALNUM`**
+   Generate a test signature tied to a device with the specified serial
+   number. The serial number is a 32-bit number expressed in hexadecimal:
+   such as `0x10203040`
+
+   The device serial number can be obtained by running the tool **getserial**
+   from an adb shell.  See section [[Obtaining Device Serial Number]] below.
+
+* **`--version`**
+   Display the version number and exit.
+
+* **`--help or -h`**
+   Display a help message and exit.
+
+
+Usage Examples
+--------------
+
+. python elfsigner.py --help
+
+Displays a help screen and exits
+
+
+. python elfsigner.py --version
+
+Displays the version number and exits.
+
+
+. python elfsigner.py --testsig=0xabcdef01
+
+Creates a TestSig in the current directory with the name: `testsig-0xabcdef01.so`,
+containing a serial number of 0xabcdef01.
+
+
+. python elfsigner.py -i dynmod.so -o signed/
+
+Signs the input file `dynmod.so` writes the signed output file to `./signed/dynmod.so`
+
+
+. python elfsigner.py -i input/dynmod.so -o signed/
+
+This command signs the input file `./input/dynmod.so` and writes the signed
+output file to `./signed/dynmod.so`
+
+
+Obtaining Device Serial Number
+==============================
+
+Android
+-------
+
+Use the command line Android application **getserial** to discover the serial number of your
+device. This utility is located in the *elfsigner* folder of the Hexagon&#8482;
+SDK.  To obtain the serial number from commad line, the device needs to be connected to the host PC to run adb commands.
+Please refer the documentation [connect to device] (Debugging_Connect to Device.html) for details.
+
+Usage of getserial is shown below.
+
+Flash the **getserial** application to the device (via **adb**)
+
+. adb push <local_path>/getserial /data/getserial
+
+Set the execute bit on the application
+
+. adb shell chmod 755 /data/getserial
+
+Execute the application to retrieve the serial number
+
+. adb shell /data/getserial
+
+The above command returns the serial number of the attached device:
+
+. ####################Serial number (see below)###########################
+.
+. Serial Num : 0x13eb80
+.
+. ####################Serial number (see above)###########################
+
+
+Alternatively **GetSerial**, a GUI based android application, can also be used to retrieve the device's serial number.
+This application is also located in the *elfsigner* folder.
+Connect the device to your host PC and run the following command
+
+.ccode
+
+   <Hexagon SDK Dir>\tools\elfsigner>adb install getserial.apk
+   1631 KB/s (2464266 bytes in 1.475s)
+         pkg: /data/local/tmp/getserial.apk
+   Success
+
+**GetSerial** can be directly run from your device's GUI. The connection to the host PC is not required while running the GUI based application.
+
+Windows Phone
+-------------
+
+Use the Windows application **getserial.exe** to discover the serial number of your device. This utility is located in the *elfsigner* folder of the Hexagon&#8482;
+SDK. This has been validated for SM8180 device. Find below the steps to run getserial.
+
+Find **MAC Address** of device and connect to the device. Open the Tshell window in admin command prompt. 
+
+. (Get-CimInstance Win32_PnPEntity | where caption -match 'USB-EEM').pnpDeviceID
+
+The above command will produce an output like `USB\VID_045E&PID_064D\00117F04BD6F`. The mac address of the device is `00117F04BD6F`. 
+
+Connect to the device using the above mac address. Enter the command `open-device <mac address>`. 
+
+. open-device 00117F04BD6F
+
+Push *getserial.exe* application to the device (via TShell). Create a new directory or use an existing temporary directory to push getserial onto the device. We are creating a new directory to push the file. 
+
+. mkdird getserial 
+. cdd getserial
+. putd <HEXAGON_SDK_ROOT>\tools\elfsigner\getserial\WinARM_Release_aarch64\getserial.exe .
+
+Push **libcdsprpc.dll** into the device. Go to the directory `C:\windows\system32\driverstore\filerepository\` on the device and search for `adsprpc` directory having the name in the format `qcadsprpc<target>.inf_arm64_<identifier>`. 
+
+. eg. qcadsprpc<target>.inf_arm64_2c86f0ffd7cac0ee
+
+Once you reach the adsprpc directory, push the dll into the same location where you pushed `getserial.exe`.
+
+. copyd windows\system32\driverstore\filerepository\qcadsprpc<target>.inf_arm64_<identifier>\libcdsprpc.dll C:\getserial
+
+Execute the application to retrieve the serial number: 
+
+. cmdd getserial
+
+The above command returns the serial number of the attached device:
+
+.pre 
+
+	####################Serial number (see below)###########################
+
+	Serial Num : 0x77b6ae61
+
+	####################Serial number (see above)###########################
+
+
+OpenWRT
+-------
+
+Use the command line OpenWRT application **getserial** to discover the serial number of your
+device. This utility is located in <Hexagon SDK Dir>\tools\elfsigner\getserial\ADSP\OpenWRT\UbuntuARM_Release(aarch64?)
+
+Usage of getserial is shown below.
+
+Copy the **getserial** application to tftp server root directory and transfer it to the device (via **tftp**)
+
+. cd /data
+. tftp -gr getserial <serverip>
+
+Set the execute bit on the application
+
+. chmod 755 /data/getserial
+
+Execute the application to retrieve the serial number
+
+. ./data/getserial
+
+The above command returns the serial number of the attached device:
+
+. ####################Serial number (see below)###########################
+.
+. Serial Num : 0x12345678
+.
+. ####################Serial number (see above)###########################
+
+Installing the TestSig on Device
+================================
+
+TestSigs, after being generated with the correct device serial number,
+should be loaded into the root of the remote file system or other location as
+specified by the environment variable ADSP_LIBRARY_PATH.  (See the
+[Remote File System] (remote_file_system.html) section for more information).
+
+The TestSig produced by **elfsigner** will be named `testsig-0xXXXXX`, where
+`XXXXX` is the serial number specified on the command line.
+
+Signature test mode is latched.  This means that after reboot, test signatures
+are validated only once on the first call to load a dynamic object.  Therefore
+after you copy the test signature to the device its a good idea to reboot the
+device so it gets recognized.
+
+Installation Example
+--------------------
+
+In this example the device serial number is 0x12345 and the previously
+generated TestSig is named `testsig-0x12345.so`. The environment variable
+ADSP_LIBRARY_PATH is set to: `ADSP_LIBRARY_PATH=/data/adsp`.
+
+Android
+.......
+
+Use **adb** to push the TestSig onto the device:
+
+. adb push testsig-0x12345.so /data/adsp/testsig-0x12345.so
+
+Windows Phone
+.............
+
+Use **TShell** to push Testsig onto the device:   
+
+. putd testsig-0x12345.so C:\Windows\system32\drivers\Driverdata\qualcomm\fastrpc
+
+OpenWRT
+.......
+
+Use **tftp** to transfer the TestSig onto the device:
+
+. cd /data/adsp
+. tftp -gr testsig-0x12345.so <serverip>
+
+Walk-through
+============
+
+On Android
+----------
+
+- First discover your device's serial number.  The below steps will print out
+  the device serial number.  Example: 0x12345678
+
+  . adb push <Hexagon SDK Dir>\tools\elfsigner\getserial\android_Release\getserial /data/
+  . adb shell chmod 777 /data/getserial
+  . adb shell /data/getserial
+
+- Next generate a test signature based on that serial number and push it
+  to the device.  The test signature is discovered on boot so a reboot is required.
+
+  . cd <Hexagon SDK Dir>
+  . setup SDK environment
+  . python <Hexagon SDK Dir>\tools\elfsigner\elfsigner.py -t 0x<serial number>
+  . adb push output/testsig-0x<serial number>.so /system/lib/rfsa/adsp/
+  . adb reboot
+  . adb wait-for-device
+
+- The above steps are captured in the following script:
+
+  . <Hexagon SDK Dir>\scripts\testsig.py
+
+
+On Windows Phone
+----------------
+
+- Use TShell to run the commands. First discover your device's serial number. The below steps will print out
+  the device serial number.  Example: 0x12345678
+
+. (Get-CimInstance Win32_PnPEntity | where caption -match 'USB-EEM').pnpDeviceID
+. open-device `MAC_Address`
+. mkdird getserial 
+. cdd getserial
+. putd <HEXAGON_SDK_ROOT>\tools\elfsigner\getserial\WinARM_Release_aarch64\getserial.exe .
+. copyd windows\system32\driverstore\filerepository\qcadsprpc<target>.inf_arm64_<identifier>\libcdsprpc.dll C:\getserial
+. cmdd getserial
+
+- Next generate a test signature based on that serial number and push it to the device.
+
+. cd <Hexagon SDK Dir>
+. setup SDK environment
+. python <Hexagon SDK Dir>\tools\elfsigner\elfsigner.py -t 0x<serial number>
+. putd testsig-0x<serial number>.so C:\Windows\system32\drivers\Driverdata\qualcomm\fastrpc
+
+- Reboot the phone. The test signature is discovered on boot so a reboot is required.
+
+On OpenWRT
+----------
+
+- First discover your device's serial number.  The below steps will print out
+  the device serial number.  Example: 0x12345678
+- Copy <Hexagon SDK Dir>\tools\elfsigner\getserial\ADSP\OpenWRT\Variant\getserial to tftp server root directory.
+- Use putty connected to device COM port to run the below commands:
+
+  . cd /data && tftp -gr getserial <serverip>
+  . chmod 777 /data/getserial
+  . ./data/getserial
+
+- Next generate a test signature based on that serial number and transfer it
+  to the device.  The test signature is discovered on boot so a reboot is required.
+
+  . cd <Hexagon SDK Dir>
+  . setup SDK environment
+  . python <Hexagon SDK Dir>\tools\elfsigner\elfsigner.py -t 0x<serial number>
+  . cd /usr/lib/rfsa/adsp/ && tftp -gr output/testsig-0x<serial number>.so <serverip>
+  . reboot
+ 
+Production-Signing
+============
+
+Signatures generated using the elfsigner from the SDK allow SDK users to prototype 
+and test their software on debug devices such as DragonBoards. However these 
+testsigs and signed .so files would not authenticate successfully on production 
+devices such as OEM phones and tablets. 
+
+To enable a .so  to be successfully deployed on production devices across
+a large number of OEM devices, the dynamic module needs to be production signed by 
+the OEM. ISVs are encouraged to work with their OEM POCs to have the modules production
+signed for OEM devices.
+
