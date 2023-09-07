@@ -15,7 +15,7 @@ echo ${machine}
 
 if [ ${machine} = "Linux" ]
 then    
-    CMAKE_ROOT="<PATH to CMAKE Installation directory>"
+    CMAKE_ROOT="/usr"
     CMAKE=${CMAKE_ROOT}/bin/cmake
     ANDROID_NDK_ROOT=${ANDROID_ROOT_DIR}
     HEXAGON_TOOLCHAIN_ROOT=${HEXAGON_SDK_ROOT}/tools/HEXAGON_Tools/8.3.04/

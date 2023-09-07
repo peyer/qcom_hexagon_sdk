@@ -1,0 +1,8 @@
+.idea/
+.vscode/
+examples/common/*/android_*_aarch64.cmake/*
+examples/common/*/hexagon_*.cmake/*
+libs/common/*/android_*_aarch64.cmake/*
+libs/common/*/hexagon_*.cmake/*
+test/common/*/android_*_aarch64.cmake/*
+test/common/*/hexagon_*.cmake/*
